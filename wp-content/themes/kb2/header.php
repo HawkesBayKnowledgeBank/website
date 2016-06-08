@@ -29,16 +29,16 @@
 		<div class="wrapper">
 
 			<!-- header -->
-			<div class='headerBack'>
+			<div class="headerBack">
 				<header class="main-header container" role="banner">
 					
 					<!-- logo -->
 					
-					<div class='main-logo'>
+					<div class="main-logo">
 						
 					</div>
 					<div class="byline">
-						<!-- <img class='main-logo' src="img/HBDA_logo.png" alt="logo"> -->
+						<!-- <img class="main-logo" src="img/HBDA_logo.png" alt="logo"> -->
 						<h1><a href="<?php echo home_url(); ?>"><?php bloginfo( 'name' ); ?></a></h1>
 						<h3><?php bloginfo( 'description' ); ?></h3>
 					</div>
@@ -47,7 +47,7 @@
 					<!-- /logo -->
 
 					<!-- nav -->
-					<nav id="nav-main" class='link-hover' role="navigation">
+					<nav id="nav-main" class="link-hover" role="navigation">
 						<?php kb2_nav(); ?>
 					</nav>
 					<!-- /nav -->
@@ -56,7 +56,7 @@
 						<span></span>
 						<span></span>
 					</div>
-					<div class='overlay'>
+					<div class="overlay">
 						<?php kb2_nav(); ?>
 					</div>
 

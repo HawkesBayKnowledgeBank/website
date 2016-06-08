@@ -24,7 +24,7 @@
 	
 	?>
 	
-	<div class='grid-container'>
+	<div class="grid-container">
 
 		<?php 
 			
@@ -32,7 +32,7 @@
 
 				 foreach( $latest_posts as $latest_post ) : ?>
 
-				 	<div class='grid-1-5 image-subjects-links'>
+				 	<div class="grid-1-5 image-subjects-links">
 
 				 		<a href='<?php echo get_permalink( $latest_post->ID ); ?>'>
 
@@ -48,7 +48,7 @@
 
 	</div>
 
-	<ul class='grid-container namesList link-hover peopleList'>
+	<ul class="grid-container namesList link-hover peopleList">
 
 		<li class='col-1-8'><a href='people?letter=a'>A</a></li>
 		<li class='col-1-8'><a href='people?letter=b'>B</a></li>
@@ -60,7 +60,7 @@
 		<li class='col-1-8'><a href='people?letter=h'>H</a></li>
 	</ul>
 		
-	<ul class='grid-container namesList link-hover peopleList'>
+	<ul class="grid-container namesList link-hover peopleList">
 		<li class='col-1-8'><a href='people?letter=i'>I</a></li>
 		<li class='col-1-8'><a href='people?letter=j'>J</a></li>
 		<li class='col-1-8'><a href='people?letter=k'>K</a></li>
@@ -71,7 +71,7 @@
 		<li class='col-1-8'><a href='people?letter=p'>P</a></li>
 	</ul>
 
-	<ul class='grid-container namesList link-hover peopleList'>
+	<ul class="grid-container namesList link-hover peopleList">
 		
 		<li class='col-1-8'><a href='people?letter=q'>Q</a></li>
 		<li class='col-1-8'><a href='people?letter=r'>R</a></li>
@@ -83,13 +83,13 @@
 		<li class='col-1-8'><a href='people?letter=x'>X</a></li>
 	</ul>
 	
-	<ul class='grid-container namesList link-hover peopleList'>
+	<ul class="grid-container namesList link-hover peopleList">
 		<li class='col-1-8'><a href='people?letter=y'>Y</a></li>
 		<li class='col-1-8'><a href='people?letter=z'>Z</a></li>
 	</ul>
 
 
-	<form class='searchBar'>
+	<form class="searchBar">
 		<?php get_search_form(); ?>
 	</form>
 
@@ -159,7 +159,7 @@
 						
 
 					<?php if ( $counter % 3 == 0 && $counter != $number_of_rows) : ?>
-        				</div><div class='grid-container peopleNames'>
+        				</div><div class="grid-container peopleNames">
         			<?php endif; ?>
 
 				<?php

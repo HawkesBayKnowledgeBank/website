@@ -32,12 +32,12 @@
 		
 		<div class="radioTxtAlign">
 
-			<input  class='advancedSearchDateAll' name='advancedSearch[date]' type='radio' value='all' checked='checked'>
+			<input  class="advancedSearchDateAll" name='advancedSearch[date]' type='radio' value='all' checked='checked'>
 			<label for='advanced_search_date_all'>Search for all of these words</label><br>
-			<input class='searchDateRange' name='advancedSearch[date]' type='radio' value='range' checked='checked'>
+			<input class="searchDateRange" name='advancedSearch[date]' type='radio' value='range' checked='checked'>
 			<label for='advancedSearchDateRange'>Search for any of these words</label>
 			<br>
-			<input class='searchDateRange' name='advancedSearch[date]' type='radio' value='range' checked='checked'>
+			<input class="searchDateRange" name='advancedSearch[date]' type='radio' value='range' checked='checked'>
 			<label for='advancedSearchDateRange'>Search for exactly this phrase</label>
 		
 		</div>

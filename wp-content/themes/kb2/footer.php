@@ -1,7 +1,7 @@
 			<!-- footer -->
-			<div class='headerBack'>
+			<div class="headerBack">
 			<footer class="main-footer" role="contentinfo">
-				<div class='grid-container'>
+				<div class="grid-container">
 					<div class="grid-4">
 					<!-- copyright -->
 					<p class="copyright">

@@ -11,7 +11,7 @@
 
 			<div class="grid-container bottom_margin">
 				
-				<div class='grid-6'>
+				<div class="grid-6">
 				<!-- post title -->
 				<?php $images = get_field('images'); ?>
 
@@ -25,7 +25,7 @@
 					
 				</div>
 					
-				<div class='grid-3'>
+				<div class="grid-3">
 						
 					<?php 
 						
@@ -36,7 +36,7 @@
 
 						<h3>Collections</h3>
 
-						<ul class='image-subjects-links'>
+						<ul class="image-subjects-links">
 
 							<?php foreach($collections as $collection): ?>
 									
@@ -57,7 +57,7 @@
 
 						<h3>Tags</h3>
 						
-						<ul class='image-subjects-links'>
+						<ul class="image-subjects-links">
 
 							<?php foreach($tags as $tag): ?>
 
@@ -77,7 +77,7 @@
 
 						<h3>Subjects</h3>
 							
-						<ul class='image-subjects-links'>
+						<ul class="image-subjects-links">
 						
 							<?php foreach( $subjects as $subject ): ?>
 								
@@ -89,7 +89,7 @@
 				
 				</div>
 					
-				<div class='grid-3'>
+				<div class="grid-3">
 					
 					<?php
 						
@@ -99,7 +99,7 @@
 						
 						<h3>Publication Date:</h3>
 
-						<p class='image-subjects-links'><?php echo $publication_year; ?></p>
+						<p class="image-subjects-links"><?php echo $publication_year; ?></p>
 					
 					<?php endif; ?>
 
@@ -109,7 +109,7 @@
 						
 						if( !empty( $originalFormat ) ): ?>
 							
-							<h3>Original Format</h3><p class='image-subjects-links'><?php echo $originalFormat; ?></p>
+							<h3>Original Format</h3><p class="image-subjects-links"><?php echo $originalFormat; ?></p>
 						
 						<?php endif; ?> 
 
@@ -119,7 +119,7 @@
 						
 						if( !empty( $accessionNumber ) ): ?>
 							
-							<h3>Accession Number</h3><p class='image-subjects-links'><?php echo $accessionNumber; ?></p>
+							<h3>Accession Number</h3><p class="image-subjects-links"><?php echo $accessionNumber; ?></p>
 						
 						<?php endif; ?>
 	

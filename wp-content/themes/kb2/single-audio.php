@@ -25,7 +25,7 @@
 						<?php endif; ?>
 				</div>
 					
-				<div class='grid-3'>
+				<div class="grid-3">
 
 					<h3>Collections</h3>
 
@@ -88,7 +88,7 @@
 				
 				</div>
 					
-				<div class='grid-3'>
+				<div class="grid-3">
 
 					<?php 
 						

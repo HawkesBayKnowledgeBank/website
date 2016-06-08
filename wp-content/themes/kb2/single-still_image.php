@@ -36,7 +36,7 @@
 				
 				</div>
 
-				<div class='grid-3'>
+				<div class="grid-3">
 					
 					<?php 
 						
@@ -47,7 +47,7 @@
 
 						<h3>Collections</h3>
 
-						<ul class='image-subjects-links'>
+						<ul class="image-subjects-links">
 						
 							<?php foreach($collections as $collection): ?>
 
@@ -68,7 +68,7 @@
 
 						<h3>Tags</h3>
 			
-						<ul class='image-subjects-links'>
+						<ul class="image-subjects-links">
 						
 							<?php foreach($tags as $tag): ?>
 
@@ -88,7 +88,7 @@
 
 						<h3>Subjects</h3>
 						
-						<ul class='image-subjects-links'>
+						<ul class="image-subjects-links">
 						
 							<?php foreach( $subjects as $subject ): ?>
 								
@@ -102,7 +102,7 @@
 					
 				</div>
 				
-				<div class='grid-3'>
+				<div class="grid-3">
 
 					<?php $origianl_format = get_field( 'format_original' );
 
@@ -110,7 +110,7 @@
 					
 						<h3>Format of the original:</h3>
 
-						<p class='image-subjects-links'>
+						<p class="image-subjects-links">
 
 							<?php the_field( 'format_original' ); ?>
 
@@ -124,7 +124,7 @@
 
 						<h3>Location</h3>
 
-						<p class='image-subjects-links'>
+						<p class="image-subjects-links">
 
 							<?php echo $location; ?>
 
@@ -138,7 +138,7 @@
 						
 					if( $file ): ?>	
 			
-						<h3 class='image-subjects-links'>Original Data File</h3>
+						<h3 class="image-subjects-links">Original Data File</h3>
 
 						<a href="<?php echo $file['url']; ?>"><?php echo $file['filename']; ?></a>
 					
@@ -150,7 +150,7 @@
 					
 						<h3>Accession number</h3>
 
-						<p class='image-subjects-links'>
+						<p class="image-subjects-links">
 
 							<?php the_field( 'accession_number' ); ?>
 						<p>

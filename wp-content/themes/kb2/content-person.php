@@ -3,7 +3,7 @@
 <div class="lndngPgFtr">
 				<img src="img/sliderImg.jpg" />
 			</div>
-	<ul class='namesList peopleList'>
+	<ul class="namesList peopleList">
 		<!-- Not sure if this is how we want to set $_GET variables and
 		 the url's -->
 		<!-- <li><a href='page-person.php?letter=a'>A</a></li>
@@ -33,10 +33,10 @@
 		<li><a href='page-person.php?letter=y'>Y</a></li>
 		<li><a href='page-person.php?letter=z'>Z</a></li> -->
 	</ul>
-		<form class='searchBar'>
+		<form class="searchBar">
 		<label><h3 class="searchLabel">Search Names</h3></label>
-		<input class='search' type='text' placeholder='Search...' required>
-		<input class='button' type='button' value='Search'>
+		<input class="search" type='text' placeholder='Search...' required>
+		<input class="button" type='button' value='Search'>
 	</form>
 
 	<?php 

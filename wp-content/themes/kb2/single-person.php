@@ -21,27 +21,27 @@
 								$middle_names = get_sub_field( 'middle_names' );
 								$family_name = get_sub_field( 'family_name' );
 							?>
-							<p class='image-subjects-links'><?php echo $first_name . " " . $middle_names . " " . $family_name; ?></p>
+							<p class="image-subjects-links"><?php echo $first_name . " " . $middle_names . " " . $family_name; ?></p>
 						<?php endwhile; endif; ?>
 					
 					
 					<?php $known_as = get_field('known_as');
 					if($known_as): ?>
 						<h3>Known as:</h3>
-						<p class='image-subjects-links'><?php echo $known_as; ?></p>
+						<p class="image-subjects-links"><?php echo $known_as; ?></p>
 					<?php endif; ?>
 					
 					
 					<?php $military_identification = get_field('military_identification');
 					if($military_identification): ?>
 						<h3>Military identification:</h3> 
-						<p class='image-subjects-links'><?php echo $military_identification; ?></p>
+						<p class="image-subjects-links"><?php echo $military_identification; ?></p>
 					<?php endif; ?>
 				</div>
 
 				<div class='grid-6'>
 					
-					<h3>Born:</h3><p class='image-subjects-links'><?php the_field( 'birthdate' ); ?></p>
+					<h3>Born:</h3><p class="image-subjects-links"><?php the_field( 'birthdate' ); ?></p>
 					
 				</div>
 					
@@ -58,12 +58,12 @@
 							$family_name = get_sub_field( 'family_name' );
 						?>
 						
-						<p class='children image-subjects-links'><?php echo $first_name . " " . $middle_names . " " . $family_name; ?></p>
+						<p class="children image-subjects-links"><?php echo $first_name . " " . $middle_names . " " . $family_name; ?></p>
 					
 					<?php endwhile; endif; ?>
 				
 				</div>
-					<h3>Related material:</h1><a class='image-subjects-links' href="#">Title of article</a>
+					<h3>Related material:</h1><a class="image-subjects-links" href="#">Title of article</a>
 				
 			</div>	
 

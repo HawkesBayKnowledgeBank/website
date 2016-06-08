@@ -15,7 +15,7 @@
 
 ?>
 
-<div class='grid-container'>
+<div class="grid-container">
 	<?php if( !empty($latest_posts) ) :
 		foreach($latest_posts as $latest_post) : ?>
 
@@ -80,7 +80,7 @@
 				</div>
 				
       			<?php if ( $counter % 3 == 0 && $counter != $number_of_subjects) : ?>
-        			</div><div class='grid-container'>
+        			</div><div class="grid-container">
         		<?php endif; ?>
 
 			<?php endforeach;

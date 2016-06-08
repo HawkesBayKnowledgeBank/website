@@ -43,7 +43,7 @@
 				</div>
 				
       			<?php if ( $counter % 3 == 0 && $counter != $number_of_subjects) : ?>
-        			</div><div class='grid-container'>
+        			</div><div class="grid-container">
         		<?php endif; ?>
 
 			<?php endforeach;

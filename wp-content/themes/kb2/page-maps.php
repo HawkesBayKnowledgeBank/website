@@ -15,9 +15,9 @@
 
 	$maps = new WP_Query($args); ?>
 
-	<div class='grid-container'>
+	<div class="grid-container">
 		<?php if ( $maps->have_posts() ) : while ( $maps->have_posts() ) : $maps->the_post(); ?>
-			<div class='grid-4'>
+			<div class="grid-4">
 				<?php $image = get_field('images'); ?>
 				<a href="<?php echo get_permalink(); ?>">
 					<img src="<?php echo $image[0]['image']['sizes']['700w']; ?>">
@@ -32,7 +32,7 @@
 			</div>
 			<?php $blog_count = $maps->current_post+1; ?>
      		<?php if ( $blog_count % 3 == 0 && $blog_count != $maps->post_count) : ?>
-        		</div><div class='grid-container group'>
+        		</div><div class="grid-container group">
       		<?php endif; ?>
 		<?php endwhile; endif; ?>
 	</div>
@@ -53,9 +53,9 @@
 
 	$maps = get_posts($args); ?>
 
-	<div class='grid-container'>
+	<div class="grid-container">
 		<?php foreach($maps as $map) : ?>
-			<div class='grid-4'>
+			<div class="grid-4">
 				<?php echo $map->post_title; ?>
 			</div>
 		<?php endforeach; ?>
