@@ -517,6 +517,33 @@ function kb_nicename($post_type) {
     //else
     return $post_type;    
 
+}add_filter( 'posts_search', 'my_search_is_perfect', 20, 2 );
+function my_search_is_perfect( $search, $wp_query ) {
+    global $wpdb;
+
+    if ( empty( $search ) )
+        return $search;
+
+    $q = $wp_query->query_vars;
+    $n = !empty( $q['exact'] ) ? '' : '%';
+
+    $search = $searchand = '';
+
+    foreach ( (array) $q['search_terms'] as $term ) {
+        $term = esc_sql( $wpdb->esc_like( $term ) );
+
+        $search .= "{$searchand}($wpdb->posts.post_title REGEXP '[[:<:]]{$term}[[:>:]]') OR ($wpdb->posts.post_content REGEXP '[[:<:]]{$term}[[:>:]]')";
+
+        $searchand = ' AND ';
+    }
+
+    if ( ! empty( $search ) ) {
+        $search = " AND ({$search}) ";
+        if ( ! is_user_logged_in() )
+            $search .= " AND ($wpdb->posts.post_password = '') ";
+    }
+
+    return $search;
 }
 
 
