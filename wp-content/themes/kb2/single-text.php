@@ -12,16 +12,23 @@
 			<div class="grid-container bottom_margin">
 				
 				<div class="grid-6">
-				<!-- post title -->
-				<?php $images = get_field('images'); ?>
+					
+					<!-- post title -->
+					<?php $images = get_field('images'); ?>
 
-					<?php if(isset($images[0]['image']['sizes']['700w'])): ?>
+					<?php if($images && count($images) > 1): ?>
 
-						<img src="<?php echo $images[0]['image']['sizes']['700w']; ?>" />
+						<?php get_template_part('part','text-slider'); ?>
 
-					<?php endif; 
-				
-				?>
+					<?php else: ?>
+
+						<?php if(isset($images[0]['image']['sizes']['700w'])): ?>
+
+							<img src="<?php echo $images[0]['image']['sizes']['700w']; ?>" />
+
+						<?php endif; ?>
+
+					<?php endif; ?>
 					
 				</div>
 					

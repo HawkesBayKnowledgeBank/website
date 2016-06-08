@@ -29,13 +29,66 @@
 
     //flexslider
 	$(window).load(function() {
-	  $('.flexslider').flexslider({
-	    animation: "slide",
-	    prevText: "",
-		nextText: "",		    
-	  });
 
-	  console.log($.flexslider)
+			if(typeof flexslider != undefined) {
+
+				if($('#textslider').length) {
+				 
+					$('#textslider').flexslider({
+					    animation: "slide",					    
+					    animationLoop: false,
+					    slideshow: false,
+					    prevText: "",
+						nextText: "",					    
+						start: function(slider) { // Fires when the slider loads the first slide
+					      var slide_count = slider.count - 1;
+
+					      $(slider)
+					        .find('img.lazy:eq(0)')
+					        .each(function() {
+					          var src = $(this).attr('data-src');
+					          $(this).attr('src', src).removeAttr('data-src');
+					        });
+					    },
+					    before: function(slider) { // Fires asynchronously with each slider animation
+					      var slides     = slider.slides,
+					          index      = slider.animatingTo,
+					          $slide     = $(slides[index]),
+					          $img       = $slide.find('img[data-src]'),
+					          current    = index,
+					          nxt_slide  = current + 1,
+					          prev_slide = current - 1;
+
+					      $slide
+					        .parent()
+					        .find('img.lazy:eq(' + current + '), img.lazy:eq(' + prev_slide + '), img.lazy:eq(' + nxt_slide + ')')
+					        .each(function() {
+					          var src = $(this).attr('data-src');
+					          $(this).attr('src', src).removeAttr('data-src');
+					        });
+					    }					    
+					});
+
+				}
+				else {
+
+					$('.flexslider').flexslider({
+					    animation: "slide",
+					    prevText: "",
+						nextText: "",		    
+					});	
+
+				}
+
+			}
+			else {
+				console.log('no flexslider :(');
+			}
+
+
+
+
+  
 	});  
 
 
@@ -84,13 +137,12 @@
 
 			});
 
-
-
-		});
-
-		
+		});		
 
 	});
+
+
+
 
 	
 })(jQuery, this);
