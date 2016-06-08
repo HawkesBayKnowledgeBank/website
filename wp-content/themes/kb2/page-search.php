@@ -24,7 +24,7 @@
 <form action="/" method="get" class="searchBar">
 	
 	<input class="search" type="text" placeholder="Search for a name, place or subject" required="" name="s" value="">
-	<input class="button" type="button" value="Search">
+	<input class="button" type="submit" value="Search">
 
 </form>
 
@@ -53,7 +53,7 @@
 <form action="/" method="get" class="searchBar">
 
 	<input class="search" type="text" placeholder="Search..." required="" name="s" value="">
-	<input class="button" type="button" value="Search">
+	<input class="button" type="submit" value="Search">
 
 </form>
 
