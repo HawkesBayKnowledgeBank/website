@@ -702,7 +702,7 @@ footer {
 .collections-list .children li { display:inline-block; background-color:transparent;padding-left:0;font-size:0.9em;}
 .collections-list .children li a { border-left:20px solid #eaeaea;  }
 
-.collections-list .showchildren { border-radius:20px;}
+.collections-list .showchildren { border-radius:20px;display:inline; padding:5px 10px;}
 
 /* Subject and Names List Pages
 ---------------------------------*/
