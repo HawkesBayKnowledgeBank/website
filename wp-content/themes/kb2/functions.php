@@ -547,4 +547,6 @@ function my_search_is_perfect( $search, $wp_query ) {
 }
 
 
+
+
 ?>

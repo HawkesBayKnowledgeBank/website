@@ -1,18 +1,13 @@
 <?php get_header(); ?>
 
+<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+
 <div class="pageTitles">
-	
-	<h1><?php the_title(); ?></h1>
 			
-	<?php 
+	<h1><?php the_title(); ?></h1>
 
-		if (have_posts()) : while (have_posts()) : the_post();
+	<?php the_content(); ?>
 
-			the_content();
-
-		endwhile; endif; 
-
-	?>			
 </div>
 
 <div class="advancedSearchOptions">
@@ -66,5 +61,7 @@
 	<input type="checkbox" id="videos" class="srchChckBoxes" value="search_videos" name="user_search"><label class="chckBoxLabel" for="video">Video</label>
 
 </form>
+
+<?php endwhile; endif; ?>
 
 <?php get_footer(); ?>

@@ -23,11 +23,11 @@
 
 				<div class="grid-1-5">
 					
-					<?php if(isset($images[0]['image']['sizes']['700w'])): ?>
+					<?php if(isset($images[0]['image']['sizes']['300w'])): ?>
 
 						<a href='<?php echo get_permalink( $latest->ID ); ?>'> 
 						
-							<img src="<?php echo $images[0]['image']['sizes']['700w']; ?>">
+							<img src="<?php echo $images[0]['image']['sizes']['300w']; ?>">
 			
 						</a>
 

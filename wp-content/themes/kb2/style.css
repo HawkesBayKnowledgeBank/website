@@ -686,6 +686,24 @@ footer {
     background: rgba(121, 151, 241, 0.7);
 }
 
+/* Collections
+---------------------------------*/
+
+.collections-list li {     
+	list-style-type: none;
+    margin: 0 5px 5px 0;
+    padding: 15px;
+    display: block;
+    background-color:rgba(228,228,228,0.9);
+}
+
+.collections-list a {background-color:#fff;padding:10px; margin:5px 0; text-decoration:none; display:inline-block;}
+.collections-list .children { clear:left; display:block; width:100%;padding-left:0; }
+.collections-list .children li { display:inline-block; background-color:transparent;padding-left:0;font-size:0.9em;}
+.collections-list .children li a { border-left:20px solid #eaeaea;  }
+
+.collections-list .showchildren { border-radius:20px;}
+
 /* Subject and Names List Pages
 ---------------------------------*/
 .listContainer {
