@@ -383,22 +383,22 @@ h2 {}
 }
 
 .main-logo {
-	width: 80px;
-	height: 80px;
-	display: block;
-	margin: 0 auto;
+	width: 130px;
+	height: 130px;
+	display: inline-block;
+	margin: 0;
 	background: #e5e5ff url('img/HBDA_logo.png') no-repeat center;
 	background-size: cover;
-	vertical-align: top;
+	vertical-align: middle;
 }
 
 .byline {
 	font: normal 1.2em/1.9 'Merriweather', sans-serif;
 	width: 80%;
 	margin: 0 auto;
-	display: block;
-	text-align: center;
-	vertical-align: top;
+	display: inline-block;
+	text-align: left;
+	vertical-align: middle;
 }
 
 .byline h1 {
@@ -966,7 +966,7 @@ footer {
 .search-box {
 	margin: 0 auto;
 	width: 37.5em;
-  padding: 10px 7px;
+  	padding: 10px 7px;
 }
 
 .advancedSearchOptions,
@@ -1317,8 +1317,8 @@ footer {
 	}
 
 	.main-logo {
-		width: 100px;
-		height: 100px;
+		width: 130px;
+		height: 130px;
 	}
 	.byline h1 {
 		font-size: 1.7em;
