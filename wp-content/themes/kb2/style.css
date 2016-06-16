@@ -850,7 +850,11 @@ footer {
 	width: 32.5em;
 }
 
-.search-input,
+.search-input{
+	width: 50%;
+    height: 44px;
+	
+}
 .footerSearch {
 	padding:5px 8px;
 	background:rgba(253, 253, 253, 1);
@@ -872,7 +876,8 @@ footer {
     border:1px solid #ccc;
     background-color:#9DB68C;
     color:#fafafa;
-    width: 90px;
+    width: 15%;
+    height: 50px;
     line-height: 1.3;
 }
 

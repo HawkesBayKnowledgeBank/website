@@ -50,6 +50,7 @@
 					<nav id="nav-main" class="link-hover" role="navigation">
 						<?php kb2_nav(); ?>
 					</nav>
+					
 					<!-- /nav -->
 					<div id="nav-icon1">
 						<span></span>
@@ -58,8 +59,11 @@
 					</div>
 					<div class="overlay">
 						<?php kb2_nav(); ?>
+						
 					</div>
-
+					<div class="only-search<?php if ( ! empty( $header_image ) ) : ?> with-image<?php endif; ?>">
+               				<?php get_search_form(); ?>
+                	</div>
 					
 
 			</header>
