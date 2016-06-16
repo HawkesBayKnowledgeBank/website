@@ -33,8 +33,27 @@
 				</div>
 					
 				<div class="grid-3">
-						
+
 					<?php 
+
+							$transcript = get_field( 'transcript' ); 
+
+							//print_r($transcript);
+
+							if( !empty($transcript) ) : ?>
+
+								<h3>Transcript</h3><?php echo $transcript; ?>
+
+							<?php endif;
+						?>
+						
+					
+				
+				</div>
+					
+				<div class="grid-3">
+
+				<?php 
 						
 					$collections = get_field( 'collections' ); 
 					//print_r($collections); 
@@ -93,10 +112,6 @@
 							<?php endforeach; ?>
 					
 						<?php endif; ?>
-				
-				</div>
-					
-				<div class="grid-3">
 					
 					<?php
 						
@@ -129,12 +144,20 @@
 							<h3>Accession Number</h3><p class="image-subjects-links"><?php echo $accessionNumber; ?></p>
 						
 						<?php endif; ?>
+
+
 	
+				</div>
+
+				<div class="grid-6">
+
+					
+
 				</div>
 			
 			</div>
-
-			<!-- post thumbnail -->
+	
+	<!-- post thumbnail -->
 			<?php if ( has_post_thumbnail()) : // Check if Thumbnail exists ?>
 				<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
 					<?php the_post_thumbnail(); // Fullsize image for the single post ?>

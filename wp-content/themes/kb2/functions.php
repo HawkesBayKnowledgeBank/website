@@ -517,7 +517,9 @@ function kb_nicename($post_type) {
     //else
     return $post_type;    
 
-}add_filter( 'posts_search', 'my_search_is_perfect', 20, 2 );
+}
+
+add_filter( 'posts_search', 'my_search_is_perfect', 20, 2 );
 function my_search_is_perfect( $search, $wp_query ) {
     global $wpdb;
 
