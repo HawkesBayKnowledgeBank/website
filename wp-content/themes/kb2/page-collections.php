@@ -26,7 +26,7 @@
 	?>
  
 	<ul class="collections">
-	    <?php kb_list_categories( $args ); ?>
+	    <?php wp_list_categories( $args ); ?>
 	</ul>
 
 
