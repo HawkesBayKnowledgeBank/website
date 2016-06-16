@@ -94,6 +94,20 @@
 
 	$(document).ready(function(){
 
+		
+		//Collections list
+
+		$('.collections-list').find('ul.children').hide().before('<a href="#" class="showchildren">+</a>');
+		$('.collections-list').on('click','.showchildren', function(e){
+			e.preventDefault();
+
+			var newtext = $(this).text() == '+' ? '-' : '+';
+			$(this).text(newtext);			
+			$(this).siblings('.children').slideToggle();
+		});
+
+
+		//Quick view links
 		$('a.quick_view').click(function(e){
 
 			e.preventDefault();
@@ -122,7 +136,7 @@
 					});
 				}			
 
-				console.log(items);
+				
 				if(items.length) {
 
 					$.magnificPopup.open({
@@ -131,7 +145,6 @@
 					      enabled: true 
 					    }
 					});
-
 
 				}
 
