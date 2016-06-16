@@ -29,7 +29,8 @@ if (function_exists('add_theme_support'))
     add_theme_support('post-thumbnails');
     add_image_size('700w', 700, '', false); // Large Thumbnail
     add_image_size('300w', 300, '', false); // Medium Thumbnail   
-    add_image_size('1200w', 1200, 9999, false); 
+    add_image_size('1200w', 1200, 9999, false);
+    add_image_size('640x480_cropped',640,480,true);
 
 
     // Add Support for Custom Backgrounds - Uncomment below if you're going to use
