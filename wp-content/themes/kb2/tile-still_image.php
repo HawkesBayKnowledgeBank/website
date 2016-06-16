@@ -6,9 +6,9 @@
 
 		<?php $images = get_field('images'); ?>
 
-		<?php if(isset($images[0]['image']['sizes']['700w'])): ?>
+		<?php if(isset($images[0]['image']['sizes']['640x480_cropped'])): ?>
 
-			<a href="<?php the_permalink(); ?>"><img src="<?php echo $images[0]['image']['sizes']['700w']; ?>" /></a>
+			<a href="<?php the_permalink(); ?>"><img src="<?php echo $images[0]['image']['sizes']['640x480_cropped']; ?>" /></a>
 
 		<?php endif; ?>
 

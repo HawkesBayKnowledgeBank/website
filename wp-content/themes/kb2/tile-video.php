@@ -8,7 +8,7 @@
 
 		<?php if(isset($images[0]['image']['sizes']['700w'])): ?>
 
-			<a href="<?php the_permalink(); ?>"><img src="<?php echo $images[0]['image']['sizes']['700w']; ?>" /></a>
+			<a href="<?php the_permalink(); ?>"><img src="<?php echo $images[0]['image']['sizes']['640x480_cropped']; ?>" /></a>
 
 		<?php elseif(get_field('youtube_id',$post->ID)): ?>
 
