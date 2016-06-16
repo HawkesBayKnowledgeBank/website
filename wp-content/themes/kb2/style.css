@@ -383,8 +383,8 @@ h2 {}
 }
 
 .main-logo {
-	width: 130px;
-	height: 130px;
+	width: 180px;
+	height: 180px;
 	display: inline-block;
 	margin: 0;
 	background: #e5e5ff url('img/HBDA_logo.png') no-repeat center;
@@ -394,10 +394,10 @@ h2 {}
 
 .byline {
 	font: normal 1.2em/1.9 'Merriweather', sans-serif;
-	width: 80%;
+	width: 70%;
 	margin: 0 auto;
 	display: inline-block;
-	text-align: left;
+	text-align: center;
 	vertical-align: middle;
 }
 
@@ -571,8 +571,7 @@ nav#nav-mobile ul {
 nav#nav-mobile li {
     display: block;
     padding: 5px 0;
-    margin: 0 5px;
-    
+    margin: 0 5px;  
 }
 
 nav#nav-mobile li:last-child {
@@ -709,7 +708,6 @@ footer {
 .listContainer {
 	width: 80%;
 	margin-left: 13%;
-	
 }
 
 .imageSubjects h1 {
@@ -907,17 +905,17 @@ footer {
 }
 
 .searchbox{
- position:relative;
- min-width:90px;
- width:0;
- height:22px;
- float:right;
- overflow:show;
- -webkit-transition: width 0.3s;
- -moz-transition: width 0.3s;
- -ms-transition: width 0.3s;
- -o-transition: width 0.3s;
- transition: width 0.3s;
+	position:relative;
+	min-width:90px;
+	width:0;
+	height:22px;
+	float:right;
+	overflow:show;
+	-webkit-transition: width 0.3s;
+	-moz-transition: width 0.3s;
+	-ms-transition: width 0.3s;
+	-o-transition: width 0.3s;
+	transition: width 0.3s;
 }
 
 .paypal_btn {
@@ -980,7 +978,6 @@ footer {
 	display: inline-block;
 	margin-left: -10px;
 	margin-right: 10px;
-
 }
 
 .srchChckBoxes {
@@ -988,7 +985,9 @@ footer {
 }
 
 
-.homesearch { padding: 30px 0 0;}
+.homesearch { 
+	padding: 30px 0 0;
+}
 
 .homesearch .searchBar, .searchbar { 
 	text-align:left; 
@@ -1130,8 +1129,8 @@ footer {
 	.main-logo {
 		float: none;
 		margin: 0 auto;
-		width: 80px;
-		height: 80px;
+		width: 150px;
+		height: 150px;
 	}
 
 	.main-header,
@@ -1316,10 +1315,10 @@ footer {
     	padding: 14px 3px; 
 	}
 
-	.main-logo {
-		width: 130px;
-		height: 130px;
-	}
+	/*.main-logo {
+		width: 180px;
+		height: 180px;
+	}*/
 	.byline h1 {
 		font-size: 1.7em;
 	}
