@@ -129,7 +129,26 @@
 							<h3>Accession Number</h3><p class="image-subjects-links"><?php echo $accessionNumber; ?></p>
 						
 						<?php endif; ?>
+
+
 	
+				</div>
+
+				<div class="grid-6">
+
+					<?php 
+
+						$transcript = get_field( 'transcript' ); 
+
+						//print_r($transcript);
+
+						if( !empty($transcript) ) : ?>
+
+							<h3>Transcript</h3><?php echo $transcript; ?>
+
+						<?php endif; 
+					?>
+
 				</div>
 			
 			</div>
