@@ -144,17 +144,17 @@ input:focus {
 \*------------------------------------*/
 
 ::selection {
-	background:#04A4CC;
+	background:#32CD32;
 	color:#FFF;
 	text-shadow:none;
 }
 ::-webkit-selection {
-	background:#04A4CC;
+	background:#32CD32;
 	color:#FFF;
 	text-shadow:none;
 }
 ::-moz-selection {
-	background:#04A4CC;
+	background:#32CD32;
 	color:#FFF;
 	text-shadow:none;
 }
@@ -1589,7 +1589,7 @@ footer {
 	font-size: 0;
 	width: 250px;
 	height: 60px;
-	background: #e5e5ff url('img/nat_lib.jpg') no-repeat center;
+	background: #e5e5ff url('img/nat_lib.gif') no-repeat center;
 	background-size: 100%;
 	vertical-align: middle;	
 }

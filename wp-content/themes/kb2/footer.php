@@ -1,7 +1,7 @@
 			<!-- footer -->
-			<div class="headerBack">
+			<div class='headerBack'>
 			<footer class="main-footer" role="contentinfo">
-				<div class="grid-container">
+				<div class='grid-container'>
 					<div class="grid-4">
 					<!-- copyright -->
 					<p class="copyright">
@@ -26,10 +26,12 @@
 					</div>
 				</div>
 				<div class='link_icons'>
-					<div class='papers_past_icon'></div>
-					<div class='nz_history_icon'></div>
-					<div class='nat_lib_icon'></div>
-					<div class='te_ara_icon'></div>
+					<a class='papers_past_icon' href="http://paperspast.natlib.govt.nz/cgi-bin/paperspast"></a>
+					<a class='nz_history_icon' href="http://www.nzhistory.net.nz/"></a>
+					<a class='nat_lib_icon' href="https://natlib.govt.nz/"></a>
+					<a class='te_ara_icon' href="http://www.teara.govt.nz/en"> </a> 
+
+
 				</div>
 			</footer>
 			</div>
