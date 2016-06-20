@@ -835,6 +835,9 @@ footer {
 /* Search Bar styles
 ---------------------------------*/
 
+.only-search { padding:15px;}
+.only-search .search-input { padding:0 10px;}
+
 .searchBar,
 .newsSubscribe {
 	width: 100%;
@@ -1411,7 +1414,11 @@ footer {
 .tiles .tile .imageWrap {
     max-height: 380px;
     overflow-y: hidden;
+    position:relative;
 }
+
+
+.tile h2 { line-height:1.3em; font-size:1.4em;}
 
 
 /* 3 */
@@ -1513,8 +1520,10 @@ footer {
 .action_buttons { width:100%; display:block;}
 
 .action_buttons > span { display:block; width:49%; text-align:left;}
-.action_buttons > span.quick_view { padding-left:30px;background: #f8f8f8 url('img/search.png') no-repeat left bottom; background-size: 20px;}
-.action_buttons > span.more { float:right;text-align:right;}
+span.quick_view {  position:absolute; bottom:0; right:0; padding: 7px; background-color:rgba(0,0,0,0.5);}
+span.quick_view a { color:#fff; line-height:25px;}
+span.quick_view img { max-width:25px; max-height:25px; opacity:0.8;}
+.action_buttons > span.more { }
 
 .view_button {
 
@@ -1533,8 +1542,6 @@ footer {
 
 .lightbox_icon {
 	display: inline-block;	
-	height: 25px;
-	
 	background-size: cover;
 	vertical-align: middle;	
 }
