@@ -17,13 +17,7 @@
 						<p>901 Omahu Road, Hastings</p>
 						<p>Ph: (06) 833-5333</p>
 					</div>
-					<div class="grid-4">
-						<p>Friends of the Knowledge Bank</p>
-						<p>NZ History</p>
-						<p>Papers Past</p>
-						<p>Te Ara</p>
-						<p>National Library</p>
-					</div>
+					
 				</div>
 				<div class='link_icons'>
 					<a class='papers_past_icon' href="http://paperspast.natlib.govt.nz/cgi-bin/paperspast"></a>
