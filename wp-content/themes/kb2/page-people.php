@@ -6,94 +6,7 @@
 		<div class="pageTitles">
 		
 		<h1><?php the_title(); ?></h1>
-		<h3>Latest Posts</h3>
-	
-	</div>
-	
-	<?php
-		
-		$args = array(
-
-			'post_type' => 'person',
-
-			'posts_per_page' => 5
-
-		);
-
-		$latest_posts = get_posts($args);
-	
-	?>
-	
-	<div class="grid-container">
-
 		<?php 
-			
-			if( !empty( $latest_posts ) ) :
-
-				 foreach( $latest_posts as $latest_post ) : ?>
-
-				 	<div class="grid-1-5 image-subjects-links">
-
-				 		<a href='<?php echo get_permalink( $latest_post->ID ); ?>'>
-
-				 			<?php echo $latest_post->post_title; ?>
-
-				 		</a>
-
-				 	</div>
-			
-				<?php endforeach;
-
-			endif; ?>
-
-	</div>
-
-	<ul class="grid-container namesList link-hover peopleList">
-
-		<li class='col-1-8'><a href='people?letter=a'>A</a></li>
-		<li class='col-1-8'><a href='people?letter=b'>B</a></li>
-		<li class='col-1-8'><a href='people?letter=c'>C</a></li>
-		<li class='col-1-8'><a href='people?letter=d'>D</a></li>
-		<li class='col-1-8'><a href='people?letter=e'>E</a></li>
-		<li class='col-1-8'><a href='people?letter=f'>F</a></li>
-		<li class='col-1-8'><a href='people?letter=g'>G</a></li>
-		<li class='col-1-8'><a href='people?letter=h'>H</a></li>
-	</ul>
-		
-	<ul class="grid-container namesList link-hover peopleList">
-		<li class='col-1-8'><a href='people?letter=i'>I</a></li>
-		<li class='col-1-8'><a href='people?letter=j'>J</a></li>
-		<li class='col-1-8'><a href='people?letter=k'>K</a></li>
-		<li class='col-1-8'><a href='people?letter=l'>L</a></li>
-		<li class='col-1-8'><a href='people?letter=m'>M</a></li>
-		<li class='col-1-8'><a href='people?letter=n'>N</a></li>
-		<li class='col-1-8'><a href='people?letter=o'>O</a></li>
-		<li class='col-1-8'><a href='people?letter=p'>P</a></li>
-	</ul>
-
-	<ul class="grid-container namesList link-hover peopleList">
-		
-		<li class='col-1-8'><a href='people?letter=q'>Q</a></li>
-		<li class='col-1-8'><a href='people?letter=r'>R</a></li>
-		<li class='col-1-8'><a href='people?letter=s'>S</a></li>
-		<li class='col-1-8'><a href='people?letter=t'>T</a></li>
-		<li class='col-1-8'><a href='people?letter=u'>U</a></li>
-		<li class='col-1-8'><a href='people?letter=v'>V</a></li>
-		<li class='col-1-8'><a href='people?letter=w'>W</a></li>
-		<li class='col-1-8'><a href='people?letter=x'>X</a></li>
-	</ul>
-	
-	<ul class="grid-container namesList link-hover peopleList">
-		<li class='col-1-8'><a href='people?letter=y'>Y</a></li>
-		<li class='col-1-8'><a href='people?letter=z'>Z</a></li>
-	</ul>
-
-
-	<form class="searchBar">
-		<?php get_search_form(); ?>
-	</form>
-
-	<?php 
 		//identify rows that have the matching first letter of family name with
 		//the letter that is clicked on
 
@@ -175,6 +88,84 @@
 		<?php endif; //if($letter)
 
 	?>
+		<h3>Latest Posts</h3>
+	
+	</div>
+	
+	<?php
+		
+		$args = array(
+
+			'post_type' => 'person',
+
+			'posts_per_page' => 5
+
+		);
+
+		$latest_posts = get_posts($args);
+	
+	?>
+	
+	<div class="grid-container">
+
+		<?php 
+			
+			if( !empty( $latest_posts ) ) :
+
+				 foreach( $latest_posts as $latest_post ) : ?>
+
+				 	<div class="grid-1-5 image-subjects-links">
+
+				 		<a href='<?php echo get_permalink( $latest_post->ID ); ?>'>
+
+				 			<?php echo $latest_post->post_title; ?>
+
+				 		</a>
+
+				 	</div>
+			
+				<?php endforeach;
+
+			endif; ?>
+
+	</div>
+
+	<ul class="grid-container namesList link-hover peopleList">
+
+		<a href='people?letter=a'>A</a></li>
+		<a href='people?letter=b'>B</a></li>
+		<a href='people?letter=c'>C</a></li>
+		<a href='people?letter=d'>D</a></li>
+		<a href='people?letter=e'>E</a></li>
+		<a href='people?letter=f'>F</a></li>
+		<a href='people?letter=g'>G</a></li>
+		<a href='people?letter=h'>H</a></li>
+		<a href='people?letter=i'>I</a></li>
+		<a href='people?letter=j'>J</a></li>
+		<a href='people?letter=k'>K</a></li>
+		<a href='people?letter=l'>L</a></li>
+		<a href='people?letter=m'>M</a></li>
+		<a href='people?letter=n'>N</a></li>
+		<a href='people?letter=o'>O</a></li>
+		<a href='people?letter=p'>P</a></li>
+		<a href='people?letter=q'>Q</a></li>
+		<a href='people?letter=r'>R</a></li>
+		<a href='people?letter=s'>S</a></li>
+		<a href='people?letter=t'>T</a></li>
+		<a href='people?letter=u'>U</a></li>
+		<a href='people?letter=v'>V</a></li>
+		<a href='people?letter=w'>W</a></li>
+		<a href='people?letter=x'>X</a></li>
+		<a href='people?letter=y'>Y</a></li>
+		<a href='people?letter=z'>Z</a></li>
+	</ul>
+
+
+	<form class="searchBar">
+		<?php get_search_form(); ?>
+	</form>
+
+	
 
 </div>
 
