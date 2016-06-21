@@ -27,7 +27,11 @@
 						
 						?>
 						
-						<img src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt'] ?>" />
+						<div id="cache"></div>
+						<a href="#cache"><img src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt'] ?>"></a>
+						<div class="popup"><img src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt'] ?>"><a href="#">X</a></div>
+
+						<!-- <img src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt'] ?>" /> -->
 						
 						<?php endwhile; ?>
 					

@@ -144,17 +144,17 @@ input:focus {
 \*------------------------------------*/
 
 ::selection {
-	background:#32CD32;
+	background:#eaeaea;
 	color:#FFF;
 	text-shadow:none;
 }
 ::-webkit-selection {
-	background:#32CD32;
+	background:#eaeaea;
 	color:#FFF;
 	text-shadow:none;
 }
 ::-moz-selection {
-	background:#32CD32;
+	background:#eaeaea;
 	color:#FFF;
 	text-shadow:none;
 }
@@ -319,6 +319,8 @@ a img.aligncenter {
 }
 
 html, body {
+	padding:0;
+    margin:0;
 	height: 100%;
 }
 
@@ -1554,7 +1556,7 @@ span.quick_view img { max-width:25px; max-height:25px; opacity:0.8;}
 	font-size: 0;
 	width: 35px;
 	height: 35px;
-	background: url('img/facebook.png') no-repeat center;
+	background: url('img/social-facebook-box-blue-icon.png') no-repeat center;
 	background-size: 100% 100%;
 	vertical-align: middle;
 }
@@ -1626,7 +1628,45 @@ span.quick_view img { max-width:25px; max-height:25px; opacity:0.8;}
 	margin-bottom: 30px;
 }
 
+/* QuickView with CSS */
 
+#cache {
+    position:absolute;
+    background:rgba(0,0,0,0);
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    z-index: -1;
+    transition:background .5s
+}
+#cache:target {
+    background:rgba(0,0,0,.5);
+    z-index: 1;
+}
+.popup {
+    position:absolute;
+    z-index: 1000;
+    display:none;
+    margin-left:-200px;
+    left:10%;
+    bottom: 0px;
+}
+.popup a {
+    position:absolute;
+    background: #333;
+    color:#fff;
+    border-radius: 50%;
+    width:20px;
+    line-height: 20px;
+    text-align: center;
+    font-family:arial;
+    right:0;
+    text-decoration: none;
+}
+#cache:target ~ .popup {
+    display:block;
+}
 
 
 

@@ -1,21 +1,17 @@
+		
 			<!-- footer -->
 			<div class='headerBack'>
 			<footer class="main-footer" role="contentinfo">
 				<div class='grid-container'>
-					<div class="grid-4">
-					<!-- copyright -->
-					<p class="copyright">
-						&copy; <?php echo date('Y'); ?> Copyright <?php bloginfo('name'); ?>. 
-						
-					</p>
-					<p><a class="social-icon" href="https://www.facebook.com/hawkesbayKnowledgeBank/" target="_blank"></a><p>
-					<!-- /copyright -->
-					</div>
-					<div class="grid-4">
+					<div class="grid-6">
 						<p>The Hawke's Bay Knowledge Bank</p>
 						<p>10am to 5pm, Monday to Friday</p>
 						<p>901 Omahu Road, Hastings</p>
+					</div>
+
+					<div class="grid-6">
 						<p>Ph: (06) 833-5333</p>
+						<p>Email: james@knowledgebank.org.nz</p>
 					</div>
 					
 				</div>
@@ -24,9 +20,15 @@
 					<a class='nz_history_icon' href="http://www.nzhistory.net.nz/"></a>
 					<a class='nat_lib_icon' href="https://natlib.govt.nz/"></a>
 					<a class='te_ara_icon' href="http://www.teara.govt.nz/en"> </a> 
+					<a class="social-icon" href="https://www.facebook.com/hawkesbayKnowledgeBank/" target="_blank"></a>
 
 
 				</div>
+				<!-- copyright -->
+				<p class="copyright">
+						&copy; <?php echo date('Y'); ?> Copyright <?php bloginfo('name'); ?>. 
+				</p>
+				<!-- /copyright -->
 			</footer>
 			</div>
 			<!-- /footer -->
