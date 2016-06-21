@@ -72,7 +72,9 @@
 						
 
 					<?php if ( $counter % 3 == 0 && $counter != $number_of_rows) : ?>
+        				
         				</div><div class="grid-container peopleNames">
+        			
         			<?php endif; ?>
 
 				<?php
