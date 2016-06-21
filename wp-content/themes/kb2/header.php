@@ -32,6 +32,8 @@
 			<div class="headerBack">
 				<header class="main-header container" role="banner">
 					
+					<?php kb2_extra_nav_menu(); ?>
+
 					<!-- logo -->
 					
 					<div class="main-logo">
