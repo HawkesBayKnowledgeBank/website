@@ -22,13 +22,15 @@
 
 				<?php if(get_field('image',$collection)): ?>
 
-					<?php $image = get_field('image', $collection); ?>
+					<?php $image = get_field('image', $collection); //print_r($image); ?>
 
-					<?php print_r($image); ?>
+					<img src="<?php echo $image['sizes']['300w']; ?>" class="thumbnail" />					
 
 				<?php endif; ?>
 
 				<h3><a href="<?php echo get_term_link($collection->term_id); ?>"><?php echo $collection->name; ?></a></h3>
+
+				<?php if(isset($collection->count)): ?><h5><?php echo $collection->count; ?> items</h5><?php endif; ?>
 				
 				<?php if(!empty($collection->description)): ?>
 
