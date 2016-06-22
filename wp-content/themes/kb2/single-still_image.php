@@ -160,8 +160,220 @@
 						<p>
 
 					<?php endif; ?>
-				
+
+					<?php $licence = get_field( 'licence' );
+
+					if( !empty( $licence ) ) : ?>
+					
+						<h3>licence :</h3>
+
+						<p class="image-subjects-links">
+
+							<?php the_field( 'licence' ); ?>
+						<p>
+
+					<?php endif; ?>
+
+					<?php $allow_commercial_licence = get_field( 'allow_commercial_licence' );
+
+					if( !empty( $allow_commercial_licence ) ) : ?>
+					
+						<h3>Allow commercial licence :</h3>
+
+						<p class="image-subjects-links">
+
+							<?php the_field( 'allow_commercial_licence' ); ?>
+						<p>
+
+					<?php endif; ?>
+
+					<?php $people = get_field( 'people' );
+
+					if( !empty( $people ) ) : ?>
+					
+						<h3>People :</h3>
+
+						<p class="image-subjects-links">
+
+							<?php the_field( 'people' ); ?>
+						<p>
+
+					<?php endif; ?>
+
+					<?php $business = get_field( 'business' );
+
+					if( !empty( $business ) ) : ?>
+					
+						<h3>Business :</h3>
+
+						<p class="image-subjects-links">
+
+							<?php echo "business"; ?>
+						<p>
+
+					<?php endif; ?>
+
+					<?php $yearpublished = get_field( 'yearpublished' );
+
+					if( !empty( $yearpublished ) ) : ?>
+					
+						<h3>Year published :</h3>
+
+						<p class="image-subjects-links">
+
+							<?php echo "yearpublished"; ?>
+						<p>
+
+					<?php endif; ?>
+					<?php $notes = get_field( 'notes' );
+
+					if( !empty( $notes ) ) : ?>
+					
+						<h3>Notes :</h3>
+
+						<p class="image-subjects-links">
+
+							<?php get_field('notes'); ?>
+						<p>
+
+					<?php endif; ?>
+					<?php $languages = get_field( 'languages' );
+
+					if( !empty( $languages ) ) : ?>
+					
+						<h3>Languages :</h3>
+
+						<p class="image-subjects-links">
+
+							<?php echo "languages";?>
+						<p>
+
+					<?php endif; ?>
+
+					<?php $computed_aperturefnumber = get_field( 'computed_aperturefnumber' );
+
+					if( !empty( $computed_aperturefnumber ) ) : ?>
+					
+						<h3>Computed aperture :</h3>
+
+						<p class="image-subjects-links">
+
+							<?php echo "computed_aperturefnumber";?>
+						<p>
+
+					<?php endif; ?>
+					<?php $exif_model = get_field( 'exif_model' );
+
+					if( !empty( $exif_model ) ) : ?>
+					
+						<h3>Exif model :</h3>
+
+						<p class="image-subjects-links">
+
+							<?php echo "exif_model";?>
+						<p>
+
+					<?php endif; ?>
+					<?php $exif_compression = get_field( 'exif_compression' );
+
+					if( !empty( $exif_compression ) ) : ?>
+					
+						<h3>Exif compression :</h3>
+
+						<p class="image-subjects-links">
+
+							<?php echo "exif_compression";?>
+						<p>
+
+					<?php endif; ?>
+					<?php $exif_isospeedratings = get_field( 'exif_isospeedratings' );
+
+					if( !empty( $exif_isospeedratings ) ) : ?>
+					
+						<h3>Exif ISO speed :</h3>
+
+						<p class="image-subjects-links">
+
+							<?php echo "exif_isospeedratings";?>
+						<p>
+
+					<?php endif; ?>
+
+					<?php $exif_focallenght = get_field( 'exif_focallenght' );
+
+					if( !empty( $exif_focallenght ) ) : ?>
+					
+						<h3>Exif focal length :</h3>
+
+						<p class="image-subjects-links">
+
+							<?php echo "exif_focallenght";?>
+						<p>
+
+					<?php endif; ?>
+
+					<?php $gps_gpslatitude = get_field( 'gps_gpslatitude' );
+
+					if( !empty( $gps_gpslatitude ) ) : ?>
+					
+						<h3>GPS latitude :</h3>
+
+						<p class="image-subjects-links">
+
+							<?php echo "gps_gpslatitude";?>
+						<p>
+
+					<?php endif; ?>
+					<?php $gps_gpslatituderef = get_field( 'gps_gpslatituderef' );
+
+					if( !empty( $gps_gpslatituderef ) ) : ?>
+					
+						<h3>GPS latitude ref :</h3>
+
+						<p class="image-subjects-links">
+
+							<?php echo "gps_gpslatituderef";?>
+						<p>
+
+					<?php endif; ?>
+					<?php $gps_gpslongitude = get_field( 'gps_gpslongitude' );
+
+					if( !empty( $gps_gpslongitude ) ) : ?>
+					
+						<h3>GPS longitude :</h3>
+
+						<p class="image-subjects-links">
+
+							<?php echo "gps_gpslongitude";?>
+						<p>
+
+					<?php endif; ?>
+					<?php $gps_gpslongituderef = get_field( 'gps_gpslongituderef' );
+
+					if( !empty( $gps_gpslongituderef ) ) : ?>
+					
+						<h3>GPS longitude ref :</h3>
+
+						<p class="image-subjects-links">
+
+							<?php echo "gps_gpslongituderef";?>
+						<p>
+
+					<?php endif; ?>
+					<?php $gps_gpslatitude = get_field( 'gps_gpslatitude' );
+
+					if( !empty( $gps_gpslatitude ) ) : ?>
+					
+						<h3>GPS latitude :</h3>
+
+						<p class="image-subjects-links">
+
+							<?php echo "gps_gpslatitude";?>
+						<p>
+
+					<?php endif; ?>
 				</div>
+
 			
 			</div>	
 
