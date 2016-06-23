@@ -24,7 +24,9 @@
 
 					<?php $image = get_field('image', $collection); //print_r($image); ?>
 
-					<img src="<?php echo $image['sizes']['300w']; ?>" class="thumbnail" />					
+					<a href="<?php echo get_term_link($collection->term_id); ?>">
+						<img src="<?php echo $image['sizes']['300w']; ?>" class="thumbnail"  />					
+					</a>
 
 				<?php endif; ?>
 
@@ -39,7 +41,7 @@
 						<?php echo $collection->description; ?>
 
 					</div><!-- . description -->
-
+				<?php endif; ?>
 					<?php 
 						//children
 						$children = get_terms( array(
@@ -54,20 +56,19 @@
 						<div class="subcollections tiles">
 
 							<?php foreach($children as $child): ?>
+								<a href="<?php echo get_term_link($child->term_id); ?>">
 
 								<div class="subcollection tile">
 
 									<h4><a href="<?php echo get_term_link($child->term_id); ?>"><?php echo $child->name; ?></a></h4>
 
 								</div><!-- .subcollection -->
+							</a>
 
 							<?php endforeach; ?>
 
 						</div><!-- .subcollections -->
-
 					<?php endif; ?>
-
-				<?php endif; ?>
 
 			</div><!-- .collection -->
 

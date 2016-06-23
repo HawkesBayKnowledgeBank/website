@@ -1,11 +1,11 @@
 /*
-	Theme Name: Hawke's Bay Knowledge Bank 
+	Theme Name: Hawke's Bay Knowledge Bank
 	Theme URI: http://knowledgebank.org.nz
 	Description: Based on HTML5 Blank WordPress Theme
 	Version: 1
-	Author: 
-	Author URI: 
-	Tags: 
+	Author:
+	Author URI:
+	Tags:
 
 	License: MIT
 	License URI: http://opensource.org/licenses/mit-license.php
@@ -360,13 +360,13 @@ h2 {}
 ---------------------------------*/
 
 .headerBack {
-	background: #e5e5ff;	
+	background: #e5e5ff;
 }
 
 .main-header {
 	padding-top: 10px;
 	padding-bottom: 10px;
-	text-align: center; 
+	text-align: center;
 	/*#ccccff;*/
 }
 
@@ -424,13 +424,13 @@ h2 {}
 ---------------------------------*/
 
 nav {
-  margin-bottom: 0; 
+  margin-bottom: 0;
   font: normal 1em/1.5 'Merriweather', sans-serif;
 }
 
 nav#nav-main {
 	margin: 0;
-	padding: 0; 
+	padding: 0;
 }
 
 nav#nav-main ul,
@@ -443,13 +443,13 @@ nav#nav-main ul,
 nav#nav-main li,
 .nav-secondary li {
     display: inline-block;
-    padding: 0 5px; 
+    padding: 0 5px;
 }
 
 nav#nav-main a,
 .nav-secondary a {
     display: block;
-    padding: 14px 12px; 
+    padding: 14px 12px;
     text-decoration: none;
 }
 
@@ -510,7 +510,8 @@ nav#nav-main a:hover {
 p.image-subjects-links {
 	display: inline-block;
 	padding: 10px 15px;
-	margin-bottom: 10px;
+	margin-top:0px;
+	margin-bottom: 0px;
 	background: #fff;
 	text-decoration: none;
 	-webkit-transition: all 0.4s ease-in-out 0s;
@@ -525,17 +526,17 @@ p.image-subjects-links:hover {
 #nav-trigger {
   display: none;
   text-align: center;
-  z-index: 500; 
-  background: #e5e5ff; 
+  z-index: 500;
+  background: #e5e5ff;
 }
 
 #nav-trigger span {
     display: inline-block;
     padding: 6px 35px;
-    background: #e5e5ff; 
+    background: #e5e5ff;
     color: #000;
     cursor: pointer;
-    text-transform: uppercase; 
+    text-transform: uppercase;
 }
 
 #nav-trigger span:hover,
@@ -548,13 +549,13 @@ p.image-subjects-links:hover {
       border-left: solid 10px transparent;
       border-top: none;
       border-bottom: solid 10px #fff;
-      border-right: solid 10px transparent; 
+      border-right: solid 10px transparent;
 }
 
 nav#nav-mobile {
   position: relative;
   display: none;
-  z-index: 500; 
+  z-index: 500;
   width: 100%;
 }
 
@@ -573,45 +574,45 @@ nav#nav-mobile ul {
 nav#nav-mobile li {
     display: block;
     padding: 5px 0;
-    margin: 0 5px;  
+    margin: 0 5px;
 }
 
 nav#nav-mobile li:last-child {
-      border-bottom: none; 
+      border-bottom: none;
 }
 
 nav#nav-mobile a {
     display: block;
     color: white;
     padding: 10px 30px;
-    text-decoration: none; 
+    text-decoration: none;
 }
 
 nav#nav-mobile a:hover {
-      background-color: #fff; 
-      color: #000; 
+      background-color: #fff;
+      color: #000;
 }
 
-#nav-mobile li.advancedSearch { 
-	display: none; 
+#nav-mobile li.advancedSearch {
+	display: none;
 }
 
-  #nav-main li.advancedSearch { 
-  	display: inline-block; 
+  #nav-main li.advancedSearch {
+  	display: inline-block;
   }
 }
 
 /* Footer
 ---------------------------------*/
 footer {
-	background: #e5e5ff; 
+	background: #e5e5ff;
 	/*background: rgba(245, 255, 250, 1);*/
-	
+
 }
 
 .main-footer {
 	padding: 20px 0 30px;
-	background: #e5e5ff; 
+	background: #e5e5ff;
 	/*background: rgba(245, 255, 250, 1);*/
 	width: 100%;
 	font: normal 1em/1.9 'Merriweather', sans-serif;
@@ -621,7 +622,7 @@ footer {
 	margin: 0;
 }
 
-.facebook, 
+.facebook,
 .email {
 	vertical-align: bottom;
 	width: 35px;
@@ -691,7 +692,7 @@ footer {
 ---------------------------------*/
 
 /*
-.collections-list li {     
+.collections-list li {
 	list-style-type: none;
     margin: 0 5px 5px 0;
     padding: 15px;
@@ -742,7 +743,7 @@ footer {
 	color: black;
 	line-height: 2;
 	list-style: none;
-}    
+}
 
 .imageSubjects li:hover,
 .peopleNames li:hover {
@@ -803,7 +804,7 @@ footer {
 .pageTitles li {
 	display: inline-block;
 	padding: 0 10px;
-}	
+}
 
 .mapsList {
 	width: 25%;
@@ -875,7 +876,7 @@ footer {
 .search-input{
 	width: 50%;
     height: 44px;
-	
+
 }
 .footerSearch {
 	padding:5px 8px;
@@ -957,8 +958,8 @@ footer {
 	outline: none;
 }
 
-.paypal_btn:hover{ 
-	background: #e05c04; 
+.paypal_btn:hover{
+	background: #e05c04;
 }
 
 .styled-select select {
@@ -971,7 +972,7 @@ footer {
    border-radius: 0;
    line-height: 2;
    -webkit-appearance: none;
-  } 
+  }
 
 .styled-select {
 	margin: 0 auto;
@@ -1009,16 +1010,16 @@ footer {
 }
 
 
-.homesearch { 
+.homesearch {
 	padding: 30px 0 0;
 }
 
-.homesearch .searchBar, .searchbar { 
-	text-align:left; 
+.homesearch .searchBar, .searchbar {
+	text-align:left;
 }
 
 .homesearch input[type="text"],
-.search input[type="text"] { 
+.search input[type="text"] {
 	padding: 5px 8px;
     background: rgba(253, 253, 253, 1);
     border: 1px solid #ccc;
@@ -1035,7 +1036,7 @@ footer {
 .homesearch .button,
 .button {
 	display: inline-block;
-	margin-left: -5px; 
+	margin-left: -5px;
 	padding: 5px 8px;
     border: 1px solid #ccc;
     background-color: #9DB68C;
@@ -1182,15 +1183,15 @@ footer {
 	}
 
 	#nav-trigger {
-	    	display: block; 
+	    	display: block;
 		}
 
 	nav#nav-main {
-	    	display: none; 
+	    	display: none;
 	}
 
 	nav#nav-mobile {
-	    display: block; 
+	    display: block;
 	 }
 
 	.socialIcons {
@@ -1336,7 +1337,7 @@ footer {
 
 @media all and (max-width: 1120px) {
 	nav#nav-main a {
-    	padding: 14px 3px; 
+    	padding: 14px 3px;
 	}
 
 	/*.main-logo {
@@ -1348,7 +1349,7 @@ footer {
 	}
 }
 
-@media screen and (min-width: 768px) { 
+@media screen and (min-width: 768px) {
 
 	.main-nav {
 		text-align: right;
@@ -1363,7 +1364,7 @@ footer {
 	}
 
 }
-	
+
 .audioPlayer {
 	text-align: center;
 }
@@ -1399,7 +1400,7 @@ footer {
 }
 
 @media (min-width: 1025px) {
-	
+
 	.container {
 		width: 80%;
 		max-width: 1150px;
@@ -1420,11 +1421,11 @@ footer {
 
 .tiles { display: block; box-sizing: border-box;  max-width:1200px; margin:0 auto;  font-size:0;} /* font-size http://stackoverflow.com/a/11456539 */
 
-.tiles .tile { 
-	display:inline-block;  
-	margin:0; 
+.tiles .tile {
+	display:inline-block;
+	margin:0;
 	padding:20px;
-	font-size:1rem; /* IE9+ */	
+	font-size:1rem; /* IE9+ */
 }
 
 .tiles .tile .inner {
@@ -1464,14 +1465,14 @@ footer {
 
 
 @media (max-width: 800px) {
-	
+
 	.tiles-3 .tile, .tiles-4 .tile {
-		width: 50%;		
+		width: 50%;
 	}
 
 	.tiles-3 .tile:nth-child(3n+1), .tiles-4 .tile:nth-child(4n+1) {
 		clear:none;
-	}	
+	}
 
 	.tiles-3 .tile:nth-child(2n+1), .tiles-4 .tile:nth-child(2n+1) {
 		clear:left;
@@ -1481,15 +1482,15 @@ footer {
 
 
 @media (max-width: 600px) {
-	
+
 	.tiles-3 .tile, .tiles-4 .tile {
-		width: 100%;		
+		width: 100%;
 	}
 
 }
 
 
-	
+
 /* Pagination
 --------------------*/
 
@@ -1497,7 +1498,7 @@ footer {
 .pagination {
 	background-color: #fff;
 	border-top: 1px solid rgba(51, 51, 51, 0.1);
-	clear:both;	
+	clear:both;
 }
 
 .pagination .screen-reader-text {
@@ -1562,9 +1563,9 @@ span.quick_view img { max-width:25px; max-height:25px; opacity:0.8;}
 }
 
 .lightbox_icon {
-	display: inline-block;	
+	display: inline-block;
 	background-size: cover;
-	vertical-align: middle;	
+	vertical-align: middle;
 }
 
 .mfp-content { max-width:60%; margin:0 auto;}
@@ -1599,7 +1600,7 @@ span.quick_view img { max-width:25px; max-height:25px; opacity:0.8;}
 	height: 60px;
 	background: #f8f8f8 url('img/paperspast.png') no-repeat center;
 	background-size: 100%;
-	vertical-align: middle;	
+	vertical-align: middle;
 }
 
 .nz_history_icon {
@@ -1609,7 +1610,7 @@ span.quick_view img { max-width:25px; max-height:25px; opacity:0.8;}
 	height: 90px;
 	background: #e5e5ff url('img/NZHistory.png') no-repeat center;
 	background-size: 100%;
-	vertical-align: middle;	
+	vertical-align: middle;
 }
 
 .nat_lib_icon {
@@ -1619,7 +1620,7 @@ span.quick_view img { max-width:25px; max-height:25px; opacity:0.8;}
 	height: 60px;
 	background: #e5e5ff url('img/nat_lib.gif') no-repeat center;
 	background-size: 100%;
-	vertical-align: middle;	
+	vertical-align: middle;
 }
 
 .te_ara_icon {
@@ -1629,7 +1630,7 @@ span.quick_view img { max-width:25px; max-height:25px; opacity:0.8;}
 	height: 75px;
 	background: #e5e5ff url('img/teara.png') no-repeat center;
 	background-size: 100%;
-	vertical-align: middle;	
+	vertical-align: middle;
 }
 
 #front_page {
@@ -1687,10 +1688,14 @@ span.quick_view img { max-width:25px; max-height:25px; opacity:0.8;}
     display:block;
 }
 
+.title_fields {
+	margin: 0px;
+	margin: :0px;
+
+}
 
 
 
-	
 
 
 

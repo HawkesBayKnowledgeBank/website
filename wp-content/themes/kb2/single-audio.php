@@ -12,8 +12,8 @@
 			<div class="grid-container bottom_margin">
 				<div class='grid-6'>
 				<!-- post title -->
-				
-					<?php 
+
+					<?php
 						$file = get_field( 'audio' );
 						if( !empty($file) ): ?>
 							<h1>
@@ -24,16 +24,16 @@
 							</audio>
 						<?php endif; ?>
 				</div>
-					
+
 				<div class="grid-3">
 
 					<h3>Collections</h3>
 
 					<ul>
-						<?php 
-							
-							$collections = get_field( 'collections' ); 
-							//print_r($collections); 
+						<?php
+
+							$collections = get_field( 'collections' );
+							//print_r($collections);
 
 							if( !empty($collections) ):
 								foreach($collections as $collection): ?>
@@ -48,12 +48,12 @@
 
 
 					<h3>Tags</h3>
-					
+
 					<ul>
-						<?php 
-							
-							$tags = get_field( 'tags' ); 
-							//print_r($tags); 
+						<?php
+
+							$tags = get_field( 'tags' );
+							//print_r($tags);
 
 							if( !empty($tags) ):
 								foreach($tags as $tag): ?>
@@ -67,67 +67,176 @@
 					</ul>
 
 					<h3>Subjects</h3>
-					
+
 					<?php
-						
+
 						$subjects = get_field('subjects');
-						
+
 						if( !empty($subjects) ): ?>
-							
+
 							<ul>
-							
+
 							<?php foreach( $subjects as $subject ): ?>
-								
+
 								<li><a href="<?php echo get_term_link($subject->term_id); ?>" class="term subject"><?php echo $subject->name; ?></a></li>
-							
+
 							<?php endforeach; ?>
-						
+
 						</ul>
-					
+
 					<?php endif; ?>
-				
+					<h3>Image</h3>
+
+					<?php
+
+						$image = get_field('image');
+
+						if( !empty($image) ): ?>
+
+							<ul>
+
+							<p class="image-subjects-links">
+
+								<?php get_field("image");?>
+							</p>
+
+						</ul>
+
+					<?php endif; ?>
+					<h3>Subjects</h3>
+
+					<?php
+
+						$people = get_field('people');
+
+						if( !empty($people) ): ?>
+
+							<ul>
+							<?php while( have_rows( 'people' ) ) : the_row();?>
+								<!-- //vars -->
+								<?php $first_name = get_sub_field( 'first_name' );
+								$middle_names = get_sub_field( 'middle_names' );
+								$family_name = get_sub_field( 'family_name' );
+								?>
+								<p class="image-subjects-links"><?php echo $first_name . " " . $middle_names . " " . $family_name; ?></p>
+
+
+							<?php endwhile;?>
+
+
+
+						</ul>
+
+					<?php endif; ?>
+
+					<?php $business = get_field('business');
+
+						if( !empty($business) ): ?>
+
+							<ul>
+
+							<p class="image-subjects-links">
+
+								<?php echo "business";?>
+							</p>
+
+						</ul>
+
+					<?php endif; ?>
+					<?php $author = get_field('author');
+
+					if( !empty($author) ): ?>
+
+						<ul>
+						<?php while( have_rows( 'author' ) ) : the_row();?>
+								<!-- //vars -->
+							<?php $first_name = get_sub_field( 'first_name' );
+							$middle_names = get_sub_field( 'middle_names' );
+							$family_name = get_sub_field( 'family_name' );
+							?>
+							<p class="image-subjects-links"><?php echo $first_name . " " . $middle_names . " " . $family_name; ?></p>
+
+
+						<?php endwhile;?>
+
+
+
+						</ul>
+
+					<?php endif; ?>
+					<?php $additional = get_field('additional');
+
+						if( !empty($additional) ): ?>
+
+							<ul>
+
+							<p class="image-subjects-links">
+
+								<?php echo "additional";?>
+							</p>
+
+						</ul>
+
+					<?php endif; ?>
+					<?php $languages = get_field('languages');
+
+						if( !empty($languages) ): ?>
+
+							<ul>
+
+							<p class="image-subjects-links">
+
+								<?php echo "languages";?>
+							</p>
+
+						</ul>
+
+					<?php endif; ?>
+
+
+
 				</div>
-					
+
 				<div class="grid-3">
 
-					<?php 
-						
+					<?php
+
 						$originalFormat = get_field( 'format_original' );
-						
+
 						if( !empty( $originalFormat ) ): ?>
-							
+
 							<h3>Original Format</h3><?php echo $originalFormat; ?>
-						
+
 						<?php endif;
-					
-					?> 
+
+					?>
 
 					<?php
-						
+
 						$original_digital_file = get_field( 'master' );
-						
+
 						if( !empty($original_digital_file) ): ?>
-							
-							<h3>Original Digital File</h3><p><?php echo $original_digital_file['title']; ?></p> 
-						
-						<?php endif; 
-					
+
+							<h3>Original Digital File</h3><p><?php echo $original_digital_file['title']; ?></p>
+
+						<?php endif;
+
 					?>
 
-					<?php 
-						
+					<?php
+
 						$accessionNumber = get_field( 'accession_number' );
-						
+
 						if( !empty( $accessionNumber ) ): ?>
-							
+
 							<h3>Accession Number</h3><?php echo $accessionNumber; ?>
-						
+
 						<?php endif;
-					
+
 					?>
-	
+
 				</div>
-			
+
 			</div>
 
 			<!-- post thumbnail -->
