@@ -8,7 +8,7 @@
 
 		<?php if(isset($images[0]['image']['sizes']['700w'])): ?>
 
-			<a href="<?php the_permalink(); ?>?quickview=true"><img src="<?php echo $images[0]['image']['sizes']['700w']; ?>" /></a>
+			<a href="<?php the_permalink(); ?>?quickview=true" class="quick_view"><img src="<?php echo $images[0]['image']['sizes']['700w']; ?>" /></a>
 			<span class="quick_view"><a class="lightbox_icon quick_view" href="<?php the_permalink(); ?>?quickview=true"><img src="/wp-content/themes/kb2/img/search-white.png" alt="View" /></a></span>
 
 		<?php endif; ?>

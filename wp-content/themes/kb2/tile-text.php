@@ -6,7 +6,7 @@
 
 		<?php if(isset($images[0]['image']['sizes']['700w'])): ?>
 
-			<a href="<?php the_permalink(); ?>?quickview=true"><img src="<?php echo $images[0]['image']['sizes']['700w']; ?>" /></a>
+			<a href="<?php the_permalink(); ?>?quickview=true" class="quick_view"><img src="<?php echo $images[0]['image']['sizes']['700w']; ?>" /></a>
 
 		<?php endif; ?>
 
