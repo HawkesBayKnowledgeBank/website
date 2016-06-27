@@ -8,7 +8,7 @@
 		//top level collections
 		$collections = get_terms( array(
 		    'taxonomy' => 'collections',
-		    'hide_empty' => false,
+		    'hide_empty' => true,
 		    'parent' => 0,
 		));		
 
@@ -18,6 +18,15 @@
 
 		<?php foreach($collections as $collection): ?>
 
+			<?php 
+				//get child collections, if any
+				$children = get_terms( array(
+				    'taxonomy' => 'collections',
+				    'hide_empty' => false,
+				    'parent' => $collection->term_id,
+				));	
+			?>
+
 			<div class="collection">
 
 				<?php if(get_field('image',$collection)): ?>
@@ -25,14 +34,26 @@
 					<?php $image = get_field('image', $collection); //print_r($image); ?>
 
 					<a href="<?php echo get_term_link($collection->term_id); ?>">
-						<img src="<?php echo $image['sizes']['300w']; ?>" class="thumbnail"  />					
+						<img src="<?php echo $image['sizes']['700w']; ?>" class="thumbnail"  />					
 					</a>
 
 				<?php endif; ?>
 
 				<h3><a href="<?php echo get_term_link($collection->term_id); ?>"><?php echo $collection->name; ?></a></h3>
 
-				<?php if(isset($collection->count)): ?><h5><?php echo $collection->count; ?> items</h5><?php endif; ?>
+				<?php 
+					
+					$itemcount = $collection->count;
+					if(!empty($children)):
+						foreach($children as $child):
+							(int)$itemcount += (int)$child->count;
+						endforeach;
+					endif;
+
+				?>
+
+				<h5><?php echo $itemcount; ?> items</h5>
+				
 				
 				<?php if(!empty($collection->description)): ?>
 
@@ -42,14 +63,6 @@
 
 					</div><!-- . description -->
 				<?php endif; ?>
-					<?php 
-						//children
-						$children = get_terms( array(
-						    'taxonomy' => 'collections',
-						    'hide_empty' => false,
-						    'parent' => $collection->term_id,
-						));	
-					?>
 
 					<?php if(!empty($children)): ?>
 
@@ -76,34 +89,6 @@
 
 	<?php endif; ?>
 
-
-<?php
-	/*
-			// List terms in a given taxonomy using wp_list_categories (also useful as a widget if using a PHP Code plugin)
-			 
-			$taxonomy     = 'collections';
-			$orderby      = 'name'; 
-			$show_count   = true;
-			$pad_counts   = false;
-			$hierarchical = true;
-			$title        = '';
-			 
-			$args = array(
-			  'taxonomy'     => $taxonomy,
-			  'orderby'      => $orderby,
-			  'show_count'   => $show_count,
-			  'pad_counts'   => $pad_counts,
-			  'hierarchical' => $hierarchical,
-			  'title_li'     => $title
-			);
-		?>
-	 
-		<ul class="collections">
-		    <?php wp_list_categories( $args ); ?>
-		</ul>
-
-	*/
-?>
 
 </div>
 

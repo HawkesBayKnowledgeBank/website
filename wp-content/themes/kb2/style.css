@@ -711,7 +711,7 @@ footer {
 
 */
 
-.collections-list .description { padding:20px 0; display:inline-block;}
+.collections-list .description { padding:20px 0; display:inline-block; max-width: 50%;}
 
 .collections-list h3, .collections-list h4 { margin:0; }
 
@@ -723,7 +723,7 @@ footer {
 
 .collections-list .subcollection.tile { background-color:#eaeaea; margin: 0 20px 20px 0;}
 
-.collections-list .collection .thumbnail { float:right; width:auto; height:auto; max-width:300px; max-height:300px; display:block;}
+.collections-list .collection .thumbnail { float:right; width:auto; height:auto; max-width:420px; max-height:315px; display:block;}
 
 
 
