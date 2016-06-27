@@ -370,6 +370,8 @@ h2 {}
 	/*#ccccff;*/
 }
 
+.main-header .menu-item { list-style-type:none;}
+
 .main-nav li,
 .secondary-nav li {
 	display: inline-block;
