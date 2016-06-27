@@ -49,7 +49,7 @@
 
 				if( !empty($collections) ): ?>
 
-				<div class="title_fields"><h3>Collections</h3></div>
+				<div class="title_fields"><h3>Collections</h3>
 
 				<ul class="image-subjects-links">
 
@@ -70,7 +70,7 @@
 
 			if( !empty($tags) ): ?>
 
-				<div class="title_fields"><h3>Tags</h3></div>
+				<div class="title_fields"><h3>Tags</h3>
 
 				<ul class="image-subjects-links">
 
@@ -90,7 +90,7 @@
 
 		if( !empty($subjects) ): ?>
 
-		<div class="title_fields"><h3>Subjects</h3></div>
+		<div class="title_fields"><h3>Subjects</h3>
 
 		<ul class="image-subjects-links">
 
@@ -112,7 +112,7 @@
 
 	if( !empty( $origianl_format ) ): ?>
 
-	<div class="title_fields"><h3>Format of the original:</h3></div>
+	<div class="title_fields"><h3>Format of the original:</h3>
 
 	<p class="image-subjects-links">
 
@@ -126,7 +126,7 @@
 
 <?php if( !empty( $location )) : ?>
 
-	<div class="title_fields"><h3>Location</h3></div>
+	<div class="title_fields"><h3>Location</h3>
 
 	<p class="image-subjects-links">
 
@@ -142,7 +142,7 @@ $file = get_field('master');?>
 
 <?php if( $file ): ?>
 
-	<h3 class="image-subjects-links">Original Data File</h3></div>
+	<h3 class="image-subjects-links">Original Data File</h3>
 
 	<a href="<?php echo $file['url']; ?>"><?php echo $file['filename']; ?></a>
 
@@ -152,7 +152,7 @@ $file = get_field('master');?>
 
 <?php if( !empty( $accession_number ) ) : ?>
 
-	<div class="title_fields"><h3>Accession number</h3></div>
+	<div class="title_fields"><h3>Accession number</h3>
 
 	<p class="image-subjects-links">
 
@@ -165,7 +165,7 @@ $file = get_field('master');?>
 
 <?php if( !empty( $licence ) ) : ?>
 
-	<div class="title_fields"><h3>licence :</h3></div>
+	<div class="title_fields"><h3>licence :</h3>
 
 	<p class="image-subjects-links">
 
@@ -178,7 +178,7 @@ $file = get_field('master');?>
 
 <?php if( !empty( $allow_commercial_licence ) ) : ?>
 
-	<div class="title_fields"><h3>Allow commercial licence :</h3></div>
+	<div class="title_fields"><h3>Allow commercial licence :</h3>
 
 	<p class="image-subjects-links">
 
@@ -191,7 +191,7 @@ $file = get_field('master');?>
 
 <?php if( !empty( $people ) ) : ?>
 
-	<div class="title_fields"><h3>People :</h3></div>
+	<div class="title_fields"><h3>People :</h3>
 
 	<p class="image-subjects-links">
 
@@ -204,11 +204,11 @@ $file = get_field('master');?>
 
 <?php if( !empty( $business ) ) : ?>
 
-	<div class="title_fields"><h3>Business :</h3></div>
+	<div class="title_fields"><h3>Business :</h3>
 
 	<p class="image-subjects-links">
 
-		<?php echo "business"; ?>
+		<?php echo $business; ?>
 	</p>
 
 <?php endif; ?>
@@ -217,11 +217,11 @@ $file = get_field('master');?>
 
 <?php if( !empty( $yearpublished ) ) : ?>
 
-	<div class="title_fields"><h3>Year published :</h3></div>
+	<div class="title_fields"><h3>Year published :</h3>
 
 	<p class="image-subjects-links">
 
-		<?php echo "yearpublished"; ?>
+		<?php echo $yearpublished; ?>
 	</p>
 
 <?php endif; ?>
@@ -229,7 +229,7 @@ $file = get_field('master');?>
 
 <?php if( !empty( $notes ) ) : ?>
 
-	<div class="title_fields"><h3>Notes :</h3></div>
+	<div class="title_fields"><h3>Notes :</h3>
 
 	<p class="image-subjects-links">
 
@@ -241,11 +241,11 @@ $file = get_field('master');?>
 
 <?php if( !empty( $languages ) ) : ?>
 
-	<div class="title_fields"><h3>Languages :</h3></div>
+	<div class="title_fields"><h3>Languages :</h3>
 
 	<p class="image-subjects-links">
 
-		<?php echo "languages";?>
+		<?php echo $languages;?>
 	</p>
 
 <?php endif; ?>
@@ -254,11 +254,11 @@ $file = get_field('master');?>
 
 <?php if( !empty( $computed_aperturefnumber ) ) : ?>
 
-	<div class="title_fields"><h3>Computed aperture :</h3></div>
+	<div class="title_fields"><h3>Computed aperture :</h3>
 
 	<p class="image-subjects-links">
 
-		<?php echo "computed_aperturefnumber";?>
+		<?php echo $computed_aperturefnumber;?>
 	</p>
 
 <?php endif; ?>
@@ -266,11 +266,11 @@ $file = get_field('master');?>
 
 <?php if( !empty( $exif_model ) ) : ?>
 
-	<div class="title_fields"><h3>Exif model :</h3></div>
+	<div class="title_fields"><h3>Exif model :</h3>
 
 	<p class="image-subjects-links">
 
-		<?php echo "exif_model";?>
+		<?php echo $exif_model;?>
 	</p>
 
 <?php endif; ?>
@@ -278,11 +278,11 @@ $file = get_field('master');?>
 
 <?php if( !empty( $exif_compression ) ) : ?>
 
-	<div class="title_fields"><h3>Exif compression :</h3></div>
+	<div class="title_fields"><h3>Exif compression :</h3>
 
 	<p class="image-subjects-links">
 
-		<?php echo "exif_compression";?>
+		<?php echo $exif_compression;?>
 	</p>
 
 <?php endif; ?>
@@ -290,11 +290,11 @@ $file = get_field('master');?>
 
 <?php if( !empty( $exif_isospeedratings ) ) : ?>
 
-	<div class="title_fields"><h3>Exif ISO speed :</h3></div>
+	<div class="title_fields"><h3>Exif ISO speed :</h3>
 
 	<p class="image-subjects-links">
 
-		<?php echo "exif_isospeedratings";?>
+		<?php echo $exif_isospeedratings;?>
 	</p>
 
 <?php endif; ?>
@@ -303,11 +303,11 @@ $file = get_field('master');?>
 
 <?php if( !empty( $exif_focallenght ) ) : ?>
 
-	<div class="title_fields"><h3>Exif focal length :</h3></div>
+	<div class="title_fields"><h3>Exif focal length :</h3>
 
 	<p class="image-subjects-links">
 
-		<?php echo "exif_focallenght";?>
+		<?php echo $exif_focallenght;?>
 	</p>
 
 <?php endif; ?>
@@ -316,11 +316,11 @@ $file = get_field('master');?>
 
 <?php if( !empty( $gps_gpslatitude ) ) : ?>
 
-	<div class="title_fields"><h3>GPS latitude :</h3></div>
+	<div class="title_fields"><h3>GPS latitude :</h3>
 
 	<p class="image-subjects-links">
 
-		<?php echo "gps_gpslatitude";?>
+		<?php echo $gps_gpslatitude;?>
 	</p>
 
 <?php endif; ?>
@@ -328,11 +328,11 @@ $file = get_field('master');?>
 
 <?php if( !empty( $gps_gpslatituderef ) ) : ?>
 
-	<div class="title_fields"><h3>GPS latitude ref :</h3></div>
+	<div class="title_fields"><h3>GPS latitude ref :</h3>
 
 	<p class="image-subjects-links">
 
-		<?php echo "gps_gpslatituderef";?>
+		<?php echo $gps_gpslatituderef;?>
 	</p>
 
 <?php endif; ?>
@@ -340,11 +340,11 @@ $file = get_field('master');?>
 
 <?php if( !empty( $gps_gpslongitude ) ) : ?>
 
-	<div class="title_fields"><h3>GPS longitude :</h3></div>
+	<div class="title_fields"><h3>GPS longitude :</h3>
 
 	<p class="image-subjects-links">
 
-		<?php echo "gps_gpslongitude";?>
+		<?php echo $gps_gpslongitude;?>
 	</p>
 
 <?php endif; ?>
@@ -352,11 +352,11 @@ $file = get_field('master');?>
 
 <?php if( !empty( $gps_gpslongituderef ) ) : ?>
 
-	<div class="title_fields"><h3>GPS longitude ref :</h3></div>
+	<div class="title_fields"><h3>GPS longitude ref :</h3>
 
 	<p class="image-subjects-links">
 
-		<?php echo "gps_gpslongituderef";?>
+		<?php echo $gps_gpslongituderef;?>
 	</p>
 
 <?php endif; ?>
@@ -364,11 +364,11 @@ $file = get_field('master');?>
 
 <?php if( !empty( $gps_gpslatitude ) ) : ?>
 
-	<div class="title_fields"><h3>GPS latitude :</h3></div>
+	<div class="title_fields"><h3>GPS latitude :</h3>
 
 	<p class="image-subjects-links">
 
-		<?php echo "gps_gpslatitude";?>
+		<?php echo $gps_gpslatitude;?>
 	</p>
 
 <?php endif; ?>

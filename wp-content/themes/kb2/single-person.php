@@ -8,7 +8,7 @@
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<div class="grid-container bottom_margin">
 					<div class='grid-6'>
-						<h2><?php the_title(); ?></h2>
+						<h2 class="Title_single"><?php the_title(); ?></h2>
 						<div class="title_fields"><h3>Name:</h3></div>
 
 						<?php if( have_rows( 'name' ) ): ?>
@@ -22,6 +22,23 @@
 
 
 							<?php endwhile;?>
+						<?php endif; ?>
+						<?php $gender = get_field( 'gender' );?>
+
+						<?php if( !empty( $gender ) ) : ?>
+
+							<div class="title_fields"><h3>Gender :</h3></div>
+
+							<p class="image-subjects-links">
+
+								<?php if ($gender==false): ?>
+									<?php echo "Male";?>
+								<?php else: ?>
+									<?php echo "Female";?>
+								<?php endif; ?>
+
+							</p>
+
 						<?php endif; ?>
 
 
@@ -40,87 +57,30 @@
 
 					</div>
 					<div class='grid-3'>
+						<h2 class="Title_single">Birth :</h2>
 						<div class="title_fields"><h3>Born:</h3></div><p class="image-subjects-links"><?php the_field( 'birthdate' ); ?></p>
-						<?php $maiden_name = get_field( 'maiden_name' );?>
-
-				<?php if( !empty( $maiden_name ) ) : ?>
-
-					<div class="title_fields"><h3>Maiden name :</h3></div>
-
-					<p class="image-subjects-links">
-
-						<?php echo "maiden_name";?>
-					</p>
-
-				<?php endif; ?>
-				<?php $maiden_name = get_field( 'maiden_name' );?>
-
-				<?php if( !empty( $maiden_name ) ) : ?>
-
-					<div class="title_fields"><h3>Maiden name :</h3></div>
-
-					<p class="image-subjects-links">
-
-						<?php echo "maiden_name";?>
-					</p>
-
-				<?php endif; ?>
-
-				<?php $gender = get_field( 'gender' );?>
-
-				<?php if( !empty( $gender ) ) : ?>
-
-					<div class="title_fields"><h3>Gender :</h3></div>
-
-					<p class="image-subjects-links">
-
-						<?php if ($gender==TRUE): ?>
-							<?php echo "Male";?>
-						<?php else: ?>
-							<?php echo "Female";?>
-						<?php endif; ?>
-
-					</p>
-
-				<?php endif; ?>
-
 						<?php $maiden_name = get_field( 'maiden_name' );?>
 
 						<?php if( !empty( $maiden_name ) ) : ?>
 
-						<div class="title_fields"><h3>Maiden name :</h3></div>
-
-						<p class="image-subjects-links">
-
-							<?php echo "maiden_name";?>
-							</p>
-
-							<?php endif; ?>
-							<?php $images = get_field( 'images' );?>
-
-							<?php if( !empty( $images ) ) : ?>
-
-								<div class="title_fields"><h3>Images :</h3></div>
-
-								<p class="image-subjects-links">
-
-									<?php get_field("images");?>
-								</p>
-
-							<?php endif; ?>
-						<?php $birthdate_accuracy = get_field( 'birthdate_accuracy' );?>
-
-						<?php if( !empty( $birthdate_accuracy ) ) : ?>
-
-							<div class="title_fields"><h3>Birthdate accuracy :</h3></div>
+							<div class="title_fields"><h3>Maiden name :</h3></div>
 
 							<p class="image-subjects-links">
 
-								<?php echo "birthdate_accuracy";?>
+								<?php echo $maiden_name;?>
 							</p>
+							<?php $birthdate_accuracy = get_field( 'birthdate_accuracy' );?>
+
+							<?php if( !empty( $birthdate_accuracy ) ) : ?>
+
+								<p class="image-subjects-links">
+
+									<?php echo $birthdate_accuracy;?>
+								</p>
+
+							<?php endif; ?>
 
 						<?php endif; ?>
-
 						<?php $birthplace = get_field( 'birthplace' );?>
 
 						<?php if( !empty( $birthplace ) ) : ?>
@@ -129,10 +89,26 @@
 
 							<p class="image-subjects-links">
 
-								<?php echo "birthplace";?>
+								<?php echo $birthplace;?>
+
 							</p>
 
 						<?php endif; ?>
+						<?php $maiden_name = get_field( 'maiden_name' );?>
+
+						<?php if( !empty( $maiden_name ) ) : ?>
+
+							<div class="title_fields"><h3>Maiden name :</h3></div>
+
+							<p class="image-subjects-links">
+
+								<?php echo $maiden_name;?>
+							</p>
+
+						<?php endif; ?>
+
+
+
 						<?php $marriage_date = get_field( 'marriage_date' );?>
 
 						<?php if( !empty( $marriage_date ) ) : ?>
@@ -149,7 +125,7 @@
 						<?php if( !empty( $marriage_date_accuracy) ) : ?>
 							<div class="title_fields"><h3>Marriage date accuracy :</h3></div>
 							<p class="image-subjects-links">
-								<?php echo "marriage_date_accuracy";?>
+								<?php echo $marriage_date_accuracy;?>
 							</p>
 
 						<?php endif; ?>
@@ -165,9 +141,8 @@
 						<?php if( !empty( $deathdate ) ) : ?>
 							<div class="title_fields"><h3>Date of death :</h3></div>
 							<p class="image-subjects-links">
-								<?php echo "deathdate";?>
+								<?php echo $deathdate;?>
 							</p>
-
 						<?php endif; ?>
 						<?php $deathdate_accuracy = get_field( 'deathdate_accuracy' );?>
 
@@ -185,10 +160,15 @@
 
 							<div class="title_fields"><h3>Place of death :</h3></div>
 							<p class="image-subjects-links">
-								<?php echo "deathplace";?>
+								<?php echo $deathplace
+								;?>
 							</p>
 
 						<?php endif; ?>
+
+					</div>
+					<div class='grid-3'>
+					<h2 class="Title_single">Family :</h2>
 						<?php $parents = get_field( 'parents' );?>
 						<?php if( !empty( $parents ) ) : ?>
 							<div class="title_fields"><h3>Parents :</h3></div>
@@ -199,7 +179,7 @@
 								$middle_names = get_sub_field( 'middle_names' );
 								$family_name = get_sub_field( 'family_name' );?>
 
-								<p class="parents image-subjects-links"><?php echo $first_name . " " . $middle_names . " " . $family_name; ?></p>
+								<p class=" image-subjects-links"><?php echo $first_name . " " . $middle_names . " " . $family_name; ?></p>
 
 							<?php endwhile;?>
 						<?php endif; ?>
@@ -237,7 +217,7 @@
 
 							<p class="image-subjects-links">
 
-								<?php echo "primary_education";?>
+								<?php echo $primary_education;?>
 							</p>
 
 						<?php endif; ?>
@@ -273,29 +253,38 @@
 
 							<p class="image-subjects-links">
 
-								<?php echo "biography";?>
+								<?php echo $biography;?>
 							</p>
 
 						<?php endif; ?>
 						<?php $related_records = get_field( 'related_records' );?>
 
-						<?php if( !empty( $related_records ) ) : ?>
-
+						<!-- <?php if( !empty( $related_records ) ) : ?>
 							<div class="title_fields"><h3>Related records :</h3></div>
 							<p class="image-subjects-links">
+								<?php print_r($related_records);?>
 								<?php get_field("related_records");?>
 							</p>
-						<?php endif; ?>
+						<?php endif; ?> -->
 						<?php $related_collections = get_field( 'related_collections' );?>
-
 						<?php if( !empty( $related_collections ) ) : ?>
+							<?php print_r($related_collections)?>
+
+
+							<?php if( !empty($collections) ):?>
 							<div class="title_fields"><h3>Related collections :</h3></div>
+								<?php foreach($collections as $collection): ?>
+
+									<li><a href="<?php echo get_term_link($collection->term_id); ?>" class="term collection"><?php echo $collection->name; ?></a></li>
+
+							<?php
+								endforeach;
+							endif;?>
+							<!-- <div class="title_fields"><h3>Related collections :</h3></div>
 							<p class="image-subjects-links">
 								<?php get_field("related_collections");?>
-							</p>
+							</p> -->
 						<?php endif; ?>
-					</div>
-					<div class='grid-3'>
 						<?php if( have_rows( 'children' ) ): ?>
 
 							<div class="title_fields"><h3>Children:</h3></div>
@@ -309,25 +298,22 @@
 								<p class="children image-subjects-links"><?php echo $first_name . " " . $middle_names . " " . $family_name; ?></p>
 							<?php endwhile;?>
 						<?php  endif; ?>
+						<div class="title_fields"><h3>Related material:</h3></div><a class="image-subjects-links" href="#">Title of article</a>
+						<!-- post thumbnail -->
+							<?php if ( has_post_thumbnail()) : // Check if Thumbnail exists ?>
+								<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
+									<?php the_post_thumbnail(); // Fullsize image for the single post ?>
+								</a>
+							<?php endif; ?>
+					<!-- /post thumbnail -->
 					</div>
-					<div class="title_fields"><h3>Related material:</h3></div><a class="image-subjects-links" href="#">Title of article</a>
-
 				</div>
-
-		<!-- post thumbnail -->
-				<?php if ( has_post_thumbnail()) : // Check if Thumbnail exists ?>
-					<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
-						<?php the_post_thumbnail(); // Fullsize image for the single post ?>
-					</a>
-				<?php endif; ?>
-				<!-- /post thumbnail -->
-
-					</article>
-				<?php endwhile; ?>
-			<?php endif; ?>
-		</section>
+			</article>
+		<?php endwhile; ?>
+		<?php endif; ?>
+	</section>
 		<!-- /section -->
-	</main>
+</main>
 
 
 <?php get_footer(); ?>

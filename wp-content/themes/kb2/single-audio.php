@@ -137,7 +137,7 @@
 
 							<p class="image-subjects-links">
 
-								<?php echo "business";?>
+								<?php echo $business;?>
 							</p>
 
 						</ul>
@@ -172,7 +172,7 @@
 
 							<p class="image-subjects-links">
 
-								<?php echo "additional";?>
+								<?php echo $additional;?>
 							</p>
 
 						</ul>
@@ -186,7 +186,7 @@
 
 							<p class="image-subjects-links">
 
-								<?php echo "languages";?>
+								<?php echo $languages;?>
 							</p>
 
 						</ul>
@@ -229,7 +229,7 @@
 
 						if( !empty( $accessionNumber ) ): ?>
 
-							<h3>Accession Number</h3><?php echo $accessionNumber; ?>
+							<h3 class="Title_single">Accession Number</h3><?php echo $accessionNumber; ?>
 
 						<?php endif;
 

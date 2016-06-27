@@ -511,7 +511,7 @@ p.image-subjects-links {
 	display: inline-block;
 	padding: 10px 15px;
 	margin-top:0px;
-	margin-bottom: 0px;
+	margin-bottom: 5px;
 	background: #fff;
 	text-decoration: none;
 	-webkit-transition: all 0.4s ease-in-out 0s;
@@ -1694,7 +1694,9 @@ span.quick_view img { max-width:25px; max-height:25px; opacity:0.8;}
 
 }
 
-
+h2.Title_single{
+	color:darkseagreen;
+}
 
 
 
