@@ -32,11 +32,12 @@
 					
 				</div>
 					
-				<div class="grid-3">
+				<div class="grid-6">
 
 					<?php 
 
 							$transcript = get_field( 'transcript' ); 
+				
 
 							//print_r($transcript);
 
@@ -53,105 +54,106 @@
 					
 				<div class="grid-3">
 
-				<?php 
-						
-					$collections = get_field( 'collections' ); 
-					//print_r($collections); 
-
-					if( !empty($collections) ): ?>
-
-						<h3>Collections</h3>
-
-						<ul class="image-subjects-links">
-
-							<?php foreach($collections as $collection): ?>
-									
-								<li><a href="<?php echo get_term_link($collection->term_id); ?>" class="term collection"><?php echo $collection->name; ?></a></li>
-
-							<?php endforeach; ?>
-						
-						</ul>
-
-					<?php endif; ?>
-						
-					<?php 
-						
-					$tags = get_field( 'tags' ); 
-					//print_r($tags); 
-
-					if( !empty($tags) ): ?>
-
-						<h3>Tags</h3>
-						
-						<ul class="image-subjects-links">
-
-							<?php foreach($tags as $tag): ?>
-
-								<li><a href="<?php echo get_term_link($tag->term_id); ?>" class="term tag"><?php echo $tag->name; ?></a></li>
-
-							<?php endforeach; ?>
-					
-						</ul>
-					
-					<?php endif; ?>
-					
-					<?php
-						
-						$subjects = get_field('subjects');
-						
-						if( !empty($subjects) ): ?>
-
-						<h3>Subjects</h3>
-							
-						<ul class="image-subjects-links">
-						
-							<?php foreach( $subjects as $subject ): ?>
-								
-								<li><a href="<?php echo get_term_link($subject->term_id); ?>" class="term subject"><?php echo $subject->name; ?></a></li>
-							
-							<?php endforeach; ?>
-					
-						<?php endif; ?>
-					
-					<?php
-						
-					$publication_year = get_field('yearpublished');
-
-					if(!empty($publication_year)): ?>
-						
-						<h3>Publication Date:</h3>
-
-						<p class="image-subjects-links"><?php echo $publication_year; ?></p>
-					
-					<?php endif; ?>
-
-					<?php 
-						
-						$originalFormat = get_field( 'format_original' );
-						
-						if( !empty( $originalFormat ) ): ?>
-							
-							<h3>Original Format</h3><p class="image-subjects-links"><?php echo $originalFormat; ?></p>
-						
-						<?php endif; ?> 
-
-					<?php 
-						
-						$accessionNumber = get_field( 'accession_number' );
-						
-						if( !empty( $accessionNumber ) ): ?>
-							
-							<h3>Accession Number</h3><p class="image-subjects-links"><?php echo $accessionNumber; ?></p>
-						
-						<?php endif; ?>
-
-
+				
 	
 				</div>
 
 				<div class="grid-6">
+					<?php 
+							
+						$collections = get_field( 'collections' ); 
+						//print_r($collections); 
 
-					
+						if( !empty($collections) ): ?>
+
+							<h3>Collections</h3>
+
+							<ul class="image-subjects-links">
+
+								<?php foreach($collections as $collection): ?>
+										
+									<li><a href="<?php echo get_term_link($collection->term_id); ?>" class="term collection"><?php echo $collection->name; ?></a></li>
+
+								<?php endforeach; ?>
+							
+							</ul>
+
+						<?php endif; ?>
+							
+						<?php 
+							
+						$tags = get_field( 'tags' ); 
+						//print_r($tags); 
+
+						if( !empty($tags) ): ?>
+
+							<h3>Tags</h3>
+							
+							<ul class="image-subjects-links">
+
+								<?php foreach($tags as $tag): ?>
+
+									<li><a href="<?php echo get_term_link($tag->term_id); ?>" class="term tag"><?php echo $tag->name; ?></a></li>
+
+								<?php endforeach; ?>
+						
+							</ul>
+						
+						<?php endif; ?>
+						
+						<?php
+							
+							$subjects = get_field('subjects');
+							
+							if( !empty($subjects) ): ?>
+
+							<h3>Subjects</h3>
+								
+							<ul class="image-subjects-links">
+							
+								<?php foreach( $subjects as $subject ): ?>
+									
+									<li><a href="<?php echo get_term_link($subject->term_id); ?>" class="term subject"><?php echo $subject->name; ?></a></li>
+								
+								<?php endforeach; ?>
+						
+							<?php endif; ?>
+						
+						<?php
+							
+						$publication_year = get_field('yearpublished');
+
+						if(!empty($publication_year)): ?>
+							
+							<h3>Publication Date:</h3>
+
+							<p class="image-subjects-links"><?php echo $publication_year; ?></p>
+						
+						<?php endif; ?>
+
+						<?php 
+							
+							$originalFormat = get_field( 'format_original' );
+							
+							if( !empty( $originalFormat ) ): ?>
+								
+								<h3>Original Format</h3><p class="image-subjects-links"><?php echo $originalFormat; ?></p>
+							
+							<?php endif; ?> 
+
+						<?php 
+							
+							$accessionNumber = get_field( 'accession_number' );
+							
+							if( !empty( $accessionNumber ) ): ?>
+								
+								<h3>Accession Number</h3><p class="image-subjects-links"><?php echo $accessionNumber; ?></p>
+							
+							<?php endif; ?>
+
+
+
+						
 
 				</div>
 			

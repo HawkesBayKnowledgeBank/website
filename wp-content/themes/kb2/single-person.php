@@ -30,14 +30,24 @@
 							<div class="title_fields"><h3>Gender :</h3></div>
 
 							<p class="image-subjects-links">
+								<?php print_r($gender)?>
 
-								<?php if ($gender==false): ?>
+								<!-- <?php if ($gender=="n"): ?>
 									<?php echo "Male";?>
 								<?php else: ?>
 									<?php echo "Female";?>
-								<?php endif; ?>
+								<?php endif; ?> -->
 
 							</p>
+
+						<?php endif; ?>
+						<?php $biography = get_field( 'biography' );?>
+
+						<?php if( !empty( $biography ) ) : ?>
+
+							<div class="title_fields"><h3>Biography :</h3></div>
+
+							<p class="image-subjects-links"><?php echo $biography; ?></p>
 
 						<?php endif; ?>
 
@@ -45,7 +55,7 @@
 						<?php $known_as = get_field('known_as');?>
 						<?php if($known_as): ?>
 							<div class="title_fields"><h3>Known as:</h3></div>
-							<p class="image-subjects-links"><?php echo $known_as; ?></p>
+							<?php echo $known_as; ?>
 						<?php endif; ?>
 
 
@@ -229,7 +239,7 @@
 
 							<p class="image-subjects-links">
 
-								<?php get_field("secondary_education");?>
+								<?php get_field($secondary_education);?>
 							</p>
 
 						<?php endif; ?>
@@ -241,22 +251,11 @@
 
 							<p class="image-subjects-links">
 
-								<?php echo "tertiary_education";?>
+								<?php echo $tertiary_education;?>
 							</p>
 
 						<?php endif; ?>
-						<?php $biography = get_field( 'biography' );?>
 
-						<?php if( !empty( $biography ) ) : ?>
-
-							<div class="title_fields"><h3>Biography :</h3></div>
-
-							<p class="image-subjects-links">
-
-								<?php echo $biography;?>
-							</p>
-
-						<?php endif; ?>
 						<?php $related_records = get_field( 'related_records' );?>
 
 						<!-- <?php if( !empty( $related_records ) ) : ?>
@@ -268,7 +267,7 @@
 						<?php endif; ?> -->
 						<?php $related_collections = get_field( 'related_collections' );?>
 						<?php if( !empty( $related_collections ) ) : ?>
-							<?php print_r($related_collections)?>
+							<!-- <?php print_r($related_collections)?> -->
 
 
 							<?php if( !empty($collections) ):?>
