@@ -1700,6 +1700,16 @@ h2.Title_single{
 	color:darkseagreen;
 }
 
+.background_wysiwyg_colour {
+	background: white;
+	padding: 10px 15px;
+}
+
+.background_wysiwyg_colour p {
+	margin: 0;
+}
+
+
 
 
 

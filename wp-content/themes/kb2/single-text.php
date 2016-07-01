@@ -29,29 +29,8 @@
 						<?php endif; ?>
 
 					<?php endif; ?>
-					
-				</div>
-					
-				<div class="grid-3">
 
-					<?php 
-
-							$transcript = get_field( 'transcript' ); 
-
-							//print_r($transcript);
-
-							if( !empty($transcript) ) : ?>
-
-								<h3>Transcript</h3><?php echo $transcript; ?>
-
-							<?php endif;
-						?>
-						
-					
-				
-				</div>
-					
-				<div class="grid-3">
+					<div class="grid-6">
 
 				<?php 
 						
@@ -148,6 +127,29 @@
 
 	
 				</div>
+					
+				</div>
+					
+				<div class="grid-6">
+
+					<?php 
+
+							$transcript = get_field( 'transcript' ); 
+
+							//print_r($transcript);
+
+							if( !empty($transcript) ) : ?>
+
+								<h3>Transcript</h3><?php echo $transcript; ?>
+
+							<?php endif;
+						?>
+						
+					
+				
+				</div>
+					
+				
 
 				<div class="grid-6">
 

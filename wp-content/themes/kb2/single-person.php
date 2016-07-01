@@ -251,10 +251,10 @@
 
 							<div class="title_fields"><h3>Biography :</h3></div>
 
-							<p class="image-subjects-links">
+							<div class="background_wysiwyg_colour">
 
 								<?php echo $biography;?>
-							</p>
+							</div>
 
 						<?php endif; ?>
 						<?php $related_records = get_field( 'related_records' );?>
