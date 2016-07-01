@@ -130,7 +130,7 @@
 					
 				</div>
 					
-				<div class="grid-6">
+				<div class="grid-6 transcript">
 
 					<?php 
 

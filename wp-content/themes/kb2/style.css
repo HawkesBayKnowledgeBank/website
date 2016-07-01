@@ -1709,6 +1709,11 @@ h2.Title_single{
 	margin: 0;
 }
 
+.transcript {
+	max-height: 600px;
+	overflow-y: scroll; 
+}
+
 
 
 
