@@ -28,7 +28,7 @@ if (function_exists('add_theme_support'))
     // Add Thumbnail Theme Support
     add_theme_support('post-thumbnails');
     add_image_size('700w', 700, '', false); // Large Thumbnail
-    add_image_size('300w', 300, '', false); // Medium Thumbnail   
+    add_image_size('300w', 300, '', false); // Medium Thumbnail
     add_image_size('1200w', 1200, 9999, false);
     add_image_size('700w',640,480,true);
 
@@ -127,11 +127,11 @@ function kb2_header_scripts()
         wp_enqueue_script('flexslider');
 
         wp_register_script('kb2scripts', get_template_directory_uri() . '/js/scripts.js', array('jquery','flexslider'), '1.0.1'); // Custom scripts
-        wp_enqueue_script('kb2scripts'); 
+        wp_enqueue_script('kb2scripts');
 
         wp_register_script('magnificjs', get_template_directory_uri() . '/js/jquery.magnific-popup.min.js', array('jquery'), '1.0.1'); // Custom scripts
-        wp_enqueue_script('magnificjs'); 
-                
+        wp_enqueue_script('magnificjs');
+
     }
 }
 
@@ -149,13 +149,13 @@ function kb2_styles()
 {
     wp_register_style('normalize', get_template_directory_uri() . '/normalize.css', array(), '1.0', 'all');
     wp_enqueue_style('normalize'); // Enqueue it!
-    
+
     wp_register_style('grid', get_template_directory_uri() . '/grid.css', array(), '1.0', 'all');
     wp_enqueue_style('grid'); // Enqueue it!
 
     wp_register_style( 'google_font', 'https://fonts.googleapis.com/css?family=Merriweather' );
     wp_enqueue_style( 'google_font' );
-    
+
     wp_register_style('kb2', get_template_directory_uri() . '/style.css', array(), '1.0', 'all');
     wp_enqueue_style('kb2'); // Enqueue it!
 
@@ -163,7 +163,7 @@ function kb2_styles()
     wp_enqueue_style('flexslidercss');
 
     wp_register_style('magnificcss', get_template_directory_uri() . '/css/magnific-popup.css', array(), '1.0', 'all');
-    wp_enqueue_style('magnificcss');    
+    wp_enqueue_style('magnificcss');
 }
 
 // Register HTML5 Blank Navigation
@@ -457,7 +457,7 @@ function html5_shortcode_demo_2($atts, $content = null) // Demo Heading H2 short
 
 
 
-//Knowledge Bank 
+//Knowledge Bank
 
 
 /* custom permalinks */
@@ -481,7 +481,7 @@ function add_input_debug_preview() {
 }
 
 //Wordpress customizer link - gtfo
-add_action( 'wp_before_admin_bar_render', 'wpse200296_before_admin_bar_render' ); 
+add_action( 'wp_before_admin_bar_render', 'wpse200296_before_admin_bar_render' );
 
 function wpse200296_before_admin_bar_render() {
     global $wp_admin_bar;
@@ -540,7 +540,7 @@ function kb_nicename($post_type) {
         return $names[$post_type];
     }
     //else
-    return $post_type;    
+    return $post_type;
 
 }
 
