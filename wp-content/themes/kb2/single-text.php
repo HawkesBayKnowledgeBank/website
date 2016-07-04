@@ -173,6 +173,24 @@
 								?></ul>
 
 						<?php endif; ?>
+
+						<?php $business = get_field( 'business' );
+
+						if( !empty( $business ) ) : ?>
+
+						<h3>Business</h3>
+
+						<p class="image-subjects-links"><?php echo $business; ?></p>
+					<?php endif; ?>
+
+					<?php $location = get_field( 'location' );
+
+						if( !empty( $location ) ) : ?>
+
+						<h3>Location</h3>
+
+						<p class="image-subjects-links"><?php echo $location; ?></p>
+					<?php endif; ?>
 				
 				</div>
 					
