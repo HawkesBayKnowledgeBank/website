@@ -29,99 +29,97 @@
 						<?php endif; ?>
 
 					<?php endif; ?>
-					
-				</div>
-					
-				<div class="grid-6">
 
-					<?php 
+					<div class="grid-6">
 
-							$transcript = get_field( 'transcript' ); 
-				
-
-							//print_r($transcript);
-
-							if( !empty($transcript) ) : ?>
-
-								<h3>Transcript</h3><?php echo $transcript; ?>
-
-							<?php endif;
-						?>
+				<?php 
 						
-					
-				
-				</div>
-					
-				<div class="grid-3">
+					$collections = get_field( 'collections' ); 
+					//print_r($collections); 
 
-				
-	
-				</div>
+					if( !empty($collections) ): ?>
 
-				<div class="grid-6">
-					<?php 
-							
-						$collections = get_field( 'collections' ); 
-						//print_r($collections); 
+						<h3>Collections</h3>
 
-						if( !empty($collections) ): ?>
+						<ul class="image-subjects-links">
 
-							<h3>Collections</h3>
-
-							<ul class="image-subjects-links">
-
-								<?php foreach($collections as $collection): ?>
-										
-									<li><a href="<?php echo get_term_link($collection->term_id); ?>" class="term collection"><?php echo $collection->name; ?></a></li>
-
-								<?php endforeach; ?>
-							
-							</ul>
-
-						<?php endif; ?>
-							
-						<?php 
-							
-						$tags = get_field( 'tags' ); 
-						//print_r($tags); 
-
-						if( !empty($tags) ): ?>
-
-							<h3>Tags</h3>
-							
-							<ul class="image-subjects-links">
-
-								<?php foreach($tags as $tag): ?>
-
-									<li><a href="<?php echo get_term_link($tag->term_id); ?>" class="term tag"><?php echo $tag->name; ?></a></li>
-
-								<?php endforeach; ?>
-						
-							</ul>
-						
-						<?php endif; ?>
-						
-						<?php
-							
-							$subjects = get_field('subjects');
-							
-							if( !empty($subjects) ): ?>
-
-							<h3>Subjects</h3>
-								
-							<ul class="image-subjects-links">
-							
-								<?php foreach( $subjects as $subject ): ?>
+							<?php foreach($collections as $collection): ?>
 									
-									<li><a href="<?php echo get_term_link($subject->term_id); ?>" class="term subject"><?php echo $subject->name; ?></a></li>
-								
-								<?php endforeach; ?>
+								<li><a href="<?php echo get_term_link($collection->term_id); ?>" class="term collection"><?php echo $collection->name; ?></a></li>
+
+							<?php endforeach; ?>
 						
-							<?php endif; ?>
+						</ul>
+
+					<?php endif; ?>
 						
-						<?php
+					<?php 
+						
+					$tags = get_field( 'tags' ); 
+					//print_r($tags); 
+
+					if( !empty($tags) ): ?>
+
+						<h3>Tags</h3>
+						
+						<ul class="image-subjects-links">
+
+							<?php foreach($tags as $tag): ?>
+
+								<li><a href="<?php echo get_term_link($tag->term_id); ?>" class="term tag"><?php echo $tag->name; ?></a></li>
+
+							<?php endforeach; ?>
+					
+						</ul>
+					
+					<?php endif; ?>
+					
+					<?php
+						
+						$subjects = get_field('subjects');
+						
+						if( !empty($subjects) ): ?>
+
+						<h3>Subjects</h3>
 							
-<<<<<<< HEAD
+						<ul class="image-subjects-links">
+						
+							<?php foreach( $subjects as $subject ): ?>
+								
+								<li><a href="<?php echo get_term_link($subject->term_id); ?>" class="term subject"><?php echo $subject->name; ?></a></li>
+							
+							<?php endforeach; ?>
+					
+						<?php endif; ?>
+					
+					<?php
+						
+					$publication_year = get_field('yearpublished');
+
+					if(!empty($publication_year)): ?>
+						
+						<h3>Publication Date:</h3>
+
+						<p class="image-subjects-links"><?php echo $publication_year; ?></p>
+					
+					<?php endif; ?>
+
+					<?php 
+						
+						$originalFormat = get_field( 'format_original' );
+						
+						if( !empty( $originalFormat ) ): ?>
+							
+							<h3>Original Format</h3><p class="image-subjects-links"><?php echo $originalFormat; ?></p>
+						
+						<?php endif; ?> 
+
+					<?php 
+						
+						$accessionNumber = get_field( 'accession_number' );
+						
+						if( !empty( $accessionNumber ) ): ?>
+							
 							<h3>Accession Number</h3><p class="image-subjects-links"><?php echo $accessionNumber; ?></p>
 						
 						<?php endif; ?>
@@ -175,49 +173,35 @@
 								?></ul>
 
 						<?php endif; ?>
-
-
 				
 				</div>
 					
 				</div>
 					
 				<div class="grid-6 transcript">
-=======
-						$publication_year = get_field('yearpublished');
 
-						if(!empty($publication_year)): ?>
-							
-							<h3>Publication Date:</h3>
->>>>>>> 1658b82c7b02a25d2752e724b25264cc10c6e293
+					<?php 
 
-							<p class="image-subjects-links"><?php echo $publication_year; ?></p>
+							$transcript = get_field( 'transcript' ); 
+
+							//print_r($transcript);
+
+							if( !empty($transcript) ) : ?>
+
+								<h3>Transcript</h3><?php echo $transcript; ?>
+
+							<?php endif;
+						?>
 						
-						<?php endif; ?>
+					
+				
+				</div>
+					
+				
 
-						<?php 
-							
-							$originalFormat = get_field( 'format_original' );
-							
-							if( !empty( $originalFormat ) ): ?>
-								
-								<h3>Original Format</h3><p class="image-subjects-links"><?php echo $originalFormat; ?></p>
-							
-							<?php endif; ?> 
+				<div class="grid-6">
 
-						<?php 
-							
-							$accessionNumber = get_field( 'accession_number' );
-							
-							if( !empty( $accessionNumber ) ): ?>
-								
-								<h3>Accession Number</h3><p class="image-subjects-links"><?php echo $accessionNumber; ?></p>
-							
-							<?php endif; ?>
-
-
-
-						
+					
 
 				</div>
 			
