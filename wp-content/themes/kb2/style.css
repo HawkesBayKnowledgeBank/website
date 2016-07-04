@@ -1706,10 +1706,6 @@ h2.Title_single{
 	margin: 0;
 }
 
-.transcript {
-	max-height: 600px;
-	overflow-y: scroll; 
-}
 
 .people_list {
 	list-style: none;
@@ -1717,7 +1713,10 @@ h2.Title_single{
 
 
 
+/* Single text */
 
+.transcript { border-bottom:15px solid #eaeaea;}
+#autoscroll {padding:5px 10px; display:inline-block;}
 
 
 

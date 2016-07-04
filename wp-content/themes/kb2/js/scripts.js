@@ -66,6 +66,9 @@
 					          var src = $(this).attr('data-src');
 					          $(this).attr('src', src).removeAttr('data-src');
 					        });
+
+					        console.log('scrolling to ' + index)
+					        scrollTranscript(index);
 					    }					    
 					});
 
@@ -105,6 +108,18 @@
 			$(this).text(newtext);			
 			$(this).siblings('.children').slideToggle();
 		});
+
+		//magnific images
+		$('.magnific').magnificPopup({
+			type: 'image',
+			closeOnContentClick: true,
+			mainClass: 'mfp-img-mobile',
+			image: {
+				verticalFit: false
+			}
+			
+		});
+
 
 
 		//Quick view links

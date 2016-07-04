@@ -10,13 +10,21 @@
 
 				<?php foreach($images as $index => $image): ?>
 
+					<?php
+
+						$src = $image['image']['sizes']['700w'];
+						$largesrc = (isset($image['image']['sizes']['1200w']) ? $image['image']['sizes']['1200w'] : $image['image']['url']);
+
+					?>
+
+
 					<?php if($index == 0): ?>
 
-						<li><img src="<?php echo $image['image']['sizes']['700w']; ?>" class="gallery-image" /></li>
+						<li><a href="<?php echo $largesrc; ?>" class="magnific"><img src="<?php echo $src; ?>" class="gallery-image" /></a></li>
 
 					<?php else: ?>
 
-						<li><img data-src="<?php echo $image['image']['sizes']['700w']; ?>" class="gallery-image lazy" /></li>
+						<li><a href="<?php echo $largesrc; ?>" class="magnific"><img data-src="<?php echo $src; ?>" class="gallery-image lazy" /></a></li>
 
 					<?php endif; ?>
 

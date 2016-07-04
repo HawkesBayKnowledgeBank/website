@@ -1,3 +1,4 @@
+var enablescroll = true;
 (function ($, root, undefined) {
 
 
@@ -7,44 +8,26 @@
 
 			
 			
-			if($('.field--name-field-transcript').length && $('.gallery-thumbs').length){
+			if($('.transcript').length && $('#textslider').length){
 
-				console.log('Found ' + $('.field--name-field-transcript').find('hr').length + ' hrs');
+				console.log('Found ' + $('.transcript').find('hr').length + ' hrs');
 
-				console.log('Transcript height:' +  $('.field--name-field-transcript').height());
+				console.log('Transcript height:' +  $('.transcript').height());
 
-				console.log('Found ' + $('.gallery-thumbs li:not(.cloned)').length + ' pages')
+				console.log('Found ' + $('#textslider li:not(.cloned)').length + ' pages')
 
 				var enablescroll = true;
 
+				console.log('Setting ' + ( $('#textslider').height() || '700px'))
+				$('.transcript').css('max-height', ( $('.flexslider .slides img').first().height() || '700px') ).css('overflow-y','scroll').css('position','relative');
 
-				$('.field--name-field-transcript').css('max-height',$('.flexslider').height()).css('overflow-y','scroll').css('position','relative');
 
-				$('.gallery-thumbs li:not(.cloned)').click(function(){		
-
-					if(enablescroll == false) {
-						return false;
-					}
-
-					var index = $(this).index('.gallery-thumbs li:not(.cloned)'); //index of this slide
-
-					var scrollpos;
-
-					if(index == 0) {
-						scrollpos = 0;
-					}
-					else {
-						scrollpos = $('.field--name-field-transcript hr:eq(' + (index - 1) + ')').position().top;
-					}
-
-					//$('.field--name-field-transcript').scrollTop($('.field--name-field-transcript').scrollTop() + scrollpos);
-					$('.field--name-field-transcript').animate({scrollTop: $('.field--name-field-transcript').scrollTop() + scrollpos + 'px'});
-				});
+				scrollTranscript();
 
 				//when we have multiple consecutive page breaks (no transcript for a series of pages) hide the second and any subsequent breaks so have just one visible line.
 				//eg <hr><hr><hr> becomes <hr><hr class="hidehr"><hr class="hidehr">...
 
-				$('.field--name-field-transcript hr').each(function(index){
+				$('.transcript hr').each(function(index){
 
 					$(this).attr('id','transcript-page-' + index);
 
@@ -55,14 +38,14 @@
 				});
 
 				if(!$('#autoscroll').length){
-					$('.field--name-field-transcript').after('<div id="autoscroll"><input type="checkbox" value="1" name="autoscroll" checked/><label for="autoscroll">Auto scroll transcript</label></div>');
+					$('.transcript').after('<div id="autoscroll"><input type="checkbox" value="1" name="autoscroll" checked/><label for="autoscroll">Auto scroll transcript</label></div>');
 					$('#autoscroll input').click(function(){
 						if($(this).is(':checked') == false){
-							$('.field--name-field-transcript').css('max-height','').css('overflow-y','');
+							$('.transcript').css('max-height','').css('overflow-y','visible');
 							enablescroll = false;
 						}
 						else {
-							$('.field--name-field-transcript').css('max-height','600px').css('overflow-y','scroll');
+							$('.transcript').css('max-height','700px').css('overflow-y','scroll');
 							enablescroll = true;
 						}
 					});
@@ -72,8 +55,39 @@
 				
 
 			}
+			else {
+				console.log('no deal')
+			}
 
 	});
 
 	
 })(jQuery, this);
+
+
+function scrollTranscript(index){		
+
+	if(typeof enablescroll == 'undefined' || enablescroll == false) {
+		console.log('no enablescroll')
+		return false;
+	}
+
+	if(typeof index == 'undefined') {
+		index = 0;
+	}
+
+	var scrollpos;
+
+	if(index == 0) {
+		scrollpos = $('.transcript h3:eq(0)').position().top;
+	}
+	else {
+		console.log('index is ' + index)
+		scrollpos = $('.transcript hr:eq(' + (index - 1) + ')').position().top;
+	}
+
+	console.log('scrollpos is ' + scrollpos)
+
+	//$('.transcript').scrollTop($('.transcript').scrollTop() + scrollpos);
+	jQuery('.transcript').animate({scrollTop: jQuery('.transcript').scrollTop() + scrollpos + 'px'});
+};

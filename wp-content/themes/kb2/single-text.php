@@ -24,7 +24,7 @@
 
 						<?php if(isset($images[0]['image']['sizes']['700w'])): ?>
 
-							<img src="<?php echo $images[0]['image']['sizes']['700w']; ?>" />
+							<a href="<?php echo (isset($images[0]['image']['sizes']['1200w']) ? $images[0]['image']['sizes']['1200w'] : $images[0]['image']['url']); ?>" class="magnific"><img src="<?php echo $images[0]['image']['sizes']['700w']; ?>" /></a>
 
 						<?php endif; ?>
 
