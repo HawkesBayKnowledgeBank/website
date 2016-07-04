@@ -254,6 +254,7 @@
 							<div class="background_wysiwyg_colour">
 
 								<?php echo $biography;?>
+							
 							</div>
 
 						<?php endif; ?>

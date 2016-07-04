@@ -124,8 +124,58 @@
 						
 						<?php endif; ?>
 
+						<?php 
 
-	
+							$license = get_field( 'licence' );
+
+							if( !empty( $license ) )  : ?>
+
+								<h3>License</h3>
+
+								<p class="image-subjects-links"><?php echo $license; ?></p>
+
+						<?php endif; ?>
+
+						<?php 
+
+							$allow_commercial_licence = get_field( 'allow_commercial_licence' );
+
+							if( !empty( $allow_commercial_licence ) )  : ?>
+
+								<h3>Allow Commercial License</h3>
+
+								<p class="image-subjects-links"><?php echo $allow_commercial_licence; ?></p>
+
+						<?php endif; ?>
+
+						<?php $people = get_field( 'people' );
+
+						if( !empty($people) ) : ?>
+
+								<h3>People</h3>
+
+								<ul class="people_list">
+
+								<?php foreach($people as $person) : ?>
+
+									<li class="image-subjects-links">
+										
+										<span><?php echo $person['first_name']; ?></span>
+										
+										<span><?php echo $person['middle_names']; ?></span>
+										
+										<span><?php echo $person['family_name']; ?></span>
+									
+									</li>
+
+								<?php endforeach;
+						
+								?></ul>
+
+						<?php endif; ?>
+
+
+				
 				</div>
 					
 				</div>

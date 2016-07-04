@@ -509,7 +509,7 @@ nav#nav-main a:hover {
 }
 
 .image-subjects-links a,
-p.image-subjects-links {
+p.image-subjects-links, li.image-subjects-links {
 	display: inline-block;
 	padding: 10px 15px;
 	margin-top:0px;
@@ -1482,7 +1482,6 @@ footer {
 
 }
 
-
 @media (max-width: 600px) {
 
 	.tiles-3 .tile, .tiles-4 .tile {
@@ -1492,10 +1491,8 @@ footer {
 }
 
 
-
 /* Pagination
 --------------------*/
-
 
 .pagination {
 	background-color: #fff;
@@ -1712,6 +1709,10 @@ h2.Title_single{
 .transcript {
 	max-height: 600px;
 	overflow-y: scroll; 
+}
+
+.people_list {
+	list-style: none;
 }
 
 
