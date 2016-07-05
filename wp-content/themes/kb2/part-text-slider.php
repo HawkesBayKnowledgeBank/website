@@ -12,7 +12,7 @@
 
 					<?php
 
-						$src = $image['image']['sizes']['700w'];
+						$src = $image['image']['sizes']['700w'];						
 						$largesrc = (isset($image['image']['sizes']['1200w']) ? $image['image']['sizes']['1200w'] : $image['image']['url']);
 
 					?>
@@ -34,6 +34,25 @@
 
 		</div><!-- #textslider -->
 
+			
 	</div>
+
+	<div class="slidernav flexslider">
+
+		<ul class="slides">
+
+			<?php foreach($images as $index => $image): ?>
+
+					<?php $smallsrc = $image['image']['sizes']['thumbnail']; ?>
+
+					<li><img src="<?php echo $smallsrc; ?>" class="gallery-image-small" /></li>
+
+			<?php endforeach; ?>
+
+		</ul>
+
+	</div><!-- .slidernav -->			
+
+	
 
 <?php endif; ?>

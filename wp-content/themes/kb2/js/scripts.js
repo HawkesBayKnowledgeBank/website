@@ -33,13 +33,28 @@
 			if(typeof flexslider != undefined) {
 
 				if($('#textslider').length) {
+
+					$('.slidernav').flexslider({
+					    animation: "slide",
+					    controlNav: false,
+					    animationLoop: false,
+					    slideshow: false,
+					    itemWidth: 150,
+					    itemMargin: 15,
+					    prevText: "",
+						nextText: "",					    
+					    asNavFor: '#textslider',					    
+					});
+
 				 
 					$('#textslider').flexslider({
-					    animation: "slide",					    
+					    animation: "slide",
+					    controlNav: false,					    
 					    animationLoop: false,
 					    slideshow: false,
 					    prevText: "",
-						nextText: "",					    
+						nextText: "",
+						sync: '.slidernav',					    
 						start: function(slider) { // Fires when the slider loads the first slide
 					      var slide_count = slider.count - 1;
 
@@ -51,6 +66,9 @@
 					        });
 					    },
 					    before: function(slider) { // Fires asynchronously with each slider animation
+					    	console.log('bang')
+					    	
+
 					      var slides     = slider.slides,
 					          index      = slider.animatingTo,
 					          $slide     = $(slides[index]),
@@ -59,18 +77,20 @@
 					          nxt_slide  = current + 1,
 					          prev_slide = current - 1;
 
-					      $slide
+							console.log($slide.parent().find('img:eq(' + current + ')'));
+
+					      	$slide
 					        .parent()
-					        .find('img.lazy:eq(' + current + '), img.lazy:eq(' + prev_slide + '), img.lazy:eq(' + nxt_slide + ')')
+					        .find('img:eq(' + current + '), img:eq(' + prev_slide + '), img:eq(' + nxt_slide + ')')
 					        .each(function() {
 					          var src = $(this).attr('data-src');
 					          $(this).attr('src', src).removeAttr('data-src');
 					        });
-
-					        console.log('scrolling to ' + index)
-					        scrollTranscript(index);
+					      
+					        scrollTranscript(index);				       
 					    }					    
 					});
+
 
 				}
 				else {
