@@ -47,7 +47,7 @@
 
 							<div class="title_fields"><h3>Biography :</h3></div>
 
-							<p class="image-subjects-links"><?php echo $biography; ?></p>
+							<div class="background_wysywyg_colour"><?php echo $biography; ?></div>
 
 						<?php endif; ?>
 
@@ -68,7 +68,14 @@
 					</div>
 					<div class='grid-3'>
 						<h2 class="Title_single">Birth :</h2>
-						<div class="title_fields"><h3>Born:</h3></div><p class="image-subjects-links"><?php the_field( 'birthdate' ); ?></p>
+
+						<?php $birthdate = get_field( 'birthdate' );?>
+						<?php if (!empty($birthdate)):?>
+							<div class="title_fields"><h3>Born:</h3></div>
+							<p class="image-subjects-links">
+							<?php echo date("jS F, Y",strtotime($birthdate));?>
+							</p>
+						<?php endif;?>
 						<?php $maiden_name = get_field( 'maiden_name' );?>
 
 						<?php if( !empty( $maiden_name ) ) : ?>
@@ -83,9 +90,10 @@
 
 							<?php if( !empty( $birthdate_accuracy ) ) : ?>
 
+
 								<p class="image-subjects-links">
 
-									<?php echo $birthdate_accuracy;?>
+									<?php echo date("jS F, Y",strtotime($birthdate_accuracy));?>
 								</p>
 
 							<?php endif; ?>
@@ -219,6 +227,19 @@
 
 							<?php endwhile;?>
 						<?php endif; ?>
+						<?php if( have_rows( 'children' ) ): ?>
+
+							<div class="title_fields"><h3>Children:</h3></div>
+
+							<?php while( have_rows( 'children' ) ) : the_row();?>
+								<!-- //vars -->
+								<?php $first_name = get_sub_field( 'first_name' );
+								$middle_names = get_sub_field( 'middle_names' );
+								$family_name = get_sub_field( 'family_name' );
+								?>
+								<p class="children image-subjects-links"><?php echo $first_name . " " . $middle_names . " " . $family_name; ?></p>
+							<?php endwhile;?>
+						<?php  endif; ?>
 						<?php $primary_education = get_field( 'primary_education' );?>
 
 						<?php if( !empty( $primary_education ) ) : ?>
@@ -256,23 +277,30 @@
 
 						<?php endif; ?>
 
-<<<<<<< HEAD
-								<?php echo $biography;?>
-							
-							</div>
 
-						<?php endif; ?>
-=======
->>>>>>> 1658b82c7b02a25d2752e724b25264cc10c6e293
+
+						<div class="title_fields"><h2 class="Title_single">Related material:</h2></div>
+						<!-- <a class="image-subjects-links" href="#">Title of article</a> -->
+						<!-- post thumbnail -->
+							<?php if ( has_post_thumbnail()) : // Check if Thumbnail exists ?>
+								<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
+									<?php the_post_thumbnail(); // Fullsize image for the single post ?>
+								</a>
+							<?php endif; ?>
+
 						<?php $related_records = get_field( 'related_records' );?>
 
-						<!-- <?php if( !empty( $related_records ) ) : ?>
+						<?php if( !empty( $related_records ) ) : ?>
 							<div class="title_fields"><h3>Related records :</h3></div>
 							<p class="image-subjects-links">
-								<?php print_r($related_records);?>
-								<?php get_field("related_records");?>
-							</p>
-						<?php endif; ?> -->
+								<?php foreach( $related_records as $related_record ):?>
+
+
+										<a href="<?php echo get_permalink( $related_record->ID ); ?>"><?php echo get_the_title( $related_record->ID ); ?></a>
+									</p>
+								<?php endforeach; ?>
+								</p>
+						<?php endif; ?>
 						<?php $related_collections = get_field( 'related_collections' );?>
 						<?php if( !empty( $related_collections ) ) : ?>
 							<!-- <?php print_r($related_collections)?> -->
@@ -287,31 +315,7 @@
 							<?php
 								endforeach;
 							endif;?>
-							<!-- <div class="title_fields"><h3>Related collections :</h3></div>
-							<p class="image-subjects-links">
-								<?php get_field("related_collections");?>
-							</p> -->
 						<?php endif; ?>
-						<?php if( have_rows( 'children' ) ): ?>
-
-							<div class="title_fields"><h3>Children:</h3></div>
-
-							<?php while( have_rows( 'children' ) ) : the_row();?>
-								<!-- //vars -->
-								<?php $first_name = get_sub_field( 'first_name' );
-								$middle_names = get_sub_field( 'middle_names' );
-								$family_name = get_sub_field( 'family_name' );
-								?>
-								<p class="children image-subjects-links"><?php echo $first_name . " " . $middle_names . " " . $family_name; ?></p>
-							<?php endwhile;?>
-						<?php  endif; ?>
-						<div class="title_fields"><h3>Related material:</h3></div><a class="image-subjects-links" href="#">Title of article</a>
-						<!-- post thumbnail -->
-							<?php if ( has_post_thumbnail()) : // Check if Thumbnail exists ?>
-								<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
-									<?php the_post_thumbnail(); // Fullsize image for the single post ?>
-								</a>
-							<?php endif; ?>
 					<!-- /post thumbnail -->
 					</div>
 				</div>

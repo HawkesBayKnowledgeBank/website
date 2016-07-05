@@ -41,7 +41,7 @@
 
 				<div class='grid-6'>
 
-					<h2><?php the_title(); ?></h2>
+					<h2 class="Title_single"><?php the_title(); ?></h2>
 
 					<?php if( have_rows('images') ): ?>
 
@@ -52,20 +52,115 @@
 
 							?>
 
-							<div id="cache"></div>
-							<a href="#cache"><img src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt'] ?>"></a>
-							<div class="popup"><img src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt'] ?>"><a href="#">X</a></div>
+							<div class="imageWrap">
 
-							<!-- <img src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt'] ?>" /> -->
+								<?php $images = get_field('images'); ?>
+
+								<?php if(isset($images[0]['image']['sizes']['700w'])): ?>
+
+									<a href="<?php the_permalink(); ?>?quickview=true" class="quick_view"><img src="<?php echo $images[0]['image']['sizes']['700w']; ?>" /></a>
+
+								<?php endif; ?>
+
+								<span class="quick_view"><a class="lightbox_icon quick_view" href="<?php the_permalink(); ?>?quickview=true"><img src="/wp-content/themes/kb2/img/search-white.png" alt="View" /></a></span>
+
+							</div>
 
 						<?php endwhile; ?>
 
 					<?php endif; ?>
+					<?php $notes = get_field( 'notes' );?>
+
+
+					<?php if( !empty( $notes ) ) : ?>
+
+						<div class="image-subjects-links"><h3>Notes :</h3></div>
+
+						<div class="background_wysywyg_colour">
+
+
+							<?php echo $notes; ?>
+						</div>
+
+					<?php endif; ?>
+					<?php $file = get_field('master');?>
+
+
+
+					<?php if( $file ): ?>
+						<div class="LicenceBox">
+							<div class="grid-container bottom_margin">
+
+								<div class='grid-8'>
+
+									<h3 class="image-subjects-links">Attachment</h3>
+
+									<a href="<?php echo $file['url']; ?>" download="<?php echo $file['filename']; ?>"><?php echo $file['filename']; ?></a>
+								</div>
+								<div class='grid-4'>
+
+									<h3 class="image-subjects-links">Size</h3>
+
+									<?php $number=0;
+									$number=($file['height']/1024);
+									$number=number_format($number, 2, ',', ' ');?>
+
+
+									<?php echo $number; ?> Mo
+								</div>
+							</div>
+						</div>
+
+					<?php endif; ?>
+					<div class="LicenceBox">
+
+						<div class="grid-container bottom_margin">
+
+
+							<div class='grid-6'>
+
+								<?php $licence = get_field( 'licence' );?>
+
+								<?php if( !empty( $licence ) ) : ?>
+
+										<?php if ($licence=="a-nc"): ?>
+											<a class='NoCommercial' href="https://creativecommons.org/licenses/by-nc/4.0/"></a>
+											<p>
+												This work is licensed under a</p>
+											<a href="http://creativecommons.org/licenses/by-nc/4.0/" rel="license"> Creative Commons Attribution-NonCommercial 4.0 International License</a>
+
+
+
+										<?php endif; ?>
+
+
+
+								<?php endif; ?>
+							</div>
+							<div class='grid-6'>
+
+								<?php $allow_commercial_licence = get_field( 'allow_commercial_licence' );?>
+
+								<?php if( !empty( $allow_commercial_licence ) ) : ?>
+
+
+										<?php if ($allow_commercial_licence==true): ?>
+											<a class='Copyright' href="https://www.paypal.com/cgi-bin/webscr"></a>
+											<a href="/licensing">About commercial licensing.</a>
+										<?php endif; ?>
+
+
+								<?php endif; ?>
+							</div>
+						</div>
+
+					</div>
 
 
 				</div>
 
 				<div class="grid-6">
+
 
 					<?php
 
@@ -152,30 +247,9 @@
 
 					<?php endif; ?>
 
-					<?php
 
-					$file = get_field('master');?>
 
-					<?php if( $file ): ?>
 
-						<h3 class="image-subjects-links">Original Data File</h3>
-
-						<a href="<?php echo $file['url']; ?>"><?php echo $file['filename']; ?></a>
-
-					<?php endif; ?>
-
-					<?php $accession_number = get_field( 'accession_number' );?>
-
-					<?php if( !empty( $accession_number ) ) : ?>
-
-						<div class="title_fields"><h3>Accession number</h3></div>
-
-						<p class="image-subjects-links">
-
-							<?php the_field( 'accession_number' ); ?>
-						</p>
-
-					<?php endif; ?>
 
 
 
@@ -217,20 +291,7 @@
 						</p>
 
 					<?php endif; ?>
-					<?php $notes = get_field( 'notes' );?>
 
-
-					<?php if( !empty( $notes ) ) : ?>
-
-						<div class="title_fields"><h3>Notes :</h3></div>
-
-						<p class="image-subjects-links">
-
-
-							<?php echo('notes'); ?>
-						</p>
-
-					<?php endif; ?>
 					<?php $languages = get_field( 'languages' );?>
 
 					<?php if( !empty( $languages ) ) : ?>
@@ -241,90 +302,22 @@
 
 							<?php echo $languages;?>
 						</p>
-					<div class="LicenceBox">
-
-						<div class="grid-container bottom_margin">
-
-
-							<div class='grid-6'>
-
-								<?php $licence = get_field( 'licence' );?>
-
-								<?php if( !empty( $licence ) ) : ?>
-
-									<div class="title_fields"><h3>Licence :</h3></div>
-
-										<?php if ($licence=="a-nc"): ?>
-											<?php echo "Attribution no commercial";?>
-											<a class='NoCommercial' href="https://creativecommons.org/licenses/by-nc/4.0/"></a>
-
-										<?php endif; ?>
-
-
-
-								<?php endif; ?>
-							</div>
-							<div class='grid-6'>
-
-								<?php $allow_commercial_licence = get_field( 'allow_commercial_licence' );?>
-
-								<?php if( !empty( $allow_commercial_licence ) ) : ?>
-
-									<div class="title_fields"><h3>Allow commercial licence :</h3></div>
-
-										<?php if ($allow_commercial_licence==true): ?>
-											<a class='Copyright' href="https://www.paypal.com/cgi-bin/webscr"></a>
-											<a href="/licensing">About commercial licensing.</a>
-										<?php endif; ?>
-
-
-								<?php endif; ?>
-							</div>
-						</div>
-					</div>
 
 					<?php endif; ?>
-					<div class="LicenceBox">
 
-						<div class="grid-container bottom_margin">
+					<?php $accession_number = get_field( 'accession_number' );?>
 
+					<?php if( !empty( $accession_number ) ) : ?>
 
-							<div class='grid-6'>
+						<div class="title_fields"><h3>Accession number</h3></div>
 
-								<?php $licence = get_field( 'licence' );?>
+						<p class="image-subjects-links">
 
-								<?php if( !empty( $licence ) ) : ?>
+							<?php the_field( 'accession_number' ); ?>
+						</p>
 
-									<div class="title_fields"><h3>Licence :</h3></div>
+					<?php endif; ?>
 
-										<?php if ($licence=="a-nc"): ?>
-											<?php echo "Attribution no commercial";?>
-											<a class='NoCommercial' href="https://creativecommons.org/licenses/by-nc/4.0/"></a>
-
-										<?php endif; ?>
-
-
-
-								<?php endif; ?>
-							</div>
-							<div class='grid-6'>
-
-								<?php $allow_commercial_licence = get_field( 'allow_commercial_licence' );?>
-
-								<?php if( !empty( $allow_commercial_licence ) ) : ?>
-
-									<div class="title_fields"><h3>Allow commercial licence :</h3></div>
-
-										<?php if ($allow_commercial_licence==true): ?>
-											<a class='Copyright' href="https://www.paypal.com/cgi-bin/webscr"></a>
-											<a href="/licensing">About commercial licensing.</a>
-										<?php endif; ?>
-
-
-								<?php endif; ?>
-							</div>
-						</div>
-					</div>
 					<?php $exif_model = get_field( 'exif_model' );?>
 					<?php $computed_aperturefnumber = get_field( 'computed_aperturefnumber' );?>
 					<?php $exif_compression = get_field( 'exif_compression' );?>
