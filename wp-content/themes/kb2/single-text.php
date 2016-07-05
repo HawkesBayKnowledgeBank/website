@@ -178,19 +178,92 @@
 
 						if( !empty( $business ) ) : ?>
 
-						<h3>Business</h3>
+							<h3>Business</h3>
 
-						<p class="image-subjects-links"><?php echo $business; ?></p>
-					<?php endif; ?>
+							<p class="image-subjects-links"><?php echo $business; ?></p>
+					
+						<?php endif; ?>
 
-					<?php $location = get_field( 'location' );
+						<?php $location = get_field( 'location' );
 
 						if( !empty( $location ) ) : ?>
 
-						<h3>Location</h3>
+							<h3>Location</h3>
 
-						<p class="image-subjects-links"><?php echo $location; ?></p>
-					<?php endif; ?>
+							<p class="image-subjects-links"><?php echo $location; ?></p>
+					
+						<?php endif; ?>
+
+						<?php $author = get_field( 'author' );
+
+						if( !empty($author) ) : ?>
+
+								<h3>Author</h3>
+
+								<ul class="people_list">
+
+								<?php foreach($author as $person) : ?>
+
+									<li class="image-subjects-links">
+										
+										<span><?php echo $person['first_name']; ?></span>
+										
+										<span><?php echo $person['middle_names']; ?></span>
+										
+										<span><?php echo $person['family_name']; ?></span>
+									
+									</li>
+
+								<?php endforeach;
+						
+								?></ul>
+
+						<?php endif; ?>
+
+						<?php 
+
+							$notes = get_field( 'notes' ); 
+
+							//print_r($transcript);
+
+							if( !empty($notes) ) : ?>
+
+								<h3>Additional Information</h3><?php echo $notes; ?>
+
+							<?php endif;
+						?>
+
+						<?php $publisher = get_field( 'publisher' );
+
+						if( !empty( $publisher ) ) : ?>
+
+							<h3>Publisher</h3>
+
+							<p class="image-subjects-links"><?php echo $publisher; ?></p>
+					
+						<?php endif; ?>
+
+						<?php $languages = get_field( 'languages' );
+
+						if( !empty( $languages ) ) : ?>
+
+							<h3>Language(s)</h3>
+
+							<p class="image-subjects-links"><?php echo $languages; ?></p>
+					
+						<?php endif; ?>
+
+						<?php
+
+					$file = get_field('master');?>
+
+					<?php if( $file ): ?>
+
+						<h3 class="image-subjects-links">Original Data File</h3>
+
+						<a href="<?php echo $file['url']; ?>"><?php echo $file['filename']; ?></a>
+
+					<?php endif; ?>  
 				
 				</div>
 					
@@ -200,16 +273,19 @@
 
 					<?php 
 
-							$transcript = get_field( 'transcript' ); 
+						$transcript = get_field( 'transcript' ); 
 
-							//print_r($transcript);
+						//print_r($transcript);
 
-							if( !empty($transcript) ) : ?>
+						if( !empty($transcript) ) : ?>
 
-								<h3>Transcript</h3><?php echo $transcript; ?>
+							<h3>Transcript</h3><?php echo $transcript; ?>
 
-							<?php endif;
-						?>
+						<?php endif;
+						
+					?>
+
+
 						
 					
 				
