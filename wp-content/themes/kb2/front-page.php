@@ -44,7 +44,7 @@
 
 	<div class="grid-6">
 
-		<div class="homesearch">
+		<!-- <div class="homesearch">
 
 			<form action="/" method="get" class="searchBar">
 
@@ -57,13 +57,13 @@
 
 
 
-		</div>
+		</div> -->
 
 
 	</div>
 
 
-</div>	
+</div>
 
 <div class="grid-container">
 
@@ -73,10 +73,10 @@
 
 	</div>
 
-</div>	
+</div>
 
 <div class="grid-container bottom-margin ">
-		
+
 	<?php
 		$landingpages = get_field('content_landing_pages');
 
@@ -86,22 +86,22 @@
 
 				<div id="front_page" class="grid-3">
 
-					
-					
-						<a href="<?php echo get_permalink($page['landing_page']->ID); ?>"><img src="<?php echo $page['image']['sizes']['300w']; ?>" alt="<?php echo $page['image']['alt'] ?>" /></a>	
-						
+
+
+						<a href="<?php echo get_permalink($page['landing_page']->ID); ?>"><img src="<?php echo $page['image']['sizes']['300w']; ?>" alt="<?php echo $page['image']['alt'] ?>" /></a>
+
 						<div class="front_page_thumb">
 
 						<h3><?php echo $page['landing_page']->post_title; ?></h3>
-						
-						<p><?php echo $page['blurb']; ?></p>						
-					
+
+						<p><?php echo $page['blurb']; ?></p>
+
 					</div>
 
 				</div>
 
 	<?php
-			
+
 			endforeach;
 
 		endif;
