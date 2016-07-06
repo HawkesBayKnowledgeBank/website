@@ -8,7 +8,34 @@
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<div class="grid-container bottom_margin">
 					<div class='grid-6'>
+
 						<h2 class="Title_single"><?php the_title(); ?></h2>
+						<?php if( have_rows('images') ): ?>
+
+							<?php while( have_rows('images') ): the_row();
+							// vars
+
+								$image = get_sub_field('image');
+
+								?>
+
+								<div class="imageWrap">
+
+									<?php $images = get_field('images'); ?>
+
+									<?php if(isset($images[0]['image']['sizes']['700w'])): ?>
+
+										<a href="<?php the_permalink(); ?>?quickview=true" class="quick_view"><img src="<?php echo $images[0]['image']['sizes']['700w']; ?>" /></a>
+
+									<?php endif; ?>
+
+									<span class="quick_view"><a class="lightbox_icon quick_view" href="<?php the_permalink(); ?>?quickview=true"><img src="/wp-content/themes/kb2/img/search-white.png" alt="View" /></a></span>
+
+								</div>
+
+							<?php endwhile; ?>
+
+						<?php endif; ?>
 						<div class="title_fields"><h3>Name:</h3></div>
 
 						<?php if( have_rows( 'name' ) ): ?>
@@ -134,8 +161,8 @@
 							<div class="title_fields"><h3>Marriage date :</h3></div>
 
 							<p class="image-subjects-links">
+								<?php echo date("jS F, Y",strtotime($marriage_date));?>
 
-								<?php echo "marriage_date";?>
 							</p>
 
 						<?php endif; ?>
@@ -151,7 +178,7 @@
 						<?php if( !empty( $marriage_place ) ) : ?>
 							<div class="title_fields"><h3>Place of Marriage :</h3></div>
 							<p class="image-subjects-links">
-								<?php echo "marriage_place";?>
+								<?php echo $marriage_place;?>
 							</p>
 
 						<?php endif; ?>
@@ -159,7 +186,7 @@
 						<?php if( !empty( $deathdate ) ) : ?>
 							<div class="title_fields"><h3>Date of death :</h3></div>
 							<p class="image-subjects-links">
-								<?php echo $deathdate;?>
+								<?php echo date("jS F, Y",strtotime($deathdate));?>
 							</p>
 						<?php endif; ?>
 						<?php $deathdate_accuracy = get_field( 'deathdate_accuracy' );?>
@@ -168,7 +195,7 @@
 
 							<div class="title_fields"><h3>Death date accuracy :</h3></div>
 							<p class="image-subjects-links">
-								<?php echo "deathdate_accuracy";?>
+								<?php echo $deathdate_accuracy;?>
 							</p>
 
 						<?php endif; ?>
