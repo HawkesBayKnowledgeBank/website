@@ -31,6 +31,7 @@
 								<!-- /post thumbnail -->
 
 							</div>
+
 							<div class="grid-3">
 
 								<?php $collections = get_field( 'collections' );?>
@@ -55,38 +56,70 @@
 									
 									<?php endif; ?>
 
-							<?php $tags = get_field( 'tags' );?>
-							<?php if( !empty($tags) ):?>
-								<div class="title_fields"><h3>Tags</h3></div>
-								<ul class="image-subjects-links">
-									<?php foreach($tags as $tag): ?>
-										<li><a href="<?php echo get_term_link($tag->term_id); ?>" class="term tag"><?php echo $tag->name; ?></a></li>
-									<?php endforeach;?>
-								</ul>
-							<?php endif;?>
+								<?php $tags = get_field( 'tags' );?>
+								
+								<?php if( !empty($tags) ):?>
+									
+									<div class="title_fields">
 
-								<?php //Subjects
-								$subjects = get_field( 'subjects' );
-									//print_r($subjects);
-								if( !empty( $subjects ) ): ?>
-								<h3>Subjects</h3>
-								<ul>
-									<?php foreach ( $subjects as $subject ): ?>
-										<li><a href="<?php echo get_term_link($subject->term_id); ?>" class="term subject"><?php echo $subject->name; ?></a></li>
-									<?php endforeach; ?>
-								</ul>
-							<?php endif;
-							?>
+										<h3>Tags</h3>
 
+									</div>
+									
+									<ul class="image-subjects-links">
+										
+										<?php foreach($tags as $tag): ?>
+											
+											<li><a href="<?php echo get_term_link($tag->term_id); ?>" class="term tag"><?php echo $tag->name; ?></a></li>
+										
+										<?php endforeach;?>
+									
+									</ul>
+								
+								<?php endif;?>
 
-						</div>
+								<?php $subjects = get_field('subjects');?>
+								
+								<?php if( !empty($subjects) ): ?>
+								
+									<div class="title_fields">
+
+										<h3>Subjects</h3>
+
+									</div>
+									
+									<ul class="image-subjects-links">
+										
+										<?php foreach( $subjects as $subject ): ?>
+											
+											<li><a href="<?php echo get_term_link($subject->term_id); ?>" class="term subject"><?php echo $subject->name; ?></a></li>
+									
+										<?php endforeach; ?>
+									
+									</ul>
+							
+								<?php endif; ?>
+
+							</div>
+
 						<div class="grid-3">
 
-							<?php $originalFormat = get_field( 'format_original' );?>
+							<?php $format_original = get_field( 'format_original' );?>
+							
+							<?php if( !empty( $format_original ) ): ?>
+								
+								<div class="title_fields">
 
-							<?php if( !empty($originalFormat) ): ?>
-								<h3>Original Format</h3>
-								<?php echo $originalFormat; ?>
+									<h3>Format of the original</h3>
+
+								</div>
+								
+								<p class="image-subjects-links">
+									
+									<?php echo $format_original; ?>
+								
+								</p>
+							
 							<?php endif;?>
 <!-- Original File -->
 								<?php $file = get_field('master');?>
@@ -94,9 +127,10 @@
 								<h3>Original Data File</h3><a href="<?php echo $file['url']; ?>"><?php echo $file['filename']; ?></a>
 							<?php endif;?>
 <!-- Accession number -->
-								<?php $accessionNumber = get_field( 'accession_number' );?>
-								<?php if( !empty( $accessionNumber ) ): ?>
-									<h3>Accession Number</h3><?php echo $accessionNumber; ?>
+								<?php $accession_number = get_field( 'accession_number' );?>
+							<?php if( !empty( $accession_number ) ): ?>
+								<div class="title_fields"><h3>Accession Number</h3></div>
+								<p class="image-subjects-links"><?php echo $accession_number; ?></p>
 							<?php endif;?>
 
 								<?php //Cover image
@@ -104,59 +138,61 @@
 								if( !empty( $image ) ): ?>
 								<h3>Cover image</h3><?php get_field('image'); ?>
 							<?php endif;?>
-							<?php $people = get_field('people');?>
+							
+							<?php $people = get_field( 'people' );
 
-							<?php if( !empty($people) ): ?>
+						if( !empty($people) ) : ?>
 
-							<ul>
-								<?php while( have_rows( 'people' ) ) : the_row();?>
-									<!-- //vars -->
-									<?php $first_name = get_sub_field( 'first_name' );
-									$middle_names = get_sub_field( 'middle_names' );
-									$family_name = get_sub_field( 'family_name' );
-									?>
-									<p class="image-subjects-links"><?php echo $first_name . " " . $middle_names . " " . $family_name; ?></p>
+								<h3>People</h3>
 
+								<ul class="people_list">
 
-								<?php endwhile;?>
+								<?php foreach($people as $person) : ?>
 
-							</ul>
+									<li class="image-subjects-links">
+										
+										<span><?php echo $person['first_name']; ?></span>
+										
+										<span><?php echo $person['middle_names']; ?></span>
+										
+										<span><?php echo $person['family_name']; ?></span>
+									
+									</li>
+
+								<?php endforeach;
+						
+								?></ul>
 
 						<?php endif; ?>
+
 						<?php $business = get_field('business');?>
-
+							
 						<?php if( !empty($business) ): ?>
-
-							<ul>
-
+							
+							<div class="title_fields"><h3>Business / organisation name :</h3></div>
+							
 							<p class="image-subjects-links">
-
+								
 								<?php echo $business;?>
+							
 							</p>
-
-						</ul>
-
-					<?php endif; ?>
-					<?php $author = get_field('author');?>
-
-
-							<?php if( !empty($author) ): ?>
-
-							<ul>
-								<?php while( have_rows( 'author' ) ) : the_row();?>
-									<!-- //vars -->
-									<?php $first_name = get_sub_field( 'first_name' );
-									$middle_names = get_sub_field( 'middle_names' );
-									$family_name = get_sub_field( 'family_name' );
-									?>
-									<p class="image-subjects-links"><?php echo $first_name . " " . $middle_names . " " . $family_name; ?></p>
-
-
-								<?php endwhile;?>
-
-							</ul>
-
+						
 						<?php endif; ?>
+						
+						<?php $author = get_field('author');?>
+							<?php if( !empty($author) ): ?>
+								<div class="title_fields"><h3>Creator / Author</h3></div>
+								<ul class="image-subjects-links">
+									<?php while( have_rows( 'author' ) ) : the_row();?>
+										<!-- //vars -->
+										<?php $first_name = get_sub_field( 'first_name' );
+										$middle_names = get_sub_field( 'middle_names' );
+										$family_name = get_sub_field( 'family_name' );
+										?>
+										<?php echo $first_name . " " . $middle_names . " " . $family_name; ?>
+									<?php endwhile;?>
+								</ul>
+							<?php endif; ?>
 						
 						<?php $additional = get_field('additional');?>
 
@@ -173,18 +209,16 @@
 
 					<?php endif; ?>
 					
-					<?php $languages = get_field('languages');?>
+					<?php $languages = get_field( 'languages' );?>
 
-						<?php if( !empty($languages) ): ?>
+					<?php if( !empty( $languages ) ) : ?>
 
-							<ul>
+						<div class="title_fields"><h3>Languages :</h3></div>
 
-							<p class="image-subjects-links">
+						<p class="image-subjects-links">
 
-								<?php echo $languages;?>
-							</p>
-
-						</ul>
+							<?php echo $languages;?>
+						</p>
 
 					<?php endif; ?>
 
