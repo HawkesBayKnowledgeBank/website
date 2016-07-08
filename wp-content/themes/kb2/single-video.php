@@ -33,31 +33,37 @@
 							</div>
 							<div class="grid-3">
 
-								<?php //Collections
-								$collections = get_field( 'collections' );
-									//print_r($collections);
-								if( !empty( $collections ) ): ?>
-								<h3>Collections</h3>
-								<ul>
-									<?php foreach( $collections as $collection ): ?>
-										<li><a href="<?php echo get_term_link($collection->term_id); ?>" class="term collection"><?php echo $collection->name; ?></a></li>
-									<?php endforeach; ?>
-								</ul>
-							<?php endif;
-							?>
+								<?php $collections = get_field( 'collections' );?>
+									
+								<?php if( !empty($collections) ): ?>
+									
+									<div class="title_fields">
 
-							<?php
-							$tags = get_field( 'tags' );
-									//print_r($tags);
-							if( !empty($tags) ): ?>
-							<h3>Tags</h3>
-							<ul>
-								<?php foreach ($tags as $tag): ?>
-									<li><a href="<?php echo get_term_link($tag->term_id); ?>" class="term tag"><?php echo $tag->name; ?></a></li>
-								<?php endforeach; ?>
-							</ul>
-						<?php endif;
-						?>
+										<h3>Collections</h3>
+
+									</div>
+							
+									<ul class="image-subjects-links">
+										
+										<?php foreach($collections as $collection): ?>
+								
+											<li><a href="<?php echo get_term_link($collection->term_id); ?>" class="term collection"><?php echo $collection->name; ?></a></li>
+							
+										<?php endforeach; ?>
+									
+									</ul>
+									
+									<?php endif; ?>
+
+							<?php $tags = get_field( 'tags' );?>
+							<?php if( !empty($tags) ):?>
+								<div class="title_fields"><h3>Tags</h3></div>
+								<ul class="image-subjects-links">
+									<?php foreach($tags as $tag): ?>
+										<li><a href="<?php echo get_term_link($tag->term_id); ?>" class="term tag"><?php echo $tag->name; ?></a></li>
+									<?php endforeach;?>
+								</ul>
+							<?php endif;?>
 
 								<?php //Subjects
 								$subjects = get_field( 'subjects' );
@@ -114,8 +120,6 @@
 
 								<?php endwhile;?>
 
-
-
 							</ul>
 
 						<?php endif; ?>
@@ -150,11 +154,10 @@
 
 								<?php endwhile;?>
 
-
-
 							</ul>
 
 						<?php endif; ?>
+						
 						<?php $additional = get_field('additional');?>
 
 						<?php if( !empty($additional) ): ?>
@@ -169,6 +172,7 @@
 						</ul>
 
 					<?php endif; ?>
+					
 					<?php $languages = get_field('languages');?>
 
 						<?php if( !empty($languages) ): ?>
