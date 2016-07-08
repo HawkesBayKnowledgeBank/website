@@ -196,10 +196,10 @@
 									<?php $find=FALSE ;?>
 									<?php if( !empty( $parent_records ) ) : ?>
 										<?php foreach( $parent_records as $parent_record ):?>
-											<?php $explo=explode(" ",get_the_title( $parent_records->ID ));?>
-												<?php print_r(strtoupper($explo[0]))?>
+											<?php $explo=explode(" ",get_the_title( $parent_record->ID ));?>
+												<!-- <?php print_r(strtoupper($explo[0]))?>
 												<?php print_r(strtoupper($explo[1]))?>
-												<?php print_r(strtoupper($explo[2]))?>
+												<?php print_r(strtoupper($explo[2]))?> -->
 												<?php if( strtoupper($explo[0])== strtoupper($first_name)and  strtoupper($explo[2])== strtoupper($family_name)):?>
 													<?php $find=TRUE ;?>
 													<?php $permalink=get_permalink( $parent_record->ID ) ;?>
@@ -258,7 +258,7 @@
 									<?php if( !empty( $children_records ) ) : ?>
 										<?php $find=FALSE ;?>
 										<?php foreach( $children_records as $children_record ):?>
-											<div class="image-subjects-links">
+											<!-- <div class="image-subjects-links"> -->
 												<?php $explo=explode(" ",get_the_title( $children_record->ID ));?>
 												<!-- explo[0] <?php print_r(strtoupper($explo[0]))?>
 												explo[1] <?php print_r(strtoupper($explo[1]))?>
@@ -271,7 +271,7 @@
 													<?php $permalink=get_permalink( $children_record->ID ) ;?>
 													<?php $the_title=get_the_title( $children_record->ID ) ;?>
 												<?php endif ;?>
-											</div>
+											<!-- </div> -->
 										<?php endforeach; ?>
 									<?php endif;?>
 									<?php if ($find==TRUE):?>
@@ -279,7 +279,9 @@
 											<a href="<?php echo $permalink; ?>"><?php echo $the_title; ?></a>
 										</div>
 									<?php else :?>
-										<?php echo $first_name . " " . $middle_names . " " . $family_name; ?>
+										<p class="image-subjects-links">
+											<?php echo $first_name . " " . $middle_names . " " . $family_name; ?>
+										</p>
 									<?php endif; ?>
 								<?php endwhile;?>
 							<?php  endif; ?>
