@@ -88,7 +88,7 @@
 
 									</div>
 									
-									<ul class="image-subjects-links">
+									<ul class="image-subjects-links ">
 										
 										<?php foreach( $subjects as $subject ): ?>
 											
@@ -145,7 +145,7 @@
 
 								<h3>People</h3>
 
-								<ul class="people_list">
+								<ul class="people_list background_wysywyg_colour">
 
 								<?php foreach($people as $person) : ?>
 
@@ -182,7 +182,7 @@
 						<?php $author = get_field('author');?>
 							<?php if( !empty($author) ): ?>
 								<div class="title_fields"><h3>Creator / Author</h3></div>
-								<ul class="image-subjects-links">
+								<ul class="image-subjects-links background_wysywyg_colour">
 									<?php while( have_rows( 'author' ) ) : the_row();?>
 										<!-- //vars -->
 										<?php $first_name = get_sub_field( 'first_name' );
@@ -198,14 +198,16 @@
 
 						<?php if( !empty($additional) ): ?>
 
-							<ul>
+							<div class="title_fields"><h3>Additional Information</h3></div>
 
-							<p class="image-subjects-links">
+							<div class="background_wysywyg_colour">
+
+							
 
 								<?php echo $additional;?>
 							</p>
 
-						</ul>
+						</div>
 
 					<?php endif; ?>
 					

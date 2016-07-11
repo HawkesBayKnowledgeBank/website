@@ -1800,7 +1800,8 @@ a:link{
 }
 
 .background_wysywyg_colour a,
-div.background_wysywyg_colour{
+div.background_wysywyg_colour,
+.background_wysywyg_colour {
 	display: inline-block;
 	padding: 10px 15px;
 	margin-top:0px;
