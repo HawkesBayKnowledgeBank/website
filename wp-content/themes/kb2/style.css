@@ -867,8 +867,12 @@ footer {
 /* Search Bar styles
 ---------------------------------*/
 
-.only-search { padding:15px;}
-.only-search .search-input { padding:0 10px;}
+.only-search {
+	padding:15px;
+}
+.only-search .search-input {
+	padding:0 10px;
+}
 
 .searchBar,
 .newsSubscribe {
@@ -905,11 +909,11 @@ footer {
 
 .search-submit {
 	position:relative;
-    padding:5px 8px;
+    /* padding:5px 8px; */
     border:1px solid #ccc;
     background-color:#9DB68C;
     color:#fafafa;
-    width: 15%;
+    width: 180px;
     height: 50px;
     line-height: 1.3;
 }
