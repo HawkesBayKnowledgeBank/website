@@ -22,9 +22,8 @@
 								$file = get_field('master');
 								if( !empty( $file ) ): ?>
 									<?php $explo=explode(".",$file['url']);?>
-									<?php echo $explo[4];?>
 									<?php if( $explo[4]== "m4v" or $explo[4]== "mp4" ) :?>
-										<video width="520" height="340" src="<?php echo $file['url']; ?>" controls>
+										<video width="520" height="340" src="<?php echo $file['url']; ?>" controls oncontextmenu="return false">
 											<?php if ( !empty( $video )) : ?>
 												<iframe width="560" height="315" src="https://www.youtube.com/embed/<?php echo $video; ?>" frameborder="0" allowfullscreen></iframe>
 											<?php endif; ?>
