@@ -351,7 +351,13 @@ a:active {
 
 h1 a, h2 a, h3 a, h4 a { text-decoration:none;}
 
+header h1{
+	letter-spacing: -3px;
+}
 h2 {}
+h3 {
+	line-height:0.5;
+}
 
 /* Main Layout Styles
 ================================ */
@@ -507,6 +513,7 @@ nav#nav-main a:hover {
 
 .image-subjects-links {
 	list-style: none;
+	line-height: 1.3em;
 
 }
 
@@ -524,9 +531,9 @@ p.image-subjects-links {
 	text-decoration: none;
 	-webkit-transition: all 0.4s ease-in-out 0s;
 	transition: all 0.4s ease-in-out 0s;
-	-webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
-	-moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
-	box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+/* 	-webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75); */
 }
 
 .image-subjects-links a:hover
@@ -1754,9 +1761,9 @@ h2.Title_single{
 /* 	border:1px solid #900; */
 	margin:1em;
 	text-align:center;
-	-webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
-	-moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
-	box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+/* 	-webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75); */
 }
 #toggle p{
 	text-align:center;
@@ -1816,9 +1823,9 @@ div.background_wysywyg_colour,
 	text-decoration: none;
 	-webkit-transition: all 0.4s ease-in-out 0s;
 	transition: all 0.4s ease-in-out 0s;
-	-webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
-	-moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
-	box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+/* 	-webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75); */
 }
 
 .background_wysywyg_colour a:hover,

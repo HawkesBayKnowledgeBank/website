@@ -131,44 +131,6 @@
 			endif; ?>
 
 	</div>
-
-	<ul class="grid-container namesList link-hover peopleList">
-
-		<a href='people?letter=a'>A</a></li>
-		<a href='people?letter=b'>B</a></li>
-		<a href='people?letter=c'>C</a></li>
-		<a href='people?letter=d'>D</a></li>
-		<a href='people?letter=e'>E</a></li>
-		<a href='people?letter=f'>F</a></li>
-		<a href='people?letter=g'>G</a></li>
-		<a href='people?letter=h'>H</a></li>
-		<a href='people?letter=i'>I</a></li>
-		<a href='people?letter=j'>J</a></li>
-		<a href='people?letter=k'>K</a></li>
-		<a href='people?letter=l'>L</a></li>
-		<a href='people?letter=m'>M</a></li>
-		<a href='people?letter=n'>N</a></li>
-		<a href='people?letter=o'>O</a></li>
-		<a href='people?letter=p'>P</a></li>
-		<a href='people?letter=q'>Q</a></li>
-		<a href='people?letter=r'>R</a></li>
-		<a href='people?letter=s'>S</a></li>
-		<a href='people?letter=t'>T</a></li>
-		<a href='people?letter=u'>U</a></li>
-		<a href='people?letter=v'>V</a></li>
-		<a href='people?letter=w'>W</a></li>
-		<a href='people?letter=x'>X</a></li>
-		<a href='people?letter=y'>Y</a></li>
-		<a href='people?letter=z'>Z</a></li>
-	</ul>
-
-
-	<form class="searchBar">
-		<?php get_search_form(); ?>
-	</form>
-
-
-
 </div>
 
 <?php get_footer(); ?>

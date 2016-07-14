@@ -93,7 +93,7 @@
 					\\====================================================//
 					-->
 
-					<?php $file = get_field('master');?>
+					<!-- <?php $file = get_field('master');?>
 					<?php if( $file ): ?>
 						<div class="LicenceBox">
 							<div class="grid-container bottom_margin">
@@ -110,7 +110,7 @@
 								</div>
 							</div>
 						</div>
-					<?php endif; ?>
+					<?php endif; ?> -->
 					<div class="LicenceBox">
 						<div class="grid-container bottom_margin">
 							<div class='grid-6'>
