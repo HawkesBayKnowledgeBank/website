@@ -356,7 +356,7 @@ header h1{
 }
 h2 {}
 h3 {
-	line-height:0.5;
+	
 }
 
 /* Main Layout Styles
@@ -1449,18 +1449,21 @@ footer {
 
 /* all */
 
-.tiles { display: block; box-sizing: border-box;  max-width:1200px; margin:0 auto;  font-size:0;} /* font-size http://stackoverflow.com/a/11456539 */
+.tiles { display: block; box-sizing: border-box;  max-width:1200px; margin:0 auto; display:flex; flex-wrap:wrap;}
 
 .tiles .tile {
-	display:inline-block;
-	margin:0;
+	display:block;
+	margin:0 0 20px;
 	padding:20px;
-	font-size:1rem; /* IE9+ */
+	display: flex;
+	flex-direction:column;
+
 }
 
 .tiles .tile .inner {
 	background-color:#f8f8f8;
 	padding:20px;
+	flex:1;
 }
 
 .tiles .tile .imageWrap {
@@ -1540,6 +1543,8 @@ footer {
 	background-color: #fff;
 	border-top: 1px solid rgba(51, 51, 51, 0.1);
 	clear:both;
+	display: block;
+    width: 100%;
 }
 
 .pagination .screen-reader-text {
@@ -1803,8 +1808,9 @@ a:link{
     -moz-border-radius: 10px 10px 0 0;
     border-radius: 10px 10px 0 0; */
 }
+.LicenceBox a { font-size: 0.8em;}
 .LicenceBox p {
-    background-color:#e5e5e5;
+    font-size: 0.8em;
     padding:5px;
     margin:0;
     /* border:1px solid #fff;
