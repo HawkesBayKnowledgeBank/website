@@ -77,36 +77,37 @@
 
 <div class="grid-container bottom-margin ">
 		
-	<?php
-		$landingpages = get_field('content_landing_pages');
+	<?php $landingpages = get_field('content_landing_pages'); ?>
 
-		if(!empty($landingpages)):
+	<?php if(!empty($landingpages)): ?>
 
-			foreach($landingpages as $page): ?>
+		<div class="tiles tiles-4">
+		
+		<?php foreach($landingpages as $page): ?>
 
-				<div id="front_page" class="grid-3">
-
-					
-					
-						<a href="<?php echo get_permalink($page['landing_page']->ID); ?>"><img src="<?php echo $page['image']['sizes']['300w']; ?>" alt="<?php echo $page['image']['alt'] ?>" /></a>	
+					<article class="tile">
 						
-						<div class="front_page_thumb">
+						<div class="imageWrap">
 
-						<h3><?php echo $page['landing_page']->post_title; ?></h3>
+							<a href="<?php echo get_permalink($page['landing_page']->ID); ?>"><img src="<?php echo $page['image']['sizes']['300w']; ?>" alt="<?php echo $page['image']['alt'] ?>" /></a>
+
+						</div>	
 						
-						<p><?php echo $page['blurb']; ?></p>						
+						<div class="inner">
+
+							<h3><?php echo $page['landing_page']->post_title; ?></h3>
+							
+							<p><?php echo $page['blurb']; ?></p>		
+
+						</div>				
 					
-					</div>
+					</article>				
 
-				</div>
+		<?php endforeach; ?>
 
-	<?php
-			
-			endforeach;
+		</div>
 
-		endif;
-
-	?>
+	<?php endif; ?>	
 
 </div>
 
