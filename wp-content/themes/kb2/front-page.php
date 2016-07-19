@@ -44,7 +44,7 @@
 
 	<div class="grid-6">
 
-		<div class="homesearch">
+		<!-- <div class="homesearch">
 
 			<form action="/" method="get" class="searchBar">
 
@@ -57,13 +57,13 @@
 
 
 
-		</div>
+		</div> -->
 
 
 	</div>
 
 
-</div>	
+</div>
 
 <div class="grid-container">
 
@@ -73,41 +73,41 @@
 
 	</div>
 
-</div>	
+</div>
 
 <div class="grid-container bottom-margin ">
-		
+
 	<?php $landingpages = get_field('content_landing_pages'); ?>
 
 	<?php if(!empty($landingpages)): ?>
 
 		<div class="tiles tiles-4">
-		
+
 		<?php foreach($landingpages as $page): ?>
 
 					<article class="tile">
-						
+
 						<div class="imageWrap">
 
 							<a href="<?php echo get_permalink($page['landing_page']->ID); ?>"><img src="<?php echo $page['image']['sizes']['300w']; ?>" alt="<?php echo $page['image']['alt'] ?>" /></a>
 
-						</div>	
-						
+						</div>
+
 						<div class="inner">
 
 							<h3><?php echo $page['landing_page']->post_title; ?></h3>
-							
-							<p><?php echo $page['blurb']; ?></p>		
 
-						</div>				
-					
-					</article>				
+							<p><?php echo $page['blurb']; ?></p>
+
+						</div>
+
+					</article>
 
 		<?php endforeach; ?>
 
 		</div>
 
-	<?php endif; ?>	
+	<?php endif; ?>
 
 </div>
 

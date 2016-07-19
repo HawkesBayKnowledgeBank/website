@@ -356,7 +356,7 @@ header h1{
 }
 h2 {}
 h3 {
-	
+
 }
 
 /* Main Layout Styles
@@ -1859,4 +1859,42 @@ h3{
 	text-decoration: none;
 	-webkit-transition: all 0.4s ease-in-out 0s;
 	transition: all 0.4s ease-in-out 0s;
+}
+
+.bouton h3{
+    border-radius: 25px;
+    border: 2px solid #73AD21;
+    padding: 5px 0 0;
+    text-indent:2em;
+
+}
+.bouton:hover h3{
+
+	border: 2px solid rgba(70, 151, 48, 0.5);
+	background:#eeeeee;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
+}
+.bouton
+{
+	color:#0000ff;
+	cursor:pointer;
+	border-color:rgba(70, 151, 48, 1);
+	transition: all,background, 2s linear 0.5s;
+	-webkit-transition: width,background, 2s linear 0.5s;
+}
+.bouton:hover
+{
+	border-color:rgba(70, 151, 48, 0.5);
+}
+.texte
+{
+	display:none;
+	border-left:1px solid rgba(70, 151, 48, 1);
+	padding:10px;
+	color:#333333;
+}
+.texte:hover
+{
+	border-left:1px solid rgba(70, 151, 48, 0.5);
+	color:#000000;
 }
