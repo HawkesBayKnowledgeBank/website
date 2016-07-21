@@ -490,6 +490,7 @@ nav#nav-main a:hover {
 	position: relative;
 }
 
+
 .link-hover a:before {
 	content: "";
 	position: absolute;
@@ -539,6 +540,9 @@ box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75); */
 .image-subjects-links a:hover
 /* p.image-subjects-links:hover */ {
 	background: #c2b280;
+	-webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+	box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
 }
 
 #nav-trigger {
@@ -1836,14 +1840,15 @@ div.background_wysywyg_colour,
 	text-decoration: none;
 	-webkit-transition: all 0.4s ease-in-out 0s;
 	transition: all 0.4s ease-in-out 0s;
-/* 	-webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
--moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75); */
+/* 	 */
 }
 
 .background_wysywyg_colour a:hover,
 div.background_wysywyg_colour:hover {
 	background: #c2b280;
+	-webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+	box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
 }
 h3{
 	color:rgba(70, 151, 48, 1);
@@ -1866,9 +1871,11 @@ h3{
     border: 2px solid #73AD21;
     padding: 5px 0 0;
     text-indent:2em;
+    -webkit-transition: all 0.4s ease-in-out 0s;
+	transition: all 0.4s ease-in-out 0s;
 
 }
-.bouton:hover h3{
+.bouton h3:hover {
 
 	border: 2px solid rgba(70, 151, 48, 0.5);
 	background:#eeeeee;
@@ -1892,9 +1899,157 @@ h3{
 	border-left:1px solid rgba(70, 151, 48, 1);
 	padding:10px;
 	color:#333333;
+	-webkit-transition: all 0.4s ease-in-out 0s;
+	transition: all 0.4s ease-in-out 0s;
+
 }
 .texte:hover
 {
 	border-left:1px solid rgba(70, 151, 48, 0.5);
 	color:#000000;
 }
+
+
+/* Header Home
+---------------------------------*/
+
+.headerBack_home {
+	background: #e5e5ff;
+}
+
+.headerBack_home .main-header {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	/* margin:0 0 0 110px; */
+	text-align: center;
+	/*#ccccff;*/
+}
+
+.headerBack_home .main-header .menu-item a{
+	list-style-type:none;
+	margin-top: 134px;
+	padding:10px 15px;
+	-webkit-transition: all 0.4s ease-in-out 0s;
+	transition: all 0.4s ease-in-out 0s;
+}
+.headerBack_home .main-header .menu-item a:hover {
+/* 	background: #c2b280;
+-webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75); */
+}
+
+@media screen and (min-width: 768px) {
+	.only-search-home .search-input {
+		margin-top: 130px;
+	}
+	.headerBack_home .main-header .menu-item{
+		margin-top: 134px;
+	}
+
+}
+.headerBack_home .main-nav li,
+.headerBack_home .secondary-nav li {
+	display: inline-block;
+}
+
+.headerBack_home .main-nav a,
+.headerBack_home .secondary-nav a {
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	padding: 6px 19px;
+	font-family: 'Merriweather', sans-serif;
+
+}
+
+.headerBack_home .main-logo {
+	width: 200px;
+	height: 193px;
+	display: inline-block;
+	margin: 0;
+	background: #e5e5ff url('img/HBDA_logo.png') no-repeat center;
+	background-size: cover;
+	vertical-align: middle;
+}
+
+.headerBack_home .byline {
+	font: normal 1.5em/1.9 'Merriweather', sans-serif;
+	width: 100%;
+	margin: 0 auto;
+	display: inline-block;
+	text-align: left;
+	vertical-align: middle;
+}
+
+.headerBack_home .byline h1 {
+	margin: 20px auto 10px;
+	padding: 0;
+	line-height: 1.1;
+	font-size:1.6em;
+
+}
+
+.headerBack_home .byline h3 {
+	padding: 0;
+	margin: -9px 0 10px 0;
+	line-height: 1;
+	font-size:0.9em;
+}
+
+
+
+
+.headerBack_home .main-nav a:hover {
+	color: #00cc00;
+}
+.headerBack_home .grid-container{
+	max-width: 1360px;
+	padding-left: 0px;
+}
+/* Search Bar styles
+---------------------------------*/
+
+.only-search-home .search-input {
+	padding:0 10px;
+	height:35px;
+	width:65%;
+}
+.only-search-home .search-submit {
+	width:100px;
+	height:41px;
+}
+
+/* Footer
+---------------------------------*/
+.main-footer .grid-container{
+	max-width: none;
+}
+.cta {
+    /* background: #c8534b left top repeat-x;
+    box-shadow: 0px 0px 10px #555;
+    color: #fff; */
+
+    font-size: 16px;
+    padding: 0;
+    line-height: 17px;
+}
+.cta .redbutton {
+    float: right;
+    margin: 15px 10px 0 10px;
+    line-height: 30px;
+    padding: 0 3px;
+    background-color: rgba(70,151,48,1);
+    border: 1px solid #ccc;
+}
+.cta .redbutton:hover {
+	background-color: rgba(70,151,48,0.5);
+}
+.cta .redbutton a {
+    color: #fafafa;
+}
+
+
+/* .only-search-home .byline h3{ */
+/* 	line-height: 1.3;
+} */

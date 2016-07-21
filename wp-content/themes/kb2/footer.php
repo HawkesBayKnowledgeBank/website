@@ -3,16 +3,33 @@
 			<div class='headerBack'>
 				<footer class="main-footer" role="contentinfo">
 					<div class='grid-container'>
-						<div class="grid-6">
+						<div class="grid-3">
 							<p>The Hawke's Bay Knowledge Bank</p>
 							<p>10am to 5pm, Monday to Friday</p>
 							<p>901 Omahu Road, Hastings</p>
 						</div>
+						<div class="grid-3">
+							<div class="cta">
+								<div class="redbutton">
+									<a href="/contact">Contact Us</a>
+								</div>
+								<p>Contribute - we need your history. Contact us to submit your material.</p>
+							</div>
+						</div>
+						<div class="grid-3">
+							<div class="cta">
+								<div class="redbutton">
+									<a href="/donate">Make a donation</a>
+								</div>
+								<p>We greatly appreciate donations from the public</p>
+							</div>
+						</div>
 
-						<div class="grid-6">
+						<div class="grid-3">
 							<p>Ph: (06) 833-5333</p>
 							<p>Email: james@knowledgebank.org.nz</p>
 						</div>
+
 
 					</div>
 					<div class='link_icons'>

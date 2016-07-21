@@ -26,9 +26,9 @@ function afficher_cacher($id) {
 		</div>
 		<div class="grid-6">
 
-			<span class="bouton" id="bouton_texte" onclick="afficher_cacher('texte')"><h3>Who Are We?</h3></span>
+			<span class="bouton" id="bouton_texte" onclick="afficher_cacher('texte')" ><h3>Who Are We?</h3></span>
 
-			<ul><div id="texte" class="texte">
+			<ul><div id="texte" class="texte" data-animation-delay="100" data-animation="fadeInUp">
 			The Hawke's Bay Knowledge Bank is a living record of Hawke's Bay and its people. It combines a robust, secure and widely-compatible digital archive with a new generation of multimedia and social tools. The aim of the trust is to create a digital encyclopedia of people and places, education, cultural, sporting, industrial and commercial achievements of yesterday linked with those of today.
 
 			We want to enrich our stored material with the knowledge of the community through user comments, tagging and sharing of information. Click here to find how you can contribute.</div></ul>

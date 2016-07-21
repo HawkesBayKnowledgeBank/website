@@ -37,8 +37,8 @@
 		<?php endwhile; endif; ?>
 	</div>
 
-	<?php 
-	//this code uses get_posts() and but only returns 5 posts, 
+	<?php
+	//this code uses get_posts() and but only returns 5 posts,
 	//when it should return 9
 	$args = array(
 		'post_type' => 'still_image',
@@ -53,12 +53,12 @@
 
 	$maps = get_posts($args); ?>
 
-	<div class="grid-container">
+	<!-- <div class="grid-container">
 		<?php foreach($maps as $map) : ?>
 			<div class="grid-4">
 				<?php echo $map->post_title; ?>
 			</div>
 		<?php endforeach; ?>
-	</div>
+	</div> -->
 
 <?php get_footer(); ?>
