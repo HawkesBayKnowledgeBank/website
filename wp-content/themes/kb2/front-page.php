@@ -18,12 +18,12 @@
 					$link = ( $slide['link_type'] == 'internal' ? get_permalink($slide['internal']->ID) : $slide['external'] );
 				?>
 
-				<a href="<?php echo $link; ?>" <?php if($slide['new_window'] == 1) echo 'target="_blank"'; ?>>
+				<!-- <a href="<?php echo $link; ?>" <?php if($slide['new_window'] == 1) echo 'target="_blank"'; ?>>
 					<img src="<?php echo $slide['image']['sizes']['1200w']; ?>" alt="<?php echo $slide['image']['alt'] ?>" />
 					<?php if(!empty($slide['caption'])): ?>
 					<div class="caption"><?php echo $slide['caption']; ?></div>
 					<?php endif; ?>
-				</a>
+				</a> -->
 
 			</li>
 
@@ -34,7 +34,7 @@
 	</div>
 <?php endif; ?>
 
-<div class="grid-container  top-padding">
+<!-- <div class="grid-container  top-padding">
 
 	<div class="grid-6">
 		<h3>The Hawke's Bay Knowledge Bank is a voluntary organisation based in Hastings, New Zealand.</h3>
@@ -44,7 +44,7 @@
 
 	<div class="grid-6">
 
-		<!-- <div class="homesearch">
+		<div class="homesearch">
 
 			<form action="/" method="get" class="searchBar">
 
@@ -57,7 +57,7 @@
 
 
 
-		</div> -->
+		</div>
 
 
 	</div>
@@ -73,7 +73,7 @@
 
 	</div>
 
-</div>
+</div> -->
 
 <div class="grid-container bottom-margin ">
 

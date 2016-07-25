@@ -6,6 +6,11 @@ Template Name: Contact Form
 
 
 <?php
+$commentError ="";
+$nameError="";
+$emailError="";
+
+
 //If the form is submitted
 if(isset($_POST['submitted'])) {
 
@@ -48,7 +53,7 @@ if(isset($_POST['submitted'])) {
 		//If there is no error, send the email
 		if(!isset($hasError)) {
 
-			$emailTo = ' james@knowledgebank.org.nz';
+			$emailTo = 'yohann.coupannec@gmail.com';
 			$subject = 'Contact Form Submission from '.$name;
 			$sendCopy = trim($_POST['sendCopy']);
 			$body = "Name: $name \n\nEmail: $email \n\nComments: $comments";
@@ -72,59 +77,81 @@ if(isset($_POST['submitted'])) {
 <?php get_header(); ?>
 <script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/scripts/contact-form.js"></script>
 
-
-
-<?php if(isset($emailSent) && $emailSent == true) { ?>
-
-	<div class="thanks">
-		<h1>Thanks, <?=$name;?></h1>
-		<p>Your email was successfully sent. I will be in touch soon.</p>
+<div class="pageTitles">
+	<h1><?php the_title(); ?></h1>
+</div>
+<div class="grid-container">
+	<div class="grid-6">
+		<h3>Phone:</h3>
+		<p>+64 6 833 5333</p>
+		<h3>Email:</h3>
+		<p><a href="mailto:james@knowledgebank.org.nz">james@knowledgebank.org.nz</a></p>
+		<h3>Post:</h3>
+		<p>Hawke's Bay Knowledge Bank<br />
+		PO Box 2025<br />
+		Stortford Lodge<br />
+		Hastings 4153</p>
+		<h3>Visit</h3>
+		<p>Members of the public are most welcome to visit us. Our usual opening hours are Monday - Friday, 10.30am - 5pm.</p>
+		<p>901 Omahu Rd, Frimley, Hastings<br />
+		(Corner of Omahu Rd and the Expressway)</p>
+		<p><iframe frameborder="0" height="450" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3073.2760226549185!2d176.81774800000005!3d-39.620988499999925!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6d69c9f72671ab9b%3A0x8dab3fc91d1b2806!2s901+Omahu+Rd%2C+Frimley%2C+Hastings+4120!5e0!3m2!1sen!2snz!4v1410767983286" style="border:0" width="600"></iframe></p>
+		<p> </p>
 	</div>
 
-<?php } else { ?>
+	<div class="grid-6">
+	<?php if(isset($emailSent) && $emailSent == true) { ?>
 
-	<?php if (have_posts()) : ?>
+		<div class="thanks">
+			<h1>Thanks, <?=$name;?></h1>
+			<p>Your email was successfully sent. I will be in touch soon.</p>
+		</div>
 
-	<?php while (have_posts()) : the_post(); ?>
-		<h1><?php the_title(); ?></h1>
-		<?php the_content(); ?>
+	<?php } else { ?>
 
-		<?php if(isset($hasError) || isset($captchaError)) { ?>
-			<p class="error">There was an error submitting the form.</p>
-		<?php } ?>
+		<?php if (have_posts()) : ?>
 
-		<form action="<?php the_permalink(); ?>" id="contactForm" method="post">
+		<?php while (have_posts()) : the_post(); ?>
+			<?php the_content(); ?>
 
-			<ol class="forms">
-				<li><label for="contactName">Name</label>
-					<input type="text" name="contactName" id="contactName" value="<?php if(isset($_POST['contactName'])) echo $_POST['contactName'];?>" class="requiredField" />
-					<?php if($nameError != '') { ?>
-						<span class="error"><?=$nameError;?></span>
-					<?php } ?>
-				</li>
+			<?php if(isset($hasError) || isset($captchaError)) { ?>
+				<p class="error">There was an error submitting the form.</p>
+			<?php } ?>
 
-				<li><label for="email">Email</label>
-					<input type="text" name="email" id="email" value="<?php if(isset($_POST['email']))  echo $_POST['email'];?>" class="requiredField email" />
-					<?php if($emailError != '') { ?>
-						<span class="error"><?=$emailError;?></span>
-					<?php } ?>
-				</li>
+			<form action="<?php the_permalink(); ?>" id="contactForm" method="post">
 
-				<li class="textarea"><label for="commentsText">Comments</label>
-					<textarea name="comments" id="commentsText" rows="20" cols="30" class="requiredField"><?php if(isset($_POST['comments'])) { if(function_exists('stripslashes')) { echo stripslashes($_POST['comments']); } else { echo $_POST['comments']; } } ?></textarea>
-					<?php if($commentError != '') { ?>
-						<span class="error"><?=$commentError;?></span>
-					<?php } ?>
-				</li>
-				<li class="inline"><input type="checkbox" name="sendCopy" id="sendCopy" value="true"<?php if(isset($_POST['sendCopy']) && $_POST['sendCopy'] == true) echo ' checked="checked"'; ?> /><label for="sendCopy">Send a copy of this email to yourself</label></li>
-				<li class="screenReader"><label for="checking" class="screenReader">If you want to submit this form, do not enter anything in this field</label><input type="text" name="checking" id="checking" class="screenReader" value="<?php if(isset($_POST['checking']))  echo $_POST['checking'];?>" /></li>
-				<li class="buttons"><input type="hidden" name="submitted" id="submitted" value="true" /><button type="submit">Email me &raquo;</button></li>
-			</ol>
-		</form>
+				<ol class="forms">
+					<li><label for="contactName">Name</label>
+						<input type="text" name="contactName" id="contactName" value="<?php if(isset($_POST['contactName'])) echo $_POST['contactName'];?>" class="requiredField" />
+						<?php if($nameError != '') { ?>
+							<span class="error"><?=$nameError;?></span>
+						<?php } ?>
+					</li>
 
-		<?php endwhile; ?>
-	<?php endif; ?>
-<?php } ?>
+					<li><label for="email">Email</label>
+						<input type="text" name="email" id="email" value="<?php if(isset($_POST['email']))  echo $_POST['email'];?>" class="requiredField email" />
+						<?php if($emailError != '') { ?>
+							<span class="error"><?=$emailError;?></span>
+						<?php } ?>
+					</li>
+
+					<li class="textarea"><label for="commentsText">Comments</label>
+						<textarea name="comments" id="commentsText" rows="20" cols="30" class="requiredField"><?php if(isset($_POST['comments'])) { if(function_exists('stripslashes')) { echo stripslashes($_POST['comments']); } else { echo $_POST['comments']; } } ?></textarea>
+						<?php if($commentError != '') { ?>
+							<span class="error"><?=$commentError;?></span>
+						<?php } ?>
+					</li>
+					<li class="inline"><input type="checkbox" name="sendCopy" id="sendCopy" value="true"<?php if(isset($_POST['sendCopy']) && $_POST['sendCopy'] == true) echo ' checked="checked"'; ?> /><label for="sendCopy">Send a copy of this email to yourself</label></li>
+					<li class="screenReader"><label for="checking" class="screenReader">If you want to submit this form, do not enter anything in this field</label><input type="text" name="checking" id="checking" class="screenReader" value="<?php if(isset($_POST['checking']))  echo $_POST['checking'];?>" /></li>
+					<li class="buttons"><input type="hidden" name="submitted" id="submitted" value="true" /><button type="submit">Email me &raquo;</button></li>
+				</ol>
+			</form>
+
+			<?php endwhile; ?>
+		<?php endif; ?>
+	<?php } ?>
+	</div>
+</div>
 
 <?php get_footer(); ?>
 

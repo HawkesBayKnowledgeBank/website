@@ -4,13 +4,14 @@
 				<footer class="main-footer" role="contentinfo">
 					<div class='grid-container'>
 						<div class="grid-3">
+
 							<p>The Hawke's Bay Knowledge Bank</p>
 							<p>10am to 5pm, Monday to Friday</p>
 							<p>901 Omahu Road, Hastings</p>
 						</div>
 						<div class="grid-3">
 							<div class="cta">
-								<div class="redbutton">
+								<div class="greenbutton">
 									<a href="/contact">Contact Us</a>
 								</div>
 								<p>Contribute - we need your history. Contact us to submit your material.</p>
@@ -18,7 +19,7 @@
 						</div>
 						<div class="grid-3">
 							<div class="cta">
-								<div class="redbutton">
+								<div class="greenbutton">
 									<a href="/donate">Make a donation</a>
 								</div>
 								<p>We greatly appreciate donations from the public</p>
