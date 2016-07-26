@@ -81,9 +81,11 @@
 
 	<?php if(!empty($landingpages)): ?>
 
-		<div class="tiles tiles-4">
+		<div class="tiles tiles-3">
+		<?php $NB=0;?>
 
 		<?php foreach($landingpages as $page): ?>
+			<?php $NB=$NB+1 ;?>
 
 					<article class="tile">
 
@@ -94,14 +96,20 @@
 						</div>
 
 						<div class="inner">
-
+<span title="blurb">This is the text I want to have a mousover
 							<h3><?php echo $page['landing_page']->post_title; ?></h3>
-
+</span>
 							<p><?php echo $page['blurb']; ?></p>
 
 						</div>
 
 					</article>
+					<?php if ($NB==3):?>
+						</div>
+						<div class="tiles tiles-4">
+					<?php endif; ?>
+
+
 
 		<?php endforeach; ?>
 
