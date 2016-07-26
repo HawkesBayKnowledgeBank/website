@@ -1,3 +1,65 @@
 /*------------------------------------*\
     Abiel
 \*------------------------------------*/
+
+.papers_past_icon {
+	display: inline-block;
+	font-size: 0;
+	width: 90px;
+	height: 36px;
+	background: #f8f8f8 url('img/paperspast.png') no-repeat center;
+	background-size: 100%;
+	vertical-align: middle;
+}
+
+.nz_history_icon {
+	display: inline-block;
+	font-size: 0;
+	width: 54px;
+	height: 54px;
+	background: #e5e5ff url('img/NZHistory.png') no-repeat center;
+	background-size: 100%;
+	vertical-align: middle;
+}
+
+.nat_lib_icon {
+	display: inline-block;
+	font-size: 0;
+	width: 150px;
+	height: 36px;
+	background: #e5e5ff url('img/nat_lib.gif') no-repeat center;
+	background-size: 100%;
+	vertical-align: middle;
+}
+
+.te_ara_icon {
+	display: inline-block;
+	font-size: 0;
+	width: 45px;
+	height: 45px;
+	background: #e5e5ff url('img/teara.png') no-repeat center;
+	background-size: 100%;
+	vertical-align: middle;
+}
+
+.social-icon {
+	display: inline-block;
+	font-size: 0;
+	width: 48px;
+	height: 48px;
+	background: url('img/social-facebook-box-blue-icon.png') no-repeat center;
+	background-size: 100% 100%;
+	vertical-align: middle;
+}
+
+
+.copyright{
+	display: inline-block;
+	font-size: 12px;
+	text-align: center;
+	width: 1200px;
+	height: 40px;
+	/*background: url('img/copyright.gif') no-repeat center;*/
+	background-size: 100% 100%;
+	vertical-align: middle;
+}
