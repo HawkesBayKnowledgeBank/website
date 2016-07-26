@@ -53,7 +53,7 @@ if(isset($_POST['submitted'])) {
 		//If there is no error, send the email
 		if(!isset($hasError)) {
 
-			$emailTo = 'yohann.coupannec@gmail.com';
+			$emailTo = 'james@knowledgebank.org.nz';
 			$subject = 'Contact Form Submission from '.$name;
 			$sendCopy = trim($_POST['sendCopy']);
 			$body = "Name: $name \n\nEmail: $email \n\nComments: $comments";
@@ -82,21 +82,21 @@ if(isset($_POST['submitted'])) {
 </div>
 <div class="grid-container">
 	<div class="grid-6">
-		<h3>Phone:</h3>
-		<p>+64 6 833 5333</p>
-		<h3>Email:</h3>
-		<p><a href="mailto:james@knowledgebank.org.nz">james@knowledgebank.org.nz</a></p>
-		<h3>Post:</h3>
-		<p>Hawke's Bay Knowledge Bank<br />
-		PO Box 2025<br />
-		Stortford Lodge<br />
-		Hastings 4153</p>
-		<h3>Visit</h3>
-		<p>Members of the public are most welcome to visit us. Our usual opening hours are Monday - Friday, 10.30am - 5pm.</p>
-		<p>901 Omahu Rd, Frimley, Hastings<br />
-		(Corner of Omahu Rd and the Expressway)</p>
-		<p><iframe frameborder="0" height="450" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3073.2760226549185!2d176.81774800000005!3d-39.620988499999925!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6d69c9f72671ab9b%3A0x8dab3fc91d1b2806!2s901+Omahu+Rd%2C+Frimley%2C+Hastings+4120!5e0!3m2!1sen!2snz!4v1410767983286" style="border:0" width="600"></iframe></p>
-		<p> </p>
+		<div class="contact-title">
+			<h3>Phone :</h3>
+			<p>+64 6 833 5333</p>
+			<h3>Email :</h3>
+			<p><a href="mailto:james@knowledgebank.org.nz">james@knowledgebank.org.nz</a></p>
+			<h3>Post :</h3>
+			<p>Hawke's Bay Knowledge Bank<br />
+			PO Box 2025<br />
+			Stortford Lodge<br />
+			Hastings 4153</p>
+			<h3>Visit :</h3>
+			<p>Members of the public are most welcome to visit us. Our usual opening hours are Monday - Friday, 10.30am - 5pm.</p>
+			<p>901 Omahu Rd, Frimley, Hastings<br />
+			(Corner of Omahu Rd and the Expressway)</p>
+		</div>
 	</div>
 
 	<div class="grid-6">
@@ -152,6 +152,14 @@ if(isset($_POST['submitted'])) {
 	<?php } ?>
 	</div>
 </div>
+<div class="grid-container">
+ 	<div class="grid-12">
+ 		<p><iframe class="google-maps" frameborder="0" height="250" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3073.2760226549185!2d176.81774800000005!3d-39.620988499999925!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6d69c9f72671ab9b%3A0x8dab3fc91d1b2806!2s901+Omahu+Rd%2C+Frimley%2C+Hastings+4120!5e0!3m2!1sen!2snz!4v1410767983286" width="1050"></iframe></p>
+ 	</div>
+</div>
+
+
+
 
 <?php get_footer(); ?>
 

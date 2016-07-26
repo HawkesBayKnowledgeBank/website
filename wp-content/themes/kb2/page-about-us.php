@@ -22,13 +22,14 @@ function afficher_cacher($id) {
 <!-- <div class='aboutPageContent'> -->
 	<div class="grid-container">
 		<div class="grid-6">
-			<h3><img class="alignnone size-full wp-image-113334" src="http://new.knowledgebank.org.nz/wp-content/uploads/node/113332/images/stoneycroft.jpg" alt="stoneycroft" /></h3>
+			<video width="520" height="340" oncontextmenu="return false" src="/wp-content/uploads/node/34574/master/34574_StoneycroftWebshort.m4v" controls>
+			</video>
 		</div>
 		<div class="grid-6">
 
-			<span class="bouton" id="bouton_texte" onclick="afficher_cacher('texte')" ><h3>Who Are We?</h3></span>
+			<span class="bouton" id="bouton_texte" onclick="afficher_cacher('texte')"><h3>Who Are We?</h3></span>
 
-			<ul><div id="texte" class="texte" data-animation-delay="100" data-animation="fadeInUp">
+			<ul><div id="texte" class="texte">
 			The Hawke's Bay Knowledge Bank is a living record of Hawke's Bay and its people. It combines a robust, secure and widely-compatible digital archive with a new generation of multimedia and social tools. The aim of the trust is to create a digital encyclopedia of people and places, education, cultural, sporting, industrial and commercial achievements of yesterday linked with those of today.
 
 			We want to enrich our stored material with the knowledge of the community through user comments, tagging and sharing of information. Click here to find how you can contribute.</div></ul>

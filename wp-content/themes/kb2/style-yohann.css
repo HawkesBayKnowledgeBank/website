@@ -1,11 +1,24 @@
 /*------------------------------------*\
     Yohann
 \*------------------------------------*/
-.screenReader { left: -9999px; position: absolute; top: -9999px; }
-.thanks { background: #F2F3F6; border: 1px solid #7E8AA2; padding:10px; }
+.screenReader {
+	left: -9999px;
+	position: absolute;
+	top: -9999px;
+}
+.thanks {
+	background: #F2F3F6;
+	border: 1px solid #7E8AA2;
+	padding:10px;
+}
 
 /*****Forms*****/
-ol.forms { float: left; list-style: none; margin: 0; width: 100%; }
+ol.forms {
+	float: left;
+	list-style: none;
+	margin: 0;
+	width: 100%;
+}
 ol.forms li {
 	clear: both;
 	float: left;
@@ -30,10 +43,21 @@ ol.forms input, ol.forms textarea {
 	-webkit-border-radius: 3px;
 	width: 214px;
 }
-ol.forms textarea { height: 300px; width: 334px; }
-ol.forms input:focus, ol.forms textarea:focus { background-color: #f2f3f6; border-color: #ff9800; }
-.error { color: #f00; }
-ol.forms li .error { font-size: 12px; margin-left: 20px; }
+ol.forms textarea {
+	height: 300px;
+	width: 334px;
+}
+ol.forms input:focus, ol.forms textarea:focus {
+	background-color: #f2f3f6;
+	border-color: rgba(70, 151, 48, 1);
+}
+.error {
+	color: #f00;
+}
+ol.forms li .error {
+	font-size: 12px;
+	margin-left: 20px;
+}
 ol.forms li.textarea .error {
 	display: block;
 	position: absolute;
@@ -41,21 +65,56 @@ ol.forms li.textarea .error {
 	top: 0;
 	width: 100px;
 }
-ol.forms li.screenReader { margin-bottom: 0; }
-ol.forms li.buttons button {
-	background: #ff9800;
-	border: none;
-	color: #000;
-	cursor: pointer;
-/* 	font: 16px/16px "Avenir LT Std", Helvetica, Arial, sans-serif; */
-	overflow: hidden;
-	padding: 6px 3px 3px 3px;
-	text-transform: uppercase;
+ol.forms li.screenReader {
+	margin-bottom: 0;
+}
+ol.forms li.buttons, ol.forms li.inline {
+	float: right;
+	width: 	460px;
+}
+ol.forms li.inline input {
+	width: auto;
+	margin-right: 0.5em;
+}
+ol.forms li.inline label {
+	display: inline;
+	float: none;
 	width: auto;
 }
-ol.forms li.buttons button:hover { color: #222; }
-ol.forms li.buttons button:active { left: -1px; position: relative; top: -1px; }
-ol.forms li.buttons, ol.forms li.inline { float: right; width: 460px; }
-ol.forms li.inline input { width: auto; }
-ol.forms li.inline label { display: inline; float: none; width: auto; }
+
+
+.headerBack_home .byline {
+	font-size:normal 1.5em/1.9 'Merriweather', sans-serif;
+}
+
+ol.forms li.buttons button {
+	position:relative;
+    /* padding:5px 8px; */
+    border:1px solid #ccc;
+    background-color:rgba(70, 151, 48, 1);
+    color:#fafafa;
+    width: 180px;
+    height: 50px;
+    line-height: 1.3;
+}
+
+ol.forms li.buttons button:hover {
+
+    background-color:rgba(70, 151, 48, 0.5);
+
+}
+.contact-title h3 {
+	margin: 0px;
+}
+.contact-title p {
+	margin: 0px;
+	margin-left: 40px;
+}
+.google-maps{
+	border:1px solid rgba(70, 151, 48, 0.5);
+}
+
+.forms {
+	border-left:1px solid rgba(70, 151, 48, 0.5);
+}
 
