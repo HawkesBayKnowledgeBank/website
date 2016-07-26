@@ -49,11 +49,11 @@
 
 							</div>
 						</div>
-						<div class="grid-2">
+						<!-- <div class="grid-2">
 							<div class="link-hover">
 								<?php kb2_extra_nav_menu(); ?>
 							</div>
-						</div>
+						</div> -->
 						<div class="grid-4">
 
 							<div class="only-search-home<?php if ( ! empty( $header_image ) ) : ?> with-image<?php endif; ?>">

@@ -1,11 +1,13 @@
 
 			<!-- footer -->
+
 			<div class='headerBack'>
 				<footer class="main-footer" role="contentinfo">
 					<div class='grid-container'>
 						<div class="grid-3">
 
-							<p>The Hawke's Bay Knowledge Bank</p>
+							<p>The Hawke's Bay</p>
+							<p>Knowledge Bank</p>
 							<p>10am to 5pm, Monday to Friday</p>
 							<p>901 Omahu Road, Hastings</p>
 						</div>
@@ -46,7 +48,9 @@
 						<div class="grid-12">
 							<!-- copyright -->
 							<p class="copyright">
-									&copy; <?php echo date('Y'); ?> Copyright <?php bloginfo('name'); ?>.
+									
+										&copy; <?php echo date('Y'); ?> Copyright <?php bloginfo('name'); ?>.
+									
 							</p>
 							<!-- /copyright -->
 						</div>
