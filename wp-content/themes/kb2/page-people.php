@@ -1,42 +1,11 @@
 <?php get_header(); ?>
 
-<div class="grid-container">
-<div class="pageTitles">
-<h1><?php the_title(); ?></h1>
-</div>
-	<?php $feature_posts = get_field( 'content_feature_posts' ); 
-
-	if(isset( $feature_posts ) ) : ?>
-
-		<?php foreach( $feature_posts as $feature_post ) : ?>
-
-			<div class="grid-4">
-
-				<a href="<?php echo get_permalink( $feature_post['post_link']->ID ); ?>">
-
-					<img src="<?php echo $feature_post['image']['sizes']['300w']; ?>" alt="<?php echo $feature_page['image']['alt']; ?>">
-
-				</a>
-
-				<a href="<?php echo get_permalink( $feature_post['post_link']->ID ); ?>">
-
-					<h3><?php echo $feature_post['post_title']; ?></h3>
-
-				</a>
-
-			</div>
-
-<?php endforeach; ?>
-
-	<?php endif; ?>
-
-</div>
 	
 	<div class="container">
 		
+		<div class="pageTitles">
 		
-		
-		
+		<h1><?php the_title(); ?></h1>
 		<?php 
 		//identify rows that have the matching first letter of family name with
 		//the letter that is clicked on
@@ -139,7 +108,7 @@
 	
 	?>
 	
-	<!-- <div class="grid-container">
+	<div class="grid-container">
 
 		<?php 
 			
@@ -161,7 +130,7 @@
 
 			endif; ?>
 
-	</div> -->
+	</div>
 
 	<ul class="grid-container namesList link-hover peopleList">
 
