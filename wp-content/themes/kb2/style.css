@@ -752,6 +752,14 @@ footer {
 
 
 
+/* Taxonomy header
+---------------------------------*/
+
+.tax-header { max-width:1200px; width:100%; margin:0 auto;}
+
+.tax-header .description { padding:20px; background-color:#fff; margin:20px 0;}
+
+
 /* Subject and Names List Pages
 ---------------------------------*/
 .listContainer {

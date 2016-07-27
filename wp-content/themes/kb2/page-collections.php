@@ -46,7 +46,7 @@
 					$itemcount = $collection->count;
 					if(!empty($children)):
 						foreach($children as $child):
-							(int)$itemcount += (int)$child->count;
+							//(int)$itemcount += (int)$child->count;
 						endforeach;
 					endif;
 
@@ -69,14 +69,14 @@
 						<div class="subcollections tiles">
 
 							<?php foreach($children as $child): ?>
-								<a href="<?php echo get_term_link($child->term_id); ?>">
+								
 
 								<div class="subcollection tile">
 
 									<h4><a href="<?php echo get_term_link($child->term_id); ?>"><?php echo $child->name; ?></a></h4>
 
 								</div><!-- .subcollection -->
-							</a>
+
 
 							<?php endforeach; ?>
 

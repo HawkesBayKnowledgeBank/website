@@ -14,27 +14,26 @@
 
 ?>
 <div class="grid-container">
+<?php
 
-	<?php
 
-		if( !empty( $latest_posts ) ) :
+			if( !empty( $latest_posts ) ) :
 
-			 foreach( $latest_posts as $latest_post ) : ?>
+				 foreach( $latest_posts as $latest_post ) : ?>
 
-			 	<div class="grid-1-5 image-subjects-links">
+				 	<div class="grid-1-5 image-subjects-links">
 
-			 		<a href='<?php echo get_permalink( $latest_post->ID ); ?>'>
+				 		<a href='<?php echo get_permalink( $latest_post->ID ); ?>'>
 
-			 			<?php echo $latest_post->post_title; ?>
+				 			<?php echo $latest_post->post_title; ?>
 
-			 		</a>
+				 		</a>
 
-			 	</div>
+				 	</div>
 
-			<?php endforeach;
+				<?php endforeach;
 
-		endif; ?>
-		
+			endif; ?>
 </div>
 	<?php $args = array(
 		'post_type' => 'video',

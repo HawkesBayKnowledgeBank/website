@@ -154,7 +154,7 @@ error_reporting(E_ALL);
 						$parent = $t['field_collections']['und'][0]['tid'];		
 					}
 
-					$wpdb->query('INSERT INTO `wp_term_taxonomy` (term_id, taxonomy, parent) VALUES ("' . $t["tid"] . '", "' . $t["name"] . '", "' . $parent . '") ON DUPLICATE KEY UPDATE term_id = ' . $t['tid'] . ', taxonomy = "' . $t["name"] . '", parent = ' . $parent);
+					$wpdb->query('INSERT INTO `wp_term_taxonomy` (term_id, taxonomy, parent) VALUES ("' . $t["tid"] . '", "collections", "' . $parent . '") ON DUPLICATE KEY UPDATE term_id = ' . $t['tid'] . ', taxonomy = "collections", parent = ' . $parent);
 				
 
 					echo 'Inserted term ' . $t["tid"] . ' (' . $t['name'] . ')' . "\n";
@@ -226,6 +226,8 @@ error_reporting(E_ALL);
 					$wpdb->query('INSERT INTO `wp_terms` values ('  . $t["tid"] . ',"' . $t["name"] . '","' . $t["tid"] . '",0)');	
 					
 					$parent = 0;
+
+					$mode = ($mode == 'subjects' ? 'subject' : $mode);
 
 					$wpdb->query('INSERT INTO `wp_term_taxonomy` (term_id, taxonomy, parent) VALUES ("' . $t["tid"] . '", "' . $mode . '", "' . $parent . '")');
 				
