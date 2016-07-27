@@ -139,10 +139,10 @@ error_reporting(E_ALL);
 
 					$tid = $t['tid'];
 
-					//if(get_term($tid,'collections')) {
-					//	echo 'Term ' . $tid . " already exists, moving on\n";
-					//	continue;
-					//}
+					if(get_term($tid,'collections')) {
+						echo 'Term ' . $tid . " already exists, moving on\n";
+						continue;
+					}
 
 					//else get on with inserting the term
 
@@ -199,7 +199,9 @@ error_reporting(E_ALL);
 
 					echo 'Left in d_term: ' . print_r($t,true) . "\n";	
 
-				}			
+				}
+
+				delete_option("collections_children");			
 
 			break;
 
