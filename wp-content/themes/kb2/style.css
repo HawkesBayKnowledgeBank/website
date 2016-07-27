@@ -2039,6 +2039,8 @@ box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75); */
     padding: 0;
     line-height: 17px;
 }
+
+/*
 .greenbutton {
     float: right;
     margin: 15px 10px 0 10px;
@@ -2049,7 +2051,7 @@ box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75); */
 }
 .greenbutton:hover {
 	background-color: rgba(70,151,48,0.5);
-}
+}*/
 .greenbutton a {
     color: #fafafa;
 }

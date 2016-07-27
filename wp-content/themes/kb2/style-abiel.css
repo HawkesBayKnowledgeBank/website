@@ -57,9 +57,25 @@
 	display: inline-block;
 	font-size: 12px;
 	text-align: center;
-	width: 1200px;
-	height: 40px;
 	/*background: url('img/copyright.gif') no-repeat center;*/
 	background-size: 100% 100%;
 	vertical-align: middle;
+}
+
+
+
+.greenbutton {
+    display: inline-block;
+    margin: 5px 0px 0px 70px;
+    line-height: 30px;
+    padding: 0 3px;
+    background-color: rgba(70,151,48,1);
+    border: 1px solid #ccc;
+}
+
+.greenbutton:hover {
+	background-color: rgba(70,151,48,0.5);
+}
+.greenbutton a {
+    color: #fafafa;
 }
