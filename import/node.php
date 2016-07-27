@@ -150,9 +150,10 @@
 			echo "Doing field_image\n";
 
 			$key = acf_key('images');
-			$subkey = array_pop(acf_key('images','image'));					
+			$subkey_array = acf_key('images','image'); //returns both parent and subkey as an array
+			$subkey = array_pop($subkey_array);	//grab the subkey				
 			
-			update_field($key,array(),$nid);
+			update_field($key,array(),$nid); //clear the image field
 
 			foreach($node[$filefield]['und'] as $index => $image) {
 
