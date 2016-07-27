@@ -1625,6 +1625,17 @@ span.quick_view img { max-width:25px; max-height:25px; opacity:0.8;}
 .mfp-content { max-width:60%; margin:0 auto;}
 .mfp-content img { max-width: 100%; height:auto; width:auto;}
 
+.social-icon {
+	display: inline-block;
+	font-size: 0;
+	width: 80px;
+	height: 80px;
+	background: url('img/social-facebook-box-blue-icon.png') no-repeat center;
+	background-size: 100% 100%;
+	vertical-align: middle;
+}
+
+
 
 
 .bottom-margin {
@@ -1637,10 +1648,9 @@ span.quick_view img { max-width:25px; max-height:25px; opacity:0.8;}
 
 .link_icons {
 	text-align: center;
-	padding-top: 20px;
 }
 
-/*.papers_past_icon {
+.papers_past_icon {
 	display: inline-block;
 	font-size: 0;
 	width: 150px;
@@ -1679,16 +1689,6 @@ span.quick_view img { max-width:25px; max-height:25px; opacity:0.8;}
 	background-size: 100%;
 	vertical-align: middle;
 }
-
-.social-icon {
-	display: inline-block;
-	font-size: 0;
-	width: 80px;
-	height: 80px;
-	background: url('img/social-facebook-box-blue-icon.png') no-repeat center;
-	background-size: 100% 100%;
-	vertical-align: middle;
-}*/
 
 #front_page {
 	padding-left: 0;
@@ -1764,8 +1764,7 @@ h2.Title_single{
 	background-size: 100% 100%;
 	vertical-align: middle;
 }
-
-/*.Copyright{
+.Copyright{
 	display: inline-block;
 	font-size: 0;
 	width: 230px;
@@ -1773,7 +1772,7 @@ h2.Title_single{
 	background: url('img/copyright.gif') no-repeat center;
 	background-size: 100% 100%;
 	vertical-align: middle;
-}*/
+}
 
 
 #toggle{

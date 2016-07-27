@@ -12,12 +12,12 @@
 
 			<span class="quick_view"><a class="lightbox_icon quick_view" href="<?php the_permalink(); ?>?quickview=true">View</a></span>
 
-		<!-- <?php elseif(get_field('youtube_id',$post->ID)): ?>
+		<?php elseif(get_field('youtube_id',$post->ID)): ?>
 
 			<?php $ytid = get_field( 'youtube_id' ); ?>
 			<a href="<?php the_permalink(); ?>?quickview=true" class="quick_view"><img src="http://img.youtube.com/vi/<?php echo $ytid; ?>/0.jpg" /></a>
 
-			<span class="quick_view"><a class="lightbox_icon quick_view" href="<?php the_permalink(); ?>?quickview=true"><img src="/wp-content/themes/kb2/img/search-white.png" alt="View" /></a></span>		 -->
+			<span class="quick_view"><a class="lightbox_icon quick_view" href="<?php the_permalink(); ?>?quickview=true"><img src="/wp-content/themes/kb2/img/search-white.png" alt="View" /></a></span>
 
 		<?php endif; ?>
 
