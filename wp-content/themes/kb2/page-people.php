@@ -134,7 +134,10 @@
 
 </div>
 
-	
+	<div class="pageTitles">
+			
+				<h3>Search our archive of people by surname</h3>
+			</div>	
 
 	<ul class="grid-container namesList link-hover peopleList">
 
