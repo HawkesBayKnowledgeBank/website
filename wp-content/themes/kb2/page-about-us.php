@@ -55,6 +55,28 @@ function afficher_cacher($id) {
 
 		</div>
 	</div>
+	<div class="grid-container">
+		<div class="grid-3">
+			<p>
+				Donation monay
+			</p>
+		</div>
+		<div class="grid-3">
+			<p>
+				Donation files
+			</p>
+		</div>
+		<div class="grid-3">
+			<p>
+				Donation
+			</p>
+		</div>
+		<div class="grid-3">
+			<p>
+			</p>
+		</div>
+
+	</div>
 
 <!-- <?php the_content(); ?> -->
 

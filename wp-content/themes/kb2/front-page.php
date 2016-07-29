@@ -96,11 +96,15 @@
 						</div>
 
 						<div class="inner">
-<span title="blurb">This is the text I want to have a mousover
-							<h3><?php echo $page['landing_page']->post_title; ?></h3>
-</span>
-							<p><?php echo $page['blurb']; ?></p>
+							<span title="blurb">
+								<a href="<?php echo get_permalink($page['landing_page']->ID); ?>"><h3><?php echo $page['landing_page']->post_title; ?></h3></a>
+							</span>
 
+						</div>
+						<div class="block-text">
+							<div class="text_hover">
+								<p><?php echo $page['blurb']; ?></p>
+							</div>
 						</div>
 
 					</article>
