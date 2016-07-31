@@ -752,6 +752,14 @@ footer {
 
 
 
+/* Taxonomy header
+---------------------------------*/
+
+.tax-header { max-width:1200px; width:100%; margin:0 auto;}
+
+.tax-header .description { padding:20px; background-color:#fff; margin:20px 0;}
+
+
 /* Subject and Names List Pages
 ---------------------------------*/
 .listContainer {
@@ -1625,6 +1633,17 @@ span.quick_view img { max-width:25px; max-height:25px; opacity:0.8;}
 .mfp-content { max-width:60%; margin:0 auto;}
 .mfp-content img { max-width: 100%; height:auto; width:auto;}
 
+.social-icon {
+	display: inline-block;
+	font-size: 0;
+	width: 80px;
+	height: 80px;
+	background: url('img/social-facebook-box-blue-icon.png') no-repeat center;
+	background-size: 100% 100%;
+	vertical-align: middle;
+}
+
+
 
 
 .bottom-margin {
@@ -1637,10 +1656,9 @@ span.quick_view img { max-width:25px; max-height:25px; opacity:0.8;}
 
 .link_icons {
 	text-align: center;
-	padding-top: 20px;
 }
 
-/*.papers_past_icon {
+.papers_past_icon {
 	display: inline-block;
 	font-size: 0;
 	width: 150px;
@@ -1679,16 +1697,6 @@ span.quick_view img { max-width:25px; max-height:25px; opacity:0.8;}
 	background-size: 100%;
 	vertical-align: middle;
 }
-
-.social-icon {
-	display: inline-block;
-	font-size: 0;
-	width: 80px;
-	height: 80px;
-	background: url('img/social-facebook-box-blue-icon.png') no-repeat center;
-	background-size: 100% 100%;
-	vertical-align: middle;
-}*/
 
 #front_page {
 	padding-left: 0;
@@ -1764,8 +1772,7 @@ h2.Title_single{
 	background-size: 100% 100%;
 	vertical-align: middle;
 }
-
-/*.Copyright{
+.Copyright{
 	display: inline-block;
 	font-size: 0;
 	width: 230px;
@@ -1773,7 +1780,7 @@ h2.Title_single{
 	background: url('img/copyright.gif') no-repeat center;
 	background-size: 100% 100%;
 	vertical-align: middle;
-}*/
+}
 
 
 #toggle{
@@ -1930,7 +1937,7 @@ h3{
 	/*#ccccff;*/
 }
 
-.headerBack_home .main-header .menu-item a{
+.headerBack_home .new_header .main-header .menu-item a{
 	list-style-type:none;
 	margin-top: 134px;
 	padding:10px 15px;
@@ -1945,10 +1952,10 @@ box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75); */
 }
 
 @media screen and (min-width: 768px) {
-	.only-search-home .search-input {
+	.only-search-home .new_header .search-input {
 		margin-top: 130px;
 	}
-	.headerBack_home .main-header .menu-item{
+	.headerBack_home .new_header .main-header .menu-item{
 		margin-top: 134px;
 	}
 

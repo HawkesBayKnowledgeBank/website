@@ -131,6 +131,59 @@
 			endif; ?>
 
 	</div>
+
+	<div class="pageTitles">
+		
+		<h3>Search our archive of Oral Interviews</h3>
+	
+	</div>	
+
+	<?php 
+
+		$args = array(
+
+			'post_type' => 'audio',
+
+		);
+
+		$audios = new WP_Query($args);
+
+	?>
+
+	<div class="grid-container">
+		
+	<?php if( $audios->have_posts() ) : ?>
+
+		<?php while( $audios->have_posts() ) : ?>
+
+			<?php $audios->the_post(); ?>
+
+				<div class="grid-4 image-subjects-links">
+					
+					<a href="<?php echo get_permalink(); ?>">
+						
+						<?php the_title(); ?>
+					
+					</a>
+					
+				</div>
+
+				<?php $audio_count = $audios->current_post+1; ?>
+
+				<?php if ( $audio_count % 3 == 0 && $audio_count != $audios->post_count) : ?>
+        		
+        			</div><div class='grid-container'>
+      				
+      			<?php endif; ?>
+
+		<?php endwhile; ?>
+
+	<?php endif; ?>
+
+	</div>
+
+
+
 </div>
 
 <?php get_footer(); ?>

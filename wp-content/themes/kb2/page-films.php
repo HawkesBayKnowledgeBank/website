@@ -2,6 +2,39 @@
 <div class="pageTitles">
 	<h1><?php the_title(); ?></h1>
 </div>
+
+<?php
+
+	$args = array(
+		'post_type' => 'video',
+		'posts_per_page' => 5
+	);
+
+	$latest_posts = get_posts($args);
+
+?>
+<div class="grid-container">
+<?php
+
+
+			if( !empty( $latest_posts ) ) :
+
+				 foreach( $latest_posts as $latest_post ) : ?>
+
+				 	<div class="grid-1-5 image-subjects-links">
+
+				 		<a href='<?php echo get_permalink( $latest_post->ID ); ?>'>
+
+				 			<?php echo $latest_post->post_title; ?>
+
+				 		</a>
+
+				 	</div>
+
+				<?php endforeach;
+
+			endif; ?>
+</div>
 	<?php $args = array(
 		'post_type' => 'video',
 		'posts_per_page' => -1

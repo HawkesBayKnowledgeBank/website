@@ -95,12 +95,11 @@
 			foreach($subjects as $subject) : ?>
 
 				<?php 
-					//Not entirely sure that this is correct. 
-					//I couldn't get it to work last night, but it's going now??
-					//Also, I tried applying the post type filter but it doesn't seem 
-					//to work.
+
 					$termID = $subject->term_id;
 					$termLinks = get_term_link($termID, 'subject');
+					if(is_wp_error($termLinks)) continue;
+
 					$postTypeLink = "?post_type=still_image";
 					$subjectPermalink = $termLinks . $postTypeLink;
 					$counter++;

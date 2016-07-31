@@ -30,37 +30,21 @@
 		<div class="wrapper">
 
 			<!-- header -->
-			<div class="headerBack_home">
-				<header class="main-header" role="banner">
+			<div class="headerBack">
+				<header class="main-header container" role="banner">
+<!--
+					<?php kb2_extra_nav_menu(); ?>
 
+					logo -->
 
-					<!-- logo -->
-					<div class="grid-container">
-						<div class="grid-2">
-							<div class="main-logo">
+					<div class="main-logo">
 
-							</div>
-						</div>
-						<div class="grid-4">
-							<div class="byline">
-								<!-- <img class="main-logo" src="img/HBDA_logo.png" alt="logo"> -->
-								<h1><a href="<?php echo home_url(); ?>"><?php bloginfo( 'name' ); ?></a></h1>
-								<h3><?php bloginfo( 'description' ); ?></h3>
-
-							</div>
-						</div>
-						<!-- <div class="grid-2">
-							<div class="link-hover">
-								<?php kb2_extra_nav_menu(); ?>
-							</div>
-						</div> -->
-						<div class="grid-4">
-
-							<div class="only-search-home<?php if ( ! empty( $header_image ) ) : ?> with-image<?php endif; ?>">
-			               				<?php get_search_form(); ?>
-			                	</div>
-		                </div>
-	            	</div>
+					</div>
+					<div class="byline">
+						<!-- <img class="main-logo" src="img/HBDA_logo.png" alt="logo"> -->
+						<h1><a href="<?php echo home_url(); ?>"><?php bloginfo( 'name' ); ?></a></h1>
+						<h3><?php bloginfo( 'description' ); ?></h3>
+					</div>
 
 
 					<!-- /logo -->
@@ -70,7 +54,7 @@
 						<?php kb2_nav(); ?>
 					</nav>
 
-
+					<!-- /nav -->
 					<div id="nav-icon1">
 						<span></span>
 						<span></span>
@@ -80,7 +64,9 @@
 						<?php kb2_nav(); ?>
 
 					</div>
-
+					<div class="only-search<?php if ( ! empty( $header_image ) ) : ?> with-image<?php endif; ?>">
+               				<?php get_search_form(); ?>
+                	</div>
 
 
 			</header>

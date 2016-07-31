@@ -139,10 +139,10 @@ error_reporting(E_ALL);
 
 					$tid = $t['tid'];
 
-					//if(get_term($tid,'collections')) {
-					//	echo 'Term ' . $tid . " already exists, moving on\n";
-					//	continue;
-					//}
+					if(get_term($tid,'collections')) {
+						echo 'Term ' . $tid . " already exists, moving on\n";
+						continue;
+					}
 
 					//else get on with inserting the term
 
@@ -154,7 +154,7 @@ error_reporting(E_ALL);
 						$parent = $t['field_collections']['und'][0]['tid'];		
 					}
 
-					$wpdb->query('INSERT INTO `wp_term_taxonomy` (term_id, taxonomy, parent) VALUES ("' . $t["tid"] . '", "' . $taxonomy . '", "' . $parent . '") ON DUPLICATE KEY UPDATE term_id = ' . $t['tid'] . ', taxonomy = "' . $taxonomy . '", parent = ' . $parent);
+					$wpdb->query('INSERT INTO `wp_term_taxonomy` (term_id, taxonomy, parent) VALUES ("' . $t["tid"] . '", "collections", "' . $parent . '") ON DUPLICATE KEY UPDATE term_id = ' . $t['tid'] . ', taxonomy = "collections", parent = ' . $parent);
 				
 
 					echo 'Inserted term ' . $t["tid"] . ' (' . $t['name'] . ')' . "\n";
@@ -199,7 +199,9 @@ error_reporting(E_ALL);
 
 					echo 'Left in d_term: ' . print_r($t,true) . "\n";	
 
-				}			
+				}
+
+				delete_option("collections_children");			
 
 			break;
 
@@ -224,6 +226,8 @@ error_reporting(E_ALL);
 					$wpdb->query('INSERT INTO `wp_terms` values ('  . $t["tid"] . ',"' . $t["name"] . '","' . $t["tid"] . '",0)');	
 					
 					$parent = 0;
+
+					$mode = ($mode == 'subjects' ? 'subject' : $mode);
 
 					$wpdb->query('INSERT INTO `wp_term_taxonomy` (term_id, taxonomy, parent) VALUES ("' . $t["tid"] . '", "' . $mode . '", "' . $parent . '")');
 				
@@ -267,7 +271,7 @@ function kb_fetch_media($file_url, $nid, $dir) {
 	//$new_filename = 'blogmedia-'.$post_id.".".$ext; //if your post has multiple files, you may need to add a random number to the file name to prevent overwrites
 
 	echo 'Attempting to open file for copying ' . $file_url . "\n";
-	if (fclose(fopen($file_url, "r"))) { //make sure the file actually exists
+	if (file_exists($file_url) && fclose(fopen($file_url, "r"))) { //make sure the file actually exists
 
 		echo 'Copying ' . $file_url . " to " . $save_path.$new_filename ."\n";
 		copy($file_url, $save_path.$new_filename);
