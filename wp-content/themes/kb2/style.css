@@ -148,18 +148,18 @@ input:focus {
 \*------------------------------------*/
 
 ::selection {
-	background:#eaeaea;
-	color:#FFF;
+	background:rgba(70,151,48,0.5);
+	color:#fafafa;;
 	text-shadow:none;
 }
 ::-webkit-selection {
-	background:#eaeaea;
-	color:#FFF;
+	background:rgba(70,151,48,0.5);
+	color:#fafafa;;
 	text-shadow:none;
 }
 ::-moz-selection {
-	background:#eaeaea;
-	color:#FFF;
+	background:rgba(70,151,48,0.5);
+	color:#fafafa;;
 	text-shadow:none;
 }
 
