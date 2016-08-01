@@ -80,42 +80,38 @@
 	<?php $landingpages = get_field('content_landing_pages'); ?>
 
 	<?php if(!empty($landingpages)): ?>
+		<div class="home-page">
 
-		<div class="tiles tiles-3">
-		<?php $NB=0;?>
+			<div class="tiles tiles-3">
+				<?php $NB=0;?>
 
-		<?php foreach($landingpages as $page): ?>
-			<?php $NB=$NB+1 ;?>
+				<?php foreach($landingpages as $page): ?>
+					<?php $NB=$NB+1 ;?>
+							<article class="tile">
 
-					<article class="tile">
+								<div class="imageWrap">
+									<div class="block-text">
+										<p><?php echo $page['blurb']; ?></p>
+									</div>
 
-						<div class="imageWrap">
+									<a href="<?php echo get_permalink($page['landing_page']->ID); ?>"><img src="<?php echo $page['image']['sizes']['300w']; ?>" alt="<?php echo $page['image']['alt'] ?>" /></a>
 
-							<a href="<?php echo get_permalink($page['landing_page']->ID); ?>"><img src="<?php echo $page['image']['sizes']['300w']; ?>" alt="<?php echo $page['image']['alt'] ?>" /></a>
+								</div>
+								<div class="inner">
+									<!-- <span title="blurb"> -->
+										<a href="<?php echo get_permalink($page['landing_page']->ID); ?>"><h3><?php echo $page['landing_page']->post_title; ?></h3></a>
+									<!-- </span> -->
 
-						</div>
-
-						<div class="inner">
-							<span title="blurb">
-								<a href="<?php echo get_permalink($page['landing_page']->ID); ?>"><h3><?php echo $page['landing_page']->post_title; ?></h3></a>
-							</span>
-
-						</div>
-						<div class="block-text">
-							<div class="text_hover">
-								<p><?php echo $page['blurb']; ?></p>
-							</div>
-						</div>
-
-					</article>
-					<?php if ($NB==3):?>
-						</div>
-						<div class="tiles tiles-4">
-					<?php endif; ?>
+								</div>
 
 
-
-		<?php endforeach; ?>
+							</article>
+							<?php if ($NB==3):?>
+								</div>
+								<div class="tiles tiles-4">
+							<?php endif; ?>
+				<?php endforeach; ?>
+			</div>
 
 		</div>
 

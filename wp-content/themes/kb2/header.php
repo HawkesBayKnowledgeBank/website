@@ -37,18 +37,18 @@
 					<!-- logo -->
 					<div class="grid-container">
 						<div class="grid-2">
-							<div class="main-logo">
+								<a href="<?php echo home_url(); ?>"><div class="main-logo">
 
+								</div></a>
 							</div>
-						</div>
-						<div class="grid-4">
-							<div class="byline">
-								<!-- <img class="main-logo" src="img/HBDA_logo.png" alt="logo"> -->
-								<h1><a href="<?php echo home_url(); ?>"><?php bloginfo( 'name' ); ?></a></h1>
-								<h3><?php bloginfo( 'description' ); ?></h3>
+							<div class="grid-4">
+								<div class="byline">
+									<!-- <img class="main-logo" src="img/HBDA_logo.png" alt="logo"> -->
+									<a href="<?php echo home_url(); ?>"><h1><?php bloginfo( 'name' ); ?></h1>
+									<h3><?php bloginfo( 'description' ); ?></h3></a>
 
+								</div>
 							</div>
-						</div>
 						<!-- <div class="grid-2">
 							<div class="link-hover">
 								<?php kb2_extra_nav_menu(); ?>
