@@ -89,7 +89,7 @@
 					<?php $NB=$NB+1 ;?>
 							<article class="tile">
 
-								<div class="imageWrap">
+								<div class="imageWrap" style="max-height :200px;">
 									<div class="block-text">
 										<p><?php echo $page['blurb']; ?></p>
 									</div>
@@ -106,6 +106,25 @@
 
 
 							</article>
+							<?php if ($NB==4):?>
+								<article class="tile">
+
+									<div class="inner">
+										<!-- <span title="blurb"> -->
+											<div class="title-main"><a href="photonews"><h3>Photo News</h3></a></div>
+											<div class="title-main" style="	border-top:1px solid rgba(70, 151, 48, 0.5);"><a href="collections"><h3>Collections</h3></a>
+											</div>
+											<div class="title-main" style="	border-top:1px solid rgba(70, 151, 48, 0.5);"><a href="books"><h3>Books</h3></a>
+											</div>
+										<!-- </span> -->
+
+									</div>
+
+
+								</article>
+
+
+							<?php endif; ?>
 							<?php if ($NB==3):?>
 								</div>
 								<div class="tiles tiles-4">

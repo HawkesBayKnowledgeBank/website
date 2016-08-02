@@ -68,7 +68,7 @@ function afficher_cacher($id) {
 				<div class="grid-4">
 					<div class="circle">
 						<p>
-							<a href="#">Volunteer for us</a>
+							<a href="/contact">Volunteer for us</a>
 						</p>
 					</div>
 				</div>
