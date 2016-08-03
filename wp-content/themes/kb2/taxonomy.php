@@ -16,6 +16,23 @@
 
 		<div class="tax-header">
 
+			<?php  //print_r($term); ?>
+
+			<?php
+				$ancestor_html = '';
+				$ancestors = get_ancestors($term->term_id, $term->taxonomy);
+				if(!empty($ancestors)) {
+					foreach($ancestors as $ancestor_id){
+						$ancestor = get_term($ancestor_id);
+						$ancestor_html .= '<a href="' . get_term_link($ancestor->term_id) . '" class="term-ancestor">' . $ancestor->name . '</a>';
+					}
+				}
+			?>
+
+			<h3><span class="taxonomy-name"><?php echo ucfirst($term->taxonomy); ?></span><?php echo $ancestor_html; ?></h3>
+			<h1><?php echo $term->name; ?></h1>
+
+
 			<?php if(!empty($term->description)): ?>
 
 				<div class="description">
@@ -29,12 +46,16 @@
 
 				<div class="subcollections tiles">
 
-					<?php foreach($children as $child): ?>						
+					<?php foreach($children as $child): ?>
 
 						<div class="subcollection tile">
 
-							<h4><a href="<?php echo get_term_link($child->term_id); ?>"><?php echo $child->name; ?></a></h4>
-							<h5><?php echo $child->count; ?></h5>
+							<div class="inner">
+
+								<h4><a href="<?php echo get_term_link($child->term_id); ?>"><?php echo $child->name; ?></a></h4>
+								<h5><?php echo $child->count; ?> items</h5>
+
+							</div>
 
 						</div><!-- .subcollection -->					
 
