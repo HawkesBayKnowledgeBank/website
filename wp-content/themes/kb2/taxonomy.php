@@ -44,22 +44,33 @@
 
 			<?php if(!empty($children)): ?>
 
-				<div class="subcollections tiles">
+				<div class="subcollections">
 
-					<?php foreach($children as $child): ?>
+					<?php
+						$tax_name = ucfirst($term->taxonomy);
+						$tax_name = preg_replace('/s$/','',$tax_name);
+					?>
 
-						<div class="subcollection tile">
+					<h5>In this <?php echo $tax_name; ?></h5>
 
-							<div class="inner">
+					<div class="tiles">
 
-								<h4><a href="<?php echo get_term_link($child->term_id); ?>"><?php echo $child->name; ?></a></h4>
-								<h5><?php echo $child->count; ?> items</h5>
+						<?php foreach($children as $child): ?>
 
-							</div>
+							<div class="subcollection tile">
 
-						</div><!-- .subcollection -->					
+								<div class="inner">
 
-					<?php endforeach; ?>
+									<h4><a href="<?php echo get_term_link($child->term_id); ?>"><?php echo $child->name; ?></a></h4>
+									<h5><?php echo $child->count; ?> items</h5>
+
+								</div>
+
+							</div><!-- .subcollection -->					
+
+						<?php endforeach; ?>
+
+				</div><!-- .tiles -->
 
 				</div><!-- .subcollections -->
 			<?php endif; ?>

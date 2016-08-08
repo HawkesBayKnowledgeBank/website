@@ -762,9 +762,10 @@ footer {
 
 .tax-header .description { padding:20px; background-color:#fff; margin:20px 0;}
 
-.tax-header .subcollections { padding:20px 0; margin:20px 0; border-top:1px solid #ccc; border-bottom:1px solid #ccc;}
+.tax-header .subcollections { padding: 20px 0 0 0; margin:20px 0; border-top:1px solid #ddd; border-bottom:1px solid #ddd;}
+.tax-header .subcollections > h5 { display:block; margin:0 0 20px; padding:0; color:rgba(70, 151, 48, 1);}
 
-.tax-header .subcollections .subcollection.tile { margin:0; padding:20px 20px 0 0; width:20%;}
+.tax-header .subcollections .subcollection.tile { margin:0; padding: 0 20px 20px  0; width:20%;}
  .tax-header .subcollections .subcollection.tile .inner { background-color:#f8f8f8;}
 
 .tax-header .subcollections .subcollection.tile h4, .tax-header .subcollections .subcollection.tile h5 { margin:0;}
