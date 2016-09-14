@@ -1,7 +1,7 @@
 <pre>
 <?php
 
-require_once('../wp-load.php');
+require_once('/webs/new/wp-load.php');
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);

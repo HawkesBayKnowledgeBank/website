@@ -58,12 +58,12 @@
 		if(isset($node[$filefield]['und']['0']['uri'])) {
 			$file_url = str_replace('public://','/webs/hbda/sites/default/files/', $node[$filefield]['und']['0']['uri']);
 
-			$fileid = kb_fetch_media($file_url,$nid,'/node/' . $nid . '/master/');
+			$fileid = kb_fetch_media($file_url,$new_post_id,'/node/' . $new_post_id . '/master/');
 
 			if($fileid) {
 
-				update_field(acf_key('master'),$fileid,$nid);
-				echo 'File ' . $fileid . ' attached to ' . $nid . "\n";
+				update_field(acf_key('master'),$fileid,$new_post_id);
+				echo 'File ' . $fileid . ' attached to ' . $new_post_id . "\n";
 
 			}
 			
@@ -77,18 +77,18 @@
 
 				$file_url = str_replace('public://','/webs/hbda/sites/default/files/', $node[$filefield]['und']['0']['uri']);
 
-				$fileid = kb_fetch_media($file_url,$nid,'/node/' . $nid . '/images/');
+				$fileid = kb_fetch_media($file_url,$new_post_id,'/node/' . $new_post_id . '/images/');
 
 				if($fileid) {
 					
 					$key = acf_key('images');
 					$subkey = array_pop(acf_key('images','image'));					
 					
-					update_field($key,array(),$nid);
+					update_field($key,array(),$new_post_id);
 
-					add_row($key,array($subkey => $fileid),$nid);					
+					add_row($key,array($subkey => $fileid),$new_post_id);					
 					
-					echo 'File ' . $fileid . ' attached to ' . $nid . "\n";
+					echo 'File ' . $fileid . ' attached to ' . $new_post_id . "\n";
 
 				}
 
@@ -109,7 +109,7 @@
 
 			if(in_array($field['type'], array('text','radio','wysiwyg')) && isset($node['field_' . $field['name']]['und'][0]['value'])) {
 
-				update_field($field['key'], $node['field_' . $field['name']]['und'][0]['value'], $nid);
+				update_field($field['key'], $node['field_' . $field['name']]['und'][0]['value'], $new_post_id);
 				echo "Added " . $field['name'] . "\n";
 
 			}
@@ -124,7 +124,7 @@
 					$newvalue[] = $dval['target_id'];
 				}
 
-				update_field($field['key'], $newvalue, $nid);
+				update_field($field['key'], $newvalue, $new_post_id);
 				echo "Added " . print_r($newvalue,true) . ' to ' . $field['name'] . "\n";
 
 			}
@@ -158,7 +158,7 @@
 
 				}
 
-				update_field(acf_key($nf),$people,$nid);
+				update_field(acf_key($nf),$people,$new_post_id);
 				echo "Added people " . print_r($people,true) . " to field $nf\n";
 
 			}

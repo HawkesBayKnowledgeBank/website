@@ -39,7 +39,7 @@
 		    'post_content' => (isset($node['body']['und'][0]['value']) ? $node['body']['und'][0]['value'] : ''),
 		    'post_status' => $status,
 		    'post_type' => 'still_image',
-		    'import_id' => $node['nid'],
+		    'import_id' => $nid,
 		    'post_author' => $node['uid']
 		);
 		$new_post_id = wp_insert_post( $new_post );		
@@ -79,7 +79,7 @@
 				$terms[] = $term['tid'];
 			}
 			
-			wp_set_post_terms( $nid, $terms, 'subject' );
+			wp_set_post_terms( $new_post_id, $terms, 'subject' );
 			echo 'Set terms ' . print_r($terms,true) . " on subjects\n";
 			unset($node['field_subjects']);
 		}
@@ -94,7 +94,7 @@
 				$terms[] = $term['tid'];
 			}
 			
-			wp_set_post_terms( $nid, $terms, 'post_tag' );
+			wp_set_post_terms( $new_post_id, $terms, 'post_tag' );
 			echo 'Set terms ' . print_r($terms,true) . " on tags\n";
 			unset($node['field_tags']);
 		}
@@ -104,12 +104,12 @@
 		if(isset($node[$filefield]['und']['0']['uri'])) {
 			echo "Doing field_master\n";
 			$file_url = str_replace('public://','/webs/hbda/sites/default/files/', $node[$filefield]['und']['0']['uri']);
-			echo 'Fetchmedia for ' . $nid . "\n" . print_r($node[$filefield]['und']['0'],true) . "\n";
-			$fileid = kb_fetch_media($file_url,$nid,'/node/' . $nid . '/master/');
+			echo 'Fetchmedia for ' . $new_post_id . "\n" . print_r($node[$filefield]['und']['0'],true) . "\n";
+			$fileid = kb_fetch_media($file_url,$new_post_id,'/node/' . $new_post_id . '/master/');
 
 			if($fileid) {
 
-				update_field(acf_key('master'),$fileid,$nid);
+				update_field(acf_key('master'),$fileid,$new_post_id);
 				echo 'File ' . $fileid . ' attached to master' . "\n";
 
 			}
@@ -126,17 +126,17 @@
 			foreach($node[$filefield]['und'] as $index => $image) {
 
 				$file_url = str_replace('public://','/webs/hbda/sites/default/files/', $image['uri']);
-				echo "Fetchmedia for " . $nid . "\n" . print_r($node[$filefield]['und']['0'],true) . "\n";
-				$fileid = kb_fetch_media($file_url,$nid,'/node/' . $nid . '/images/');
+				echo "Fetchmedia for " . $new_post_id . "\n" . print_r($node[$filefield]['und']['0'],true) . "\n";
+				$fileid = kb_fetch_media($file_url,$new_post_id,'/node/' . $new_post_id . '/images/');
 
 				if($fileid) {
 					
 					$key = acf_key('images');
 					$subkey = array_pop(acf_key('images','image'));					
 					
-					update_field($key,array(),$nid);
+					update_field($key,array(),$new_post_id);
 
-					add_row($key,array($subkey => $fileid),$nid);					
+					add_row($key,array($subkey => $fileid),$new_post_id);					
 					
 					echo 'File ' . $fileid . ' attached to image' . "\n";
 
@@ -163,7 +163,7 @@
 
 				echo "Doing field " . 'field_' . $field['name'] . "\n";
 
-				update_field($field['key'], $node['field_' . $field['name']]['und'][0]['value'], $nid);
+				update_field($field['key'], $node['field_' . $field['name']]['und'][0]['value'], $new_post_id);
 				echo "Added value " .  $node['field_' . $field['name']]['und'][0]['value'] . ' to ' . $field['name'] . ' (' . $field['key'] . ')' . "\n";
 				unset($node['field_' . $field['name']]);
 			}
@@ -183,7 +183,7 @@
 					$newvalue[] = $dval['target_id'];
 				}
 
-				update_field($field['key'], $newvalue, $nid);
+				update_field($field['key'], $newvalue, $new_post_id);
 				echo "Added value " . print_r($newvalue,true) . ' to ' . $field['name'] . ' (' . $field['key'] . ')' . "\n";
 
 				unset($node['field_' . $field['name']]);
@@ -191,6 +191,14 @@
 
 
 		}
+
+
+		//special case - body -> notes field
+		$notes = (isset($node['body']['und'][0]['value']) ? $node['body']['und'][0]['value'] : '');
+		if(!empty($notes)) {
+			update_field('field_56d3eb00413be', $notes, $new_post_id);
+		}
+
 
 
 
@@ -215,7 +223,7 @@
 
 				}
 
-				update_field(acf_key($nf),$people,$nid);
+				update_field(acf_key($nf),$people,$new_post_id);
 				echo "Added people " . print_r($people,true) . " to field $nf (" . acf_key($nf) . ")\n";
 				unset($node['field_' . $nf]);
 			}

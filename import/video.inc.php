@@ -15,7 +15,7 @@
 		//exit;
 /***********************/
 
-/*
+
 		//Post
 		$status = ($node['status'] == 1 ? 'publish' : 'draft');
 
@@ -39,18 +39,18 @@
 			$cid = $node['field_collections']['und'][0]['tid'];		
 			wp_set_post_terms( $new_post_id, $cid, 'collections' );
 		}
-*/
+
 		//master
 		$filefield = 'field_master';
 		if(isset($node[$filefield]['und']['0']['uri'])) {
 			$file_url = str_replace('public://','/webs/hbda/sites/default/files/', $node[$filefield]['und']['0']['uri']);
 
-			$fileid = kb_fetch_media($file_url,$nid,'/node/' . $nid . '/master/');
+			$fileid = kb_fetch_media($file_url,$new_post_id,'/node/' . $new_post_id . '/master/');
 
 			if($fileid) {
 
-				update_field('field_56b1b000cc95a',$fileid,$nid);
-				echo 'File ' . $fileid . ' attached to ' . $nid . "\n";
+				update_field('field_56b1b000cc95a',$fileid,$new_post_id);
+				echo 'File ' . $fileid . ' attached to ' . $new_post_id . "\n";
 
 			}
 			
@@ -64,12 +64,12 @@
 
 				$file_url = str_replace('public://','/webs/hbda/sites/default/files/', $node[$filefield]['und']['0']['uri']);
 
-				$fileid = kb_fetch_media($file_url,$nid,'/node/' . $nid . '/images/');
+				$fileid = kb_fetch_media($file_url,$new_post_id,'/node/' . $new_post_id . '/images/');
 
 				if($fileid) {
 
-					update_field('field_56b1b2da7d393',$fileid,$nid);
-					echo 'File ' . $fileid . ' attached to ' . $nid . "\n";
+					update_field('field_56b1b2da7d393',$fileid,$new_post_id);
+					echo 'File ' . $fileid . ' attached to ' . $new_post_id . "\n";
 
 				}
 
@@ -95,7 +95,7 @@
 
 			if(isset($node[$name]['und'][0]['value'])){
 
-				update_field($key, $node[$name]['und'][0]['value'], $nid);
+				update_field($key, $node[$name]['und'][0]['value'], $new_post_id);
 				echo "Added $name \n";
 
 			}
@@ -111,7 +111,7 @@
 				$terms[] = $term['tid'];
 			}
 			
-			wp_set_post_terms( $nid, $terms, 'subject' );
+			wp_set_post_terms( $new_post_id, $terms, 'subject' );
 			echo 'Set terms ' . print_r($terms,true) . "\n";
 		}
 
@@ -124,7 +124,7 @@
 				$terms[] = $term['tid'];
 			}
 			
-			wp_set_post_terms( $nid, $terms, 'post_tag' );
+			wp_set_post_terms( $new_post_id, $terms, 'post_tag' );
 			echo 'Set terms ' . print_r($terms,true) . "\n";
 		}
 
@@ -144,7 +144,7 @@
 
 			}
 
-			update_field('field_56b1b2323ae6f',$authors,$nid);
+			update_field('field_56b1b2323ae6f',$authors,$new_post_id);
 			echo "Added authors " . print_r($authors,true) . "\n";
 
 		}
@@ -164,7 +164,7 @@
 
 			}
 
-			update_field('field_56b1b119b7b70',$people,$nid);
+			update_field('field_56b1b119b7b70',$people,$new_post_id);
 			echo "Added people " . print_r($people,true) . "\n";
 
 		}
@@ -175,12 +175,12 @@
 
 			echo '<img src="' . $file_url . '"/>';
 
-			$fileid = kb_fetch_media($file_url,$nid,'/node/' . $nid . '/images/');
+			$fileid = kb_fetch_media($file_url,$new_post_id,'/node/' . $new_post_id . '/images/');
 
 			if($fileid) {
 
-				update_field('field_56b1b2da7d393',$fileid,$nid);
-				echo 'File ' . $fileid . ' attached to ' . $nid . "\n";
+				update_field('field_56b1b2da7d393',$fileid,$new_post_id);
+				echo 'File ' . $fileid . ' attached to ' . $new_post_id . "\n";
 
 			}		
 			
