@@ -547,6 +547,169 @@ function kb_nicename($post_type) {
 
 }
 
+
+/*************************/
+//Auto-generate images from PDF and TIFF uploads
+
+
+function kb_auto_images( $post_id, $post, $update ) {
+
+    ini_set( 'error_log', WP_CONTENT_DIR . '/debug.log' );
+
+    //if this isn't one of the post types we want, bail out
+    if ( !in_array($post->post_type, array('text','still_image')) ) {
+        return;
+    }
+
+    // unhook this function so it doesn't loop infinitely when we save things on the post below
+    remove_action( 'save_post', 'kb_auto_images' );
+
+    //we have a master file and the checkbox is checked and we don't have any images, time to auto generate
+    if(get_field('master',$post_id) && get_field('auto_generate_images',$post_id) && !get_field('images',$post_id)) {
+
+        $master = get_field('master',$post_id);
+
+        error_log('auto generate images for ' . $post_id . print_r($master,true));
+
+
+        //get absolute file path of master
+        //make output directory
+        //generate images
+        //turn images into wp attachments
+        //save attachments to the files custom field
+
+
+        $file_url = '';
+
+        $nid = $post_id;
+        $dir = '';
+    
+
+        //directory to import to    
+        $uploads = wp_upload_dir();
+        $save_path = $uploads['basedir'].$dir;
+
+        //if the directory doesn't exist, create it 
+        if(!file_exists($save_path)) {
+            echo 'Making directory ' . $save_path . "\n";
+            mkdir($save_path,0775,true);
+            echo 'Made directory ' . $save_path . "\n";
+        }
+
+        //rename the file... alternatively, you could explode on "/" and keep the original file name
+        $fileparts = explode("/", $file_url);
+        $new_filename = $nid . '_' . array_pop($fileparts);
+        //$new_filename = 'blogmedia-'.$post_id.".".$ext; //if your post has multiple files, you may need to add a random number to the file name to prevent overwrites
+
+        echo 'Attempting to open file for copying ' . $file_url . "\n";
+        if (file_exists($file_url) && fclose(fopen($file_url, "r"))) { //make sure the file actually exists
+
+            echo 'Copying ' . $file_url . " to " . $save_path.$new_filename ."\n";
+            copy($file_url, $save_path.$new_filename);
+
+            //echo (file_exists($save_path.$new_filename) ? $save_path.$new_filename . 'exists' : $save_path.$new_filename . 'does not exist :(');
+
+            $siteurl = get_option('siteurl');
+            echo "getimagesize()\n";
+            $file_info = getimagesize($save_path.$new_filename);
+
+            //create an array of attachment data to insert into wp_posts table
+            $artdata = array();
+            $artdata = array(
+                'post_author' => 1, 
+                'post_date' => current_time('mysql'),
+                'post_date_gmt' => current_time('mysql'),
+                'post_title' => $new_filename, 
+                'post_status' => 'inherit',
+                'comment_status' => 'closed',
+                'ping_status' => 'closed',
+                'post_name' => sanitize_title_with_dashes(str_replace("_", "-", $new_filename)),                                            
+                'post_modified' => current_time('mysql'),
+                'post_modified_gmt' => current_time('mysql'),
+                'post_parent' => '', //$post_id
+                'post_type' => 'attachment',
+                'guid' => sanitize_title_with_dashes(str_replace("_", "-", $new_filename)),
+                'post_mime_type' => $file_info['mime'],
+                'post_excerpt' => '',
+                'post_content' => ''
+            );  
+
+            //insert the database record
+            echo "attaching to WP\n" . print_r($artdata,true) . "\n";
+            try{
+
+
+                $defaults = array(
+                        'file'        => $save_path.$new_filename,
+                        'post_parent' => 0
+                );
+
+
+                $data = wp_parse_args( $artdata, $defaults );
+        
+                if ( ! empty( $parent ) ) {
+                        $data['post_parent'] = $parent;
+                }
+        
+                $data['post_type'] = 'attachment';
+        
+
+                echo 'inserting attachment post' . "\n";
+                $attach_id = wp_insert_post( $data, true );
+               
+
+                //$attach_id = wp_insert_attachment( $artdata, $save_path.$new_filename, 0 ); //can swap 0 for $post_id to be parent
+            }
+            catch(Exception $e) {
+                echo 'no deal'; exit;
+            }
+
+            //generate metadata and thumbnails
+            echo 'making image metadata' . "\n";
+            if ($attach_data = wp_generate_attachment_metadata( $attach_id, $save_path . $new_filename)) {
+
+                if(is_wp_error($attach_data)) {
+
+                    echo $attach_data->get_error_message();
+
+                }
+                else {
+
+                    echo "adding image metadata\n";
+                    wp_update_attachment_metadata($attach_id, $attach_data);
+
+                }
+                
+            }
+
+            return $attach_id;
+
+            //optional make it the featured image of the post it's attached to
+            //$rows_affected = $wpdb->insert($wpdb->prefix.'postmeta', array('post_id' => $post_id, 'meta_key' => '_thumbnail_id', 'meta_value' => $attach_id));
+        }
+        else { //file does not exist
+            return false;
+        }
+
+    }//if
+
+
+    // re-hook this function
+    add_action( 'save_post', 'kb_auto_images', 10, 3 );
+
+}//kb_auto_images()
+
+add_action( 'save_post', 'kb_auto_images', 10, 3 );
+
+
+
+
+
+/*************************/
+
+
+
+
 add_filter( 'posts_search', 'my_search_is_perfect', 20, 2 );
 function my_search_is_perfect( $search, $wp_query ) {
     global $wpdb;
@@ -575,15 +738,9 @@ function my_search_is_perfect( $search, $wp_query ) {
 
     return $search;
 }
-/*function afficher_cacher($id) {
-    if (document.getElementById($id).style.visibility=='hidden') {
-        document.getElementById($id).style.visibility='visible';
-    }
-    else {
-        document.getElementById($id).style.visibility='hidden';
-    }
-    return true;
-}*/
+
+
+
 
 ?>
 
