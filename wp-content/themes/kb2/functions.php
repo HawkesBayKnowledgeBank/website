@@ -549,19 +549,23 @@ function kb_nicename($post_type) {
 
 
 /*************************/
-//Auto-generate images from PDF and TIFF uploads
 
+//Auto-generate images from PDF and TIFF uploads
 
 function kb_auto_images( $post_id, $post, $update ) {
 
-    ini_set( 'error_log', WP_CONTENT_DIR . '/debug.log' );
+    //return false; //remove me
+
+    ini_set( 'error_log', WP_CONTENT_DIR . '/debug.log' ); //redirect error output to the debug log
+
+    error_log('Firing doc -> image auto conversion');
 
     //if this isn't one of the post types we want, bail out
     if ( !in_array($post->post_type, array('text','still_image')) ) {
         return;
     }
 
-    // unhook this function so it doesn't loop infinitely when we save things on the post below
+    // unhook this function for now, so it doesn't loop infinitely when we save things on the post below
     remove_action( 'save_post', 'kb_auto_images' );
 
     //we have a master file and the checkbox is checked and we don't have any images, time to auto generate
@@ -572,127 +576,181 @@ function kb_auto_images( $post_id, $post, $update ) {
         error_log('auto generate images for ' . $post_id . print_r($master,true));
 
 
+        //1. Can we just copy the master over? Yes if it's an image, no if it's a tiff or a PDF or something else.
+
+        if(isset($master['mime_type'])) {
+
+            switch( $master['mime_type'] ) {
+
+                //only copy images, fallthrough on accepted mime types
+                case 'image/jpeg':
+                case 'image/png':
+                case 'image/gif':
+
+                    //field key varies by content type, but the names are always the same. Helper function kb_acf_key below does a basic name => key conversion.
+                    $image_field_key = kb_acf_key('images', 'image'); //returns array($field key, $subfield key)
+                    
+                    $images[] = array($image_field_key[1] => $master['id']); //add repeater row
+
+                    update_field($image_field_key[0], $images, $post_id); //save
+
+                    error_log('copied master to ' . $image_field_key[0] . ' on ' . $post_id);
+
+                    return;
+                    break;
+
+            }//switch
+        }
+        else { //this is no image
+
+            error_log('not an image');
+
+        }//endif
+
+        //If we got here, we are not dealing with an image - let's try to make some jpegs out of whatever we have.
+
         //get absolute file path of master
         //make output directory
         //generate images
         //turn images into wp attachments
-        //save attachments to the files custom field
+        //save attachments to the files custom field        
 
+        $file_path = get_attached_file( $master['id'] ); //absolute path to file we are converting
 
-        $file_url = '';
-
-        $nid = $post_id;
-        $dir = '';
-    
-
-        //directory to import to    
+        //build our path and filename bits
+        
         $uploads = wp_upload_dir();
-        $save_path = $uploads['basedir'].$dir;
+        $uploads_sub_directory = '/attachments/' . $post_id . '/';
+        $save_directory = $uploads['basedir'].$uploads_sub_directory;
+
+        $fileparts = explode("/", $file_path);
+        $current_filename = array_pop($fileparts); //includes extension
+        $new_filename = preg_replace('/\\.[^.\\s]{3,4}$/', '', $current_filename); //strip extension
+        $new_filename = $post_id . '_' .  $new_filename . '.jpg'; //add prefix and new extension - something like 12345_originalfilename.jpg
+
+        $output_file_path = $save_directory . $new_filename; //full path to output file.
+
+        if(file_exists($output_file_path)) {
+            error_log('output file already exists'); 
+            return false;  
+        } 
 
         //if the directory doesn't exist, create it 
-        if(!file_exists($save_path)) {
-            echo 'Making directory ' . $save_path . "\n";
-            mkdir($save_path,0775,true);
-            echo 'Made directory ' . $save_path . "\n";
+        if(!file_exists($save_directory)) {
+            echo 'Making directory ' . $save_directory . "\n";
+            mkdir($save_directory,0775,true);
+            echo 'Made directory ' . $save_directory . "\n";
         }
 
-        //rename the file... alternatively, you could explode on "/" and keep the original file name
-        $fileparts = explode("/", $file_url);
-        $new_filename = $nid . '_' . array_pop($fileparts);
-        //$new_filename = 'blogmedia-'.$post_id.".".$ext; //if your post has multiple files, you may need to add a random number to the file name to prevent overwrites
+        //do conversion
 
-        echo 'Attempting to open file for copying ' . $file_url . "\n";
-        if (file_exists($file_url) && fclose(fopen($file_url, "r"))) { //make sure the file actually exists
-
-            echo 'Copying ' . $file_url . " to " . $save_path.$new_filename ."\n";
-            copy($file_url, $save_path.$new_filename);
-
-            //echo (file_exists($save_path.$new_filename) ? $save_path.$new_filename . 'exists' : $save_path.$new_filename . 'does not exist :(');
-
-            $siteurl = get_option('siteurl');
-            echo "getimagesize()\n";
-            $file_info = getimagesize($save_path.$new_filename);
-
-            //create an array of attachment data to insert into wp_posts table
-            $artdata = array();
-            $artdata = array(
-                'post_author' => 1, 
-                'post_date' => current_time('mysql'),
-                'post_date_gmt' => current_time('mysql'),
-                'post_title' => $new_filename, 
-                'post_status' => 'inherit',
-                'comment_status' => 'closed',
-                'ping_status' => 'closed',
-                'post_name' => sanitize_title_with_dashes(str_replace("_", "-", $new_filename)),                                            
-                'post_modified' => current_time('mysql'),
-                'post_modified_gmt' => current_time('mysql'),
-                'post_parent' => '', //$post_id
-                'post_type' => 'attachment',
-                'guid' => sanitize_title_with_dashes(str_replace("_", "-", $new_filename)),
-                'post_mime_type' => $file_info['mime'],
-                'post_excerpt' => '',
-                'post_content' => ''
-            );  
-
-            //insert the database record
-            echo "attaching to WP\n" . print_r($artdata,true) . "\n";
-            try{
-
-
-                $defaults = array(
-                        'file'        => $save_path.$new_filename,
-                        'post_parent' => 0
-                );
-
-
-                $data = wp_parse_args( $artdata, $defaults );
-        
-                if ( ! empty( $parent ) ) {
-                        $data['post_parent'] = $parent;
-                }
-        
-                $data['post_type'] = 'attachment';
+        //Use imagemagick's convert command to make jpeg(s) from the import file. Imagemagick will auto detect and handle pretty much what we throw at it - jpeg, tiff or pdf. Also handles multiple pages.
+        exec('convert -quality 90 -interlace none -density 300 -format jpg -resize 1800x1800 ' . $file_path . ' ' . $output_file_path);
+        error_log('convert -quality 90 -interlace none -density 300 -format jpg -resize 1800x1800 ' . $file_path . ' ' . $output_file_path);
         
 
-                echo 'inserting attachment post' . "\n";
-                $attach_id = wp_insert_post( $data, true );
-               
+        //ok then, that either worked or it didn't. Let's check.
+        //if we got multiple jpegs from a multi-page file, they will be numbered. If we only got one, we'll just handle it the same way.        
+        $jpegs = glob($save_directory . '*.jpg'); //get a list of all the jpegs in the output directory
+            
+        if (!empty($jpegs)) { //we got one or more
 
-                //$attach_id = wp_insert_attachment( $artdata, $save_path.$new_filename, 0 ); //can swap 0 for $post_id to be parent
-            }
-            catch(Exception $e) {
-                echo 'no deal'; exit;
-            }
+            natsort($jpegs); //get our numbered filenames in the right natural order (so we get 1, 2, 3 instead of 1, 10, 2, 3 etc)
+        
+            foreach($jpegs as $jpeg) {
 
-            //generate metadata and thumbnails
-            echo 'making image metadata' . "\n";
-            if ($attach_data = wp_generate_attachment_metadata( $attach_id, $save_path . $new_filename)) {
+                echo 'Attempting to open file for copying ' . $jpeg . "\n";
 
-                if(is_wp_error($attach_data)) {
+                if (file_exists($jpeg) && fclose(fopen($jpeg, "r"))) { //make sure the file actually exists
 
-                    echo $attach_data->get_error_message();
+                    $siteurl = get_option('siteurl');
+                    
+                    $file_info = getimagesize($jpeg); //despite the name gets a bit more than size
 
-                }
-                else {
+                    //create an array of attachment data to insert into wp_posts table            
+                    $artdata = array(
+                        'post_author' => 1, 
+                        'post_date' => current_time('mysql'),
+                        'post_date_gmt' => current_time('mysql'),
+                        'post_title' => $new_filename, 
+                        'post_status' => 'inherit',
+                        'comment_status' => 'closed',
+                        'ping_status' => 'closed',
+                        'post_name' => sanitize_title_with_dashes(str_replace("_", "-", $new_filename)),                                            
+                        'post_modified' => current_time('mysql'),
+                        'post_modified_gmt' => current_time('mysql'),
+                        'post_parent' => '', //$post_id
+                        'post_type' => 'attachment',
+                        'guid' => sanitize_title_with_dashes(str_replace("_", "-", $new_filename)),
+                        'post_mime_type' => $file_info['mime'],
+                        'post_excerpt' => '',
+                        'post_content' => ''
+                    );  
 
-                    echo "adding image metadata\n";
-                    wp_update_attachment_metadata($attach_id, $attach_data);
+                    //insert the database record
+                    //echo "attaching to WP\n" . print_r($artdata,true) . "\n";
+                    try{
 
-                }
+                        $defaults = array(
+                                'file'        => $jpeg,
+                                'post_parent' => 0
+                        );
+
+                        $data = wp_parse_args( $artdata, $defaults );
                 
-            }
+                        if ( ! empty( $parent ) ) {
+                                $data['post_parent'] = $parent;
+                        }
+                
+                        $data['post_type'] = 'attachment';        
+                        
+                        $attach_id = wp_insert_post( $data, true );
+                        
+                    }
+                    catch(Exception $e) {
+                        //echo 'no deal'; exit;
+                        error_log('Could not create an attachment for ' . $post_id);
+                    }
 
-            return $attach_id;
+                    //generate metadata and thumbnails
+                    //echo 'making image metadata' . "\n";
+                    if ($attach_data = wp_generate_attachment_metadata( $attach_id, $jpeg)) {
 
-            //optional make it the featured image of the post it's attached to
-            //$rows_affected = $wpdb->insert($wpdb->prefix.'postmeta', array('post_id' => $post_id, 'meta_key' => '_thumbnail_id', 'meta_value' => $attach_id));
-        }
-        else { //file does not exist
-            return false;
-        }
+                        if(is_wp_error($attach_data)) {
+                            error_log($attach_data->get_error_message());
+                        }
+                        else {
+                            error_log("adding image metadata\n");
+                            wp_update_attachment_metadata($attach_id, $attach_data);
+                        }
+                        
+                    }
 
-    }//if
+                    //all done, add this image to our image field if everything looks ok
+                    if(!empty($attach_id)){
 
+                        //first get current field value
+                        $images = get_field('images',$post_id);
+                        if(empty($images)) $images = array(); //initialise if empty
+
+                        //field key varies by content type, but the names are always the same. Helper function kb_acf_key below does a basic name => key conversion.
+                        $image_field_key = kb_acf_key('images', 'image'); //returns array($field key, $subfield key)
+                        
+                        $images[] = array($image_field_key[1] => $attach_id); //add repeater row
+
+                        update_field($image_field_key[0], $images, $post_id); //save
+
+                        error_log('added image to repeater field ' . $image_field_key[0] . ' on ' . $post_id);
+
+                    }
+
+                }//endif
+
+            }//foreach
+
+        } //endif conversion worked        
+        
+    }//endif conditions for auto generation are satisified
 
     // re-hook this function
     add_action( 'save_post', 'kb_auto_images', 10, 3 );
@@ -702,7 +760,53 @@ function kb_auto_images( $post_id, $post, $update ) {
 add_action( 'save_post', 'kb_auto_images', 10, 3 );
 
 
+//key an ACF field key by name
+function kb_acf_key($name, $subfield = null) {
 
+    global $post;
+
+    $fieldgroup_ids = array(
+        'collections' => 35640,
+        'still_image' => 37072, 
+        'video' => 35615,
+        'person' => 36254,
+        'audio' => 51154,
+        'text' => 51186,        
+    );
+        
+    //Get all the fields on an ACF field group
+    $fields = acf_get_fields_by_id($fieldgroup_ids[$post->post_type]);
+
+    foreach($fields as $field) {
+
+        if($field['name'] == $name) {
+
+            if($subfield != null){
+
+                if(!empty($field['sub_fields'])) {
+
+                    foreach($field['sub_fields'] as $sub) {
+
+                        if($sub['name'] == $subfield) {
+                            return array($field['key'],$sub['key']);                                    
+                        }
+
+                    }
+                    return false;
+
+                }
+                else {
+                    return false;
+                }
+            }
+            else {
+                return $field['key'];
+            }
+        }
+
+    }
+
+}//acf_key()
 
 
 /*************************/

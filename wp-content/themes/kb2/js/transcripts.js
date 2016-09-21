@@ -8,7 +8,7 @@ var enablescroll = true;
 
 			
 			
-			if($('.transcript').length && $('#textslider').length){
+			if($('.transcript').length && $('.transcript h3:eq(0)').length && $('#textslider').length){
 
 				console.log('Found ' + $('.transcript').find('hr').length + ' hrs');
 
@@ -67,7 +67,7 @@ var enablescroll = true;
 
 function scrollTranscript(index){		
 
-	if(typeof enablescroll == 'undefined' || enablescroll == false) {
+	if(typeof enablescroll == 'undefined' || enablescroll == false || $('.transcript h3:eq(0)').length == 0) {
 		console.log('no enablescroll')
 		return false;
 	}
