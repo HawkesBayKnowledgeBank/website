@@ -13,7 +13,7 @@
 	$latest_posts = get_posts($args);
 
 ?>
-<div class="grid-container">
+<div class="tiles tiles-5">
 <?php
 
 
@@ -21,7 +21,7 @@
 
 				 foreach( $latest_posts as $latest_post ) : ?>
 
-				 	<div class="grid-1-5 image-subjects-links">
+				 	<div class="tile image-subjects-links">
 
 				 		<a href='<?php echo get_permalink( $latest_post->ID ); ?>'>
 
@@ -49,12 +49,12 @@
 	$videos = new WP_Query($args); ?>
 
 
-	<div class="grid-container">
+	<div class="tiles tiles-4">
 		<?php if ( $videos->have_posts() ) : ?>
 			<?php while ( $videos->have_posts() ) :?>
 				<?php $videos->the_post(); ?>
-				<div class="grid-4">
-					<div class="article-movie" >
+				<div class="tile">
+					
 						<div class="imageWrap">
 							<?php $images = get_field('images'); ?>
 							<a href="<?php echo get_permalink($post->ID); ?>">
@@ -76,12 +76,9 @@
 							<h2><a href="<?php echo get_permalink($post->ID); ?>"><?php the_title(); ?></a></h2>
 							<p><?php echo kb_nicename($post->post_type); ?></p>
 						</div>
-					</div>
+					
 				</div>
-				<?php $blog_count = $videos->current_post+1; ?>
-				<?php if ( $blog_count % 3 == 0 && $blog_count != $videos->post_count) : ?>
-					</div><div class="grid-container group">
-				<?php endif; ?>
+
 			<?php endwhile;?>
 		<?php endif; ?>
 	</div>

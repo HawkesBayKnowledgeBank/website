@@ -1,35 +1,72 @@
 <?php get_header(); ?>
 
-<div class="grid-container collections-list">
+<div class="pageTitles">
+
+	<h1>Collections</h1>		
+
+	<p>Collections of material donated by people and organisations.</p>
+
+</div>
+
+<?php
+
+	//top level collections
+	$collections = get_terms( array(
+	    'taxonomy' => 'collections',
+	    'hide_empty' => true,
+	    'parent' => 0,
+	));		
+
+	$counter = 0;
+	$number_of_rows = count($collections);
+
+	$filterletter = (isset($_GET['letter']) ? strtolower(substr($_GET['letter'],0,1)) : '');
+
+?>
 
 
-	<?php
+<?php if(!empty($collections)): ?>
 
-		//top level collections
-		$collections = get_terms( array(
-		    'taxonomy' => 'collections',
-		    'hide_empty' => true,
-		    'parent' => 0,
-		));		
 
-		$counter = 0;
-		$number_of_rows = count($collections);
+	<div class="grid-container collections-list">	
 
-	?>
+		<?php $pagerletter = ''; ?>
 
-	<?php if(!empty($collections)): ?>
+		<div class="letter-paging">
+
+			<?php $activeclass = ($filterletter == '' ? 'active' : ''); ?>
+
+			<a href="<?php the_permalink(); ?>" class="<?php echo $activeclass; ?>">all</a>
+
+			<?php foreach($collections as $collection): ?>
+
+				<?php
+
+					$letter = strtolower(substr($collection->name,0,1));
+
+					$activeclass = ($filterletter == $letter ? 'active' : '');
+
+					if($pagerletter != $letter) :
+						$pagerletter = $letter;	?>
+
+						<a href="<?php the_permalink(); ?>?letter=<?php echo $letter; ?>" class="<?php echo $activeclass; ?>"><?php echo $letter; ?></a>
+
+					<?php
+
+					endif;
+
+				?>
+
+			<?php endforeach; ?>
+			
+		</div>
+
 
 		<?php foreach($collections as $collection): ?>
 
-			<?php 
-				//get child collections, if any
-				$children = get_terms( array(
-				    'taxonomy' => 'collections',
-				    'hide_empty' => false,
-				    'parent' => $collection->term_id,
-				));	
-				$counter++;
-			?>
+			<?php $letter = strtolower(substr($collection->name,0,1)); ?>
+
+			<?php if(!empty($filterletter) && $filterletter != $letter) continue; //skip this collection if it does not begin with the requested letter ?>
 
 			<!-- <div class="grid-6"> -->
 			<div class="collection">
@@ -59,25 +96,19 @@
 					<div class="description">
 
 						<?php echo $collection->description; ?>
-						<?php echo $number_of_rows ?>
-						<?php echo $counter ?>
+
 					</div><!-- . description -->
 				<?php endif; ?>
 
 
 			</div><!-- .collection -->
 			
-			<?php if ( $counter % 2 == 0 && $counter != $number_of_rows) : ?>
 
-				</div><div class="grid-container collections-list">
-
-			<?php endif; ?>
 			
 		<?php endforeach; ?>
 
-	<?php endif; ?>
+	</div>
 
-
-</div>
+<?php endif; ?>
 
 <?php get_footer(); ?>

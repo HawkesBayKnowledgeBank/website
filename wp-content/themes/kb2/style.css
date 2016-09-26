@@ -737,9 +737,9 @@ footer {
 
 */
 
-.collections-list { padding:0; }
+.collections-list { padding:10px 0 0 0; }
 
-.collections-list .description {  display:inline-block; max-width: 50%; font-size:0.9em;}
+.collections-list .description {  display:inline-block; max-width: 70%; font-size:0.9em;}
 
 .collections-list h3, .collections-list h4, .collections-list h5 { margin:0; }
 
@@ -752,6 +752,15 @@ footer {
 .collections-list .subcollection.tile { background-color:#fff; margin: 0 20px 20px 0;}
 
 .collections-list .collection .thumbnail { float:right; width:auto; height:auto; max-width:120px;  display:block; max-height:120px;}
+
+/* Letter paging
+---------------------------------*/
+
+.letter-paging { display:block; text-align:center; padding:10px 0;}
+
+.letter-paging a { display:inline-block; padding: 5px 10px; margin: 0 2px 2px; text-transform:uppercase; font-size:1.2em; background-color:#f9f9f9; border:1px solid #f9f9f9;}
+.letter-paging a.active { border-color:#222;}
+
 
 
 /* Taxonomy header
@@ -1484,7 +1493,7 @@ footer {
 
 .tiles .tile {
 	display:block;
-	margin:0 0 20px;
+	margin:0;
 	padding:20px;
 	display: flex;
 	flex-direction:column;
@@ -1506,6 +1515,15 @@ footer {
 
 .tile h2 { line-height:1.3em; font-size:1.4em;}
 
+/* 2 */
+
+.tiles-2 .tile {
+	width:50%;
+}
+
+.tiles-2 .tile:nth-child(2n+1) {
+	clear:left;
+}
 
 /* 3 */
 
@@ -1527,29 +1545,40 @@ footer {
 	clear:left;
 }
 
+/* 5 */
 
-@media (max-width: 800px) {
+.tiles-5 .tile {
+	width:20%;
+}
+
+.tiles-5 .tile:nth-child(5n+1) {
+	clear:left;
+}
+
+@media (max-width: 900px) { /*make everything 50%, remove clearing */
 
 	.tiles-3 .tile, .tiles-4 .tile {
 		width: 50%;
 	}
 
-	.tiles-3 .tile:nth-child(3n+1), .tiles-4 .tile:nth-child(4n+1) {
+	.tiles-3 .tile:nth-child(3n+1), .tiles-4 .tile:nth-child(4n+1), .tiles-5 .tile:nth-child(5n+1) {
 		clear:none;
 	}
 
-	.tiles-3 .tile:nth-child(2n+1), .tiles-4 .tile:nth-child(2n+1) {
+	.tiles-3 .tile:nth-child(2n+1), .tiles-4 .tile:nth-child(2n+1), .tiles-5 .tile:nth-child(2n+1) {
 		clear:left;
 	}
 
 }
 
 
-@media (max-width: 600px) {
+@media (max-width: 600px) { /* make everything 100% */
 
-	.tiles-3 .tile, .tiles-4 .tile {
+	.tiles-2 .tile, .tiles-3 .tile, .tiles-4 .tile, .tiles-5 .tile {
 		width: 100%;
 	}
+
+	.tiles .tile, .tiles .tile .inner { padding:10px;}
 
 }
 
