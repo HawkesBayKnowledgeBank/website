@@ -147,6 +147,18 @@
 					<?php endif; ?>
 			<!-- /post thumbnail -->
 
+				<div class="grid-container">
+
+					<div class="grid-6">
+
+						<?php get_template_part('part','field-master'); ?>
+
+					</div>
+					<div class="grid-6">
+					</div>
+
+				</div>
+
 
 					</article>
 		<!-- /article -->

@@ -253,17 +253,6 @@
 					
 						<?php endif; ?>
 
-						<?php
-
-					$file = get_field('master');?>
-
-					<?php if( $file ): ?>
-
-						<h3 class="image-subjects-links">Original Data File</h3>
-
-						<a href="<?php echo $file['url']; ?>"><?php echo $file['filename']; ?></a>
-
-					<?php endif; ?>  
 				
 				</div>
 					
@@ -330,6 +319,18 @@
 			<?php comments_template(); ?>
 
 			*/ ?>
+
+				<div class="grid-container">
+
+					<div class="grid-6">
+
+						<?php get_template_part('part','field-master'); ?>
+
+					</div>
+					<div class="grid-6">
+					</div>
+
+				</div>			
 
 		</article>
 		<!-- /article -->

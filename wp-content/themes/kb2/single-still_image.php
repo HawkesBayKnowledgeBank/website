@@ -39,7 +39,7 @@
 
 			<div class="grid-container bottom_margin">
 
-				<div class='grid-6'>
+				<div class="grid-6">
 
 					<h2 class="Title_single"><?php the_title(); ?></h2>
 
@@ -93,48 +93,8 @@
 					\\====================================================//
 					-->
 
-					<!-- <?php $file = get_field('master');?>
-					<?php if( $file ): ?>
-						<div class="LicenceBox">
-							<div class="grid-container bottom_margin">
-								<div class='grid-8'>
-									<h3 class="image-subjects-links">Attachment</h3>
-									<a href="<?php echo $file['url']; ?>" download="<?php echo $file['filename']; ?>"><?php echo $file['filename']; ?></a>
-								</div>
-								<div class='grid-4'>
-									<h3 class="image-subjects-links">Size</h3>
-									<?php $number=0;
-									$number=($file['height']/1024);
-									$number=number_format($number, 2, ',', ' ');?>
-									<?php echo $number; ?> Mo
-								</div>
-							</div>
-						</div>
-					<?php endif; ?> -->
-					<div class="LicenceBox">
-						<div class="grid-container bottom_margin">
-							<div class='grid-6'>
-								<?php $licence = get_field( 'licence' );?>
-								<?php if( !empty( $licence ) ) : ?>
-										<?php if ($licence=="a-nc"): ?>
-											<a class='NoCommercial' href="https://creativecommons.org/licenses/by-nc/4.0/"></a>
-											<p>
-												This work is licensed under a</p>
-											<a href="http://creativecommons.org/licenses/by-nc/4.0/" rel="license"> Creative Commons Attribution-NonCommercial 4.0 International License</a>
-										<?php endif; ?>
-								<?php endif; ?>
-							</div>
-							<div class='grid-6'>
-								<?php $allow_commercial_licence = get_field( 'allow_commercial_licence' );?>
-								<?php if( !empty( $allow_commercial_licence ) ) : ?>
-										<?php if ($allow_commercial_licence==true): ?>
-											<a class='Copyright' href="https://www.paypal.com/cgi-bin/webscr"></a>
-											<a href="/licensing">About commercial licensing.</a>
-										<?php endif; ?>
-								<?php endif; ?>
-							</div>
-						</div>
-					</div>
+					<?php get_template_part('part','field-master'); ?>
+					
 				</div>
 				<!--END ATTACHEMENTS
 				y\\====================================================//

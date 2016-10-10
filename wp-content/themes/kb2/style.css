@@ -1821,8 +1821,7 @@ h2.Title_single{
 	font-size: 0;
 	width: 230px;
 	height: 40px;
-	background: url('img/copyright.gif') no-repeat center;
-	background-size: 100% 100%;
+	background: url('img/copyright.gif') no-repeat left center;	
 	vertical-align: middle;
 }
 
@@ -1848,37 +1847,45 @@ a:link{
 
 
 .LicenceBox {
-    /* -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px; */
-    -moz-box-shadow: 0 0 5px #555;
-    -webkit-box-shadow: 0 0 5px #555;
-    box-shadow: 0 0 5px #555;
-    /* width:400px; */
+    padding:5px 0;
 }
 .LicenceBox h3 {
     margin:0;
     padding:2px;
     font-size:1.5em;
-    /* color:#fff;
-    background-color:#9DADC6;
-    border:1px solid #8E98A4;
-    border-bottom:0;
-    -webkit-border-radius: 10px 10px 0 0;
-    -moz-border-radius: 10px 10px 0 0;
-    border-radius: 10px 10px 0 0; */
+
 }
-.LicenceBox a { font-size: 0.8em;}
+
+.LicenceBox .filesize { font-size:0.8em; margin-left:10px;}
+
+.LicenceBox .download, #donation-modal .download {  background: url(/wp-content/themes/kb2/img/download-icon-png-5.png) left 10px center no-repeat #fff; padding: 10px 20px 10px 45px;  margin:20px 0; display:block; color:rgba(70, 151, 48, 1);}
+.LicenceBox .download .filesize, #donation-modal .filesize { color:#333;}
+
+#donation-modal .download { border-top:1px solid #999; border-bottom:1px solid #999; }
+
+.LicenceBox .grid-container { padding:0;}
+
+.LicenceBox a { font-weight:bold;}
 .LicenceBox p {
     font-size: 0.8em;
-    padding:5px;
+    padding:5px 0;
     margin:0;
-    /* border:1px solid #fff;
-    border-top:0;
-    -webkit-border-radius: 0 0 10px 10px;
-    -moz-border-radius: 0 0 10px 10px;
-    border-radius: 0 0 10px 10px; */
 }
+
+.LicenceBox .grid-6 { border:1px solid #999; border-radius:10px; padding:20px;}
+
+
+.LicenceBox input[type="submit"] { webkit-appearance:none; padding: 5px 20px; font-size:12px; margin:5px 0;}
+
+.LicenceBox h4 { margin:0 0 5px 0;}
+
+#donation-modal { background-color:#fff; padding:20px;}
+
+#donation-modal img { max-width:100%;}
+
+#donation-modal .pp {width:100%;}
+
+.popup-modal-dismiss { font-size:2em; position:absolute; right:10px; top:10px; line-height:15px;}
 
 
 .background_wysywyg_colour{
@@ -1896,7 +1903,7 @@ div.background_wysywyg_colour,
 	text-decoration: none;
 	-webkit-transition: all 0.4s ease-in-out 0s;
 	transition: all 0.4s ease-in-out 0s;
-/* 	 */
+
 }
 
 .background_wysywyg_colour a:hover,
