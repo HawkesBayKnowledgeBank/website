@@ -1,0 +1,136 @@
+/*------------------------------------*\
+    Abiel
+\*------------------------------------*/
+
+/*LINK ICONS*/
+.papers_past_icon {
+	display: inline-block;
+	font-size: 0;
+	width: 120px;
+	height: 48px;
+	background: #f8f8f8 url('img/paperspast.png') no-repeat center;
+	background-size: 100%;
+	vertical-align: middle;
+}
+
+.nz_history_icon {
+	display: inline-block;
+	font-size: 0;
+	width: 72px;
+	height: 72px;
+	background: #e5e5ff url('img/NZHistory.png') no-repeat center;
+	background-size: 100%;
+	vertical-align: middle;
+}
+
+.nat_lib_icon {
+	display: inline-block;
+	font-size: 0;
+	width: 200px;
+	height: 48px;
+	background: #e5e5ff url('img/nat_lib.gif') no-repeat center;
+	background-size: 100%;
+	vertical-align: middle;
+}
+
+.te_ara_icon {
+	display: inline-block;
+	font-size: 0;
+	width: 60px;
+	height: 60px;
+	background: #e5e5ff url('img/teara.png') no-repeat center;
+	background-size: 100%;
+	vertical-align: middle;
+}
+
+.social-icon {
+	display: inline-block;
+	font-size: 0;
+	width: 64px;
+	height: 64px;
+	background: url('img/social-facebook-box-blue-icon.png') no-repeat center;
+	background-size: 100% 100%;
+	vertical-align: middle;
+}
+
+
+.give-a-little-icon {
+	display: inline-block;
+	font-size: 0;
+	width: 180px;
+	height: 90px;
+	background: url('img/give-a-little.png') no-repeat center;
+	background-size: 100%;
+	vertical-align: middle;
+}
+
+.paypal-icon {
+	display: inline-block;
+	font-size: 0;
+	width: 180px;
+	height: 90px;
+	background: url('img/paypal.jpg') no-repeat center;
+	background-size: 100%;
+	vertical-align: middle;
+}
+
+/*END OF LINK ICONS*/
+
+.copyright{
+	display: inline-block;
+	font-size: 12px;
+	text-align: center;
+	/*background: url('img/copyright.gif') no-repeat center;*/
+	background-size: 100% 100%;
+	vertical-align: middle;
+}
+
+
+/*FOOTER BUTTON*/
+
+.greenbutton {
+    display: inline-block;
+    margin: 7px 0px 10px;
+    line-height: 30px;
+    padding: 0 3px;
+    background-color: rgba(70,151,48,1);
+    border: 1px solid #ccc;
+}
+
+.greenbutton:hover {
+	background-color: rgba(70,151,48,0.5);
+}
+.greenbutton a {
+    color: #fafafa;
+    display: block;
+}
+
+/*END OF FOOTER BUTTON*/
+
+/*DONATE BUTTON*/
+.donatebutton {
+    display: inline-block;
+    margin: 7px 0px 10px;
+    line-height: 30px;
+    padding: 0 3px;
+    background-color: rgba(70,151,48,1);
+    border: 1px solid #ccc;
+}
+
+.donatebutton:hover {
+	background-color: rgba(70,151,48,0.5);
+}
+.donatebutton a {
+    color: #fafafa;
+    display: block;
+}
+
+
+/*END OF DONATE BUTTON*/
+
+/*AUDIO*/
+#audio {
+	#color: #f9f9f9;
+}
+
+/*END OF AUDIO*/

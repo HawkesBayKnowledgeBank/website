@@ -42,7 +42,7 @@
 
 					<!-- nav -->
 					<nav class="nav" role="navigation">
-						<?php html5blank_nav(); ?>
+						<?php knowledgebank_nav(); ?>
 					</nav>
 					<!-- /nav -->
 

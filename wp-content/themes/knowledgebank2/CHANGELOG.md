@@ -1,4 +1,4 @@
-### [HTML5 Blank](http://html5blank.com) Changelog
+### [HTML5 Blank](http://knowledgebank.com) Changelog
 
 ## 1.4.3 (02 December, 2013)
 
@@ -35,7 +35,7 @@
 
 ## 1.3.9 (07 April, 2013)
 
-* Added WAI-ARIA landmark roles to enrich semantics and improve accessibility. [Stacey Cordoni](https://github.com/staceycordoni) [#32](https://github.com/toddmotto/html5blank/pull/32)
+* Added WAI-ARIA landmark roles to enrich semantics and improve accessibility. [Stacey Cordoni](https://github.com/staceycordoni) [#32](https://github.com/toddmotto/knowledgebank/pull/32)
 * Added WAI-ARIA 'role=button' to search form &lt;button&gt;
 * Upgrade search input type from 'type=text' to 'type=search' for better use of HTML5 alongside WAI-ARIA
 
@@ -44,9 +44,9 @@
 * Load Modernizr from CloudFlare CDN (same as Conditionizr)
 * Load only Conditionizr and Modernizr through the &lt;head&gt;, with Conditionizr call too.
 * Load jQuery CDN (Google) in footer, with jQuery CDN fallback (CloudFlare)
-* Separated WordPress script enqueue to load Conditionizr, Modernizr in head: 'function html5blank_header_scripts()'
+* Separated WordPress script enqueue to load Conditionizr, Modernizr in head: 'function knowledgebank_header_scripts()'
 * Hard-coded jQuery and CDN fallback into footer.php above custom theme scripts, more reliable fallback method
-* Load custom theme scripts in footer: 'function html5blank_footer_scripts()'
+* Load custom theme scripts in footer: 'function knowledgebank_footer_scripts()'
 * Loading scripts before closing &lt;/body&gt; tag is best practice and not seen often in WordPress sites
 * Lowercase &lt;!doctype html&gt; in header.php
 * Remove empty line at end of functions.php
@@ -159,7 +159,7 @@
 
 ## 1.2.4 (15 October, 2012)
 
-* Custom Comments callback - wp_list_comments('type=comment&callback=html5blankcomments'); editable comments now in functions.php
+* Custom Comments callback - wp_list_comments('type=comment&callback=knowledgebankcomments'); editable comments now in functions.php
 * Custom default Gravatar now built in, with demo gravatar.jpg inside the 'img' folder, swap it out
 * Changed date format from the_date to the_time('F j, Y')
 * Changed time format from the_time to the_time('g:i a')
@@ -177,7 +177,7 @@
 
 ## 1.2.1 (07 October, 2012)
 
-* Custom callback for wp_nav_menu, now in functions.php with html5blank_nav(); in header.php
+* Custom callback for wp_nav_menu, now in functions.php with knowledgebank_nav(); in header.php
 * JavaScript added to 'scripts.js', hides URL bar after page load on iPhone/iPad, great for responsive projects
 * Meta tag 'apple-mobile-web-app-capable' added to header.php
 * Meta tag 'apple-mobile-web-app-status-bar-style' added to header.php
@@ -242,7 +242,7 @@
 * CSS change, create non-semantic section below media queries, moved text-selection colors etc
 * CSS change, default font-family for h1-h6 Helvetica Neue with Helvetica/Arial fallbacks (previous Georgia)
 * CSS header theme details updated to new URL
-* Move toddmotto.com/html5blank/ to new html5blank.com domain
+* Move toddmotto.com/knowledgebank/ to new knowledgebank.com domain
 * Favicon support for theme directory favicon.ico
 * Apple touch icon support, drag into root folder
 * LICENSE.md and README.md added and fully updated

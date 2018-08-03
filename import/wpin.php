@@ -10,14 +10,14 @@ error_reporting(E_ALL);
 	//still_image
 	//$mode = 'still_image';
 	//$fgid = 37072; //fieldgroup id
-	
+
 	//video
 	//$mode = 'video';
 	//$fgid = 35615; //fieldgroup id
-	
+
 	//person
 	//$mode = 'person';
-	//$fgid = 36254; //fieldgroup id	
+	//$fgid = 36254; //fieldgroup id
 
 	//audio
 	//$mode = 'audio';
@@ -27,18 +27,18 @@ error_reporting(E_ALL);
 	//$mode = 'text';
 	//$fgid = '51186';
 
-	
+	//Different things to import - we will loop through them all
 	$modes = array(
-		'collections' => 35640,//$mode => $fgid
-		'still_image' => 37072, 
-		'video' => 35615,
-		'person' => 36254,
+		//'collections' => 35640,//$mode => $fgid
+		//'still_image' => 37072,
+		//'video' => 35615,
+		//'person' => 36254,
 		'audio' => 51154,
-		'text' => 51186,		
+		//'text' => 51186,
 	);
 
 	foreach($modes as $mode => $fgid) :
-		
+
 		//Get all the fields on an ACF field group
 		$fields = acf_get_fields_by_id($fgid);
 
@@ -53,8 +53,8 @@ error_reporting(E_ALL);
 
 				//have to get content from another script, can't bootstrap both WP and Drupal in this one
 				//json is as good as anything for the job
-				$json = file_get_contents('http://new.knowledgebank.org.nz/import/drupalout.php?mode=' . $mode); 
-				
+				$json = file_get_contents('http://new.knowledgebank.org.nz/import/drupalout.php?mode=' . $mode);
+
 				$nodes = json_decode($json,true);//true = return as A_ARRAY
 
 				$templatepath = '/webs/new/import/node.php';
@@ -62,29 +62,54 @@ error_reporting(E_ALL);
 				if(!empty($nodes) && file_exists($templatepath)) {
 
 					$count = 0;
-
 					$limit = 0;
-			
+
+					$update_existing = false;
+
 					foreach($nodes as $node) :
 
-						//check if this already exists
-						$checkpost = get_post($node['nid']);					
+						$wp_id = nid_to_wpid($node['nid']);
 
-						if(!empty($checkpost) && $checkpost != null) { //already exists, move on without importing
+						if(!empty($wp_id) && $update_existing == false){
 							echo $node['nid'] . " already exists, moving on\n";
 							continue;
 						}
 
-						//else... do the import with the template
+						if(empty($wp_id)){ //need to create a post
 
+							//Post
+							$status = ($node['status'] == 1 ? 'publish' : 'draft');
+
+							$new_post = array(
+							    'post_title' => $node['title'],
+							    'post_date' => date('Y-m-d H:i:s',$node['created']),
+							    'post_modified' => date('Y-m-d H:i:s',$node['changed']),
+							    'post_content' => (isset($node['body']['und'][0]['value']) ? $node['body']['und'][0]['value'] : ''),
+							    'post_status' => $status,
+							    'post_type' => $mode,
+							    'import_id' => $node['nid'], //preserve Drupal nid if possible (but we cannot rely on it)
+							    'post_author' => $node['uid'],
+								'meta_input' => array('_drupal_nid' => $node['nid'])
+							);
+							$wp_id = wp_insert_post( $new_post );
+							echo 'Inserted ' . $wp_id . "\n";
+
+							$wp_post = get_post($wp_id);
+
+						}
+						else{
+							$wp_post = get_post($wp_id);
+						}
+
+						//Now do the data update / import
 						/********************************************/
 
 						include($templatepath);
 
-						/*********************************************/		
+						/*********************************************/
 
 
-						$count+=1;	
+						$count+=1;
 
 						if($limit > 0 && $count == $limit) break;
 
@@ -146,24 +171,24 @@ error_reporting(E_ALL);
 
 					//else get on with inserting the term
 
-					$wpdb->query('INSERT INTO `wp_terms` values ('  . $t["tid"] . ',"' . $t["name"] . '","' . $t["tid"] . '",0) ON DUPLICATE KEY UPDATE term_id = ' . $t["tid"] . ', name = "' . $t['name'] . '", slug = "' . $t['tid'] . '"');	
-					
+					$wpdb->query('INSERT INTO `wp_terms` values ('  . $t["tid"] . ',"' . $t["name"] . '","' . $t["tid"] . '",0) ON DUPLICATE KEY UPDATE term_id = ' . $t["tid"] . ', name = "' . $t['name'] . '", slug = "' . $t['tid'] . '"');
+
 					$parent = 0;
 
 					if(isset($t['field_collections']['und'][0]['tid'])){
-						$parent = $t['field_collections']['und'][0]['tid'];		
+						$parent = $t['field_collections']['und'][0]['tid'];
 					}
 
 					$wpdb->query('INSERT INTO `wp_term_taxonomy` (term_id, taxonomy, parent) VALUES ("' . $t["tid"] . '", "collections", "' . $parent . '") ON DUPLICATE KEY UPDATE term_id = ' . $t['tid'] . ', taxonomy = "collections", parent = ' . $parent);
-				
+
 
 					echo 'Inserted term ' . $t["tid"] . ' (' . $t['name'] . ')' . "\n";
 
 					$filefield = 'field_donor_form';
 					if(isset($t[$filefield]['und']['0']['uri']) && !get_field('donor_form','collections_' . $tid)) {
-						$file_url = str_replace('public://','/webs/hbda/sites/default/files/', $t[$filefield]['und']['0']['uri']);
+						$file_path = str_replace('public://','/webs/hbda/sites/default/files/', $t[$filefield]['und']['0']['uri']);
 
-						$fileid = kb_fetch_media($file_url,$tid,'/collections/'.$tid.'/');
+						$fileid = kb_fetch_media($file_path,$tid,'/collections/'.$tid.'/');
 
 						if($fileid) {
 
@@ -171,7 +196,7 @@ error_reporting(E_ALL);
 							echo 'File ' . $fileid . ' attached to ' . $tid . "\n";
 
 						}
-						
+
 					}
 
 
@@ -197,17 +222,17 @@ error_reporting(E_ALL);
 
 					echo 'Updated term ' . $tid . ' (' . $t['name'] . ')' . "\n";
 
-					echo 'Left in d_term: ' . print_r($t,true) . "\n";	
+					echo 'Left in d_term: ' . print_r($t,true) . "\n";
 
 				}
 
-				delete_option("collections_children");			
+				delete_option("collections_children");
 
 			break;
 
 			case 'tags':
 			case 'subjects':
-		
+
 				$json = file_get_contents('http://new.knowledgebank.org.nz/import/drupalout.php?mode=' . $mode);
 
 				$terms = json_decode($json,true);
@@ -223,144 +248,100 @@ error_reporting(E_ALL);
 
 					//else get on with inserting the term
 
-					$wpdb->query('INSERT INTO `wp_terms` values ('  . $t["tid"] . ',"' . $t["name"] . '","' . $t["tid"] . '",0)');	
-					
+					$wpdb->query('INSERT INTO `wp_terms` values ('  . $t["tid"] . ',"' . $t["name"] . '","' . $t["tid"] . '",0)');
+
 					$parent = 0;
 
 					$mode = ($mode == 'subjects' ? 'subject' : $mode);
 
 					$wpdb->query('INSERT INTO `wp_term_taxonomy` (term_id, taxonomy, parent) VALUES ("' . $t["tid"] . '", "' . $mode . '", "' . $parent . '")');
-				
+
 					echo 'Inserted term ' . $t["tid"] . ' (' . $t['name'] . ')' . "\n";
-					
-				}						
 
-			break;		
+				}
 
-			
+			break;
 
 
-		
+
+
+
 
 		}//switch
 
 
 	endforeach;
 
-
-function kb_fetch_media($file_url, $nid, $dir) {
-	require_once(ABSPATH . 'wp-load.php');
+/**
+* Fetch remote physical media and stick it in WordPress
+* Need the existing file path, the Wordpress post to attach the media to, and the desired save path within the Wordpress uploads directory
+*/
+function kb_fetch_media($file_path, $wp_id, $uploads_subdir) {
+	//require_once(ABSPATH . 'wp-load.php');
 	require_once(ABSPATH . 'wp-admin/includes/image.php');
 	global $wpdb;
 
+	//rename the file
+	$fileparts = explode("/", $file_path);
+	$filename = array_pop($fileparts);
 
-	//directory to import to	
-	$uploads = wp_upload_dir();
-	$save_path = $uploads['basedir'].$dir;
+	//directory to import to
+	// Get the path to the upload directory.
+	$wp_upload_dir = wp_upload_dir();
+	$save_dir = $wp_upload_dir['basedir'].$uploads_subdir;
+	$save_path = $save_dir. '/' . $filename;
 
-	//if the directory doesn't exist, create it	
-	if(!file_exists($save_path)) {
-		echo 'Making directory ' . $save_path . "\n";
-		mkdir($save_path,0775,true);
-		echo 'Made directory ' . $save_path . "\n";
+	//if the directory doesn't exist, create it
+	if(!file_exists($save_dir)) {
+		echo 'Making directory ' . $save_dir . "\n";
+		mkdir($save_dir,0775,true);
+		echo 'Made directory ' . $save_dir . "\n";
 	}
 
-	//rename the file... alternatively, you could explode on "/" and keep the original file name
-	$fileparts = explode("/", $file_url);
-	$new_filename = $nid . '_' . array_pop($fileparts);
-	//$new_filename = 'blogmedia-'.$post_id.".".$ext; //if your post has multiple files, you may need to add a random number to the file name to prevent overwrites
+	echo 'Attempting to open file for copying ' . $file_path . "\n";
+	if (file_exists($file_path) && fclose(fopen($file_path, "r"))) { //make sure the file actually exists
 
-	echo 'Attempting to open file for copying ' . $file_url . "\n";
-	if (file_exists($file_url) && fclose(fopen($file_url, "r"))) { //make sure the file actually exists
-
-		echo 'Copying ' . $file_url . " to " . $save_path.$new_filename ."\n";
-		copy($file_url, $save_path.$new_filename);
-
-		//echo (file_exists($save_path.$new_filename) ? $save_path.$new_filename . 'exists' : $save_path.$new_filename . 'does not exist :(');
+		echo 'Copying ' . $file_path . " to " . $save_path ."\n";
+		copy($file_path, $save_path);
 
 		$siteurl = get_option('siteurl');
 		echo "getimagesize()\n";
-		$file_info = getimagesize($save_path.$new_filename);
+		$file_info = getimagesize($save_path);
 
-		//create an array of attachment data to insert into wp_posts table
-		$artdata = array();
-		$artdata = array(
-			'post_author' => 1, 
-			'post_date' => current_time('mysql'),
-			'post_date_gmt' => current_time('mysql'),
-			'post_title' => $new_filename, 
-			'post_status' => 'inherit',
-			'comment_status' => 'closed',
-			'ping_status' => 'closed',
-			'post_name' => sanitize_title_with_dashes(str_replace("_", "-", $new_filename)),											
-			'post_modified' => current_time('mysql'),
-			'post_modified_gmt' => current_time('mysql'),
-			'post_parent' => '', //$post_id
-			'post_type' => 'attachment',
-			'guid' => sanitize_title_with_dashes(str_replace("_", "-", $new_filename)),
-			'post_mime_type' => $file_info['mime'],
-			'post_excerpt' => '',
-			'post_content' => ''
-		);	
+		// Check the type of file. We'll use this as the 'post_mime_type'.
+		$filetype = wp_check_filetype( basename( $save_path ), null );
 
-		//insert the database record
-		echo "attaching to WP\n" . print_r($artdata,true) . "\n";
-		try{
+		// Prepare an array of post data for the attachment.
+		$attachment = array(
+			'guid'           => $wp_upload_dir['url'] . '/' . basename( $save_path ),
+			'post_mime_type' => $filetype['type'],
+			'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $save_path ) ),
+			'post_content'   => '',
+			'post_status'    => 'inherit'
+		);
 
+		// Insert the attachment.
+		$attach_id = wp_insert_attachment( $attachment, $save_path, $wp_id );
 
-			$defaults = array(
-	                'file'        => $save_path.$new_filename,
-	                'post_parent' => 0
-	        );
+		// Generate the metadata for the attachment, and update the database record.
+		$attach_data = wp_generate_attachment_metadata( $attach_id, $save_path );
 
-
-	        $data = wp_parse_args( $artdata, $defaults );
-	
-	        if ( ! empty( $parent ) ) {
-	                $data['post_parent'] = $parent;
-	        }
-	
-	        $data['post_type'] = 'attachment';
-	
-
-			echo 'inserting attachment post' . "\n";
-	        $attach_id = wp_insert_post( $data, true );
-	       
-
-			//$attach_id = wp_insert_attachment( $artdata, $save_path.$new_filename, 0 ); //can swap 0 for $post_id to be parent
+		if(is_wp_error($attach_data)) {
+			echo $attach_data->get_error_message();
+			return false;
 		}
-		catch(Exception $e) {
-			echo 'no deal'; exit;
-		}
-
-		//generate metadata and thumbnails
-		echo 'making image metadata' . "\n";
-		if ($attach_data = wp_generate_attachment_metadata( $attach_id, $save_path . $new_filename)) {
-
-			if(is_wp_error($attach_data)) {
-
-				echo $attach_data->get_error_message();
-
-			}
-			else {
-
-				echo "adding image metadata\n";
-				wp_update_attachment_metadata($attach_id, $attach_data);
-
-			}
-			
+		else {
+			echo "adding image metadata\n";
+			wp_update_attachment_metadata($attach_id, $attach_data);
 		}
 
 		return $attach_id;
 
-		//optional make it the featured image of the post it's attached to
-		//$rows_affected = $wpdb->insert($wpdb->prefix.'postmeta', array('post_id' => $post_id, 'meta_key' => '_thumbnail_id', 'meta_value' => $attach_id));
 	}
 	else {
 		return false;
 	}
 
-	return true;
 }
 
 
@@ -380,7 +361,7 @@ function acf_key($name, $subfield = null) {
 					foreach($field['sub_fields'] as $sub) {
 
 						if($sub['name'] == $subfield) {
-							return array($field['key'],$sub['key']);									
+							return array($field['key'],$sub['key']);
 						}
 
 					}
@@ -414,23 +395,23 @@ function kb_add_term($cid,$taxonomy) {
 
 		$tid = $t['tid'];
 
-		$wpdb->query('INSERT INTO `wp_terms` values ('  . $t["tid"] . ',"' . $t["name"] . '","' . $t["tid"] . '",0) ON DUPLICATE KEY UPDATE term_id = ' . $t["tid"] . ', name = "' . $t['name'] . '", slug = "' . $t['tid'] . '"');	
-		
+		$wpdb->query('INSERT INTO `wp_terms` values ('  . $t["tid"] . ',"' . $t["name"] . '","' . $t["tid"] . '",0) ON DUPLICATE KEY UPDATE term_id = ' . $t["tid"] . ', name = "' . $t['name'] . '", slug = "' . $t['tid'] . '"');
+
 		$parent = 0;
 
 		if(isset($t['field_collections']['und'][0]['tid'])){
-			$parent = $t['field_collections']['und'][0]['tid'];		
+			$parent = $t['field_collections']['und'][0]['tid'];
 		}
 
 		$wpdb->query('INSERT INTO `wp_term_taxonomy` (term_id, taxonomy, parent) VALUES ("' . $t["tid"] . '", "' . $taxonomy . '", "' . $parent . '") ON DUPLICATE KEY UPDATE term_id = ' . $t['tid'] . ', taxonomy = "' . $taxonomy . '", parent = ' . $parent);
-		
+
 		echo 'Inserted term ' . $t["tid"] . ' (' . $t['name'] . ')' . "\n";
 
 		$filefield = 'field_donor_form';
 		if(isset($t[$filefield]['und']['0']['uri'])) {
-			$file_url = str_replace('public://','/webs/hbda/sites/default/files/', $t[$filefield]['und']['0']['uri']);
+			$file_path = str_replace('public://','/webs/hbda/sites/default/files/', $t[$filefield]['und']['0']['uri']);
 
-			$fileid = kb_fetch_media($file_url,$tid,'/collections/'.$tid.'/');
+			$fileid = kb_fetch_media($file_path,$tid,'/collections/'.$tid.'/');
 
 			if($fileid) {
 
@@ -438,7 +419,7 @@ function kb_add_term($cid,$taxonomy) {
 				echo 'File ' . $fileid . ' attached to ' . $tid . "\n";
 
 			}
-			
+
 		}
 
 
@@ -450,7 +431,11 @@ function kb_add_term($cid,$taxonomy) {
 }
 
 
-
+function nid_to_wpid($nid){
+	global $wpdb;
+	$result = $wpdb->get_results("SELECT post_id FROM wp_postmeta WHERE meta_key = '_drupal_nid' AND meta_value = '$nid'");
+	return !empty($result[0]->post_id) ? $result[0]->post_id : false;
+}
 
 
 
