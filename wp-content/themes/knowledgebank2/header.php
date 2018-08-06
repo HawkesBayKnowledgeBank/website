@@ -13,38 +13,24 @@
 		<meta name="description" content="<?php bloginfo('description'); ?>">
 
 		<?php wp_head(); ?>
-		<script>
-        // conditionizr.com
-        // configure environment tests
-        conditionizr.config({
-            assets: '<?php echo get_template_directory_uri(); ?>',
-            tests: {}
-        });
-        </script>
 
 	</head>
 	<body <?php body_class(); ?>>
 
-		<!-- wrapper -->
-		<div class="wrapper">
+		<header class="header">
+			<div class="inner">
+				<a href="/" class="logo">
+					<img src="<?php echo get_stylesheet_directory_uri(); ?>/img/knowledgebank_logo.svg">
+					<span>Knowledge<br/>Bank</span>
+				</a>
+				<span class="grow"></span>
+				<nav>
+					<ul>
 
-			<!-- header -->
-			<header class="header clear" role="banner">
+						<?php wp_nav_menu( array( 'menu_id' => 2212, 'container' => '' ) ); ?>
 
-					<!-- logo -->
-					<div class="logo">
-						<a href="<?php echo home_url(); ?>">
-							<!-- svg logo - toddmotto.com/mastering-svg-use-for-a-retina-web-fallbacks-with-png-script -->
-							<img src="<?php echo get_template_directory_uri(); ?>/img/logo.svg" alt="Logo" class="logo-img">
-						</a>
-					</div>
-					<!-- /logo -->
-
-					<!-- nav -->
-					<nav class="nav" role="navigation">
-						<?php knowledgebank_nav(); ?>
-					</nav>
-					<!-- /nav -->
-
-			</header>
-			<!-- /header -->
+					</ul>
+				</nav>
+				<a href="#main-search" class="search-icon"><i class="mdi mdi-magnify"></i></a>
+			</div><!-- .inner -->
+		</header><!-- .header -->
