@@ -120,7 +120,7 @@
 
 			if($fileid) {
 
-				update_field(acf_key('master'),$fileid,$$wp_id);
+				update_field(acf_key('master'),$fileid,$wp_id);
 				echo 'File ' . $fileid . ' attached to master' . "\n";
 
 			}

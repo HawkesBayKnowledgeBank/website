@@ -2,7 +2,7 @@
     <div class="inner">
         <div class="searchbar">
 
-            <form class="" action="index.html" method="post">
+            <form class="" action="/" method="post">
                 <div class="top">
                     <i class="mdi mdi-magnify"></i>
                     <input type="text" name="" value="" placeholder="Keyword Search">

@@ -2,6 +2,7 @@
 <?php
 
 require_once('/webs/new/wp-load.php');
+require_once('/webs/new/wp-admin/includes/media.php');
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -88,7 +89,7 @@ error_reporting(E_ALL);
 							    'post_status' => $status,
 							    'post_type' => $mode,
 							    'import_id' => $node['nid'], //preserve Drupal nid if possible (but we cannot rely on it)
-							    'post_author' => $node['uid'],
+							    'post_author' => 5115,
 								'meta_input' => array('_drupal_nid' => $node['nid'])
 							);
 							$wp_id = wp_insert_post( $new_post );
