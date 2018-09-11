@@ -4,7 +4,7 @@
 
 
 
-		global $fields; 
+		global $fields;
 
 
 
@@ -14,12 +14,12 @@
 		unset($node['rdf_mapping']);
 		$nid = $node['nid'];
 
-		echo "\n\n";
-		echo "********************************************************************\n";
-		echo "********************************************************************\n";
-		echo "Doing node $nid \n";
-		echo "********************************************************************\n";
-		echo "********************************************************************\n";
+		import_log("\n\n");
+		import_log("********************************************************************\n");
+		import_log("********************************************************************\n");
+		import_log("Doing node $nid \n");
+		import_log("********************************************************************\n");
+		import_log("********************************************************************\n");
 
 
 
@@ -42,28 +42,28 @@
 		    'import_id' => $nid,
 		    'post_author' => $node['uid']
 		);
-		$new_post_id = wp_insert_post( $new_post );		
+		$new_post_id = wp_insert_post( $new_post );
 
-		echo 'Inserted ' . $new_post_id . "\n";
-	
+		import_log('Inserted ' . $new_post_id . "\n");
+
 		unset($node['body']);
 
 		//Collections
 		if(isset($node['field_collections']['und'][0]['tid'])){
-			echo "Doing collections\n";
-			$cid = $node['field_collections']['und'][0]['tid'];		
+			import_log("Doing collections\n");
+			$cid = $node['field_collections']['und'][0]['tid'];
 			wp_set_object_terms( $new_post_id, $cid, 'collections' );
-			echo 'Set collection ' . $cid . "\n";
+			import_log('Set collection ' . $cid . "\n");
 
 			unset($node['field_collections']);
 		}
 
 		//Series
 		if(isset($node['field_series']['und'][0]['tid'])){
-			echo "Doing series\n";
-			$cid = $node['field_series']['und'][0]['tid'];		
+			import_log("Doing series\n");
+			$cid = $node['field_series']['und'][0]['tid'];
 			wp_set_object_terms( $new_post_id, $cid, 'collections', true );
-			echo 'Set series ' . $cid . "\n";
+			import_log('Set series ' . $cid . "\n");
 			unset($node['field_series']);
 		}
 
@@ -71,84 +71,84 @@
 
 		//subjects
 		if(isset($node['field_subjects']['und'][0]['tid'])){
-			echo "Doing subjects\n";
+			import_log("Doing subjects\n");
 
 			$terms = array();
 
 			foreach($node['field_subjects']['und'] as $term) {
 				$terms[] = $term['tid'];
 			}
-			
+
 			wp_set_post_terms( $new_post_id, $terms, 'subject' );
-			echo 'Set terms ' . print_r($terms,true) . " on subjects\n";
+			import_log('Set terms ' . print_r($terms,true) . " on subjects\n");
 			unset($node['field_subjects']);
 		}
 
 		//tags
 		if(isset($node['field_tags']['und'][0]['tid'])){
-			echo "Doing tags\n";
+			import_log("Doing tags\n");
 
 			$terms = array();
 
 			foreach($node['field_tags']['und'] as $term) {
 				$terms[] = $term['tid'];
 			}
-			
+
 			wp_set_post_terms( $new_post_id, $terms, 'post_tag' );
-			echo 'Set terms ' . print_r($terms,true) . " on tags\n";
+			import_log('Set terms ' . print_r($terms,true) . " on tags\n");
 			unset($node['field_tags']);
 		}
 
 		//master
 		$filefield = 'field_master';
 		if(isset($node[$filefield]['und']['0']['uri'])) {
-			echo "Doing field_master\n";
+			import_log("Doing field_master\n");
 			$file_url = str_replace('public://','/webs/hbda/sites/default/files/', $node[$filefield]['und']['0']['uri']);
-			echo 'Fetchmedia for ' . $new_post_id . "\n" . print_r($node[$filefield]['und']['0'],true) . "\n";
+			import_log('Fetchmedia for ' . $new_post_id . "\n" . print_r($node[$filefield]['und']['0'],true) . "\n");
 			$fileid = kb_fetch_media($file_url,$new_post_id,'/node/' . $new_post_id . '/master/');
 
 			if($fileid) {
 
 				update_field(acf_key('master'),$fileid,$new_post_id);
-				echo 'File ' . $fileid . ' attached to master' . "\n";
+				import_log('File ' . $fileid . ' attached to master' . "\n");
 
 			}
 			unset($node[$filefield]);
-			
-		}			
+
+		}
 
 		//image
 		$filefield = 'field_image';
 		if(isset($node[$filefield]['und'][0]['uri'])) {
 
-			echo "Doing field_image\n";
+			import_log("Doing field_image\n");
 
 			foreach($node[$filefield]['und'] as $index => $image) {
 
 				$file_url = str_replace('public://','/webs/hbda/sites/default/files/', $image['uri']);
-				echo "Fetchmedia for " . $new_post_id . "\n" . print_r($node[$filefield]['und']['0'],true) . "\n";
+				import_log("Fetchmedia for " . $new_post_id . "\n" . print_r($node[$filefield]['und']['0'],true) . "\n");
 				$fileid = kb_fetch_media($file_url,$new_post_id,'/node/' . $new_post_id . '/images/');
 
 				if($fileid) {
-					
+
 					$key = acf_key('images');
-					$subkey = array_pop(acf_key('images','image'));					
-					
+					$subkey = array_pop(acf_key('images','image'));
+
 					update_field($key,array(),$new_post_id);
 
-					add_row($key,array($subkey => $fileid),$new_post_id);					
-					
-					echo 'File ' . $fileid . ' attached to image' . "\n";
+					add_row($key,array($subkey => $fileid),$new_post_id);
+
+					import_log('File ' . $fileid . ' attached to image' . "\n");
 
 				}
 
 			}
 
 			unset($node[$filefield]);
-			
+
 		}
 
-		
+
 
 		//auto mapping - wp field name must be exactly the same as the Drupal field name, minus field_
 		//drupal = field_foo
@@ -161,10 +161,10 @@
 
 			if(in_array($field['type'], array('text','radio','wysiwyg','true_false','select')) && isset($node['field_' . $field['name']]['und'][0]['value'])) {
 
-				echo "Doing field " . 'field_' . $field['name'] . "\n";
+				import_log("Doing field " . 'field_' . $field['name'] . "\n");
 
 				update_field($field['key'], $node['field_' . $field['name']]['und'][0]['value'], $new_post_id);
-				echo "Added value " .  $node['field_' . $field['name']]['und'][0]['value'] . ' to ' . $field['name'] . ' (' . $field['key'] . ')' . "\n";
+				import_log("Added value " .  $node['field_' . $field['name']]['und'][0]['value'] . ' to ' . $field['name'] . ' (' . $field['key'] . ')' . "\n");
 				unset($node['field_' . $field['name']]);
 			}
 			elseif( isset($node['field_' . $field['name']]) ){
@@ -184,7 +184,7 @@
 				}
 
 				update_field($field['key'], $newvalue, $new_post_id);
-				echo "Added value " . print_r($newvalue,true) . ' to ' . $field['name'] . ' (' . $field['key'] . ')' . "\n";
+				import_log("Added value " . print_r($newvalue,true) . ' to ' . $field['name'] . ' (' . $field['key'] . ')' . "\n");
 
 				unset($node['field_' . $field['name']]);
 			}
@@ -224,15 +224,15 @@
 				}
 
 				update_field(acf_key($nf),$people,$new_post_id);
-				echo "Added people " . print_r($people,true) . " to field $nf (" . acf_key($nf) . ")\n";
+				import_log("Added people " . print_r($people,true) . " to field $nf (" . acf_key($nf) . ")\n");
 				unset($node['field_' . $nf]);
 			}
 
 		}
 
-		echo "\nLeft in node:\n";
+		import_log("\nLeft in node:\n");
 		print_r($node);
-		echo "\n\n";
+		import_log("\n\n");
 
 
 

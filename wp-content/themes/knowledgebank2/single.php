@@ -31,6 +31,10 @@
 
 			<?php the_content(); // Dynamic Content ?>
 
+			<pre style="padding:30px; background-color:#fff;">
+				<?php print_r(get_fields()); ?>
+			</pre>
+
 			<?php the_tags( __( 'Tags: ', 'knowledgebank' ), ', ', '<br>'); // Separated by commas with a line break at the end ?>
 
 			<p><?php _e( 'Categorised in: ', 'knowledgebank' ); the_category(', '); // Separated by commas ?></p>

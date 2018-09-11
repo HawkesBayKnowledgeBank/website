@@ -4,7 +4,7 @@
 
 
 
-		global $fields; 
+		global $fields;
 
 
 
@@ -14,14 +14,14 @@
 		unset($node['rdf_mapping']);
 		$nid = $node['nid'];
 
-		echo "\n\n";
-		echo "********************************************************************\n";
-		echo "********************************************************************\n";
-		echo "Doing node $nid \n";
-		echo "********************************************************************\n";
-		echo "********************************************************************\n";
+		import_log("\n\n");
+		import_log("********************************************************************\n");
+		import_log("********************************************************************\n");
+		import_log("Doing node $nid \n");
+		import_log("********************************************************************\n");
+		import_log("********************************************************************\n");
 
-	
+
 		//print_r($node);
 
 /***********************/
@@ -42,14 +42,14 @@
 		    'import_id' => $node['nid'],
 		    'post_author' => $node['uid']
 		);
-		$new_post_id = wp_insert_post( $new_post );		
+		$new_post_id = wp_insert_post( $new_post );
 
-		echo 'Inserted ' . $new_post_id . "\n";
-	
+		import_log('Inserted ' . $new_post_id . "\n");
+
 
 		//Collections
 		if(isset($node['field_collections']['und'][0]['tid'])){
-			$cid = $node['field_collections']['und'][0]['tid'];		
+			$cid = $node['field_collections']['und'][0]['tid'];
 			wp_set_post_terms( $new_post_id, $cid, 'collections' );
 		}
 
@@ -63,11 +63,11 @@
 			if($fileid) {
 
 				update_field(acf_key('master'),$fileid,$new_post_id);
-				echo 'File ' . $fileid . ' attached to ' . $new_post_id . "\n";
+				import_log('File ' . $fileid . ' attached to ' . $new_post_id . "\n");
 
 			}
-			
-		}			
+
+		}
 
 		//image
 		$filefield = 'field_image';
@@ -80,23 +80,23 @@
 				$fileid = kb_fetch_media($file_url,$new_post_id,'/node/' . $new_post_id . '/images/');
 
 				if($fileid) {
-					
+
 					$key = acf_key('images');
-					$subkey = array_pop(acf_key('images','image'));					
-					
+					$subkey = array_pop(acf_key('images','image'));
+
 					update_field($key,array(),$new_post_id);
 
-					add_row($key,array($subkey => $fileid),$new_post_id);					
-					
-					echo 'File ' . $fileid . ' attached to ' . $new_post_id . "\n";
+					add_row($key,array($subkey => $fileid),$new_post_id);
+
+					import_log('File ' . $fileid . ' attached to ' . $new_post_id . "\n");
 
 				}
 
 			}
-			
+
 		}
 
-		
+
 
 		//auto mapping - wp field name must be exactly the same as the Drupal field name, minus field_
 		//drupal = field_foo
@@ -110,7 +110,7 @@
 			if(in_array($field['type'], array('text','radio','wysiwyg')) && isset($node['field_' . $field['name']]['und'][0]['value'])) {
 
 				update_field($field['key'], $node['field_' . $field['name']]['und'][0]['value'], $new_post_id);
-				echo "Added " . $field['name'] . "\n";
+				import_log("Added " . $field['name'] . "\n");
 
 			}
 
@@ -125,7 +125,7 @@
 				}
 
 				update_field($field['key'], $newvalue, $new_post_id);
-				echo "Added " . print_r($newvalue,true) . ' to ' . $field['name'] . "\n";
+				import_log("Added " . print_r($newvalue,true) . ' to ' . $field['name'] . "\n");
 
 			}
 
@@ -159,7 +159,7 @@
 				}
 
 				update_field(acf_key($nf),$people,$new_post_id);
-				echo "Added people " . print_r($people,true) . " to field $nf\n";
+				import_log("Added people " . print_r($people,true) . " to field $nf\n");
 
 			}
 

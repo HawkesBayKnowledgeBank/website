@@ -6,9 +6,9 @@
 
 		unset($node['rdf_mapping']);
 		$nid = $node['nid'];
-		echo "Doing node $nid \n";
+		import_log("Doing node $nid \n");
 
-	
+
 		//print_r($node);
 
 /***********************/
@@ -29,14 +29,14 @@
 		    'import_id' => $node['nid'],
 		    'post_author' => $node['uid']
 		);
-		$new_post_id = wp_insert_post( $new_post );		
+		$new_post_id = wp_insert_post( $new_post );
 
-		echo 'Inserted ' . $new_post_id . "\n";
-	
+		import_log('Inserted ' . $new_post_id . "\n");
+
 
 		//Collections
 		if(isset($node['field_collections']['und'][0]['tid'])){
-			$cid = $node['field_collections']['und'][0]['tid'];		
+			$cid = $node['field_collections']['und'][0]['tid'];
 			wp_set_post_terms( $new_post_id, $cid, 'collections' );
 		}
 
@@ -50,11 +50,11 @@
 			if($fileid) {
 
 				update_field('field_56b1b000cc95a',$fileid,$new_post_id);
-				echo 'File ' . $fileid . ' attached to ' . $new_post_id . "\n";
+				import_log('File ' . $fileid . ' attached to ' . $new_post_id . "\n");
 
 			}
-			
-		}			
+
+		}
 /*
 		//image
 		$filefield = 'field_image';
@@ -69,12 +69,12 @@
 				if($fileid) {
 
 					update_field('field_56b1b2da7d393',$fileid,$new_post_id);
-					echo 'File ' . $fileid . ' attached to ' . $new_post_id . "\n";
+					import_log('File ' . $fileid . ' attached to ' . $new_post_id . "\n");
 
 				}
 
 			}
-			
+
 		}
 
 		//simple text fields
@@ -82,7 +82,7 @@
 		//drupal_name => field_key
 		$fieldmap = array(
 			'field_accession_number' => 'field_56b1b27b3ae75',
-			'field_business' => 'field_56b1b1f23ae6b',			
+			'field_business' => 'field_56b1b1f23ae6b',
 			'field_youtube_id' => 'field_56b1b02fcc95b',
 			'field_format_original' => 'field_56b1b2103ae6d',
 			'field_additional' => 'field_56b1b2413ae73',
@@ -96,7 +96,7 @@
 			if(isset($node[$name]['und'][0]['value'])){
 
 				update_field($key, $node[$name]['und'][0]['value'], $new_post_id);
-				echo "Added $name \n";
+				import_log("Added $name \n");
 
 			}
 
@@ -110,9 +110,9 @@
 			foreach($node['field_subjects']['und'] as $term) {
 				$terms[] = $term['tid'];
 			}
-			
+
 			wp_set_post_terms( $new_post_id, $terms, 'subject' );
-			echo 'Set terms ' . print_r($terms,true) . "\n";
+			import_log('Set terms ' . print_r($terms,true) . "\n");
 		}
 
 		//tags
@@ -123,9 +123,9 @@
 			foreach($node['field_tags']['und'] as $term) {
 				$terms[] = $term['tid'];
 			}
-			
+
 			wp_set_post_terms( $new_post_id, $terms, 'post_tag' );
-			echo 'Set terms ' . print_r($terms,true) . "\n";
+			import_log('Set terms ' . print_r($terms,true) . "\n");
 		}
 
 		//Author
@@ -145,7 +145,7 @@
 			}
 
 			update_field('field_56b1b2323ae6f',$authors,$new_post_id);
-			echo "Added authors " . print_r($authors,true) . "\n";
+			import_log("Added authors " . print_r($authors,true) . "\n");
 
 		}
 
@@ -165,7 +165,7 @@
 			}
 
 			update_field('field_56b1b119b7b70',$people,$new_post_id);
-			echo "Added people " . print_r($people,true) . "\n";
+			import_log("Added people " . print_r($people,true) . "\n");
 
 		}
 
@@ -173,17 +173,17 @@
 
 			$file_url = 'http://img.youtube.com/vi/' . $node['field_youtube_id']['und'][0]['value'] . '/0.jpg';
 
-			echo '<img src="' . $file_url . '"/>';
+			import_log('<img src="' . $file_url . '"/>');
 
 			$fileid = kb_fetch_media($file_url,$new_post_id,'/node/' . $new_post_id . '/images/');
 
 			if($fileid) {
 
 				update_field('field_56b1b2da7d393',$fileid,$new_post_id);
-				echo 'File ' . $fileid . ' attached to ' . $new_post_id . "\n";
+				import_log('File ' . $fileid . ' attached to ' . $new_post_id . "\n");
 
-			}		
-			
+			}
+
 		}
 */
 ?>

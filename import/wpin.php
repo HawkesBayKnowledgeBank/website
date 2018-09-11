@@ -8,6 +8,11 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+
+function import_log($message){
+	file_put_contents('import.log', date('Y-m-d H:i:s') . " - $message\n", FILE_APPEND);
+}
+
 	//still_image
 	//$mode = 'still_image';
 	//$fgid = 37072; //fieldgroup id
@@ -31,11 +36,11 @@ error_reporting(E_ALL);
 	//Different things to import - we will loop through them all
 	$modes = array(
 		//'collections' => 35640,//$mode => $fgid
-		//'still_image' => 37072,
+		'still_image' => 37072,
 		//'video' => 35615,
 		//'person' => 36254,
-		'audio' => 51154,
-		//'text' => 51186,
+		//'audio' => 51154,
+		'text' => 51186,
 	);
 
 	foreach($modes as $mode => $fgid) :
@@ -72,7 +77,7 @@ error_reporting(E_ALL);
 						$wp_id = nid_to_wpid($node['nid']);
 
 						if(!empty($wp_id) && $update_existing == false){
-							echo $node['nid'] . " already exists, moving on\n";
+							import_log($node['nid'] . " already exists, moving on\n");
 							continue;
 						}
 
@@ -93,7 +98,7 @@ error_reporting(E_ALL);
 								'meta_input' => array('_drupal_nid' => $node['nid'])
 							);
 							$wp_id = wp_insert_post( $new_post );
-							echo 'Inserted ' . $wp_id . "\n";
+							import_log('Inserted ' . $wp_id );
 
 							$wp_post = get_post($wp_id);
 
@@ -120,12 +125,12 @@ error_reporting(E_ALL);
 				}
 				else {
 
-					echo "$nodes is empty or no template found\n";
+					import_log("$nodes is empty or no template found\n");
 					exit;
 
 				}
 
-				echo "Did $count nodes";
+				import_log("Did $count nodes");
 
 
 			break;
@@ -150,7 +155,7 @@ error_reporting(E_ALL);
 
 				//print_r($d_collections);
 
-				echo count($d_collections) . " collections in Drupal\n";
+				import_log(count($d_collections) . " collections in Drupal\n");
 /*
 				$wp_collections_unsorted = get_terms('collections',array('hide_empty' => false));
 
@@ -166,7 +171,7 @@ error_reporting(E_ALL);
 					$tid = $t['tid'];
 
 					if(get_term($tid,'collections')) {
-						echo 'Term ' . $tid . " already exists, moving on\n";
+						import_log('Term ' . $tid . " already exists, moving on\n");
 						continue;
 					}
 
@@ -183,7 +188,7 @@ error_reporting(E_ALL);
 					$wpdb->query('INSERT INTO `wp_term_taxonomy` (term_id, taxonomy, parent) VALUES ("' . $t["tid"] . '", "collections", "' . $parent . '") ON DUPLICATE KEY UPDATE term_id = ' . $t['tid'] . ', taxonomy = "collections", parent = ' . $parent);
 
 
-					echo 'Inserted term ' . $t["tid"] . ' (' . $t['name'] . ')' . "\n";
+					import_log('Inserted term ' . $t["tid"] . ' (' . $t['name'] . ')' );
 
 					$filefield = 'field_donor_form';
 					if(isset($t[$filefield]['und']['0']['uri']) && !get_field('donor_form','collections_' . $tid)) {
@@ -194,7 +199,7 @@ error_reporting(E_ALL);
 						if($fileid) {
 
 							update_field('field_56b452c658411',$fileid,'collections_' . $tid);
-							echo 'File ' . $fileid . ' attached to ' . $tid . "\n";
+							import_log('File ' . $fileid . ' attached to ' . $tid );
 
 						}
 
@@ -207,10 +212,10 @@ error_reporting(E_ALL);
 
 						if(in_array($field['type'], array('text','radio','wysiwyg','true_false','select')) && isset($t['field_' . $field['name']]['und'][0]['value'])) {
 
-							echo "Doing field " . 'field_' . $field['name'] . "\n";
+							import_log("Doing field " . 'field_' . $field['name'] );
 
 							update_field($field['key'], $t['field_' . $field['name']]['und'][0]['value'], 'collections_' . $tid);
-							echo "Added value " .  $t['field_' . $field['name']]['und'][0]['value'] . ' to ' . $field['name'] . ' (' . $field['key'] . ')' . "\n";
+							import_log("Added value " .  $t['field_' . $field['name']]['und'][0]['value'] . ' to ' . $field['name'] . ' (' . $field['key'] . ')' );
 							unset($t['field_' . $field['name']]);
 						}
 						elseif( isset($t['field_' . $field['name']]) ){
@@ -221,9 +226,9 @@ error_reporting(E_ALL);
 					}
 
 
-					echo 'Updated term ' . $tid . ' (' . $t['name'] . ')' . "\n";
+					import_log('Updated term ' . $tid . ' (' . $t['name'] . ')' );
 
-					echo 'Left in d_term: ' . print_r($t,true) . "\n";
+					import_log('Left in d_term: ' . print_r($t,true) );
 
 				}
 
@@ -243,7 +248,7 @@ error_reporting(E_ALL);
 					$tid = $t['tid'];
 
 					if(get_term($tid,$mode)) {
-						echo 'Term ' . $tid . " already exists, moving on\n";
+						import_log('Term ' . $tid . " already exists, moving on\n");
 						continue;
 					}
 
@@ -257,7 +262,7 @@ error_reporting(E_ALL);
 
 					$wpdb->query('INSERT INTO `wp_term_taxonomy` (term_id, taxonomy, parent) VALUES ("' . $t["tid"] . '", "' . $mode . '", "' . $parent . '")');
 
-					echo 'Inserted term ' . $t["tid"] . ' (' . $t['name'] . ')' . "\n";
+					import_log('Inserted term ' . $t["tid"] . ' (' . $t['name'] . ')' );
 
 				}
 
@@ -290,23 +295,23 @@ function kb_fetch_media($file_path, $wp_id, $uploads_subdir) {
 	// Get the path to the upload directory.
 	$wp_upload_dir = wp_upload_dir();
 	$save_dir = $wp_upload_dir['basedir'].$uploads_subdir;
-	$save_path = $save_dir. '/' . $filename;
+	$save_path = $save_dir. $filename;
 
 	//if the directory doesn't exist, create it
 	if(!file_exists($save_dir)) {
-		echo 'Making directory ' . $save_dir . "\n";
+		import_log('Making directory ' . $save_dir );
 		mkdir($save_dir,0775,true);
-		echo 'Made directory ' . $save_dir . "\n";
+		import_log('Made directory ' . $save_dir );
 	}
 
-	echo 'Attempting to open file for copying ' . $file_path . "\n";
+	import_log('Attempting to open file for copying ' . $file_path );
 	if (file_exists($file_path) && fclose(fopen($file_path, "r"))) { //make sure the file actually exists
 
-		echo 'Copying ' . $file_path . " to " . $save_path ."\n";
+		import_log('Copying ' . $file_path . " to " . $save_path ."\n");
 		copy($file_path, $save_path);
 
 		$siteurl = get_option('siteurl');
-		echo "getimagesize()\n";
+		import_log("getimagesize()\n");
 		$file_info = getimagesize($save_path);
 
 		// Check the type of file. We'll use this as the 'post_mime_type'.
@@ -328,11 +333,11 @@ function kb_fetch_media($file_path, $wp_id, $uploads_subdir) {
 		$attach_data = wp_generate_attachment_metadata( $attach_id, $save_path );
 
 		if(is_wp_error($attach_data)) {
-			echo $attach_data->get_error_message();
+			import_log($attach_data->get_error_message());
 			return false;
 		}
 		else {
-			echo "adding image metadata\n";
+			import_log("adding image metadata\n");
 			wp_update_attachment_metadata($attach_id, $attach_data);
 		}
 
@@ -406,7 +411,7 @@ function kb_add_term($cid,$taxonomy) {
 
 		$wpdb->query('INSERT INTO `wp_term_taxonomy` (term_id, taxonomy, parent) VALUES ("' . $t["tid"] . '", "' . $taxonomy . '", "' . $parent . '") ON DUPLICATE KEY UPDATE term_id = ' . $t['tid'] . ', taxonomy = "' . $taxonomy . '", parent = ' . $parent);
 
-		echo 'Inserted term ' . $t["tid"] . ' (' . $t['name'] . ')' . "\n";
+		import_log('Inserted term ' . $t["tid"] . ' (' . $t['name'] . ')' );
 
 		$filefield = 'field_donor_form';
 		if(isset($t[$filefield]['und']['0']['uri'])) {
@@ -417,14 +422,14 @@ function kb_add_term($cid,$taxonomy) {
 			if($fileid) {
 
 				update_field('field_56b452c658411',$fileid,'collections_' . $tid);
-				echo 'File ' . $fileid . ' attached to ' . $tid . "\n";
+				import_log('File ' . $fileid . ' attached to ' . $tid );
 
 			}
 
 		}
 
 
-		echo 'Updated term ' . $tid . ' (' . $t['name'] . ')' . "\n";
+		import_log('Updated term ' . $tid . ' (' . $t['name'] . ')' );
 
 
 	}
