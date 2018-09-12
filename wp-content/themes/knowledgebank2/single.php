@@ -19,7 +19,7 @@
 
 			<!-- post title -->
 			<h1>
-				<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"><?php the_title(); ?></a>
+				<?php the_title(); ?>
 			</h1>
 			<!-- /post title -->
 
@@ -44,6 +44,194 @@
 			<?php edit_post_link(); // Always handy to have Edit Post Links available ?>
 
 			<?php comments_template(); ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			<section class="layer intro intro-default background-image" style="background-image:url(img/quake.jpg);">
+				<div class="inner">
+					<div class="intro-copy dark inner-700">
+						<ul class="breadcrumbs">
+							<li><a href="#">Home</a></li>
+							<li><a href="#">Browse</a></li>
+							<li>Title</li>
+						</ul>
+						<h1>Page Title</h1>
+					</div><!-- .intro-copy -->
+				</div><!-- .inner -->
+			</section>
+
+			<?php get_template_part('part','searchbar'); ?>
+
+			<?php $images = get_field('images'); ?>
+
+			<?php if(!empty($images)): ?>
+
+				<?php
+					//maybe output a caption with each image
+					$transcript = get_field('transcript');
+					if(!empty($transcript)){
+						$captions = preg_split('/<hr ?\/?>/', $transcript);//pages are delimited by <hr /> (match variations <hr> and <hr/>)
+					}
+
+
+				?>
+
+				<section class="layer media-slider-wrap">
+					<div class="inner">
+						<div class="media-slider">
+
+							<?php foreach($images as $index => $image): $image = $image['image']; //image :) ?>
+
+							<div class="media-slide">
+								<div class="media-slide-inner">
+									<img src="<?php echo $image['sizes']['medium_large']; ?>" alt="<?php echo $image['alt']; ?>" />
+									<a href="<?php echo $image['url']; ?>" class="zoom">
+										<i class="mdi mdi-magnify"></i>
+									</a>
+								</div>
+								<?php if(!empty($captions[$index])): ?>
+								<div class="caption">
+									<?php echo $captions[$index]; ?>
+								</div>
+							<?php endif; ?>
+							</div><!-- .media-slide -->
+
+							<?php endforeach; ?>
+
+						</div><!-- .media-slider -->
+					</div>
+				</section>
+
+			<?php endif; //!empty($images) ?>
+
+			<section class="layer attributes">
+				<div class="inner">
+					<div class="grid column-2">
+						<div class="col">
+							<h4>Notes:</h4>
+							<p>Official photograph of earthquake damage, "14"</p>
+						</div>
+						<div class="col">
+							<h4>Date published:</h4>
+							<p>1931</p>
+						</div>
+						<div class="col">
+							<h4>Collection: </h4>
+							<p><a href="#">COLWILL VM</a></p>
+						</div>
+						<div class="col">
+							<h4>Series:</h4>
+							<p><a href="#">1931 Earthquake</a></p>
+						</div>
+						<div class="col">
+							<h4>Tags:</h4>
+							<p><a href="#">earthquake</a></p>
+						</div>
+						<div class="col">
+							<h4>Subjects:</h4>
+							<p><a href="#">Disasters and Emergencies</a></p>
+						</div>
+						<div class="col">
+							<h4>Format of the original:</h4>
+							<p>Photograph</p>
+						</div>
+						<div class="col">
+							<h4>Original digital file:</h4>
+							<p class="file-name">colwillvm1123-brownphotoalbum-02c-warrensbuildings.jpg</p>
+							<div class="button-group">
+								<a href="#" class="button download image">Download <span>1.3MB</span></a>
+								<!--<a href="#" class="button download pdf">Download <span>1.3MB</span></a>
+								<a href="#" class="button download video">Download <span>1.3MB</span></a>
+								<a href="#" class="button download audio">Download <span>1.3MB</span></a> -->
+							</div>
+						</div>
+						<div class="col">
+							<h4>Accession Number: </h4>
+							<p>967/968/35522</p>
+						</div>
+						<div class="col">
+							<h4>License:</h4>
+							<img src="img/cc.png" style="float: right;" alt="Creative Commons Attribution-NonCommercial 4.0 International License">
+							<p>This work is licensed under a <a href="https://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License.</a></p>
+							<p><a href="#">About commercial licensing</a></p>
+							<div class="button-group">
+								<a href="#" class="button">Purchase commercial license</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="layer commenting-wrap">
+				<div class="inner">
+					<div class="commenting">
+						<h4>Do you know something about this record?</h4>
+						<p class="temp">Commenting system here</p>
+					</div>
+				</div>
+			</section>
+
+			<section class="layer logos">
+				<div class="inner">
+					<div class="section-header center">
+						<h4>Sponsors &amp; Supporters</h4>
+						<p>We'd like to thank the following businesses and organisations for their support.</p>
+					</div>
+					<div class="grid">
+						<a href="#"><img src="img/freeman-decorators.png" alt="Freeman Decorators"></a>
+						<a href="#"><img src="img/new_life_electrical.png" alt="New Life Electrical"></a>
+						<a href="#"><img src="img/unison-fibre-80.png" alt="unison Fiber"></a>
+						<a href="#"><img src="img/knowledge@2x.png" alt="Knowledge Accountants"></a>
+						<a href="#"><img src="img/bvond-logo.jpg" alt="Bannister and Von Dadelszen"></a>
+						<a href="#"><img src="img/ubuntu_black-orange_hex.png" alt="Ubuntu ( unofficial )"></a>
+						<a href="#"><img src="img/morgan_builders.png" alt="Morgan Builders"></a>
+						<a href="#"><img src="img/hutchinsons.png" alt="Hutchinson’s Furnishers"></a>
+						<a href="#"><img src="img/ecct-logo-2014.png" alt="Eastern & Central Community Trust"></a>
+						<a href="#"><img src="img/rd9_historical_trust.png" alt="RD9 Historical Trust"></a>
+						<a href="#"><img src="img/ballantyne_trust.png" alt="Ballantyne Trust"></a>
+					</div>
+				</div>
+			</section>
+
+			<section class="layer signup">
+				<div class="inner">
+					<div class="section-header center">
+						<h4>Sign up to our newsletter</h4>
+					</div>
+					<form class="" action="index.html" method="post">
+						<input type="text" name="" value="" placeholder="First name">
+						<input type="text" name="" value="" placeholder="Last name">
+						<input type="email" name="" value="" placeholder="Email address">
+						<button type="submit" name="button">Sign up</button>
+					</form>
+				</div>
+			</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 		</article>
 		<!-- /article -->
