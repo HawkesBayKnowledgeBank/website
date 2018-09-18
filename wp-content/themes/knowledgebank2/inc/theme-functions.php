@@ -31,3 +31,12 @@ function formatBytes($size, $precision = 2){
     $suffixes = array('', 'kB', 'MB', 'GB', 'TB');
     return round(pow(1024, $base - floor($base)), $precision) .' '. $suffixes[floor($base)];
 }
+
+
+//Remove SEO Menu in Admin Bar
+function knowledgebank_admin_bar_render() {
+    global $wp_admin_bar;
+    $wp_admin_bar->remove_menu('all-in-one-seo-pack');
+    $wp_admin_bar->remove_menu('customize');
+}
+add_action( 'wp_before_admin_bar_render', 'knowledgebank_admin_bar_render' );
