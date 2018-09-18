@@ -1,7 +1,7 @@
 <?php
 
 
-//exit; //remove to use :-)
+exit; //remove to use :-)
 
 
 require_once('../wp-load.php');
