@@ -35,11 +35,11 @@ function import_log($message){
 
 	//Different things to import - we will loop through them all
 	$modes = array(
-		//'collections' => 35640,//$mode => $fgid
+		'collections' => 35640,//$mode => $fgid
 		'still_image' => 37072,
-		//'video' => 35615,
-		//'person' => 36254,
-		//'audio' => 51154,
+		'video' => 35615,
+		'person' => 36254,
+		'audio' => 51154,
 		'text' => 51186,
 	);
 

@@ -9,71 +9,28 @@
 		<!-- article -->
 		<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
-			<!-- post thumbnail -->
-			<?php if ( has_post_thumbnail()) : // Check if Thumbnail exists ?>
-				<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
-					<?php the_post_thumbnail(); // Fullsize image for the single post ?>
-				</a>
-			<?php endif; ?>
-			<!-- /post thumbnail -->
-
-			<!-- post title -->
-			<h1>
-				<?php the_title(); ?>
-			</h1>
-			<!-- /post title -->
-
-			<!-- post details -->
-			<span class="date"><?php the_time('F j, Y'); ?> <?php the_time('g:i a'); ?></span>
-			<span class="author"><?php _e( 'Published by', 'knowledgebank' ); ?> <?php the_author_posts_link(); ?></span>
-			<span class="comments"><?php if (comments_open( get_the_ID() ) ) comments_popup_link( __( 'Leave your thoughts', 'knowledgebank' ), __( '1 Comment', 'knowledgebank' ), __( '% Comments', 'knowledgebank' )); ?></span>
-			<!-- /post details -->
-
-			<?php the_content(); // Dynamic Content ?>
-
-			<pre style="padding:30px; background-color:#fff;">
-				<?php print_r(get_fields()); ?>
-			</pre>
-
-			<?php the_tags( __( 'Tags: ', 'knowledgebank' ), ', ', '<br>'); // Separated by commas with a line break at the end ?>
-
-			<p><?php _e( 'Categorised in: ', 'knowledgebank' ); the_category(', '); // Separated by commas ?></p>
-
-			<p><?php _e( 'This post was written by ', 'knowledgebank' ); the_author(); ?></p>
-
-			<?php edit_post_link(); // Always handy to have Edit Post Links available ?>
-
-			<?php comments_template(); ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 			<section class="layer intro intro-default background-image" style="background-image:url(img/quake.jpg);">
 				<div class="inner">
 					<div class="intro-copy dark inner-700">
 						<ul class="breadcrumbs">
 							<li><a href="#">Home</a></li>
 							<li><a href="#">Browse</a></li>
-							<li>Title</li>
+							<li><?php the_title(); ?></li>
 						</ul>
-						<h1>Page Title</h1>
+						<h1><?php the_title(); ?></h1>
 					</div><!-- .intro-copy -->
 				</div><!-- .inner -->
 			</section>
 
-			<?php get_template_part('part','searchbar'); ?>
+			<?php get_template_part('sections/search','main'); ?>
+
+			<?php $fields = get_field_objects(); ?>
+
+			<a href="#json">json</a>
+			<pre style="padding:30px; background-color:#fff;display:none;" id="json">
+				<?php print_r($fields); ?>
+				<?php //print_r(get_fields()); ?>
+			</pre>
 
 			<?php $images = get_field('images'); ?>
 
@@ -85,8 +42,6 @@
 					if(!empty($transcript)){
 						$captions = preg_split('/<hr ?\/?>/', $transcript);//pages are delimited by <hr /> (match variations <hr> and <hr/>)
 					}
-
-
 				?>
 
 				<section class="layer media-slider-wrap">
@@ -97,7 +52,15 @@
 
 							<div class="media-slide">
 								<div class="media-slide-inner">
-									<img src="<?php echo $image['sizes']['medium_large']; ?>" alt="<?php echo $image['alt']; ?>" />
+									<?php
+										if($index > 3){ //lazy load everything after image 3
+											$src = sprintf('src="" data-lazy-src="%s"',$image['sizes']['medium_large']);
+										}
+										else{
+											$src = sprintf('src="%s"',$image['sizes']['medium_large']);
+										}
+									?>
+									<img <?php echo $src; ?> alt="<?php echo $image['alt']; ?>" />
 									<a href="<?php echo $image['url']; ?>" class="zoom">
 										<i class="mdi mdi-magnify"></i>
 									</a>
@@ -120,57 +83,14 @@
 			<section class="layer attributes">
 				<div class="inner">
 					<div class="grid column-2">
-						<div class="col">
-							<h4>Notes:</h4>
-							<p>Official photograph of earthquake damage, "14"</p>
-						</div>
-						<div class="col">
-							<h4>Date published:</h4>
-							<p>1931</p>
-						</div>
-						<div class="col">
-							<h4>Collection: </h4>
-							<p><a href="#">COLWILL VM</a></p>
-						</div>
-						<div class="col">
-							<h4>Series:</h4>
-							<p><a href="#">1931 Earthquake</a></p>
-						</div>
-						<div class="col">
-							<h4>Tags:</h4>
-							<p><a href="#">earthquake</a></p>
-						</div>
-						<div class="col">
-							<h4>Subjects:</h4>
-							<p><a href="#">Disasters and Emergencies</a></p>
-						</div>
-						<div class="col">
-							<h4>Format of the original:</h4>
-							<p>Photograph</p>
-						</div>
-						<div class="col">
-							<h4>Original digital file:</h4>
-							<p class="file-name">colwillvm1123-brownphotoalbum-02c-warrensbuildings.jpg</p>
-							<div class="button-group">
-								<a href="#" class="button download image">Download <span>1.3MB</span></a>
-								<!--<a href="#" class="button download pdf">Download <span>1.3MB</span></a>
-								<a href="#" class="button download video">Download <span>1.3MB</span></a>
-								<a href="#" class="button download audio">Download <span>1.3MB</span></a> -->
-							</div>
-						</div>
-						<div class="col">
-							<h4>Accession Number: </h4>
-							<p>967/968/35522</p>
-						</div>
-						<div class="col">
-							<h4>License:</h4>
-							<img src="img/cc.png" style="float: right;" alt="Creative Commons Attribution-NonCommercial 4.0 International License">
-							<p>This work is licensed under a <a href="https://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License.</a></p>
-							<p><a href="#">About commercial licensing</a></p>
-							<div class="button-group">
-								<a href="#" class="button">Purchase commercial license</a>
-							</div>
-						</div>
+
+						<?php
+							foreach($fields as $field):
+								//look for templates for each field, first by name and then by type
+								knowledgebank_field_template($field);
+							endforeach;
+						?>
+
 					</div>
 				</div>
 			</section>

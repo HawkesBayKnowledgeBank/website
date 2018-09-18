@@ -25,7 +25,9 @@ jQuery(document).ready(function($) {
         }
     });
 
-
+    $('a[href="#json"]').click(function(){
+        $('#json').slideToggle();
+    });
 
 
     //Magnific
@@ -107,10 +109,30 @@ jQuery(document).ready(function($) {
 
 
     $('.media-slider').slick({
+
       dots: true,
       slidesToShow: 1,
       slidesToScroll: 1,
       adaptiveHeight: true,
+    });
+
+    //lazy loading - slick's native version doesn't handle adaptiveHeight o.O
+    //unlazy the slide after the one we are viewing
+    $('.media-slider').on('afterChange', function(event, slick, currentSlide){
+        var nextSlide = currentSlide + 1;
+        var $next_image = $('[data-slick-index="' + nextSlide + '"] img[data-lazy-src]');
+        if($next_image.length){
+            $next_image.attr('src', $next_image.attr('data-lazy-src') );
+            $next_image.removeAttr('data-lazy-src');
+        }
+    });
+    //if jumping to a lazy slide, unlazy it
+    $('.media-slider').on('beforeChange', function(event, slick, currentSlide, nextSlide){
+        var $next_image = $('[data-slick-index="' + nextSlide + '"] img[data-lazy-src]');
+        if($next_image.length){
+            $next_image.attr('src', $next_image.attr('data-lazy-src') );
+            $next_image.removeAttr('data-lazy-src');
+        }
     });
 
     // Open search mobile filters
