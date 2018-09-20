@@ -477,7 +477,7 @@
   .logos{margin-bottom: 20px;}
   .logos > .inner{padding: 30px 20px;max-width: 100%;}
   .logos .grid{display: -webkit-box;display: -ms-flexbox;display: flex;-ms-flex-wrap: wrap;flex-wrap: wrap;-webkit-box-pack: center;-ms-flex-pack: center;justify-content: center;-webkit-box-align: center;-ms-flex-align: center;align-items: center;-webkit-filter: grayscale(1);filter: grayscale(1);opacity: 0.8;}
-  .logos .grid a{max-width: 90px;margin: 10px 13px;}
+  .logos .grid a, .logos .grid span{max-width: 90px;margin: 10px 13px;}
   .logos .grid img{}
 
   @media screen and (max-width:670px){

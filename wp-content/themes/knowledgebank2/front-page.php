@@ -90,17 +90,20 @@
             <p>We'd like to thank the following businesses and organisations for their support.</p>
         </div>
         <div class="grid">
-            <a href="#"><img src="/templates/img/freeman-decorators.png" alt="Freeman Decorators"></a>
-            <a href="#"><img src="/templates/img/new_life_electrical.png" alt="New Life Electrical"></a>
-            <a href="#"><img src="/templates/img/unison-fibre-80.png" alt="unison Fiber"></a>
-            <a href="#"><img src="/templates/img/knowledge@2x.png" alt="Knowledge Accountants"></a>
-            <a href="#"><img src="/templates/img/bvond-logo.jpg" alt="Bannister and Von Dadelszen"></a>
-            <a href="#"><img src="/templates/img/ubuntu_black-orange_hex.png" alt="Ubuntu ( unofficial )"></a>
-            <a href="#"><img src="/templates/img/morgan_builders.png" alt="Morgan Builders"></a>
-            <a href="#"><img src="/templates/img/hutchinsons.png" alt="Hutchinson’s Furnishers"></a>
-            <a href="#"><img src="/templates/img/ecct-logo-2014.png" alt="Eastern & Central Community Trust"></a>
-            <a href="#"><img src="/templates/img/rd9_historical_trust.png" alt="RD9 Historical Trust"></a>
-            <a href="#"><img src="/templates/img/ballantyne_trust.png" alt="Ballantyne Trust"></a>
+            <?php $sponsors = get_field('sponsors'); ?>
+            <?php if(!empty($sponsors)): ?>
+                <?php foreach($sponsors as $sponsor):  ?>
+                        <?php if(!empty($sponsor['link'])): ?>
+                            <a href="<?php echo $sponsor['link']; ?>">
+                                <img src="<?php echo $sponsor['logo']['url']; ?>" alt="<?php echo $sponsor['logo']['alt']; ?>" />
+                            </a>
+                        <?php else: ?>
+                            <span>
+                                <img src="<?php echo $sponsor['logo']['url']; ?>" alt="<?php echo $sponsor['logo']['alt']; ?>" />
+                            </span>
+                        <?php endif; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
         </div>
     </div>
 </section>

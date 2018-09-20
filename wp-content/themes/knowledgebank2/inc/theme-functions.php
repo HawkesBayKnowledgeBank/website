@@ -5,6 +5,17 @@ function knowledgebank_field_template($field){
 
     if(empty($field) || !is_array($field) || empty($field['key'])) return false;
 
+    //skip certain fields
+    $exclude = array(
+        'licence',
+        'allow_commercial_licence',
+        'computed_aperturefnumber',
+        'exif_model',
+        'exif_isospeedratings',
+        'exif_focallength'
+    );
+    if(in_array($field['name'], $exclude)) return false;
+
     //try in order: field key, name, type, fallback default
     foreach(array('key','name','type','default') as $template_type){
 
