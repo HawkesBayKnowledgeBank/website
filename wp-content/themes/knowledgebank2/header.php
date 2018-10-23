@@ -27,7 +27,7 @@
 				<nav>
 					<ul>
 
-						<?php wp_nav_menu( array( 'menu_id' => 2212, 'container' => '' ) ); ?>
+						<?php wp_nav_menu( array( 'theme_location' => 'main', 'container' => '' ) ); ?>
 
 					</ul>
 				</nav>

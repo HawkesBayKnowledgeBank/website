@@ -7,34 +7,47 @@
 							</div>
 							<div class="col">
 								<h5>Quicklinks</h5>
-								<ul>
-									<li><a href="#">Home</a></li>
-									<li><a href="#">About</a></li>
-									<li><a href="#">Browse</a></li>
-									<li><a href="#">Newsletters</a></li>
-									<li><a href="#">Contact</a></li>
-								</ul>
-							</div>
-							<div class="col">
-								<h5>Visit</h5>
-								<p>Members of the public are most welcome to visit us. Our usual opening hours are Monday - Friday, 10.30am - 4.30pm.</p>
-								<p>901 Omahu Rd, Frimley, Hastings</p>
-								<div class="button-group">
-									<a href="https://www.google.com/maps?ll=-39.620448,176.818138&amp;z=16&amp;t=m&amp;hl=en-US&amp;gl=NZ&amp;mapclient=embed&amp;q=901+Omahu+Rd+Frimley+Hastings+4120" class="button">View map</a>
-								</div><!-- .button-group -->
-							</div>
-							<div class="col">
-								<h5>Contact</h5>
-								<p>Phone: <a href="tel:+6468335333">+64 6 833 5333</a><br>
-									Email: <a href="mailto:admin@knowledgebank.org.nz">admin@knowledgebank.org.nz</a></p>
-								<p>Post: Hawke's Bay Knowledge Bank, PO Box 2025, Stortford Lodge, Hastings 4153</p>
+								<?php wp_nav_menu( array( 'theme_location' => 'footer', 'container' => '' ) ); ?>
 
+							</div>
+							<div class="col">
+
+								<?php the_field('footer_column_left','option'); ?>
+
+								<?php if(get_field('footer_column_left_buttons','option')): ?>
+									<div class="button-group">
+										<?php $buttons = get_field('footer_column_left_buttons','option'); ?>
+										<?php foreach($buttons as $button): ?>
+											<?php
+												$target = !empty($button['target']) ? 'target="_blank"' : '';
+												echo vsprintf('<a href="%s" class="button" %s>%s</a>', array($button['url'], $target, $button['label']));
+											?>
+										<?php endforeach; ?>
+									</div><!-- .button-group -->
+								<?php endif; ?>
+
+							</div>
+							<div class="col">
+
+								<?php the_field('footer_column_right','option'); ?>
+
+								<?php if(get_field('footer_column_right_buttons','option')): ?>
+									<div class="button-group">
+										<?php $buttons = get_field('footer_column_right_buttons','option'); ?>
+										<?php foreach($buttons as $button): ?>
+											<?php
+												$target = !empty($button['target']) ? 'target="_blank"' : '';
+												echo vsprintf('<a href="%s" class="button" %s>%s</a>', array($button['url'], $target, $button['label']));
+											?>
+										<?php endforeach; ?>
+									</div><!-- .button-group -->
+								<?php endif; ?>
 
 							</div>
 						</div>
-						<p class="footer-meta">© 2018 Hawke's Bay Digital Archives Trust &nbsp;&nbsp;<span>|</span>&nbsp;&nbsp;
-							<a href="http://mogul.nz/" target="_blank">Website by Mogul</a> &nbsp;&nbsp;<span>|</span>&nbsp;&nbsp;
-							<a href="#">Login</a></p>
+						<p class="footer-meta">© 2018 Hawke's Bay Digital Archives Trust <span class="spacer">|</span>
+							<a href="http://mogul.nz/" target="_blank">Website by Mogul</a> <span class="spacer">|</span>
+							<a href="/login">Login</a></p>
 
 					</div>
 				</footer>

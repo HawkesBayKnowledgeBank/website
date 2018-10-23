@@ -36,6 +36,9 @@ function knowledgebank_field_template($field){
 
 }//knowledgebank_field_template()
 
+/**
+* Format a number of bytes in a nice human format
+*/
 //https://stackoverflow.com/a/2510540/10189367
 function formatBytes($size, $precision = 2){
     $base = log($size, 1024);
@@ -51,3 +54,28 @@ function knowledgebank_admin_bar_render() {
     $wp_admin_bar->remove_menu('customize');
 }
 add_action( 'wp_before_admin_bar_render', 'knowledgebank_admin_bar_render' );
+
+
+if( function_exists('acf_add_options_page') ) {
+
+	$option_page = acf_add_options_page(array(
+		'page_title' 	=> 'Theme General Settings',
+		'menu_title' 	=> 'Theme Settings',
+		'menu_slug' 	=> 'theme-general-settings',
+		'capability' 	=> 'manage_options',
+		'redirect' 	=> false
+	));
+
+}
+
+
+/**
+*menus
+*/
+
+function knowledgebank_register_menus() {
+  register_nav_menu('top', 'Top');
+  register_nav_menu('main', 'Main');
+  register_nav_menu('footer', 'Footer');
+}
+add_action( 'init', 'knowledgebank_register_menus' );
