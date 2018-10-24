@@ -128,111 +128,38 @@
 
 					<div class="grid column-4 ">
 
-			  		<div class="col tile shadow video">
-							<div class="tile-img" style="background-image:url('img/quake.jpg')">
-								<a href="#"></a>
-							</div>
-							<div class="tile-copy">
-								<h4><a href="#">Tile title</a></h4>
-								<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper.</p>
-								<div class="button-group">
-									<a href="#" class="button">Button</a>
-								</div>
-							</div><!-- .tile-copy -->
-						</div><!-- .col -->
+						<?php if(have_posts()): while(have_posts()): the_post(); ?>
 
-						<div class="col tile shadow image">
-							<div class="tile-img" style="background-image:url('img/quake1.jpg')">
-								<a href="#"></a>
-							</div>
-							<div class="tile-copy">
-								<h4><a href="#">Tile title</a></h4>
-								<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper.</p>
-								<div class="button-group">
-									<a href="#" class="button">Button</a>
-								</div>
-							</div><!-- .tile-copy -->
-						</div><!-- .col -->
+							<?php
 
-						<div class="col tile shadow audio">
-							<div class="tile-img" style="background-image:url('img/quake2.jpg')">
-								<a href="#"></a>
-							</div>
-							<div class="tile-copy">
-								<h4><a href="#">Tile title</a></h4>
-								<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper.</p>
-								<div class="button-group">
-									<a href="#" class="button">Button</a>
-								</div>
-							</div><!-- .tile-copy -->
-						</div><!-- .col -->
+								$type = $post->post_type;
+								$images = get_field('images', $post->ID);
+								if(!empty($images[0]['image'])){
+									$image = $images[0]['image'];
+								}
+								$link = get_permalink($post->ID);
 
-						<div class="col tile shadow book">
-							<div class="tile-img" style="background-image:url('img/quake3.jpg')">
-								<a href="#"></a>
-							</div>
-							<div class="tile-copy">
-								<h4><a href="#">Tile title</a></h4>
-								<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper.</p>
-								<div class="button-group">
-									<a href="#" class="button">Button</a>
-								</div>
-							</div><!-- .tile-copy -->
-						</div><!-- .col -->
+							?>
 
-						<div class="col tile shadow text">
-							<div class="tile-img" style="background-image:url('img/quake1.jpg')">
-								<a href="#"></a>
-							</div>
-							<div class="tile-copy">
-								<h4><a href="#">Tile title</a></h4>
-								<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper.</p>
-								<div class="button-group">
-									<a href="#" class="button">Button</a>
-								</div>
-							</div><!-- .tile-copy -->
-						</div><!-- .col -->
+				  			<div class="col tile shadow <?php echo $type; ?>">
+								<?php if(!empty($image)): ?>
+									<?php
+										$src = !empty($image['sizes']['medium_large']) ? $image['sizes']['medium_large'] : '';
+									?>
+									<div class="tile-img lazy" style="background-image:url(/wp-content/themes/knowledgebank2/img/placeholder-400.png)" data-src="<?php echo $src; ?>">
+										<a href="<?php echo $link; ?>"></a>
+									</div>
+								<?php endif; ?>
+								<div class="tile-copy">
+									<h4><a href="<?php echo $link; ?>"><?php echo $post->post_title; ?></a></h4>
+									<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper.</p>
+									<div class="button-group">
+										<a href="#" class="button">Button</a>
+									</div>
+								</div><!-- .tile-copy -->
+							</div><!-- .col -->
 
-						<div class="col tile shadow people">
-							<div class="tile-img" style="background-image:url('img/quake2.jpg')">
-								<a href="#"></a>
-							</div>
-							<div class="tile-copy">
-								<h4><a href="#">Tile title</a></h4>
-								<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper.</p>
-								<div class="button-group">
-									<a href="#" class="button">Button</a>
-								</div>
-							</div><!-- .tile-copy -->
-						</div><!-- .col -->
-
-						<div class="col tile shadow video">
-							<div class="tile-img" style="background-image:url('img/quake.jpg')">
-								<a href="#"></a>
-							</div>
-							<div class="tile-copy">
-								<h4><a href="#">Tile title</a></h4>
-								<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper.</p>
-								<div class="button-group">
-									<a href="#" class="button">Button</a>
-								</div>
-							</div><!-- .tile-copy -->
-						</div><!-- .col -->
-
-						<div class="col tile shadow image">
-							<div class="tile-img" style="background-image:url('img/quake1.jpg')">
-								<a href="#"></a>
-							</div>
-							<div class="tile-copy">
-								<h4><a href="#">Tile title</a></h4>
-								<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper.</p>
-								<div class="button-group">
-									<a href="#" class="button">Button</a>
-								</div>
-							</div><!-- .tile-copy -->
-						</div><!-- .col -->
-
-
+						<?php endwhile; endif; ?>
 
 					</div><!-- .grid -->
 

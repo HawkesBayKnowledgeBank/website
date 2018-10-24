@@ -199,8 +199,12 @@ jQuery(document).ready(function($) {
     });
 
 
-
-
+    //Lazy images
+    $('.lazy').lazy({
+      effect: "fadeIn",
+      effectTime: 300,
+      threshold: 0
+    });
 
     //lets you overide the scrolljacking/stops janky stuff happening
     $('html,body').on("scroll mousedown wheel DOMMouseScroll mousewheel keyup touchmove", function() {
@@ -221,9 +225,9 @@ jQuery(document).ready(function($) {
 	*/
 
     //Youtube iframe in content
-		$('iframe[src*="youtube.com"]').each(function() {
-			$(this).wrap('<div class="video-wrapper"/>');
-		});
+	$('iframe[src*="youtube.com"]').each(function() {
+		$(this).wrap('<div class="video-wrapper"/>');
+	});
 
 
 });

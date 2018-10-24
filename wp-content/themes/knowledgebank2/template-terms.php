@@ -7,24 +7,28 @@
 <?php
 
 	$mode = get_field('mode');
+
+	//arguments for get_terms()
+	$args = array(
+		'hide_empty' => true,
+		'meta_query' => array(
+			array(
+				'key' => 'public',
+				'value' => 1,
+			)
+		)
+	);
+
 	if($mode == 'Taxonomy'):
-
 		$taxonomy = get_field('display_taxonomy');
-
-		$terms = get_terms( array(
-			'taxonomy' => $taxonomy[0]->name,
-			'hide_empty' => false,
-		));
-
+		$args['taxonomy'] = $taxonomy[0]->name;
+		$args['parent'] = 0;
 	else:
-
 		$term = get_field('display_term');
-		$terms = get_terms( array(
-			'child_of' => $term[0]->term_id,
-			'hide_empty' => false,
-		));
-
+		$args['child_of'] = $term[0]->term_id;
 	endif;
+
+	$terms = get_terms( $args );
 
 ?>
 <?php get_header(); ?>
@@ -42,7 +46,6 @@
 					</div><!-- .intro-copy -->
 				</div><!-- .inner -->
 			</section>
-
 
 			<section class="layer controls">
 				<div class="inner">
@@ -107,108 +110,46 @@
 
 					<div class="grid column-4 ">
 
-						<div class="col tile shadow video">
-							<div class="tile-img" style="background-image:url('img/quake.jpg')">
-								<a href="#"></a>
-							</div>
-							<div class="tile-copy">
-								<h4><a href="#">Tile title</a></h4>
-								<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper.</p>
-								<div class="button-group">
-									<a href="#" class="button">Button</a>
-								</div>
-							</div><!-- .tile-copy -->
-						</div><!-- .col -->
+						<?php if(!empty($terms)): ?>
 
+							<?php foreach($terms as $term): ?>
 
-						<div class="col tile shadow">
-							<div class="tile-img" style="background-image:url('<?php echo $tile['image']['sizes']['medium']; ?>')">
-								<a href="<?php echo $tile['link']; ?>"></a>
-							</div>
-							<div class="tile-copy">
-								<h4><a href="<?php echo $tile['link']; ?>"><?php echo $tile['title']; ?></a></h4>
-								<?php echo $tile['content']; ?>
-								<?php if(!empty($tile['button_label'])): ?>
-									<div class="button-group">
-										<a href="<?php echo $tile['button_link']; ?>" class="button"><?php echo $tile['button_label']; ?></a>
-									</div>
-								<?php endif; ?>
-							</div><!-- .tile-copy -->
-						</div><!-- .col -->
+								<?php
 
-					</div><!-- .grid -->
+									$link = get_term_link($term);
+									$image = get_field('image',$term);
 
-					<ul class="pagination">
-						<li class="current-page"><a href="#">1</a></li>
-						<li><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
-						<li><a href="#">4</a></li>
-						<li><a href="#">5</a></li>
-						<li><a href="#">6</a></li>
-						<li><a href="#">7</a></li>
-						<li><a href="#">8</a></li>
-						<li><a href="#">9</a></li>
-						<li class="elipses">...</li>
-						<li><a href="#">Next ></a></li>
-						<li><a href="#">Last >></a></li>
-					</ul>
+								?>
 
-				</div><!-- .inner -->
-			</section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-			<section class="layer results tiles ">
-
-				<div class="inner">
-
-					<div class="grid column-4 ">
-
-						<?php $tiles = get_field('tiles'); ?>
-
-						<?php if(!empty($tiles['tiles'])): ?>
-							<?php foreach($tiles['tiles'] as $tile): ?>
-
-					  			<div class="col tile shadow">
-									<div class="tile-img" style="background-image:url('<?php echo $tile['image']['sizes']['medium']; ?>')">
-										<a href="<?php echo $tile['link']; ?>"></a>
-									</div>
+								<div class="col tile shadow">
+									<?php if(!empty($image)): ?>
+										<?php
+											$src = !empty($image['sizes']['medium_large']) ? $image['sizes']['medium_large'] : '';
+										?>
+										<div class="tile-img lazy" data-src="<?php echo $src; ?>">
+											<a href="<?php echo $link; ?>"></a>
+										</div>
+									<?php endif; ?>
 									<div class="tile-copy">
-										<h4><a href="<?php echo $tile['link']; ?>"><?php echo $tile['title']; ?></a></h4>
-										<?php echo $tile['content']; ?>
-										<?php if(!empty($tile['button_label'])): ?>
-											<div class="button-group">
-												<a href="<?php echo $tile['button_link']; ?>" class="button"><?php echo $tile['button_label']; ?></a>
-											</div>
-										<?php endif; ?>
+										<h4><a href="<?php echo $link; ?>"><?php echo $term->name; ?></a></h4>
+										<?php if(!empty($term->description)): ?><p><?php echo $term->description; ?></p><?php endif; ?>
+										<div class="button-group">
+											<a href="<?php echo $link; ?>" class="button">View</a>
+										</div>
 									</div><!-- .tile-copy -->
 								</div><!-- .col -->
 
 							<?php endforeach; ?>
+
 						<?php endif; ?>
+
 
 					</div><!-- .grid -->
 
-				</div><!-- .inner -->
 
+				</div><!-- .inner -->
 			</section>
 
 	</main>
-
 
 <?php get_footer(); ?>

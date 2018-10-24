@@ -236,7 +236,7 @@
   a.button.download span{font-weight:400;font-size:14px;}
   a.button.download:after{font-family:'Material Design Icons';position: absolute;left: 0;font-size: 18px;font-weight:normal;}
   a.button.download:before{content: "\F045";}
-  a.button.download.image:after{content: "\F2E9";}
+  a.button.download.still_image:after{content: "\F2E9";}
   a.button.download.video:after{content: "\F567";}
   a.button.download.audio:after{content: "\F57E";}
   a.button.download.pdf:after{content: "\F225";}
@@ -610,13 +610,13 @@
 
   /* Tile media types */
   .tile.video .tile-copy:before,
-  .tile.image .tile-copy:before,
+  .tile.still_image .tile-copy:before,
   .tile.audio .tile-copy:before,
   .tile.book .tile-copy:before,
   .tile.text .tile-copy:before,
   .tile.people .tile-copy:before{content:' ';display:block;font-family: 'Material Design Icons';background: #35c343;position: absolute;top: -21px;color: white;width: 40px;height: 40px;border-radius: 40px;right: 20px;text-align: center;line-height: 40px;font-size: 21px;cursor: default;}
   .tile.video .tile-copy:before{content: "\F567";}
-  .tile.image .tile-copy:before{content: "\F2E9";}
+  .tile.still_image .tile-copy:before{content: "\F2E9";}
   .tile.audio .tile-copy:before{content: "\F57E";}
   .tile.book .tile-copy:before{content: "\F0BA";}
   .tile.text .tile-copy:before{content: "\F9A7";}
@@ -640,7 +640,7 @@
   .tiles.rows .tile-copy p{}
   .tiles.rows .tile-img{display: none;}
   .tiles.rows .tile-copy{display: -webkit-box;display: -ms-flexbox;display: flex;-ms-flex-wrap: nowrap;flex-wrap: nowrap;padding: 0;}
-  .tiles.rows .tile.video .tile-copy:before, .tiles.rows .tile.image .tile-copy:before, .tiles.rows .tile.audio .tile-copy:before, .tiles.rows .tile.book .tile-copy:before, .tiles.rows .tile.text .tile-copy:before, .tiles.rows .tile.people .tile-copy:before{display:none;}
+  .tiles.rows .tile.video .tile-copy:before, .tiles.rows .tile.still_image .tile-copy:before, .tiles.rows .tile.audio .tile-copy:before, .tiles.rows .tile.book .tile-copy:before, .tiles.rows .tile.text .tile-copy:before, .tiles.rows .tile.people .tile-copy:before{display:none;}
   .tiles.rows .tile-copy h4{flex-shrink: 0;margin: 0 20px 0 0;font-size: 16px;}
   .tiles.rows .tile-copy h4 a{font-weight: 700;}
   .tiles.rows .tile-copy h4 a:hover{border-bottom:1px solid;}

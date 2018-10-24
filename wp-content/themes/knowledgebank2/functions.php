@@ -80,6 +80,9 @@ function knowledgebank_header_scripts(){
         wp_register_script('magnific-js', get_template_directory_uri() . '/js/lib/jquery.magnific-popup.js', array('jquery'), '1.0.0'); // Custom scripts
         wp_enqueue_script('magnific-js');
 
+        wp_register_script('lazy-js', get_template_directory_uri() . '/js/lib/jquery.lazy.min.js', array('jquery'), '1.0.0'); // Custom scripts
+        wp_enqueue_script('lazy-js');
+
         wp_register_script('slick-js', '//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js', array('jquery'), '1.0.0'); // Custom scripts
         wp_enqueue_script('slick-js');
 
