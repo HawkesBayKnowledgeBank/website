@@ -15,6 +15,7 @@
 				</div><!-- .inner -->
 			</section>
 
+			<?php get_template_part('sections/search','main'); ?>
 
 			<section class="layer results tiles ">
 

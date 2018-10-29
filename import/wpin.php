@@ -34,8 +34,11 @@ function import_log($message){
 	//$fgid = '51186';
 
 	//Different things to import - we will loop through them all
+	//taxonomies first, content second
 	$modes = array(
-		'collections' => 35640,//$mode => $fgid
+		//'collections' => 35640,//$mode => $fgid
+		'tags' => '',
+		'subjects' => '',
 		'still_image' => 37072,
 		'video' => 35615,
 		'person' => 36254,
@@ -70,7 +73,7 @@ function import_log($message){
 					$count = 0;
 					$limit = 0;
 
-					$update_existing = false;
+					$update_existing = true;
 
 					foreach($nodes as $node) :
 
@@ -248,19 +251,22 @@ function import_log($message){
 					$tid = $t['tid'];
 
 					if(get_term($tid,$mode)) {
-						import_log('Term ' . $tid . " already exists, moving on\n");
-						continue;
+						//import_log('Term ' . $tid . " already exists, moving on\n");
+						//continue;
 					}
 
 					//else get on with inserting the term
 
-					$wpdb->query('INSERT INTO `wp_terms` values ('  . $t["tid"] . ',"' . $t["name"] . '","' . $t["tid"] . '",0)');
+					$wpdb->query('REPLACE INTO `wp_terms` values ('  . $t["tid"] . ',"' . $t["name"] . '","' . $t["tid"] . '",0)');
+
+					//$wpdb->query('REPLACE INTO `wp_terms` values (%d, "%s", "%d",0)',$t["tid"],$t["name"],$t["tid"]);
 
 					$parent = 0;
 
-					$mode = ($mode == 'subjects' ? 'subject' : $mode);
+					if($mode == 'tags') $mode = 'post_tag';
+					if($mode == 'subjects') $mode = 'subject';
 
-					$wpdb->query('INSERT INTO `wp_term_taxonomy` (term_id, taxonomy, parent) VALUES ("' . $t["tid"] . '", "' . $mode . '", "' . $parent . '")');
+					$wpdb->query('REPLACE INTO `wp_term_taxonomy` (term_id, taxonomy, parent) VALUES ("' . $t["tid"] . '", "' . $mode . '", "' . $parent . '")');
 
 					import_log('Inserted term ' . $t["tid"] . ' (' . $t['name'] . ')' );
 
@@ -315,7 +321,7 @@ function kb_fetch_media($file_path, $wp_id, $uploads_subdir) {
 		$file_info = getimagesize($save_path);
 
 		// Check the type of file. We'll use this as the 'post_mime_type'.
-		$filetype = wp_check_filetype( basename( $save_path ), null );
+		$filetype = wp_check_filetype( basename( $save_path ), NULL );
 
 		// Prepare an array of post data for the attachment.
 		$attachment = array(

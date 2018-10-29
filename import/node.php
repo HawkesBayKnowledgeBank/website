@@ -94,10 +94,10 @@
 
 			foreach($node['field_tags']['und'] as $term) {
 
-				$wp_term = get_term( $term['tid'] ,'subjects');
+				$wp_term = get_term( $term['tid'] ,'post_tag');
 
 				if(empty($wp_term)) {
-					kb_add_term( $term['tid'] ,'subjects');
+					kb_add_term( $term['tid'] ,'post_tag');
 				}
 
 				$terms[] = $term['tid'];
@@ -107,6 +107,7 @@
 			import_log('Set terms ' . print_r($terms,true) . " on tags");
 			unset($node['field_tags']);
 		}
+
 
 		//FILES
 
@@ -225,5 +226,5 @@
 		import_log("Left in node:");
 		print_r($node);
 		import_log("");
-
+		
 ?>

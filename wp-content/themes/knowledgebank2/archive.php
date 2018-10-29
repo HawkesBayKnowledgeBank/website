@@ -8,62 +8,13 @@
 						<ul class="breadcrumbs">
 							<li><a href="http://mogulframework.wpengine.com">Home</a></li><li>Browse</li>
 						</ul>
-						<h1>Browse</h1>
+						<h1><?php the_title(); ?></h1>
 		  			<p>Default page intro text. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id.</p>
 					</div><!-- .intro-copy -->
 				</div><!-- .inner -->
 			</section>
 
-
-			<section class="layer searchbar-wrap" id="main-search">
-				<div class="inner">
-					<div class="searchbar">
-
-						<form class="" action="index.html" method="post">
-							<div class="top">
-								<i class="mdi mdi-magnify"></i>
-								<input type="text" name="" value="" placeholder="Keyword Search">
-								<button type="submit" name="button">Search</button>
-							</div>
-							<div class="bottom">
-								<button class="searchbar-toggle" type="button" name="Show options">Filter</button>
-								<div class="searchbar-options">
-									<ul>
-										<li>
-											<input type="checkbox" id="check_books" value="Books">
-											<label for="check_books">Books</label>
-										</li>
-										<li>
-											<input type="checkbox" id="check_images" value="Images">
-											<label for="check_images">Images</label>
-										</li>
-										<li>
-											<input type="checkbox" id="check_audio" value="Audio">
-											<label for="check_audio">Audio</label>
-										</li>
-										<li>
-											<input type="checkbox" id="check_video" value="Video">
-											<label for="check_video">Video</label>
-										</li>
-										<li>
-											<input type="checkbox" id="check_text" value="Text">
-											<label for="check_text">Text</label>
-										</li>
-										<li>
-											<input type="checkbox" id="check_people" value="People">
-											<label for="check_people">People</label>
-										</li>
-									</ul>
-									<span class="grow"></span>
-									<a href="#">Tips</a>
-
-								</div>
-							</div>
-						</form>
-
-					</div>
-				</div>
-			</section>
+			<?php get_template_part('sections/search','main'); ?>
 
 			<section class="layer controls">
 				<div class="inner">

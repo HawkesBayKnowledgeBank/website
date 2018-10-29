@@ -47,6 +47,8 @@
 				</div><!-- .inner -->
 			</section>
 
+			<?php //get_template_part('sections/search','main'); ?>
+
 			<section class="layer controls">
 				<div class="inner">
 
@@ -132,6 +134,7 @@
 									<?php endif; ?>
 									<div class="tile-copy">
 										<h4><a href="<?php echo $link; ?>"><?php echo $term->name; ?></a></h4>
+										<p class="term-item-count"><?php echo $term->count; ?> items</p>
 										<?php if(!empty($term->description)): ?><p><?php echo $term->description; ?></p><?php endif; ?>
 										<div class="button-group">
 											<a href="<?php echo $link; ?>" class="button">View</a>
