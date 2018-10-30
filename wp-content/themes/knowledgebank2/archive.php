@@ -8,7 +8,7 @@
 						<ul class="breadcrumbs">
 							<li><a href="http://mogulframework.wpengine.com">Home</a></li><li>Browse</li>
 						</ul>
-						<h1><?php the_title(); ?></h1>
+						<h1><?php the_archive_title(); ?></h1>
 		  			<p>Default page intro text. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id.</p>
 					</div><!-- .intro-copy -->
 				</div><!-- .inner -->

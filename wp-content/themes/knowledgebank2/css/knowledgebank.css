@@ -236,7 +236,7 @@
   a.button.download span{font-weight:400;font-size:14px;}
   a.button.download:after{font-family:'Material Design Icons';position: absolute;left: 0;font-size: 18px;font-weight:normal;}
   a.button.download:before{content: "\F045";}
-  a.button.download.still_image:after{content: "\F2E9";}
+  a.button.download.image:after, a.button.download.still_image:after{content: "\F2E9";}
   a.button.download.video:after{content: "\F567";}
   a.button.download.audio:after{content: "\F57E";}
   a.button.download.pdf:after{content: "\F225";}

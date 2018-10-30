@@ -201,15 +201,10 @@ jQuery(document).ready(function($) {
 
     //Lazy images
     $('.lazy').lazy({
-      effect: "fadeIn",
-      effectTime: 300,
-      threshold: 0
+      effect: "show",
     });
 
-    //lets you overide the scrolljacking/stops janky stuff happening
-    $('html,body').on("scroll mousedown wheel DOMMouseScroll mousewheel keyup touchmove", function() {
-	    $('html,body').stop();
-    });
+
 
     var googleMaps = 'iframe[src*="google.com"][src*="map"][src*="embed"]';
     $(googleMaps).wrap('<div class="google-map-wrapper disable-pointer-events"></div>').after('<style>.disable-pointer-events iframe{pointer-events:none;}</style>');
