@@ -126,7 +126,7 @@
 								<div class="col tile shadow">
 									<?php if(!empty($image)): ?>
 										<?php
-											$src = !empty($image['sizes']['medium_large']) ? $image['sizes']['medium_large'] : '';
+											$src = !empty($image['sizes']['medium']) ? $image['sizes']['medium'] : '';
 										?>
 										<div class="tile-img lazy" data-src="<?php echo $src; ?>">
 											<a href="<?php echo $link; ?>"></a>

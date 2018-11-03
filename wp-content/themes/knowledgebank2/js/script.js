@@ -201,7 +201,9 @@ jQuery(document).ready(function($) {
 
     //Lazy images
     $('.lazy').lazy({
-      effect: "show",
+      effect: "fadeIn",
+      effectTime: 300,
+      threshold: 0
     });
 
 

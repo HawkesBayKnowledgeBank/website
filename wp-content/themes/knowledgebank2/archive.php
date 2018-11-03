@@ -95,7 +95,7 @@
 				  			<div class="col tile shadow <?php echo $type; ?>">
 								<?php if(!empty($image)): ?>
 									<?php
-										$src = !empty($image['sizes']['medium_large']) ? $image['sizes']['medium_large'] : '';
+										$src = !empty($image['sizes']['medium']) ? $image['sizes']['medium'] : '';
 									?>
 									<div class="tile-img lazy" style="background-image:url(/wp-content/themes/knowledgebank2/img/placeholder-400.png)" data-src="<?php echo $src; ?>">
 										<a href="<?php echo $link; ?>"></a>
@@ -103,9 +103,9 @@
 								<?php endif; ?>
 								<div class="tile-copy">
 									<h4><a href="<?php echo $link; ?>"><?php echo $post->post_title; ?></a></h4>
-									<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper.</p>
+										<?php the_excerpt(); ?>
 									<div class="button-group">
-										<a href="#" class="button">Button</a>
+										<a href="<?php echo $link; ?>" class="button">View Details</a>
 									</div>
 								</div><!-- .tile-copy -->
 							</div><!-- .col -->

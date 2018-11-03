@@ -12,6 +12,8 @@
 // Load any external files you have here
 
 require_once(get_stylesheet_directory() . '/inc/theme-functions.php');
+require_once(get_stylesheet_directory() . '/inc/theme-acf.php');
+require_once(get_stylesheet_directory() . '/inc/file-conversions.php');
 
 
 /*------------------------------------*\
@@ -28,35 +30,9 @@ if (function_exists('add_theme_support')){
 
     // Add Thumbnail Theme Support
     add_theme_support('post-thumbnails');
-    add_image_size('large', 1200, '', false); // Large Thumbnail
-    add_image_size('medium', 800, '', true); // Medium Thumbnail
-    add_image_size('small', 200, '', true); // Small Thumbnail
+
     //add_image_size('custom-size', 700, 200, true); // Custom Thumbnail Size call using the_post_thumbnail('custom-size');
 
-    // Add Support for Custom Backgrounds - Uncomment below if you're going to use
-    /*add_theme_support('custom-background', array(
-	'default-color' => 'FFF',
-	'default-image' => get_template_directory_uri() . '/img/bg.jpg'
-    ));*/
-
-    // Add Support for Custom Header - Uncomment below if you're going to use
-    /*add_theme_support('custom-header', array(
-	'default-image'			=> get_template_directory_uri() . '/img/headers/default.jpg',
-	'header-text'			=> false,
-	'default-text-color'		=> '000',
-	'width'				=> 1000,
-	'height'			=> 198,
-	'random-default'		=> false,
-	'wp-head-callback'		=> $wphead_cb,
-	'admin-head-callback'		=> $adminhead_cb,
-	'admin-preview-callback'	=> $adminpreview_cb
-    ));*/
-
-    // Enables post and comment RSS feed links to head
-    add_theme_support('automatic-feed-links');
-
-    // Localisation Support
-    //load_theme_textdomain('knowledgebank', get_template_directory() . '/languages');
 }
 
 /*------------------------------------*\
@@ -107,6 +83,12 @@ function knowledgebank_styles(){
     wp_register_style('normalize', get_template_directory_uri() . '/normalize.css', array(), '1.0', 'all');
     wp_enqueue_style('normalize');
 
+    wp_register_style('google-karla', 'https://fonts.googleapis.com/css?family=Karla:400,700', array(), '1.0', 'all');
+    wp_enqueue_style('google-karla');
+
+    wp_register_style('material-icons', get_template_directory_uri() . '/css/lib/materialdesignicons.min.css', array(), '1.0', 'all');
+    wp_enqueue_style('material-icons');
+
     wp_register_style('knowledgebank', get_template_directory_uri() . '/css/knowledgebank.css', array(), '1.0', 'all');
     wp_enqueue_style('knowledgebank');
 
@@ -115,8 +97,6 @@ function knowledgebank_styles(){
 
     wp_register_style('select2-css', '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css', array(), '1.0', 'all');
     wp_enqueue_style('select2-css');
-
-
 
 }
 
@@ -215,6 +195,7 @@ remove_action('wp_head', 'wp_shortlink_wp_head', 10, 0);
 
 // Remove Filters
 //remove_filter('the_excerpt', 'wpautop'); // Remove <p> tags from Excerpt altogether
+
 
 
 ?>

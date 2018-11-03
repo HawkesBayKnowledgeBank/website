@@ -1,6 +1,10 @@
 <?php
     require_once('../wp-load.php');
 
+
+    exit;
+
+
     $args = array(
         'taxonomy' => 'collections',
         'hide_empty' => true,

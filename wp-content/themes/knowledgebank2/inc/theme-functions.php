@@ -1,7 +1,12 @@
 
 <?php
 
-function knowledgebank_field_template($field){
+/**
+ * Output a field template
+ * @param  array  $field  Acf field from get_field_object()
+ * @param  boolean $looping If we are looping through all fields on a record, we will automatically exclude certain ones. If not, just output whatever field we are given
+ */
+function knowledgebank_field_template($field, $looping= true){
 
     if(empty($field) || !is_array($field) || empty($field['key'])) return false;
 
@@ -12,11 +17,13 @@ function knowledgebank_field_template($field){
         'computed_aperturefnumber',
         'exif_model',
         'exif_isospeedratings',
-        'exif_focallength'
+        'exif_focallength',
+        'audio',
+        'video'
     );
-    if(in_array($field['name'], $exclude)) return false;
+    if($looping && in_array($field['name'], $exclude)) return false;
 
-    //try in order: field key, name, type, fallback default
+    //try in order of priority: field key, name, type, fallback default
     foreach(array('key','name','type','default') as $template_type){
 
         //default - we get here after exhausting other options

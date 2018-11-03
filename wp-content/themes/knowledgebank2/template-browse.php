@@ -29,7 +29,7 @@
 							<?php foreach($tiles['tiles'] as $tile): ?>
 
 					  			<div class="col tile shadow">
-									<div class="tile-img" style="background-image:url('<?php echo $tile['image']['sizes']['medium']; ?>')">
+									<div class="tile-img" style="background-image:url('<?php echo $tile['image']['sizes']['thumbnail']; ?>')">
 										<a href="<?php echo $tile['link']; ?>"></a>
 									</div>
 									<div class="tile-copy">

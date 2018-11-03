@@ -1,6 +1,6 @@
 <div class="col field field-master" data-field-name="<?php echo $field['name']; ?>">
     <h4><?php echo $field['label'];?></h4>
-    <p class="file-name"><?php echo $field['value']['filename']; ?></p>
+    <p class="file-name"><?php echo $field['value']['filename']; ?></p>    
     <div class="button-group">
 
         <?php
