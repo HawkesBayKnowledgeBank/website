@@ -77,6 +77,15 @@
 			<section class="layer results tiles ">
 				<div class="inner">
 
+					<div class="grid column-5">
+						<div class="col tile shadow">foo</div>
+						<div class="col tile shadow">foo</div>
+						<div class="col tile shadow">foo</div>
+						<div class="col tile shadow">foo</div>
+						<div class="col tile shadow">foo</div>
+					</div><!-- child terms -->
+
+
 					<div class="grid column-4 ">
 
 						<?php if(have_posts()): while(have_posts()): the_post(); ?>
@@ -94,7 +103,7 @@
 
 				  			<div class="col tile shadow <?php echo $type; ?>">
 								<?php if(!empty($image)): ?>
-									<?php
+									<?php print_r($image);
 										$src = !empty($image['sizes']['medium']) ? $image['sizes']['medium'] : '';
 									?>
 									<div class="tile-img lazy" style="background-image:url(/wp-content/themes/knowledgebank2/img/placeholder-400.png)" data-src="<?php echo $src; ?>">
@@ -115,18 +124,7 @@
 					</div><!-- .grid -->
 
 					<ul class="pagination">
-						<li class="current-page"><a href="#">1</a></li>
-						<li><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
-						<li><a href="#">4</a></li>
-						<li><a href="#">5</a></li>
-						<li><a href="#">6</a></li>
-						<li><a href="#">7</a></li>
-						<li><a href="#">8</a></li>
-						<li><a href="#">9</a></li>
-						<li class="elipses">...</li>
-						<li><a href="#">Next ></a></li>
-						<li><a href="#">Last >></a></li>
+						<?php knowledgebank_numeric_posts_nav(); ?>
 					</ul>
 
 				</div><!-- .inner -->

@@ -148,6 +148,16 @@
     .grid.column-4 .col.card{width: calc(25% - 20px);margin-left: 10px;margin-right: 10px;}
     .grid.column-4.tight .col{width: calc(25% - 12px);margin-left: 6px;margin-right: 6px;}
 
+    .grid.column-5{display: -webkit-box;display: -ms-flexbox;display: flex;-ms-flex-wrap: wrap;flex-wrap: wrap;}
+    .tiles .grid.column-5,
+    .cards .grid.column-5{margin-left:-10px;margin-right:-10px;}
+    .tiles .grid.column-5.tight,
+    .cards .grid.column-5.tight{margin-left:-6px;margin-right:-6px;}
+    .grid.column-5 .col{width: 20%;}
+    .grid.column-5 .col.tile,
+    .grid.column-5 .col.card{width: calc(20% - 20px);margin-left: 10px;margin-right: 10px;}
+    .grid.column-5.tight .col{width: calc(20% - 12px);margin-left: 6px;margin-right: 6px;}
+
     @media screen and (max-width:1200px){
       .grid.column-2 .col,
       .grid.column-3 .col,
@@ -168,20 +178,25 @@
       .tiles .grid.column-3, .cards .grid.column-3,
       .tiles .grid.column-3.tight, .cards .grid.column-3.tight,
       .tiles .grid.column-4, .cards .grid.column-4,
-      .tiles .grid.column-4.tight, .cards .grid.column-4.tight{margin-left:0;margin-right:0;}
+      .tiles .grid.column-4.tight, .cards .grid.column-4.tight,
+      .tiles .grid.column-5, .cards .grid.column-5,
+      .tiles .grid.column-5.tight, .cards .grid.column-5.tight{margin-left:0;margin-right:0;}
 
       .grid.column-2 .col,
       .grid.column-3 .col,
       .grid.column-4 .col,
       .grid.column-4 .col:last-child,
+      .grid.column-5 .col,
 
       .grid.column-2 .col.tile,.grid.column-2 .col.card,
       .grid.column-3 .col.tile,.grid.column-3 .col.card,
       .grid.column-4 .col.tile,.grid.column-4 .col.card,
+      .grid.column-5 .col.tile,.grid.column-5 .col.card,
 
       .grid.column-2.tight .col.tile,.grid.column-2.tight .col.card,
       .grid.column-3.tight .col.tile,.grid.column-3.tight .col.card,
-      .grid.column-4.tight .col.tile,.grid.column-4.tight .col.card{width: 100%;margin-left:0;margin-right:0;}
+      .grid.column-4.tight .col.tile,.grid.column-4.tight .col.card,
+      .grid.column-5.tight .col.tile,.grid.column-5.tight .col.card{width: 100%;margin-left:0;margin-right:0;}
     }
 
 /* typography / fonts
