@@ -73,3 +73,5 @@ templates/single-pages.html
 templates/single-video.html
 templates/single.html
 templates/whoswho.html
+tmp.php
+.gitignore
