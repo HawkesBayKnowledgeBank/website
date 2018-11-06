@@ -564,7 +564,7 @@
     .tiles{}
     .tiles .inner{max-width: 1500px;padding: 60px 5%;}
     .grid .tile{}
-    .grid .tile .tile-img{padding-top: 200px;background-size: cover;background-position: center;position: relative;}
+    .grid .tile .tile-img{padding-top: 200px;background-size: cover;background-position: top center;position: relative;}
     .grid .tile .tile-img a{position: absolute;top: 0;left: 0;right: 0;bottom: 0;text-decoration: none;}
     .grid .tile.shadow{overflow: hidden;border-radius: 2px;background-color: white;margin-bottom: 30px;border-radius: 4px;box-shadow: 0px 6px 4px -4px rgba(125, 127, 142, 0.26);}
     .grid .tile-copy{padding: 25px;background:white;position: relative;}
@@ -684,7 +684,7 @@
   ul.pagination li{display: inline-block;margin: 0 3px;}
   ul.pagination li.elipses{font-size: 26px;line-height: 0;color: #999;}
   ul.pagination li a{background: white;display: block;box-shadow: 0px 6px 4px -4px rgba(125, 127, 142, 0.26);border-radius: 32px;text-decoration: none;padding: 3px 9px;min-width: 31px;color: #9192a5;font-weight: 400;font-size: 14px;transition: 0.2s cubic-bezier(0.4, 0.0, 0.6, 1) all;transform: scale(1);}
-  ul.pagination li.current-page a{background: rgb(53, 195, 67);box-shadow: none;pointer-events: none;color: white;}
+  ul.pagination li.active a{background: rgb(53, 195, 67);box-shadow: none;pointer-events: none;color: white;}
   ul.pagination li:last-child a,
   ul.pagination li:nth-last-child(2) a{padding: 3px 16px;width: auto;}
 

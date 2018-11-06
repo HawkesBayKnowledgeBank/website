@@ -1,4 +1,11 @@
 <?php get_header(); ?>
+<?php
+
+	$term = get_queried_object();
+	$term_id = $term->term_id;
+	$taxonomy = $term->taxonomy;
+
+?>
 
 	<main role="main">
 
@@ -9,7 +16,7 @@
 							<li><a href="http://mogulframework.wpengine.com">Home</a></li><li>Browse</li>
 						</ul>
 						<h1><?php the_archive_title(); ?></h1>
-		  			<p>Default page intro text. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id.</p>
+		  				<?php if(!empty($term->description)) echo apply_filters('the_content', $term->description); ?>
 					</div><!-- .intro-copy -->
 				</div><!-- .inner -->
 			</section>
@@ -76,14 +83,41 @@
 
 			<section class="layer results tiles ">
 				<div class="inner">
-
+					<?php
+						$child_terms = get_term_children( $term_id, $taxonomy );
+					?>
+					<?php if(!empty($child_terms)): ?>
+						<h2>Collections in <?php echo single_cat_title( '', false ); ?></h2>
 					<div class="grid column-5">
-						<div class="col tile shadow">foo</div>
-						<div class="col tile shadow">foo</div>
-						<div class="col tile shadow">foo</div>
-						<div class="col tile shadow">foo</div>
-						<div class="col tile shadow">foo</div>
+						<?php foreach($child_terms as $child_id): ?>
+							<?php
+								$child_term = get_term_by('id',$child_id, $taxonomy);
+								$link = get_term_link($child_term);
+								$image = get_field('image',$child_term);
+							?>
+
+							<div class="col tile shadow">
+								<?php /*if(!empty($image)): ?>
+									<?php
+										$src = !empty($image['sizes']['thumbnail']) ? $image['sizes']['thumbnail'] : '';
+									?>
+									<div class="tile-img lazy" data-src="<?php echo $src; ?>">
+										<a href="<?php echo $link; ?>"></a>
+									</div>
+								<?php endif; */ ?>
+								<div class="tile-copy">
+									<h4><a href="<?php echo $link; ?>"><?php echo $child_term->name; ?></a></h4>
+									<p class="term-item-count"><?php echo $child_term->count; ?> items</p>
+									<?php if(!empty($child_term->description)): ?><p><?php echo $child_term->description; ?></p><?php endif; ?>
+									<div class="button-group">
+										<a href="<?php echo $link; ?>" class="button">View</a>
+									</div>
+								</div><!-- .tile-copy -->
+							</div><!-- .col -->
+						<?php endforeach; ?>
+
 					</div><!-- child terms -->
+					<?php endif; ?>
 
 
 					<div class="grid column-4 ">
@@ -103,8 +137,8 @@
 
 				  			<div class="col tile shadow <?php echo $type; ?>">
 								<?php if(!empty($image)): ?>
-									<?php print_r($image);
-										$src = !empty($image['sizes']['medium']) ? $image['sizes']['medium'] : '';
+									<?php //print_r($image);
+										$src = !empty($image['sizes']['thumbnail']) ? $image['sizes']['thumbnail'] : '';
 									?>
 									<div class="tile-img lazy" style="background-image:url(/wp-content/themes/knowledgebank2/img/placeholder-400.png)" data-src="<?php echo $src; ?>">
 										<a href="<?php echo $link; ?>"></a>
