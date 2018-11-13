@@ -25,9 +25,11 @@
 		$args['parent'] = 0;
 	else:
 		$term = get_field('display_term');
+		//print_r($term);
+		$args['taxonomy'] = $term[0]->taxonomy;
 		$args['child_of'] = $term[0]->term_id;
 	endif;
-
+	
 	$terms = get_terms( $args );
 
 ?>
@@ -38,9 +40,7 @@
 			<section class="layer intro intro-default">
 				<div class="inner">
 					<div class="intro-copy dark inner-700">
-						<ul class="breadcrumbs">
-							<li><a href="http://mogulframework.wpengine.com">Home</a></li><li>Browse</li>
-						</ul>
+						<?php get_template_part('sections/breadcrumbs'); ?>
 						<h1><?php the_title(); ?></h1>
 						<?php the_field('intro'); ?>
 					</div><!-- .intro-copy -->
@@ -143,6 +143,10 @@
 								</div><!-- .col -->
 
 							<?php endforeach; ?>
+
+						<?php else: ?>
+
+							<p>No terms</p>
 
 						<?php endif; ?>
 

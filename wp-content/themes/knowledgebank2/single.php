@@ -12,11 +12,7 @@
 			<section class="layer intro intro-default background-image" style="background-image:url(img/quake.jpg);">
 				<div class="inner">
 					<div class="intro-copy dark inner-700">
-						<ul class="breadcrumbs">
-							<li><a href="#">Home</a></li>
-							<li><a href="#">Browse</a></li>
-							<li><?php the_title(); ?></li>
-						</ul>
+						<?php get_template_part('sections/breadcrumbs'); ?>
 						<h1><?php the_title(); ?></h1>
 					</div><!-- .intro-copy -->
 				</div><!-- .inner -->

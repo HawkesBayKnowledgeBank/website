@@ -12,9 +12,7 @@
 			<section class="layer intro intro-default">
 				<div class="inner">
 					<div class="intro-copy dark inner-700">
-						<ul class="breadcrumbs">
-							<li><a href="http://mogulframework.wpengine.com">Home</a></li><li>Browse</li>
-						</ul>
+						<?php get_template_part('sections/breadcrumbs'); ?>
 						<h1><?php the_archive_title(); ?></h1>
 		  				<?php if(!empty($term->description)) echo apply_filters('the_content', $term->description); ?>
 					</div><!-- .intro-copy -->
@@ -84,14 +82,13 @@
 			<section class="layer results tiles ">
 				<div class="inner">
 					<?php
-						$child_terms = get_term_children( $term_id, $taxonomy );
+						$child_terms = get_terms(array( 'taxonomy' => $taxonomy, 'child_of' => $term_id, 'orderby' => 'name' ));
 					?>
 					<?php if(!empty($child_terms)): ?>
 						<h2>Collections in <?php echo single_cat_title( '', false ); ?></h2>
 					<div class="grid column-5">
-						<?php foreach($child_terms as $child_id): ?>
+						<?php foreach($child_terms as $child_term): ?>
 							<?php
-								$child_term = get_term_by('id',$child_id, $taxonomy);
 								$link = get_term_link($child_term);
 								$image = get_field('image',$child_term);
 							?>
@@ -128,22 +125,18 @@
 
 								$type = $post->post_type;
 								$images = get_field('images', $post->ID);
-								if(!empty($images[0]['image'])){
-									$image = $images[0]['image'];
-								}
+								$image = !empty($images[0]['image']) ? $images[0]['image'] : false;
 								$link = get_permalink($post->ID);
 
 							?>
 
 				  			<div class="col tile shadow <?php echo $type; ?>">
-								<?php if(!empty($image)): ?>
-									<?php //print_r($image);
-										$src = !empty($image['sizes']['thumbnail']) ? $image['sizes']['thumbnail'] : '';
-									?>
-									<div class="tile-img lazy" style="background-image:url(/wp-content/themes/knowledgebank2/img/placeholder-400.png)" data-src="<?php echo $src; ?>">
-										<a href="<?php echo $link; ?>"></a>
-									</div>
-								<?php endif; ?>
+
+								<?php $src = !empty($image['sizes']['thumbnail']) ? $image['sizes']['thumbnail'] : '/wp-content/themes/knowledgebank2/img/placeholder-400.png';	?>
+								<div class="tile-img lazy" style="background-image:url(/wp-content/themes/knowledgebank2/img/placeholder-400.png)" data-src="<?php echo $src; ?>">
+									<a href="<?php echo $link; ?>"></a>
+								</div>
+
 								<div class="tile-copy">
 									<h4><a href="<?php echo $link; ?>"><?php echo $post->post_title; ?></a></h4>
 										<?php the_excerpt(); ?>

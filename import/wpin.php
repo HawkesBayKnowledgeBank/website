@@ -36,14 +36,14 @@ function import_log($message){
 	//Different things to import - we will loop through them all
 	//taxonomies first, content second
 	$modes = array(
-		//'collections' => 35640,//$mode => $fgid
-		'tags' => '',
+		'collections' => 35640,//$mode => $fgid
+		/*'tags' => '',
 		'subjects' => '',
 		'still_image' => 37072,
 		'video' => 35615,
 		'person' => 36254,
 		'audio' => 51154,
-		'text' => 51186,
+		'text' => 51186,*/
 	);
 
 	foreach($modes as $mode => $fgid) :
@@ -139,6 +139,7 @@ function import_log($message){
 			break;
 
 			case 'collections': //does both collections and series from drupal
+				echo 'collections';
 
 				$json = file_get_contents('http://new.knowledgebank.org.nz/import/drupalout.php?mode=collections');
 
@@ -175,7 +176,7 @@ function import_log($message){
 
 					if(get_term($tid,'collections')) {
 						import_log('Term ' . $tid . " already exists, moving on\n");
-						continue;
+						//continue;
 					}
 
 					//else get on with inserting the term
@@ -204,6 +205,9 @@ function import_log($message){
 							update_field('field_56b452c658411',$fileid,'collections_' . $tid);
 							import_log('File ' . $fileid . ' attached to ' . $tid );
 
+						}
+						else{
+							import_log('Failed to attach file');
 						}
 
 					}
@@ -351,6 +355,7 @@ function kb_fetch_media($file_path, $wp_id, $uploads_subdir) {
 
 	}
 	else {
+		import_log("File at $file_path does not exist");
 		return false;
 	}
 

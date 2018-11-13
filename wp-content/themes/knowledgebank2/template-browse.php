@@ -6,9 +6,7 @@
 			<section class="layer intro intro-default">
 				<div class="inner">
 					<div class="intro-copy dark inner-700">
-						<ul class="breadcrumbs">
-							<li><a href="http://mogulframework.wpengine.com">Home</a></li><li>Browse</li>
-						</ul>
+						<?php get_template_part('sections/breadcrumbs'); ?>
 						<h1><?php the_title(); ?></h1>
 						<?php the_field('intro'); ?>
 					</div><!-- .intro-copy -->

@@ -3,7 +3,7 @@
 
 
     exit;
-
+    //fixing images on collections
 
     $args = array(
         'taxonomy' => 'collections',

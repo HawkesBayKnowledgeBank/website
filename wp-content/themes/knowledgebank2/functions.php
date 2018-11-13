@@ -277,4 +277,3 @@ function knowledgebank_numeric_posts_nav() {
 
 
 }
-?>
