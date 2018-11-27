@@ -4,35 +4,7 @@
 * This template is for listing terms in a specified taxonomy, or subterms of a specified term.
 */
 ?>
-<?php
 
-	$mode = get_field('mode');
-
-	//arguments for get_terms()
-	$args = array(
-		'hide_empty' => true,
-		'meta_query' => array(
-			array(
-				'key' => 'public',
-				'value' => 1,
-			)
-		)
-	);
-
-	if($mode == 'Taxonomy'):
-		$taxonomy = get_field('display_taxonomy');
-		$args['taxonomy'] = $taxonomy[0]->name;
-		$args['parent'] = 0;
-	else:
-		$term = get_field('display_term');
-		//print_r($term);
-		$args['taxonomy'] = $term[0]->taxonomy;
-		$args['child_of'] = $term[0]->term_id;
-	endif;
-	
-	$terms = get_terms( $args );
-
-?>
 <?php get_header(); ?>
 
 	<main role="main">
@@ -46,67 +18,53 @@
 					</div><!-- .intro-copy -->
 				</div><!-- .inner -->
 			</section>
+			<?php $filters = knowledgebank_get_filters(); ?>
+			<?php include_once(get_template_directory() . '/sections/term-filters.php'); //include rather than get_template_part so we can share $filters ?>
 
-			<?php //get_template_part('sections/search','main'); ?>
+			<?php
 
-			<section class="layer controls">
-				<div class="inner">
+				$mode = get_field('mode');
 
-					<form class="" action="index.html" method="post">
-						<div class="controls-grid">
+				//arguments for get_terms()
+				$args = array(
+					'hide_empty' => true,
+					'meta_query' => array(
+						array(
+							'key' => 'public',
+							'value' => 1,
+						)
+					)
+				);
 
-							<div class="control-option">
-								<label>Filter results by tags</label>
-								<select class="select2" name="tags[]" multiple="multiple">
-								  <option value="tag1">Tag 1</option>
-								  <option value="tag2">Tag 2</option>
-									<option value="tag3">Tag 3</option>
-								</select>
-							</div><!-- .control-option -->
+				if($mode == 'Taxonomy'):
+					$taxonomy = get_field('display_taxonomy');
+					$args['taxonomy'] = $taxonomy[0]->name;
+					$args['parent'] = 0;
+				else:
+					$term = get_field('display_term');
+					//print_r($term);
+					$args['taxonomy'] = $term[0]->taxonomy;
+					$args['child_of'] = $term[0]->term_id;
+				endif;
 
-							<div class="control-option">
-								<label>View as</label>
-								<select class="select2-nosearch" name="View" id="view-select">
-								  <option value="tiles" class="tiles-option">Tiles</option>
-								  <option value="rows" class="rows-option">Rows</option>
-								</select>
-							</div><!-- .control-option -->
+				$all_terms = get_terms( $args ); //we need to know how many terms there are in total, for pagination
 
-							<div class="control-option">
-								<label>Sort by</label>
-								<select class="select2-nosearch" name="View">
-								  <option value="item-count">Item count</option>
-								  <option value="name">Name</option>
-								</select>
-							</div><!-- .control-option -->
+				//Filters
+				if(!empty($filters['number']) && is_numeric($filters['number'])){
+					$args['number'] = $filters['number']; //per page
+				}
+				else{
+					$args['number'] = 20;
+				}
 
-							<div class="control-option">
-								<label>Order</label>
-								<select class="select2-nosearch" name="View">
-								  <option value="ascending">Ascending</option>
-								  <option value="descending">Descending</option>
-								</select>
-							</div><!-- .control-option -->
+				if(!empty($_GET['term_page']) && is_numeric($_GET['term_page'])){
+					$offset = $args['number'] * ($_GET['term_page'] - 1); //eg on page 2, with 20 posts per page, we skip 20 * (2-1)
+					$args['offset'] = $offset;
+				}
 
-							<div class="control-option">
-								<label>Items per page</label>
-								<select class="select2-nosearch" name="View">
-								  <option value="5">5</option>
-								  <option value="10">10</option>
-									<option value="20">20</option>
-									<option value="40">40</option>
-									<option value="60">60</option>
-								</select>
-							</div><!-- .control-option -->
+				$terms = get_terms( $args ); //just the terms we want
 
-
-						</div>
-					</form>
-
-				</div>
-			</section>
-
-
+			?>
 			<section class="layer results tiles ">
 				<div class="inner">
 
@@ -153,6 +111,24 @@
 
 					</div><!-- .grid -->
 
+					<ul class="pagination">
+						<?php
+							//pagination
+							$total_terms = count($all_terms);
+							$max_pages = ceil($total_terms / $args['number']);
+
+							foreach(range(1,$max_pages) as $page_number):
+
+								$term_page = !empty($_GET['term_page']) ? $_GET['term_page'] : 1;
+								$current_page = $term_page == $page_number ? 'active' : '';
+								$url_params = array('term_page' => $page_number, 'filters' => $filters);
+								$url = get_permalink() . '?' . http_build_query($url_params);
+
+						?>
+							<li class="<?php echo $current_page; ?>"><a href="<?php echo $url; ?>"><?php echo $page_number; ?></a></li>
+
+						<?php endforeach; ?>
+					</ul>
 
 				</div><!-- .inner -->
 			</section>

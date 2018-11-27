@@ -3,8 +3,9 @@
 
 	$term = get_queried_object();
 	$term_id = $term->term_id;
-	$taxonomy = $term->taxonomy;
-
+	$taxonomy = get_taxonomy($term->taxonomy);
+	$taxonomy_name = $term->taxonomy;
+	//print_r($taxonomy);
 ?>
 
 	<main role="main">
@@ -26,7 +27,7 @@
 
 					<form class="" action="index.html" method="post">
 						<div class="controls-grid">
-
+<?php /*
 							<div class="control-option">
 								<label>Filter results by tags</label>
 								<select class="select2" name="tags[]" multiple="multiple">
@@ -35,7 +36,7 @@
 									<option value="tag3">Tag 3</option>
 								</select>
 							</div><!-- .control-option -->
-
+*/ ?>
 							<div class="control-option">
 								<label>View as</label>
 								<select class="select2-nosearch" name="View" id="view-select">
@@ -82,10 +83,10 @@
 			<section class="layer results tiles ">
 				<div class="inner">
 					<?php
-						$child_terms = get_terms(array( 'taxonomy' => $taxonomy, 'child_of' => $term_id, 'orderby' => 'name' ));
+						$child_terms = get_terms(array( 'taxonomy' => $taxonomy_name, 'child_of' => $term_id, 'orderby' => 'name' ));
 					?>
 					<?php if(!empty($child_terms)): ?>
-						<h2>Collections in <?php echo single_cat_title( '', false ); ?></h2>
+						<h5>Sub-<?php echo strtolower($taxonomy->labels->singular_name); ?>s in <?php echo single_cat_title( '', false ); ?></h5>
 					<div class="grid column-5">
 						<?php foreach($child_terms as $child_term): ?>
 							<?php
@@ -106,9 +107,11 @@
 									<h4><a href="<?php echo $link; ?>"><?php echo $child_term->name; ?></a></h4>
 									<p class="term-item-count"><?php echo $child_term->count; ?> items</p>
 									<?php if(!empty($child_term->description)): ?><p><?php echo $child_term->description; ?></p><?php endif; ?>
+									<?php /*
 									<div class="button-group">
 										<a href="<?php echo $link; ?>" class="button">View</a>
 									</div>
+									*/ ?>
 								</div><!-- .tile-copy -->
 							</div><!-- .col -->
 						<?php endforeach; ?>
@@ -116,7 +119,7 @@
 					</div><!-- child terms -->
 					<?php endif; ?>
 
-
+					<h5>Records in <?php echo single_cat_title( '', false ); ?></h5>
 					<div class="grid column-4 ">
 
 						<?php if(have_posts()): while(have_posts()): the_post(); ?>

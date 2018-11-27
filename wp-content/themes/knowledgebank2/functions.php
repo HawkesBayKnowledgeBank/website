@@ -14,6 +14,7 @@
 require_once(get_stylesheet_directory() . '/inc/theme-functions.php');
 require_once(get_stylesheet_directory() . '/inc/theme-acf.php');
 require_once(get_stylesheet_directory() . '/inc/file-conversions.php');
+require_once(get_stylesheet_directory() . '/inc/pagination.php');
 
 
 /*------------------------------------*\
@@ -52,6 +53,9 @@ function knowledgebank_header_scripts(){
 
         wp_register_script('knowledgebank-js', get_template_directory_uri() . '/js/script.js', array('jquery'), '1.0.0'); // Custom scripts
         wp_enqueue_script('knowledgebank-js');
+
+        wp_register_script('knowledgebank-terms-js', get_template_directory_uri() . '/js/term-filters.js', array('jquery'), '1.0.0'); // Custom scripts
+        wp_enqueue_script('knowledgebank-terms-js');
 
         wp_register_script('magnific-js', get_template_directory_uri() . '/js/lib/jquery.magnific-popup.js', array('jquery'), '1.0.0'); // Custom scripts
         wp_enqueue_script('magnific-js');
@@ -274,6 +278,14 @@ function knowledgebank_numeric_posts_nav() {
     if ( get_next_posts_link() )
         printf( '<li>%s</li>' . "\n", get_next_posts_link() );
 
+}//knowledgebank_numeric_posts_nav
 
-
-}
+//get certain allowed values from the URL to do filtery things with
+function knowledgebank_get_filters(){
+    $allowed_keys = array('order','orderby','view_mode','tags','number');
+    $filters = array();
+    if(!empty($_GET['filters']) && is_array($_GET['filters'])){
+        $filters = array_intersect_key($_GET['filters'], array_flip($allowed_keys));
+    }
+    return $filters;
+}//knowledgebank_get_filters
