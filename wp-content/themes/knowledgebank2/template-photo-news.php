@@ -1,11 +1,51 @@
-<?php /* Template Name: Term listing */ ?>
-<?php
-/**
-* This template is for listing terms in a specified taxonomy, or subterms of a specified term.
-*/
-?>
+<?php /* Template Name: Photo News */ ?>
 
 <?php get_header(); ?>
+
+<?php
+
+	$mode = get_field('mode');
+
+	//arguments for get_terms()
+	$args = array(
+		'hide_empty' => true,
+		'meta_query' => array(
+			array(
+				'key' => 'public',
+				'value' => 1,
+			)
+		)
+	);
+
+	if($mode == 'Taxonomy'):
+		$taxonomy = get_field('display_taxonomy');
+		$args['taxonomy'] = $taxonomy[0]->name;
+		$args['parent'] = 0;
+	else:
+		$display_term = get_field('display_term');
+		//print_r($term);
+		$args['taxonomy'] = $display_term[0]->taxonomy;
+		$args['child_of'] = $display_term[0]->term_id;
+	endif;
+
+	$all_terms = get_terms( $args ); //we need to know how many terms there are in total, for pagination
+
+	//Filters
+	if(!empty($filters['number']) && is_numeric($filters['number'])){
+		$args['number'] = $filters['number']; //per page
+	}
+	else{
+		$args['number'] = 20;
+	}
+
+	if(!empty($_GET['term_page']) && is_numeric($_GET['term_page'])){
+		$offset = $args['number'] * ($_GET['term_page'] - 1); //eg on page 2, with 20 posts per page, we skip 20 * (2-1)
+		$args['offset'] = $offset;
+	}
+
+	$terms = get_terms( $args ); //just the terms we want, accounting for pagination
+
+?>
 
 	<main role="main">
 
@@ -15,57 +55,16 @@
 						<?php get_template_part('sections/breadcrumbs'); ?>
 						<h1><?php the_title(); ?></h1>
 						<?php the_field('intro'); ?>
+						<?php if(!empty($display_term[0]->description)): ?>
+							<p><?php echo $display_term[0]->description; ?></p>
+						<?php endif; ?>
 					</div><!-- .intro-copy -->
 				</div><!-- .inner -->
 			</section>
 			<?php $filters = knowledgebank_get_filters(); ?>
 			<?php include_once(get_template_directory() . '/sections/term-filters.php'); //include rather than get_template_part so we can share $filters ?>
 
-			<?php
-
-				$mode = get_field('mode');
-
-				//arguments for get_terms()
-				$args = array(
-					'hide_empty' => true,
-					'meta_query' => array(
-						array(
-							'key' => 'public',
-							'value' => 1,
-						)
-					)
-				);
-
-				if($mode == 'Taxonomy'):
-					$taxonomy = get_field('display_taxonomy');
-					$args['taxonomy'] = $taxonomy[0]->name;
-					$args['parent'] = 0;
-				else:
-					$display_term = get_field('display_term');
-					//print_r($term);
-					$args['taxonomy'] = $display_term[0]->taxonomy;
-					$args['child_of'] = $display_term[0]->term_id;
-				endif;
-
-				$all_terms = get_terms( $args ); //we need to know how many terms there are in total, for pagination
-
-				//Filters
-				if(!empty($filters['number']) && is_numeric($filters['number'])){
-					$args['number'] = $filters['number']; //per page
-				}
-				else{
-					$args['number'] = 20;
-				}
-
-				if(!empty($_GET['term_page']) && is_numeric($_GET['term_page'])){
-					$offset = $args['number'] * ($_GET['term_page'] - 1); //eg on page 2, with 20 posts per page, we skip 20 * (2-1)
-					$args['offset'] = $offset;
-				}
-
-				$terms = get_terms( $args ); //just the terms we want, accounting for pagination
-
-			?>
-			<section class="layer results tiles ">
+				<section class="layer results tiles photo-news">
 				<div class="inner">
 
 					<div class="grid column-4 ">
@@ -84,7 +83,7 @@
 								<div class="col tile shadow">
 									<?php if(!empty($image)): ?>
 										<?php
-											$src = !empty($image['sizes']['thumbnail']) ? $image['sizes']['thumbnail'] : '';
+											$src = !empty($image['sizes']['medium']) ? $image['sizes']['medium'] : '';
 										?>
 										<div class="tile-img lazy" data-src="<?php echo $src; ?>">
 											<a href="<?php echo $link; ?>"></a>

@@ -22,71 +22,21 @@
 
 			<?php get_template_part('sections/search','main'); ?>
 
-			<section class="layer controls">
-				<div class="inner">
+			<?php include_once(get_template_directory() . '/sections/term-filters.php'); //include rather than get_template_part so we can share $filters ?>
 
-					<form class="" action="index.html" method="post">
-						<div class="controls-grid">
-<?php /*
-							<div class="control-option">
-								<label>Filter results by tags</label>
-								<select class="select2" name="tags[]" multiple="multiple">
-								  <option value="tag1">Tag 1</option>
-								  <option value="tag2">Tag 2</option>
-									<option value="tag3">Tag 3</option>
-								</select>
-							</div><!-- .control-option -->
-*/ ?>
-							<div class="control-option">
-								<label>View as</label>
-								<select class="select2-nosearch" name="View" id="view-select">
-								  <option value="tiles" class="tiles-option">Tiles</option>
-								  <option value="rows" class="rows-option">Rows</option>
-								</select>
-							</div><!-- .control-option -->
-
-							<div class="control-option">
-								<label>Sort by</label>
-								<select class="select2-nosearch" name="View">
-								  <option value="item-count">Item count</option>
-								  <option value="name">Name</option>
-								</select>
-							</div><!-- .control-option -->
-
-							<div class="control-option">
-								<label>Order</label>
-								<select class="select2-nosearch" name="View">
-								  <option value="ascending">Ascending</option>
-								  <option value="descending">Descending</option>
-								</select>
-							</div><!-- .control-option -->
-
-							<div class="control-option">
-								<label>Items per page</label>
-								<select class="select2-nosearch" name="View">
-								  <option value="5">5</option>
-								  <option value="10">10</option>
-									<option value="20">20</option>
-									<option value="40">40</option>
-									<option value="60">60</option>
-								</select>
-							</div><!-- .control-option -->
-
-
-						</div>
-					</form>
-
-				</div>
-			</section>
-
-
-			<section class="layer results tiles ">
+			<?php
+				$extra_classes = array();
+				if($term->parent == 967){
+					$extra_classes[] = 'photo-news';
+				}
+			?>
+			<section class="layer results tiles <?php echo implode(' ', $extra_classes); ?>">
 				<div class="inner">
 					<?php
 						$child_terms = get_terms(array( 'taxonomy' => $taxonomy_name, 'child_of' => $term_id, 'orderby' => 'name' ));
 					?>
 					<?php if(!empty($child_terms)): ?>
-						<h5>Sub-<?php echo strtolower($taxonomy->labels->singular_name); ?>s in <?php echo single_cat_title( '', false ); ?></h5>
+						<?php /* <h5>Sub-<?php echo strtolower($taxonomy->labels->singular_name); ?>s in <?php echo single_cat_title( '', false ); ?></h5> */ ?>
 					<div class="grid column-5">
 						<?php foreach($child_terms as $child_term): ?>
 							<?php
@@ -119,7 +69,7 @@
 					</div><!-- child terms -->
 					<?php endif; ?>
 
-					<h5>Records in <?php echo single_cat_title( '', false ); ?></h5>
+					<?php /* <h5>Records in <?php echo single_cat_title( '', false ); ?></h5> */ ?>
 					<div class="grid column-4 ">
 
 						<?php if(have_posts()): while(have_posts()): the_post(); ?>
@@ -130,12 +80,12 @@
 								$images = get_field('images', $post->ID);
 								$image = !empty($images[0]['image']) ? $images[0]['image'] : false;
 								$link = get_permalink($post->ID);
-
+								$image_size = $term->parent == 967 ? 'medium' : 'thumbnail';
 							?>
 
 				  			<div class="col tile shadow <?php echo $type; ?>">
 
-								<?php $src = !empty($image['sizes']['thumbnail']) ? $image['sizes']['thumbnail'] : '/wp-content/themes/knowledgebank2/img/placeholder-400.png';	?>
+								<?php $src = !empty($image['sizes'][$image_size]) ? $image['sizes'][$image_size] : '/wp-content/themes/knowledgebank2/img/placeholder-400.png';	?>
 								<div class="tile-img lazy" style="background-image:url(/wp-content/themes/knowledgebank2/img/placeholder-400.png)" data-src="<?php echo $src; ?>">
 									<a href="<?php echo $link; ?>"></a>
 								</div>
