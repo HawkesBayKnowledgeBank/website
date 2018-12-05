@@ -167,17 +167,15 @@
 
 			//simple text fields
 
-			if(in_array($field['type'], array('text','radio','wysiwyg','true_false','select')) && isset($node['field_' . $field['name']]['und'][0]['value'])) {
+			if(in_array($field['type'], array('text','radio','wysiwyg','true_false','select')) && !empty($node['field_' . $field['name']]['und'][0]['value'])) {
 
-				import_log("Doing field " . 'field_' . $field['name'] );
+				import_log("Doing text field " . 'field_' . $field['name'] );
 
 				update_field($field['key'], $node['field_' . $field['name']]['und'][0]['value'], $wp_id);
 				import_log("Added value " .  $node['field_' . $field['name']]['und'][0]['value'] . ' to ' . $field['name'] . ' (' . $field['key'] . ')' );
 				unset($node['field_' . $field['name']]);
 			}
-			elseif( isset($node['field_' . $field['name']]) ){
-				unset($node['field_' . $field['name']]);
-			}
+
 
 			//relationship fields
 
@@ -195,7 +193,7 @@
 				unset($node['field_' . $field['name']]);
 			}
 
-		}
+		}//foreach field
 
 		//Name fields
 
@@ -226,5 +224,5 @@
 		import_log("Left in node:");
 		print_r($node);
 		import_log("");
-		
+
 ?>

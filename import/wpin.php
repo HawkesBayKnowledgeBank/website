@@ -36,12 +36,12 @@ function import_log($message){
 	//Different things to import - we will loop through them all
 	//taxonomies first, content second
 	$modes = array(
-		'collections' => 35640,//$mode => $fgid
-		/*'tags' => '',
+		/*'collections' => 35640,//$mode => $fgid
+		'tags' => '',
 		'subjects' => '',
 		'still_image' => 37072,
-		'video' => 35615,
-		'person' => 36254,
+		'video' => 35615,*/
+		'person' => 36254,/*
 		'audio' => 51154,
 		'text' => 51186,*/
 	);
