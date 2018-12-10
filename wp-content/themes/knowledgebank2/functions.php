@@ -72,15 +72,10 @@ function knowledgebank_header_scripts(){
     }
 }
 
-// Load HTML5 Blank conditional scripts
-function knowledgebank_conditional_scripts(){
-    /*
-    if (is_page('pagenamehere')) {
-        wp_register_script('scriptname', get_template_directory_uri() . '/js/scriptname.js', array('jquery'), '1.0.0'); // Conditional script(s)
-        wp_enqueue_script('scriptname');
-    }
-    */
+function knowledgebank_admin_scripts(){
+    wp_enqueue_script( 'acf-date-picker-js', get_stylesheet_directory_uri() . '/js/custom_acf_date_picker.js', array(), '1.0.0', true );
 }
+add_action('admin_enqueue_scripts', 'knowledgebank_admin_scripts');
 
 // Load HTML5 Blank styles
 function knowledgebank_styles(){

@@ -19,7 +19,9 @@ function knowledgebank_field_template($field, $looping= true){
         'exif_isospeedratings',
         'exif_focallength',
         'audio',
-        'video'
+        'video',
+        'birthdate_accuracy',
+        'deathdate_accuracy',
     );
     if($looping && in_array($field['name'], $exclude)) return false;
 
@@ -86,3 +88,35 @@ function knowledgebank_register_menus() {
   register_nav_menu('footer', 'Footer');
 }
 add_action( 'init', 'knowledgebank_register_menus' );
+
+
+
+//Format a date using an associated 'accuracy' field
+function knowledgebank_get_date($field_name, $post_id) {
+    $field = get_field_object($field_name,$post_id);
+    $_date = $field['value'];
+    if(!empty($_date)){
+        $_date_dt = DateTime::createFromFormat($field['return_format'], $_date);
+        if(!empty($_date_dt)){
+            $_date_accuracy = get_field($field_name . '_accuracy', $post_id);
+            switch($_date_accuracy){
+
+                case '365':
+                    $_date = $_date_dt->format('Y');
+                break;
+
+                case '30':
+                    $_date = $_date_dt->format('Y-m');
+                break;
+
+                default:
+                    $_date = $_date_dt->format('Y-m-d');
+                break;
+
+            }
+        }
+    }
+
+    return $_date;
+
+}//knowldgebank_get_date()

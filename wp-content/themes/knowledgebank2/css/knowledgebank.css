@@ -741,13 +741,13 @@
   .control-option.alphabet{width: 100% !important;margin-bottom: 0;}
   .control-option.alphabet label{margin-bottom:14px;}
   .control-option .alphabet-flex{display: -webkit-box;display: -ms-flexbox;display: flex;-ms-flex-wrap: nowrap;flex-wrap: nowrap;-webkit-box-pack: stretch;-ms-flex-pack: stretch;justify-content: stretch;}
-  .control-option .alphabet-flex button{width: 100%;margin: 0 3px;background: white;display: block;box-shadow: 0px 6px 4px -4px rgba(125, 127, 142, 0.26);border: 0;border-radius: 4px;outline: none;color: #9192a5;font-weight: 400;font-size: 14px;padding: 6px 0px;transition: 0.2s cubic-bezier(0.4, 0.0, 0.6, 1) all;transform: scale(1);}
-  .control-option .alphabet-flex button.active{box-shadow: none;z-index: 1;transform: scale(1.16);color: #ffffff;background: #35c343;}
+  .control-option .alphabet-flex a{width: 100%;margin: 0 3px;background: white;display: block;box-shadow: 0px 6px 4px -4px rgba(125, 127, 142, 0.26);border: 0;border-radius: 4px;outline: none;color: #9192a5;font-weight: 400;font-size: 14px;padding: 6px 0px;transition: 0.2s cubic-bezier(0.4, 0.0, 0.6, 1) all;transform: scale(1); text-align:center; text-transform:uppercase; text-decoration:none;}
+  .control-option .alphabet-flex a.active{box-shadow: none;z-index: 1;transform: scale(1.16);color: #ffffff;background: #35c343;}
 
 
   @media screen and (min-width:1025px){
-    .control-option .alphabet-flex button:hover{box-shadow: 0px 3px 12px 0px rgba(122, 124, 140, 0.3);z-index: 1;transform: scale(1.16);color: #282a43;}
-    .control-option .alphabet-flex button.active:hover{color:white;}
+    .control-option .alphabet-flex a:hover{box-shadow: 0px 3px 12px 0px rgba(122, 124, 140, 0.3);z-index: 1;transform: scale(1.16);color: #282a43;}
+    .control-option .alphabet-flex a.active:hover{color:white;}
   }
   @media screen and (max-width:870px){
     .control-option label{font-size:13px;}
@@ -763,7 +763,7 @@
     .control-option:nth-child(5){width: calc(33.33% - 7px);}
 
     .control-option .alphabet-flex{overflow-x: auto;padding: 5px 20px 9px;margin: 0 -5%;}
-    .control-option .alphabet-flex button{min-width:26px;}
+    .control-option .alphabet-flex a{min-width:26px;}
   }
 
 
