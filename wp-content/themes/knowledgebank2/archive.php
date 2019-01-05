@@ -7,6 +7,12 @@
 	$term_id = $term->term_id;
 	$taxonomy = get_taxonomy($term->taxonomy);
 	$taxonomy_name = $term->taxonomy;
+
+	$title = get_the_archive_title();
+	if($term->parent == 967){
+		$title = "Hawke's Bay Photo News - " . $term->name;
+	}
+
 ?>
 
 	<main role="main">
@@ -15,7 +21,7 @@
 				<div class="inner">
 					<div class="intro-copy dark inner-700">
 						<?php get_template_part('sections/breadcrumbs'); ?>
-						<h1><?php the_archive_title(); ?></h1>
+						<h1><?php echo $title; ?></h1>
 		  				<?php if(!empty($term->description)) echo apply_filters('the_content', $term->description); ?>
 					</div><!-- .intro-copy -->
 				</div><!-- .inner -->
