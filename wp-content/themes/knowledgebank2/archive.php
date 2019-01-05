@@ -1,11 +1,12 @@
 <?php get_header(); ?>
+<?php $filters = knowledgebank_get_filters(); ?>
 <?php
+	global $wp_query;
 
 	$term = get_queried_object();
 	$term_id = $term->term_id;
 	$taxonomy = get_taxonomy($term->taxonomy);
 	$taxonomy_name = $term->taxonomy;
-	//print_r($taxonomy);
 ?>
 
 	<main role="main">
@@ -19,8 +20,6 @@
 					</div><!-- .intro-copy -->
 				</div><!-- .inner -->
 			</section>
-
-			<?php get_template_part('sections/search','main'); ?>
 
 			<?php include_once(get_template_directory() . '/sections/term-filters.php'); //include rather than get_template_part so we can share $filters ?>
 
@@ -99,7 +98,13 @@
 								</div><!-- .tile-copy -->
 							</div><!-- .col -->
 
-						<?php endwhile; endif; ?>
+							<?php endwhile; ?>
+
+						<?php else: ?>
+
+							<p>No results found</p>
+
+						<?php endif; ?>
 
 					</div><!-- .grid -->
 
@@ -111,7 +116,5 @@
 			</section>
 
 	</main>
-
-<?php get_sidebar(); ?>
 
 <?php get_footer(); ?>

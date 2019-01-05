@@ -277,10 +277,64 @@ function knowledgebank_numeric_posts_nav() {
 
 //get certain allowed values from the URL to do filtery things with
 function knowledgebank_get_filters(){
-    $allowed_keys = array('order','orderby','view_mode','tags','number');
+    $allowed_keys = array('order','orderby','view_mode','tags','number','search');
     $filters = array();
     if(!empty($_GET['filters']) && is_array($_GET['filters'])){
+        //get any $_GET['filters'] elements with a key in $allowed keys
         $filters = array_intersect_key($_GET['filters'], array_flip($allowed_keys));
     }
     return $filters;
 }//knowledgebank_get_filters
+
+function knowledgebank_pre_get_posts($query){
+    if(empty($query)) return false;
+    if($query->is_main_query()){
+        $filters = knowledgebank_get_filters();
+        //search filtering if applicable
+        if(!empty($filters['search'])){
+            $query->set('search', $filters['search']);
+            $query->set('s', $filters['search']);
+        }//$filters['search']
+        //ordering
+        if(!empty($filters['order'])){
+            $query->set('order', $filters['order']);
+        }
+        if(!empty($filters['orderby'])){
+            $query->set('orderby', $filters['orderby']);
+        }
+        if(!empty($filters['number'])){
+            $query->set('posts_per_page', $filters['number']);
+        }
+    }
+}//knowledgebank_pre_get_posts()
+add_filter('pre_get_posts', 'knowledgebank_pre_get_posts');
+
+
+
+function knowledgebank_get_collections($post_id){
+    $terms = wp_get_post_terms($post_id, 'collections');
+    if(empty($terms)) return false;
+
+    $collections = array();
+    foreach($terms as $collection){
+        if($collection->parent == 0) {
+            $collection->children = knowledgebank_find_child_terms($collection, $terms);
+            $collections[$collection->term_id] = $collection;
+        }
+    }
+
+    return $collections;
+
+}
+
+function knowledgebank_find_child_terms($parent_collection, $all_post_collections){
+    $children = array();
+    foreach($all_post_collections as $collection){
+        if($collection->parent == $parent_collection->term_id){
+            //find this term's children too
+            $collection->children = knowledgebank_find_child_terms($collection, $all_post_collections);
+            $children[] = $collection;
+        }
+    }
+    return $children;
+}

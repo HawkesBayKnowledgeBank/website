@@ -180,7 +180,7 @@ jQuery(document).ready(function($) {
     });
 
     // single image - Magnific (for images)
-    $('.media-slider').each(function() {
+    $('.media-slider:not(.video)').each(function() {
         $(this).magnificPopup({
             delegate: 'a.zoom',
             type: 'image',
@@ -191,13 +191,10 @@ jQuery(document).ready(function($) {
     });
 
 
-
-
     // Book slider
     $('.book-slider').slick({
       dots: true,
     });
-
 
     //Lazy images
     $('.lazy').lazy({

@@ -1,41 +1,34 @@
 <section class="layer controls terms">
 
-    
+
     <div class="inner">
 
         <form class="filters" action="" method="get">
             <div class="controls-grid">
 
-                <div class="control-option">
-                    <label>Filter results by tags</label>
-                    <select class="select2" name="filters[tags]" multiple="multiple">
-                      <option value="tag1">Tag 1</option>
-                      <option value="tag2">Tag 2</option>
-                        <option value="tag3">Tag 3</option>
-                    </select>
-                </div><!-- .control-option -->
-
-                <div class="control-option">
-                    <label>View as</label>
-                    <select class="select2-nosearch" name="filters[view_mode]" id="view-select">
-                      <option value="tiles" class="tiles-option">Tiles</option>
-                      <option value="rows" class="rows-option">Rows</option>
-                    </select>
+                <div class="control-option searchfilter">
+                    <label>Search in <em><?php the_title(); ?></em></label>
+                    <div class="searchfilter-wrap">
+                        <input type="text" name="filters[search]" class="searchfilter" value="<?php if(!empty($filters['search'])) echo $filters['search']; ?>" />
+                        <input type="submit" value="Search" />
+                    </div>
                 </div><!-- .control-option -->
 
                 <div class="control-option">
                     <label>Sort by</label>
                     <select class="select2-nosearch" name="filters[orderby]">
-                        <option value="name">Name</option>
-                        <option value="item-count">Item count</option>
+                        <?php $active_filter = !empty($filters['orderby']) ? $filters['orderby'] : ''; ?>
+                        <option value="name" <?php if($active_filter == 'name') echo 'selected'; ?>>Name</option>
+                        <?php /* <option value="date" <?php if($active_filter == 'date') echo 'selected'; ?>>Date Created</option> */ ?>
                     </select>
                 </div><!-- .control-option -->
 
                 <div class="control-option">
                     <label>Order</label>
                     <select class="select2-nosearch" name="filters[order]">
-                      <option value="ascending">Ascending</option>
-                      <option value="descending">Descending</option>
+                      <?php $active_filter = !empty($filters['order']) ? $filters['order'] : ''; ?>
+                      <option value="ASC" <?php if($active_filter == 'ASC') echo 'selected'; ?>>Ascending</option>
+                      <option value="DESC" <?php if($active_filter == 'DESC') echo 'selected'; ?>>Descending</option>
                     </select>
                 </div><!-- .control-option -->
 

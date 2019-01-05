@@ -1,5 +1,5 @@
 <ul class="breadcrumbs">
-	<li><a href="/">Home</a></li> 
+	<li><a href="/">Home</a></li>
     <?php
 
         if(is_archive()){
@@ -23,7 +23,28 @@
 
         }
 
-    ?>
+		if(is_single()){
 
+			//get hierarchical collection list
+			$collections = knowledgebank_get_collections($post->ID);
+			//grab one... could potentially deal with multiple though
+			if(!empty($collections)){
+				$collection = array_shift($collections);
+				echo sprintf('<li><a href="%s">%s</a></li> ', get_term_link($collection->term_id), $collection->name);
+				if(!empty($collection->children)){
+					$children = $collection->children;
+					do{
+						$child = array_shift($children);
+						echo sprintf('<li><a href="%s">%s</a></li> ', get_term_link($child->term_id), $child->name);
+						$children = $child->children;
+					} while (!empty($children));
+				}
+			}
+
+			echo sprintf('<li>%s</li>', $post->post_title);
+
+		}
+
+    ?>
 
 </ul>

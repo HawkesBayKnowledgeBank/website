@@ -22,6 +22,7 @@ function knowledgebank_field_template($field, $looping= true){
         'video',
         'birthdate_accuracy',
         'deathdate_accuracy',
+        'youtube_id'
     );
     if($looping && in_array($field['name'], $exclude)) return false;
 

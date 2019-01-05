@@ -18,7 +18,7 @@
 				</div><!-- .inner -->
 			</section>
 
-			<?php get_template_part('sections/search','main'); ?>
+			<?php //get_template_part('sections/search','main'); ?>
 
 			<?php $fields = get_field_objects(); ?>
 
@@ -84,6 +84,15 @@
 				?>
 
 			<?php endif; //audio ?>
+
+			<?php if(get_field('youtube_id')): ?>
+
+				<?php
+					$youtube_id = get_field_object('youtube_id');
+					knowledgebank_field_template($youtube_id, false);
+				?>
+
+			<?php endif; //videos ?>
 
 			<section class="layer attributes">
 				<div class="inner">

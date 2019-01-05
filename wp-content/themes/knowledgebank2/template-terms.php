@@ -47,7 +47,12 @@
 					$args['child_of'] = $display_term[0]->term_id;
 				endif;
 
-				$all_terms = get_terms( $args ); //we need to know how many terms there are in total, for pagination
+				//search filtering if applicable
+				if(!empty($filters['search'])){
+					$args['search'] = $filters['search'];
+				}//$filters['search']
+
+				$all_terms = get_terms( $args ); //we need to know how many terms there are in total, for pagination. TODO: find a more efficient solution than this
 
 				//Filters
 				if(!empty($filters['number']) && is_numeric($filters['number'])){
@@ -62,6 +67,14 @@
 					$args['offset'] = $offset;
 				}
 
+				//ordering
+				if(!empty($filters['order'])){
+					$args['order'] = $filters['order'];
+				}
+				if(!empty($filters['orderby'])){
+					$args['orderby'] = $filters['orderby'];
+				}
+				
 				$terms = get_terms( $args ); //just the terms we want, accounting for pagination
 
 			?>
@@ -104,7 +117,7 @@
 
 						<?php else: ?>
 
-							<p>No terms</p>
+							<p>No results found</p>
 
 						<?php endif; ?>
 
@@ -116,18 +129,18 @@
 							//pagination
 							$total_terms = count($all_terms);
 							$max_pages = ceil($total_terms / $args['number']);
+							if($max_pages > 0):
+								foreach(range(1,$max_pages) as $page_number):
+									if($page_number == 0) continue;
+									$term_page = !empty($_GET['term_page']) ? $_GET['term_page'] : 1;
+									$current_page = $term_page == $page_number ? 'active' : '';
+									$url_params = array('term_page' => $page_number, 'filters' => $filters);
+									$url = get_permalink() . '?' . http_build_query($url_params);
 
-							foreach(range(1,$max_pages) as $page_number):
-
-								$term_page = !empty($_GET['term_page']) ? $_GET['term_page'] : 1;
-								$current_page = $term_page == $page_number ? 'active' : '';
-								$url_params = array('term_page' => $page_number, 'filters' => $filters);
-								$url = get_permalink() . '?' . http_build_query($url_params);
-
-						?>
-							<li class="<?php echo $current_page; ?>"><a href="<?php echo $url; ?>"><?php echo $page_number; ?></a></li>
-
-						<?php endforeach; ?>
+							?>
+								<li class="<?php echo $current_page; ?>"><a href="<?php echo $url; ?>"><?php echo $page_number; ?></a></li>
+							<?php endforeach; ?>
+						<?php endif; ?>
 					</ul>
 
 				</div><!-- .inner -->

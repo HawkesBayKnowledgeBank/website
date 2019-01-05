@@ -1,7 +1,7 @@
 <?php /* Template Name: Photo News */ ?>
 
 <?php get_header(); ?>
-
+<?php $filters = knowledgebank_get_filters(); ?>
 <?php
 
 	$mode = get_field('mode');
@@ -28,6 +28,11 @@
 		$args['child_of'] = $display_term[0]->term_id;
 	endif;
 
+	//search filtering if applicable
+	if(!empty($filters['search'])){
+		$args['search'] = $filters['search'];
+	}//$filters['search']
+
 	$all_terms = get_terms( $args ); //we need to know how many terms there are in total, for pagination
 
 	//Filters
@@ -36,6 +41,14 @@
 	}
 	else{
 		$args['number'] = 20;
+	}
+
+	//ordering
+	if(!empty($filters['order'])){
+		$args['order'] = $filters['order'];
+	}
+	if(!empty($filters['orderby'])){
+		$args['orderby'] = $filters['orderby'];
 	}
 
 	if(!empty($_GET['term_page']) && is_numeric($_GET['term_page'])){
@@ -61,7 +74,7 @@
 					</div><!-- .intro-copy -->
 				</div><!-- .inner -->
 			</section>
-			<?php $filters = knowledgebank_get_filters(); ?>
+
 			<?php include_once(get_template_directory() . '/sections/term-filters.php'); //include rather than get_template_part so we can share $filters ?>
 
 				<section class="layer results tiles photo-news">
