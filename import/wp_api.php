@@ -2,7 +2,7 @@
 
 
 $username = 'api';
-$password = '5rEh*$Q^MprEapEV01Ljdofy';
+$password = 'xxx';
 // the standard end point for posts in an initialised Curl
 $process = curl_init('http://new.knowledgebank.org.nz/wp-json/wp/v2/posts');
 // create an array of data to use, this is basic - see other examples for more complex inserts
