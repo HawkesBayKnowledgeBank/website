@@ -206,6 +206,7 @@
 				$people = array();
 
 				foreach($node['field_' . $nf]['und'] as $person) {
+					
 					$people[] = array(
 						array_pop(acf_key($nf,'first_name')) => $person['given'],
 						array_pop(acf_key($nf,'middle_names')) => $person['middle'],

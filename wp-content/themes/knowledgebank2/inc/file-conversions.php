@@ -12,6 +12,7 @@ function knowledgebank_convert_to_mp3($input_path) {
         $mp3_path = "{$path['dirname']}/{$path['filename']}.mp3"; // /path/to/file.ogg -> /path/to/file.mp3
 
         if($mp3_path != '/.mp3'){
+            if(file_exists($mp3_path)) return $mp3_path;
             exec("ffmpeg -i $input_path $mp3_path");
             if(file_exists($mp3_path)) return $mp3_path;
         }

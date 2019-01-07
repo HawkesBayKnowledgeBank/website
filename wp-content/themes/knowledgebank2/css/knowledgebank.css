@@ -466,7 +466,7 @@
   .intro-default[style*="background-image:url"]{background-position: center;position: relative;}
   .intro-default[style*="background-image:url"]:before{content:' ';display:block;position: absolute;top: 0;left: 0;width: 100%;height: 100%;background: rgba(0, 0, 0, 0.3);}
 
-  .intro-default .inner{padding: 100px 5% 80px;z-index: 1;position: relative;}
+  .intro-default .inner{padding: 50px 5% 40px;z-index: 1;position: relative;}
   .intro-default .inner .intro-copy{}
   .intro-default h1{}
   .intro-default p{font-size: 1.2em;}
@@ -566,7 +566,7 @@
     .grid .tile{}
     .grid .tile .tile-img{padding-top: 200px;background-size: cover;background-position: top center;position: relative;}
     .grid .tile .tile-img a{position: absolute;top: 0;left: 0;right: 0;bottom: 0;text-decoration: none;}
-    .grid .tile.shadow{overflow: hidden;border-radius: 2px;background-color: white;margin-bottom: 30px;border-radius: 4px;box-shadow: 0px 6px 4px -4px rgba(125, 127, 142, 0.26);}
+    .grid .tile.shadow{overflow: hidden;background-color: white;margin-bottom: 30px;border-radius: 4px;box-shadow: 0px 6px 4px -4px rgba(125, 127, 142, 0.26);}
     .grid .tile-copy{padding: 25px;background:white;position: relative;}
     .grid .tile-copy h4 > a{color: #282a43;font-weight: 400;text-decoration: none;}
     .grid .tile-copy.transparent{background: transparent;}
@@ -574,6 +574,7 @@
     .grid .tile-copy.transparent{padding: 25px 0px 0px;}
     .grid .tile-copy p{font-size: 14px;}
     .tile-copy p:last-child{margin-bottom:0px;}
+
 
     @media screen and (max-width:849px){
       .tiles .inner{padding: 30px 5%;}
@@ -690,15 +691,26 @@
     ul.pagination li a:hover{transform: scale(1.16);color: #282a43;}
   }
   @media screen and (max-width:720px){
+      ul.pagination li {  margin: 0 3px 10px 0;}
+     /*
     ul.pagination{display: flex;overflow-x: auto;align-items: center;margin: 0 -5%;padding: 10px 20px;}
     .tiles.rows ul.pagination{margin-top:16px;}
     ul.pagination li{margin: 0 2px;}
     ul.pagination li.elipses{font-size: 16px;margin: 0 7px;}
     ul.pagination li a{white-space: nowrap;width: 26px;padding: 0;height: 26px;line-height: 26px;min-width: 1px;}
-
+*/
   }
 
 
+/* blog */
+
+article.news{background-color: white;margin-bottom: 30px;border-radius: 4px;box-shadow: 0px 6px 4px -4px rgba(125, 127, 142, 0.26); padding:40px;}
+.post-date { font-weight:bold; padding:20px 0;}
+.news .post-thumbnail { float:right; margin: 0 0 0 20px; max-width:400px;}
+@media screen and (max-width:660px){
+  .news .post-thumbnail { float:none; margin: 0 auto 20px auto; }
+  .news .post-thumbnail img {max-width:100%; width:100%; display:block; margin: 0 auto;}
+}
 /* Footer
   --------------------------- */
   .footer{background: #24293e;}

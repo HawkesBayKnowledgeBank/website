@@ -1,6 +1,9 @@
 <pre>
 <?php
 
+exit; //remove to use :-)
+
+
 require_once('/webs/new/wp-load.php');
 require_once('/webs/new/wp-admin/includes/media.php');
 
@@ -41,8 +44,8 @@ function import_log($message){
 		'subjects' => '',
 		'still_image' => 37072,
 		'video' => 35615,*/
-		'person' => 36254,/*
-		'audio' => 51154,
+		/*'person' => 36254,
+		*/'audio' => 51154,/*
 		'text' => 51186,*/
 	);
 
