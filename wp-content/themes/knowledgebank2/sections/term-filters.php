@@ -7,7 +7,8 @@
             <div class="controls-grid">
 
                 <div class="control-option searchfilter">
-                    <label>Search in <em><?php the_title(); ?></em></label>
+                    <?php  $term = get_queried_object(); ?>
+                    <label>Search in <em><?php echo !empty($term->name) ? $term->name :  get_the_title(); ?></em></label>
                     <div class="searchfilter-wrap">
                         <input type="text" name="filters[search]" class="searchfilter" value="<?php if(!empty($filters['search'])) echo $filters['search']; ?>" />
                         <input type="submit" value="Search" />

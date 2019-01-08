@@ -85,7 +85,7 @@
 								$images = get_field('images', $post->ID);
 								$image = !empty($images[0]['image']) ? $images[0]['image'] : false;
 								$link = get_permalink($post->ID);
-								$image_size = $term->parent == 967 ? 'medium' : 'thumbnail';
+								$image_size = $term->parent == 967 ? 'medium' : 'thumbnail';//medium for photo news
 							?>
 
 				  			<div class="col tile shadow <?php echo $type; ?>">
@@ -98,6 +98,24 @@
 								<div class="tile-copy">
 									<h4><a href="<?php echo $link; ?>"><?php echo $post->post_title; ?></a></h4>
 										<?php the_excerpt(); ?>
+										<?php
+											if($type == 'audio') { //see if we have an mp3 and/or ogg
+												$mp3 = get_field('audio', $post->ID);
+												$ogg = false;
+												$master = get_field('master', $post->ID);
+												if(!empty($master['mime_type']) && $master['mime_type'] == 'audio/ogg'){
+													$ogg = $master['url'];
+												}
+												if(!empty($mp3) || !empty($ogg)): ?>
+												<audio controls>
+												  <?php if($mp3): ?><source src="<?php echo $mp3['url']; ?>" type="<?php echo $mp3['mime_type']; ?>"><?php endif; ?>
+												  <?php if($ogg): ?><source src="<?php echo $ogg; ?>" type="audio/ogg"><?php endif; ?>
+												  Your browser does not support the audio element.
+												</audio>
+												<?php endif;
+											}
+
+										?>
 									<div class="button-group">
 										<a href="<?php echo $link; ?>" class="button">View Details</a>
 									</div>

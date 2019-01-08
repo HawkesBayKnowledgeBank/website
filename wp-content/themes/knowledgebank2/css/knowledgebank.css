@@ -639,6 +639,7 @@
   .tile.text .tile-copy:before{content: "\F9A7";}
   .tile.people .tile-copy:before{content: "\F004";}
 
+  .tile.audio audio { display:block; width:100%;}
 
   .term-content-types {position: absolute;top: -21px; right:20px; text-align:right;}
   .term-content-type{ display:inline-block;}
@@ -651,7 +652,7 @@
 
   .term-content-type.video:before{content: "\F567";}
   .term-content-type.still_image:before{content: "\F2E9";}
-  .term-content-type.audio:before{content: "\F57E";}
+  .term-content-type.audio:before{content: "\F57E"; }
   .term-content-type.book:before{content: "\F0BA";}
   .term-content-type.text:before{content: "\F9A7";}
   .term-content-type.people:before{content: "\F004";}

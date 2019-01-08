@@ -95,14 +95,14 @@
 								?>
 
 								<div class="col tile shadow">
-									<?php if(!empty($image)): ?>
-										<?php
-											$src = !empty($image['sizes']['thumbnail']) ? $image['sizes']['thumbnail'] : '';
-										?>
-										<div class="tile-img lazy" data-src="<?php echo $src; ?>">
-											<a href="<?php echo $link; ?>"></a>
-										</div>
-									<?php endif; ?>
+
+									<?php
+										$src = !empty($image['sizes']['thumbnail']) ? $image['sizes']['thumbnail'] : '/wp-content/themes/knowledgebank2/img/placeholder-400.png';
+									?>
+									<div class="tile-img lazy" style="background-image:url(/wp-content/themes/knowledgebank2/img/placeholder-400.png)" data-src="<?php echo $src; ?>">
+										<a href="<?php echo $link; ?>"></a>
+									</div>
+
 									<div class="tile-copy">
 										<h4><a href="<?php echo $link; ?>"><?php echo $term->name; ?></a></h4>
 										<p><div class="term-item-count"><?php echo $term->count; ?> items</div><div class="term-content-types"><?php echo knowledgebank_term_content_type_icons($term); ?></div></p>
