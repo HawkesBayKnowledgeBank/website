@@ -20,13 +20,9 @@
 
 			<?php //get_template_part('sections/search','main'); ?>
 
-			<?php $fields = get_field_objects(); ?>
-
-			<a href="#json">json</a>
-			<pre style="padding:30px; background-color:#fff;display:none;" id="json">
-				<?php print_r($fields); ?>
-				<?php //print_r(get_fields()); ?>
-			</pre>
+			<?php
+				$fields = knowledgebank_get_field_objects($field); //we want to move / remove / play around with field orders
+			?>
 
 			<?php $images = get_field('images'); ?>
 
@@ -108,6 +104,12 @@
 					</div>
 				</div>
 			</section>
+
+			<a href="#json">json</a>
+			<pre style="padding:30px; background-color:#fff;display:none;" id="json">
+				<?php print_r($fields); ?>
+				<?php //print_r(get_fields()); ?>
+			</pre>
 
 			<section class="layer commenting-wrap">
 				<div class="inner">

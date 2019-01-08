@@ -639,6 +639,23 @@
   .tile.text .tile-copy:before{content: "\F9A7";}
   .tile.people .tile-copy:before{content: "\F004";}
 
+
+  .term-content-types {position: absolute;top: -21px; right:20px; text-align:right;}
+  .term-content-type{ display:inline-block;}
+  .term-content-type.video:before,
+  .term-content-type.still_image:before,
+  .term-content-type.audio:before,
+  .term-content-type.book:before,
+  .term-content-type.text:before,
+  .term-content-type.people:before{content:' ';display:block;font-family: 'Material Design Icons';background: #35c343;color: white;width: 40px;height: 40px;border-radius: 40px;text-align: center;line-height: 40px;font-size: 21px;cursor: default; margin-left:5px;}
+
+  .term-content-type.video:before{content: "\F567";}
+  .term-content-type.still_image:before{content: "\F2E9";}
+  .term-content-type.audio:before{content: "\F57E";}
+  .term-content-type.book:before{content: "\F0BA";}
+  .term-content-type.text:before{content: "\F9A7";}
+  .term-content-type.people:before{content: "\F004";}
+
   .grid .tile.video .tile-img a{text-align: center;line-height: 200px;}
   .grid .tile.video .tile-img a:before{content: "\F40C";display:block;font-family: 'Material Design Icons';color: white;font-size: 60px;font-weight: 400;transition: 0.2s cubic-bezier(0.4, 0.0, 0.6, 1) all;transform: scale(1);text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);}
   .grid .tile.video .tile-img a:hover:before{transform: scale(1.18);text-shadow: 0px 7px 10px rgba(0, 0, 0, 0.3);}

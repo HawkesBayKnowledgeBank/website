@@ -74,7 +74,7 @@
 				if(!empty($filters['orderby'])){
 					$args['orderby'] = $filters['orderby'];
 				}
-				
+
 				$terms = get_terms( $args ); //just the terms we want, accounting for pagination
 
 			?>
@@ -105,7 +105,7 @@
 									<?php endif; ?>
 									<div class="tile-copy">
 										<h4><a href="<?php echo $link; ?>"><?php echo $term->name; ?></a></h4>
-										<p class="term-item-count"><?php echo $term->count; ?> items</p>
+										<p><div class="term-item-count"><?php echo $term->count; ?> items</div><div class="term-content-types"><?php echo knowledgebank_term_content_type_icons($term); ?></div></p>
 										<?php if(!empty($term->description)): ?><p><?php echo $term->description; ?></p><?php endif; ?>
 										<div class="button-group">
 											<a href="<?php echo $link; ?>" class="button">View</a>

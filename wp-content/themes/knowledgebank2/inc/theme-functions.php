@@ -8,7 +8,7 @@
  */
 function knowledgebank_field_template($field, $looping= true){
 
-    if(empty($field) || !is_array($field) || empty($field['key'])) return false;
+    if(empty($field['value']) || !is_array($field) || empty($field['key'])) return false;
 
     //skip certain fields
     $exclude = array(
@@ -22,7 +22,8 @@ function knowledgebank_field_template($field, $looping= true){
         'video',
         'birthdate_accuracy',
         'deathdate_accuracy',
-        'youtube_id'
+        'youtube_id',
+        'auto_generate_images'
     );
     if($looping && in_array($field['name'], $exclude)) return false;
 
@@ -45,6 +46,13 @@ function knowledgebank_field_template($field, $looping= true){
     }
 
 }//knowledgebank_field_template()
+
+
+function knowledgebank_get_field_objects(){
+    if(!function_exists($fields)) return false;
+    $fields = get_field_objects();
+
+}
 
 /**
 * Format a number of bytes in a nice human format
@@ -121,3 +129,42 @@ function knowledgebank_get_date($field_name, $post_id) {
     return $_date;
 
 }//knowldgebank_get_date()
+
+/**
+ * Output a set of icons representing the content types found with a particular term.
+ * For performance we save this as term meta and update it only if missing or when saving posts
+ * @param  [type] $term [description]
+ * @return [type]       [description]
+ */
+function knowledgebank_term_content_type_icons($term){
+
+    $types = get_term_meta($term->term_id, 'term_content_types', true);
+
+    if(empty($types)){ //query and determine the content types in the term
+        $args = array(
+            'post_type' => 'any',
+            'posts_per_page' => -1,
+            'post_status' => 'publish',
+            'tax_query' => array(
+                array(
+                    'taxonomy' => $term->taxonomy,
+                    'field' => 'slug',
+                    'terms' => $term->slug,
+                )
+            )
+        );
+        $term_posts = get_posts($args);
+        $types = array();
+        if(!empty($term_posts)){
+            //get a simple unique array of post types found
+            $types = array_unique(array_map(function($term_post){ return $term_post->post_type; },$term_posts));
+            if(!empty($types)) update_term_meta($term->term_id, 'term_post_types', $types);
+        }
+    }
+    if(!empty($types)){
+        foreach($types as $type){
+            echo sprintf('<span class="term-content-type %s"></span>',$type);
+        }
+    }
+
+}//knowledgebank_term_content_type_icons
