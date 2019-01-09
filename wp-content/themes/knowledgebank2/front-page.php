@@ -2,62 +2,57 @@
 
 <section class="home-intro dark">
 
-    <div class="intro-background-slider">
-        <div class="home-bg-slide" style="background-image:url('/templates/img/quake.jpg');"></div>
-        <div class="home-bg-slide" style="background-image:url('/templates/img/quake1.jpg');"></div>
-        <div class="home-bg-slide" style="background-image:url('/templates/img/quake3.jpg');"></div>
-        <div class="home-bg-slide" style="background-image:url('/templates/img/quake4.jpg');"></div>
-    </div>
+    <?php $slides = get_field('slider'); ?>
 
-    <div class="inner">
-        <div class="intro-slider">
-            <div class="home-slide" style="background-image:url('/templates/img/quake.jpg');">
-                <div class="slide-copy">
-                    <h5>Featured content</h5>
-                    <h1>History to be revealed through photos</h1>
-                    <div class="button-group">
-                        <a href="#" class="button">Watch the video</a>
-                    </div>
-                </div>
-            </div><!-- .home-slide -->
-            <div class="home-slide" style="background-image:url('/templates/img/quake1.jpg');">
-                <div class="slide-copy">
-                    <h5>Featured content</h5>
-                    <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit</h2>
-                    <div class="button-group">
-                        <a href="#" class="button">Read more</a>
-                    </div>
-                </div>
-            </div><!-- .home-slide -->
-            <div class="home-slide" style="background-image:url('/templates/img/quake3.jpg');">
-                <div class="slide-copy">
-                    <h5>Featured content</h5>
-                    <h2>Duis aute irure dolor in reprehenderit</h2>
-                    <div class="button-group">
-                        <a href="#" class="button">Read more</a>
-                    </div>
-                </div>
-            </div><!-- .home-slide -->
-            <div class="home-slide" style="background-image:url('/templates/img/quake4.jpg');">
-                <div class="slide-copy">
-                    <h5>Featured content</h5>
-                    <h2>Nemo enim ipsam voluptatem</h2>
-                    <div class="button-group">
-                        <a href="#" class="button">Read more</a>
-                    </div>
-                </div>
-            </div><!-- .home-slide -->
-        </div>
-        <div class="intro-text">
-            <h4>The Hawke's Bay Knowledge Bank is a living record of Hawke's Bay and its people.</h4>
-            <p>It combines a robust, secure and widely-compatible digital archive with a new generation of multimedia and social tools.</p>
-            <!-- <p>We want to enrich our stored material with the knowledge of the community through user comments, tagging and sharing of information.</p> -->
-            <div class="button-group">
-                <a href="#" class="button">About Us</a>
-            </div>
+    <?php //print_r($slides); ?>
+    <?php if(!empty($slides)): ?>
+        <div class="intro-background-slider">
+            <?php foreach($slides as $slide): ?>
+                <?php if(!empty($slide['image']['sizes']['large'])): ?>
+                    <div class="home-bg-slide" style="background-image:url('<?php echo $slide['image']['sizes']['large']; ?>');"></div>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </div><!--.intro-background-slider -->
 
-        </div>
-    </div>
+        <div class="inner">
+            <div class="intro-slider">
+                <?php foreach($slides as $slide): ?>
+                    <?php $src = !empty($slide['image']['sizes']['large']) ? $slide['image']['sizes']['large'] : $slide['image']['url']; ?>
+                    <div class="home-slide" style="background-image:url('<?php echo $src; ?>');">
+                        <div class="slide-copy">
+                            <h5>Featured content</h5>
+                            <h2><?php echo $slide['title']; ?></h2>
+                            <div class="button-group">
+                                <?php
+                                    $link = '#';
+                                    if($slide['link_type'] == 'internal' && !empty($slide['internal'])){
+                                        $link = get_permalink($slide['internal']->ID);
+                                    }
+                                    elseif(!empty($slide['external'])){
+                                        $link = $slide['external'];
+                                    }
+                                    $target = $slide['new_window'] ? ' target="_blank"' : '';
+                                ?>
+                                <a href="<?php echo $link; ?>" class="button" <?php echo $target; ?>><?php echo $slide['link_text']; ?></a>
+
+                            </div>
+                        </div>
+                    </div><!-- .home-slide -->
+                <?php endforeach; ?>
+            </div><!-- .intro-slider-->
+            <div class="intro-text">
+                <?php the_field('slider_intro'); ?>
+                <?php if(get_field('intro_link_text')): ?>
+                    <div class="button-group">
+                        <a href="<?php the_field('intro_link_url'); ?>" class="button"><?php the_field('intro_link_text'); ?></a>
+                    </div>
+                <?php endif; ?>
+            </div><!-- .intro-text -->
+        </div><!-- .inner -->
+
+    <?php endif; ?>
+
+
 </section> <!-- .home-intro -->
 
 <?php get_template_part('sections/search','main'); ?>
