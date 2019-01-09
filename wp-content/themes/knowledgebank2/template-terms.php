@@ -28,24 +28,28 @@
 				//arguments for get_terms()
 				$args = array(
 					'hide_empty' => true,
-					'meta_query' => array(
-						array(
-							'key' => 'public',
-							'value' => 1,
-						)
-					)
+					'meta_query' => array(),
 				);
 
 				if($mode == 'Taxonomy'):
 					$taxonomy = get_field('display_taxonomy');
 					$args['taxonomy'] = $taxonomy[0]->name;
 					$args['parent'] = 0;
+
+					if($taxonomy[0]->name == 'collections') :
+						$args['meta_query'][] = array(
+							'key' => 'public',
+							'value' => 1,
+						);
+					endif;
+
 				else:
 					$display_term = get_field('display_term');
 					//print_r($term);
 					$args['taxonomy'] = $display_term[0]->taxonomy;
 					$args['child_of'] = $display_term[0]->term_id;
 				endif;
+
 
 				//search filtering if applicable
 				if(!empty($filters['search'])){
@@ -78,7 +82,7 @@
 				$terms = get_terms( $args ); //just the terms we want, accounting for pagination
 
 			?>
-			<section class="layer results tiles ">
+			<section class="layer results tiles <?php echo $args['taxonomy']; ?> ">
 				<div class="inner">
 
 					<div class="grid column-4 ">
@@ -96,12 +100,12 @@
 
 								<div class="col tile shadow">
 
-									<?php
-										$src = !empty($image['sizes']['thumbnail']) ? $image['sizes']['thumbnail'] : '/wp-content/themes/knowledgebank2/img/placeholder-400.png';
-									?>
-									<div class="tile-img lazy" style="background-image:url(/wp-content/themes/knowledgebank2/img/placeholder-400.png)" data-src="<?php echo $src; ?>">
-										<a href="<?php echo $link; ?>"></a>
-									</div>
+									<?php if($term->name == 'collections'): ?>
+										<?php $src = !empty($image['sizes']['thumbnail']) ? $image['sizes']['thumbnail'] : '/wp-content/themes/knowledgebank2/img/placeholder-400.png';	?>
+										<div class="tile-img lazy" style="background-image:url(/wp-content/themes/knowledgebank2/img/placeholder-400.png)" data-src="<?php echo $src; ?>">
+											<a href="<?php echo $link; ?>"></a>
+										</div>
+									<?php endif; ?>
 
 									<div class="tile-copy">
 										<h4><a href="<?php echo $link; ?>"><?php echo $term->name; ?></a></h4>

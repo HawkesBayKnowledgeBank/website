@@ -65,18 +65,20 @@
 <section class="layer cards">
     <div class="inner">
         <div class="grid column-2 tight">
+            <?php $box_left = get_field('box_left'); ?>
             <div class="col card">
-                <h3>We need your history</h3>
-                <p>We're always interested in hearing about family or individual collections which might not have been shared as widely as they could be. If you have a cache of old photographs, film, slides or other materials which you think could be of interest to the wider public, please get in touch.</p>
+                <h3><?php echo $box_left['heading']; ?></h3>
+                <?php echo $box_left['content']; ?>
                 <div class="button-group">
-                    <a href="#" class="button">Contribute Now</a>
+                    <a href="<?php echo $box_left['button_url']; ?>" class="button"><?php echo $box_left['button_label']; ?></a>
                 </div>
             </div>
+            <?php $box_right = get_field('box_right'); ?>
             <div class="col card">
-                <h3>Make a donation</h3>
-                <p>Can you help? We appreciate any and all donations towards preserving our local history.</p>
+                <h3><?php echo $box_right['heading']; ?></h3>
+                <?php echo $box_right['content']; ?>
                 <div class="button-group">
-                    <a href="#" class="button">Donate Now</a>
+                    <a href="<?php echo $box_right['button_url']; ?>" class="button"><?php echo $box_right['button_label']; ?></a>
                 </div>
             </div>
         </div>

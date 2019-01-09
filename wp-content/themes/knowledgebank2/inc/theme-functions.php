@@ -138,7 +138,7 @@ function knowledgebank_get_date($field_name, $post_id) {
  */
 function knowledgebank_term_content_type_icons($term){
 
-    $types = get_term_meta($term->term_id, 'term_content_types', true);
+    $types = get_term_meta($term->term_id, 'term_post_types', true);
 
     if(empty($types)){ //query and determine the content types in the term
         $args = array(
@@ -158,8 +158,10 @@ function knowledgebank_term_content_type_icons($term){
         if(!empty($term_posts)){
             //get a simple unique array of post types found
             $types = array_unique(array_map(function($term_post){ return $term_post->post_type; },$term_posts));
+
             if(!empty($types)) update_term_meta($term->term_id, 'term_post_types', $types);
         }
+        echo 'regen';
     }
     if(!empty($types)){
         foreach($types as $type){
@@ -168,3 +170,24 @@ function knowledgebank_term_content_type_icons($term){
     }
 
 }//knowledgebank_term_content_type_icons
+
+function update_term_icons($post_id){
+    $saved_post_type = get_post_type($post_id);
+    foreach(array('post_tag','collections') as $tax_name){
+        $terms = wp_get_post_terms($post_id, $tax_name);
+        if(!empty($terms)){
+            foreach($terms as $term){
+                $term_types = get_term_meta($term->term_id, 'term_content_types', true); //get existing list of types on the term
+                if(empty($term_types)){
+                    $term_types = array($saved_post_type);
+                    update_term_meta($term->term_id, 'term_post_types', $term_types);
+                }
+                elseif(!in_array($saved_post_type, $term_types)){
+                    $term_types[] = $saved_post_type;
+                    update_term_meta($term->term_id, 'term_post_types', $term_types);
+                }
+            }
+        }
+    }
+}
+add_action('save_post','update_term_icons');

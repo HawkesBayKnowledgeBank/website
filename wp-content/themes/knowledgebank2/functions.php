@@ -305,6 +305,11 @@ function knowledgebank_pre_get_posts($query){
         if(!empty($filters['number'])){
             $query->set('posts_per_page', $filters['number']);
         }
+
+
+        if(is_tag()) $query->set('post_type', array('still_image','audio','video','person','text'));
+
+
     }
 }//knowledgebank_pre_get_posts()
 add_filter('pre_get_posts', 'knowledgebank_pre_get_posts');

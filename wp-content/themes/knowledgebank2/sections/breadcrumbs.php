@@ -2,7 +2,11 @@
 	<li><a href="/">Home</a></li>
     <?php
 
-        if(is_archive()){
+        if(is_tag()){
+			echo sprintf('<li><a href="%s">%s</a></li> ', '/tags/', 'Tags');
+			$term = get_queried_object();
+			echo sprintf('<li>%s</li>', $term->name);
+		} elseif(is_archive()) {
 
             $term = get_queried_object();
             //print_r($term);
@@ -22,6 +26,17 @@
             echo sprintf('<li>%s</li>', $term->name);
 
         }
+
+		if(is_page()){
+			global $post;
+			$ancestors = get_ancestors($post->ID, 'page');
+			if(!empty($ancestors)){
+				foreach($ancestors as $ancestor_id){
+					echo sprintf('<li><a href="%s">%s</a></li> ', get_permalink($ancestor_id), get_the_title($ancestor_id));
+				}
+			}
+			echo sprintf('<li>%s</li>', $post->post_title);
+		}//is_page()
 
 		if(is_single()){
 
@@ -51,14 +66,14 @@
 
 			echo sprintf('<li>%s</li>', $post->post_title);
 
-		}
+		}//is_single()
 
 		//Blog page
 		global $wp_query;
 		if ( isset( $wp_query ) && (bool) $wp_query->is_posts_page ) {
 			$posts_page_id = get_option('page_for_posts');
 			echo sprintf('<li>%s</li>', get_the_title($posts_page_id));
-		}
+		}//blog pafe
 
 
 
