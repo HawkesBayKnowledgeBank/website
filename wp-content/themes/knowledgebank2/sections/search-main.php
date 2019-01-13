@@ -2,10 +2,10 @@
     <div class="inner">
         <div class="searchbar">
 
-            <form class="" action="/" method="post">
+            <form class="" action="/search" method="get">
                 <div class="top">
                     <i class="mdi mdi-magnify"></i>
-                    <input type="text" name="" value="" placeholder="Keyword Search">
+                    <input type="text" name="s" value="<?php echo get_search_query(); ?>" placeholder="Keyword Search">
                     <button type="submit" name="button">Search</button>
                 </div>
                 <div class="bottom">

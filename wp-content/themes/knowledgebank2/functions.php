@@ -299,8 +299,14 @@ function knowledgebank_pre_get_posts($query){
         if(!empty($filters['order'])){
             $query->set('order', $filters['order']);
         }
+        elseif(is_archive() && $query->queried_object_id != 277873){ //not the news page
+            $query->set('order', 'ASC');
+        }
         if(!empty($filters['orderby'])){
             $query->set('orderby', $filters['orderby']);
+        }
+        elseif(is_archive() && $query->queried_object_id != 277873){
+            $query->set('orderby', 'name');
         }
         if(!empty($filters['number'])){
             $query->set('posts_per_page', $filters['number']);

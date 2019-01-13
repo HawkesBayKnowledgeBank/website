@@ -1,4 +1,4 @@
-<div class="col field field-people field-<?php echo $field['type']; ?>" data-field-name="<?php echo $field['name']; ?>">
+<div class="col field field-author field-<?php echo $field['type']; ?>" data-field-name="<?php echo $field['name']; ?>">
     <h4><?php echo $field['label'];?></h4>
     <ul>
     <?php

@@ -42,7 +42,7 @@
 					?>
 					<?php if(!empty($child_terms)): ?>
 						<?php /* <h5>Sub-<?php echo strtolower($taxonomy->labels->singular_name); ?>s in <?php echo single_cat_title( '', false ); ?></h5> */ ?>
-					<div class="grid column-5">
+					<div class="grid column-5 sub-collections">
 						<?php foreach($child_terms as $child_term): ?>
 							<?php
 								$link = get_term_link($child_term);
@@ -84,6 +84,9 @@
 								$type = $post->post_type;
 								$images = get_field('images', $post->ID);
 								$image = !empty($images[0]['image']) ? $images[0]['image'] : false;
+								if(empty($image)) $image = get_field('image');
+
+
 								$link = get_permalink($post->ID);
 								$image_size = $term->parent == 967 ? 'medium' : 'thumbnail';//medium for photo news
 							?>

@@ -21,7 +21,7 @@
 			<?php //get_template_part('sections/search','main'); ?>
 
 			<?php
-				$fields = knowledgebank_get_field_objects($field); //we want to move / remove / play around with field orders
+				$fields = knowledgebank_get_field_objects(); //we want to move / remove / play around with field orders
 			?>
 
 			<?php $images = get_field('images'); ?>
@@ -81,14 +81,13 @@
 
 			<?php endif; //audio ?>
 
-			<?php if(get_field('youtube_id')): ?>
-
-				<?php
-					$youtube_id = get_field_object('youtube_id');
-					knowledgebank_field_template($youtube_id, false);
-				?>
-
-			<?php endif; //videos ?>
+			<?php
+				if($post->post_type == 'video'):
+					$video = get_field_object('master');
+					$video['name'] = 'video';
+					knowledgebank_field_template($video, false);
+				 endif; //videos
+			?>
 
 			<section class="layer attributes">
 				<div class="inner">
@@ -102,21 +101,62 @@
 						?>
 
 					</div>
+					<?php /*
+					<a href="#json">json</a>
+					<pre style="padding:30px; background-color:#fff;display:none;" id="json">
+						<?php print_r($fields); ?>
+						<?php //print_r(get_fields()); ?>
+					</pre>
+					*/
+					?>
 				</div>
 			</section>
-
-			<a href="#json">json</a>
-			<pre style="padding:30px; background-color:#fff;display:none;" id="json">
-				<?php print_r($fields); ?>
-				<?php //print_r(get_fields()); ?>
-			</pre>
 
 			<section class="layer commenting-wrap">
 				<div class="inner">
 					<div class="commenting">
 						<h4>Do you know something about this record?</h4>
-						<p class="temp">Commenting system here</p>
-					</div>
+						<p>Please note we cannot verify the accuracy of any information posted by the community.</p>
+						<div id="disqus_thread"></div>
+						<script>
+						    /**
+						     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT
+						     *  THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR
+						     *  PLATFORM OR CMS.
+						     *
+						     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT:
+						     *  https://disqus.com/admin/universalcode/#configuration-variables
+						     */
+
+						    var disqus_config = function () {
+						        // Replace PAGE_URL with your page's canonical URL variable
+						        //this.page.url = https://knowledgebank.org.nz/<?php echo get_field('accession_number'); ?>;
+
+						        // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+								<?php
+									$identifier = get_post_meta($post->ID, '_drupal_nid', true);
+									if(empty($identifier)) $identifier = $post->ID;
+								?>
+								this.page.identifier = 'node/<?php echo $identifier; ?>';
+						    };
+
+
+						    (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+						        var d = document, s = d.createElement('script');
+
+						        s.src = 'https://hawkesbayknowledgebank.disqus.com/embed.js';
+
+						        s.setAttribute('data-timestamp', +new Date());
+						        (d.head || d.body).appendChild(s);
+						    })();
+						</script>
+						<noscript>
+						    Please enable JavaScript to view the
+						    <a href="https://disqus.com/?ref_noscript" rel="nofollow">
+						        comments powered by Disqus.
+						    </a>
+						</noscript>
+					</div><!-- .commenting -->
 				</div>
 			</section>
 

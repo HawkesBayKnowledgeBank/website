@@ -1,19 +1,42 @@
+<?php /* Template Name: Search results */ ?>
 <?php get_header(); ?>
+<?php $filters = knowledgebank_get_filters(); ?>
+<?php
+	global $wp_query;
+
+	$title = 'Search';
+	$search_query = get_search_query();
+	if(!empty($search_query)) $title .= ' - ' . $search_query;
+
+?>
 
 	<main role="main">
-		<!-- section -->
-		<section>
 
-			<h1><?php echo sprintf( __( '%s Search Results for ', 'knowledgebank' ), $wp_query->found_posts ); echo get_search_query(); ?></h1>
+			<section class="layer intro intro-default">
+				<div class="inner">
+					<div class="intro-copy dark inner-700">
+						<?php get_template_part('sections/breadcrumbs'); ?>
+						<h1><?php echo $title; ?></h1>
+					</div><!-- .intro-copy -->
+				</div><!-- .inner -->
+			</section>
 
-			<?php get_template_part('loop'); ?>
+				<?php print_r(array_keys((array)$wp_query)); ?>
 
-			<?php get_template_part('pagination'); ?>
+				<main role="main">
+					<!-- section -->
+					<section class="layer">
+						<div class="inner thin content">
+						<?php get_template_part('search_loop'); ?>
+						<ul class="pagination">
+							<?php knowledgebank_numeric_posts_nav(); ?>
+						</ul>
+					</div>
+					</section>
+					<!-- /section -->
+				</main>
 
-		</section>
-		<!-- /section -->
+
 	</main>
-
-<?php get_sidebar(); ?>
 
 <?php get_footer(); ?>

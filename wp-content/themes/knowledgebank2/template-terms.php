@@ -100,7 +100,7 @@
 
 								<div class="col tile shadow">
 
-									<?php if($term->name == 'collections'): ?>
+									<?php if($term->taxonomy == 'collections'): ?>
 										<?php $src = !empty($image['sizes']['thumbnail']) ? $image['sizes']['thumbnail'] : '/wp-content/themes/knowledgebank2/img/placeholder-400.png';	?>
 										<div class="tile-img lazy" style="background-image:url(/wp-content/themes/knowledgebank2/img/placeholder-400.png)" data-src="<?php echo $src; ?>">
 											<a href="<?php echo $link; ?>"></a>

@@ -72,7 +72,8 @@
    ----------------------- */
 
   .videoWrapper {position: relative;padding-bottom: 53.98%; /* 16:9 */padding-top: 25px;height: 0;}
-  .videoWrapper iframe {position: absolute;top: 0;left: 0;width: 100%;height: 100%;}
+  .videoWrapper iframe, .videoWrapper video {position: absolute;top: 0;left: 0;width: 100%;height: 100%;}
+  .videoWrapper video { height:auto;}
 
   /* slick slider */
   .slick-list,.slick-slider,.slick-track{position:relative;display:block}.slick-loading .slick-slide,.slick-loading .slick-track{visibility:hidden}.slick-slider{box-sizing:border-box;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;-khtml-user-select:none;user-select:none;-webkit-touch-callout:none;-ms-touch-action:pan-y;touch-action:pan-y;-webkit-tap-highlight-color:transparent}.slick-list{overflow:hidden;margin:0;padding:0}.slick-list:focus{outline:0}.slick-list.dragging{cursor:pointer;cursor:hand}.slick-slider .slick-list,.slick-slider .slick-track{-webkit-transform:translate3d(0,0,0);-moz-transform:translate3d(0,0,0);-ms-transform:translate3d(0,0,0);-o-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}.slick-track{top:0;left:0}.slick-track:after,.slick-track:before{display:table;content:''}.slick-track:after{clear:both}.slick-slide{display:none;float:left;height:100%;min-height:1px}[dir=rtl] .slick-slide{float:right}.slick-slide img{display:block;margin: auto;}.slick-slide.slick-loading img{display:none}.slick-slide.dragging img{pointer-events:none}.slick-initialized .slick-slide{display:block}.slick-vertical .slick-slide{display:block;height:auto;border:1px solid transparent}.slick-arrow.slick-hidden{display:none}
@@ -977,7 +978,10 @@ article.news{background-color: white;margin-bottom: 30px;border-radius: 4px;box-
 
 .layer.photo-news .grid .tile .tile-img { padding-top:420px;}
 
+/* Sub-colletion tiles */
 
+.grid.sub-collections .tile.shadow, .grid.sub-collections .tile.shadow .tile-copy { background-color: #35c343; color :#fff;}
+.grid.sub-collections .tile-copy h4 > a, .grid.sub-collections .tile-copy h4 > a:visited { color : #fff; }
 /* Print Styles
 --------------------------- */
 

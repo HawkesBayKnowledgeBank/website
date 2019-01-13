@@ -19,11 +19,11 @@ function knowledgebank_field_template($field, $looping= true){
         'exif_isospeedratings',
         'exif_focallength',
         'audio',
-        'video',
         'birthdate_accuracy',
         'deathdate_accuracy',
         'youtube_id',
-        'auto_generate_images'
+        'auto_generate_images',
+        'collections',
     );
     if($looping && in_array($field['name'], $exclude)) return false;
 
@@ -48,9 +48,46 @@ function knowledgebank_field_template($field, $looping= true){
 }//knowledgebank_field_template()
 
 
+/**
+ * Wrapper arund get_field_objects() with some extra field ordering
+ * @return array ACF field objects
+ */
 function knowledgebank_get_field_objects(){
-    if(!function_exists($fields)) return false;
     $fields = get_field_objects();
+
+    //Anything we want to go before other fields, in desired order
+    $before = array_flip(array('master','licence')); //use a nice simple array to declare field names, but flip so these become keys for use
+
+    if(!empty($before) && !empty($fields)){
+        foreach($before as $field_name => $_val){
+            if(array_key_exists($field_name, $fields)){ //found the field we are looking for, move it into $before
+                $before[$field_name] = $fields[$field_name];
+                unset($fields[$field_name]);
+            }
+            else{
+                unset($before[$field_name]);
+            }
+        }
+    }
+
+    //Anything we want specifically moved to the end
+    $after = array_flip(array('accession_number'));
+    if(!empty($after) && !empty($fields)){
+        foreach($after as $field_name => $_val){
+            if(array_key_exists($field_name, $fields)){ //found the field we are looking for, move it into $after
+                $after[$field_name] = $fields[$field_name];
+                unset($fields[$field_name]);
+            }
+            else{
+                unset($after['field_name']);
+            }
+        }
+    }
+
+    $fields = array_merge($before, $fields, $after);
+    //print_r($fields);
+
+    return $fields;
 
 }
 
@@ -161,7 +198,7 @@ function knowledgebank_term_content_type_icons($term){
 
             if(!empty($types)) update_term_meta($term->term_id, 'term_post_types', $types);
         }
-        echo 'regen';
+        
     }
     if(!empty($types)){
         foreach($types as $type){
