@@ -8,6 +8,8 @@
             $position = strpos( $current_url , '/page' );
             $nopaging_url = ( $position ) ? substr( $current_url, 0, $position ) : $current_url;
             $nopaging_url = trailingslashit( $nopaging_url );
+
+            if(is_page('photo-news')) $nopaging_url = '/collections/967/';
         ?>
         <form class="filters" action="<?php echo $nopaging_url; ?>" method="get">
             <div class="controls-grid">

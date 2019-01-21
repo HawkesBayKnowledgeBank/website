@@ -198,11 +198,11 @@ function knowledgebank_term_content_type_icons($term){
 
             if(!empty($types)) update_term_meta($term->term_id, 'term_post_types', $types);
         }
-        
+
     }
     if(!empty($types)){
         foreach($types as $type){
-            echo sprintf('<span class="term-content-type %s"></span>',$type);
+            echo sprintf('<span class="icon-content-type %s"></span>',$type);
         }
     }
 

@@ -292,9 +292,10 @@ function knowledgebank_pre_get_posts($query){
         $filters = knowledgebank_get_filters();
         //search filtering if applicable
         if(!empty($filters['search'])){
-            $query->set('search', $filters['search']);
-            $query->set('s', $filters['search']);
+            if(is_archive()) $query->set('search', $filters['search']);
+            if(is_archive()) $query->set('s', $filters['search']);
         }//$filters['search']
+
         //ordering
         if(!empty($filters['order'])){
             $query->set('order', $filters['order']);
@@ -308,6 +309,7 @@ function knowledgebank_pre_get_posts($query){
         elseif(is_archive() && $query->queried_object_id != 277873){
             $query->set('orderby', 'name');
         }
+
         if(!empty($filters['number'])){
             $query->set('posts_per_page', $filters['number']);
         }
@@ -315,7 +317,7 @@ function knowledgebank_pre_get_posts($query){
 
         if(is_tag()) $query->set('post_type', array('still_image','audio','video','person','text'));
 
-
+        //print_r($query);
     }
 }//knowledgebank_pre_get_posts()
 add_filter('pre_get_posts', 'knowledgebank_pre_get_posts');
@@ -349,3 +351,36 @@ function knowledgebank_find_child_terms($parent_collection, $all_post_collection
     }
     return $children;
 }
+
+
+function knowledgebank_remove_redux_stuff(){
+    global $wp_meta_boxes;
+
+    if(!empty($wp_meta_boxes['dashboard']['side']['high']['redux_dashboard_widget'])){
+        unset($wp_meta_boxes['dashboard']['side']['high']['redux_dashboard_widget']);
+    }
+
+}
+add_action('wp_dashboard_setup','knowledgebank_remove_redux_stuff',100);
+
+$redux = ReduxFrameworkInstances::get_instance('wpml_settings');
+remove_action('admin_notices', array($redux, '_admin_notices'), 99);
+
+
+/* Fancy search */
+require_once('wp-advanced-search/wpas.php');
+
+
+function knowledgebank_advanced_search_form() {
+    $args = array();
+    $args['wp_query'] = array('post_type' => 'post',
+                              'posts_per_page' => 5);
+    $args['fields'][] = array('type' => 'search',
+                              'title' => 'Search',
+                              'placeholder' => 'Enter search terms...');
+    $args['fields'][] = array('type' => 'taxonomy',
+                              'taxonomy' => 'collections',
+                              'format' => 'select');
+    register_wpas_form('knowledgebank_advanced_search', $args);
+}
+add_action('init', 'knowledgebank_advanced_search_form');

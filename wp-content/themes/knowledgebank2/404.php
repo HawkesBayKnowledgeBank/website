@@ -1,24 +1,24 @@
 <?php get_header(); ?>
 
-	<main role="main">
-		<!-- section -->
-		<section>
+	<main role="main" id="post-error404; ?>">
 
-			<!-- article -->
-			<article id="post-404">
-
-				<h1><?php _e( 'Page not found', 'knowledgebank' ); ?></h1>
-				<h2>
-					<a href="<?php echo home_url(); ?>"><?php _e( 'Return home?', 'knowledgebank' ); ?></a>
-				</h2>
-
-			</article>
-			<!-- /article -->
-
+		<section class="layer intro intro-default">
+			<div class="inner">
+				<div class="intro-copy dark inner-700">
+					<h1>404 - Page not found</h1>
+				</div><!-- .intro-copy -->
+			</div><!-- .inner -->
 		</section>
-		<!-- /section -->
-	</main>
 
-<?php get_sidebar(); ?>
+		<section class="layer single-column">
+			<div class="inner thin content">
+
+					<p>Sorry, the URL requested was not found.</p>
+
+			</div><!-- .inner -->
+		</section>
+
+
+	</main>
 
 <?php get_footer(); ?>

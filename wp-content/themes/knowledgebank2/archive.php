@@ -12,6 +12,7 @@
 	if($term->parent == 967){
 		$title = "Hawke's Bay Photo News - " . $term->name;
 	}
+	if(get_field('display_title', $term)) $title = get_field('display_title', $term);
 
 ?>
 
@@ -22,7 +23,7 @@
 					<div class="intro-copy dark inner-700">
 						<?php get_template_part('sections/breadcrumbs'); ?>
 						<h1><?php echo $title; ?></h1>
-		  				<?php if(!empty($term->description)) echo apply_filters('the_content', $term->description); ?>
+		  				<?php if(!empty($term->description)) echo "<p>{$term->description}</p>"; ?>
 					</div><!-- .intro-copy -->
 				</div><!-- .inner -->
 			</section>
@@ -31,7 +32,7 @@
 
 			<?php
 				$extra_classes = array();
-				if($term->parent == 967){
+				if($term->term_id == 967 || $term->parent == 967){
 					$extra_classes[] = 'photo-news';
 				}
 			?>
@@ -88,7 +89,7 @@
 
 
 								$link = get_permalink($post->ID);
-								$image_size = $term->parent == 967 ? 'medium' : 'thumbnail';//medium for photo news
+								$image_size = $term->term_id == 967 || $term->parent == 967 ? 'medium' : 'thumbnail';//medium for photo news
 							?>
 
 				  			<div class="col tile shadow <?php echo $type; ?>">

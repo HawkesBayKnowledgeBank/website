@@ -31,6 +31,6 @@
 
 					</ul>
 				</nav>
-				<a href="#main-search" class="search-icon"><i class="mdi mdi-magnify"></i></a>
+				<a href="/search" class="search-icon"><i class="mdi mdi-magnify"></i></a>
 			</div><!-- .inner -->
 		</header><!-- .header -->

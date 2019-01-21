@@ -6,7 +6,7 @@
 
 	$title = 'Search';
 	$search_query = get_search_query();
-	if(!empty($search_query)) $title .= ' - ' . $search_query;
+	//if(!empty($search_query)) $title .= ' - ' . $search_query;
 
 ?>
 
@@ -21,12 +21,23 @@
 				</div><!-- .inner -->
 			</section>
 
-				<?php print_r(array_keys((array)$wp_query)); ?>
+			<?php get_template_part('sections/search','main'); ?>
+
+			<?php
+
+				$advanced_search = new WP_Advanced_Search('knowledgebank_advanced_search');
+				//$advanced_search->the_form();
+
+			?>
+
 
 				<main role="main">
 					<!-- section -->
 					<section class="layer">
 						<div class="inner thin content">
+
+							<?php if(!empty($search_query)): ?><h3>Results for <em><?php echo $search_query; ?></em></h3><?php endif; ?>
+
 						<?php get_template_part('search_loop'); ?>
 						<ul class="pagination">
 							<?php knowledgebank_numeric_posts_nav(); ?>

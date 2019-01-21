@@ -8,22 +8,27 @@
 			echo sprintf('<li>%s</li>', $term->name);
 		} elseif(is_archive()) {
 
-            $term = get_queried_object();
-            //print_r($term);
+			if(is_post_type_archive('bibliography')){
+				echo '<li>Bibliography</a>';
+			}
+			else{
+				$term = get_queried_object();
+	            //print_r($term);
 
-            echo sprintf('<li><a href="/%s">%s</a></li> ', $term->taxonomy, ucwords($term->taxonomy));
+	            echo sprintf('<li><a href="/%s">%s</a></li> ', $term->taxonomy, ucwords($term->taxonomy));
 
-            $ancestors = get_ancestors($term->term_id, $term->taxonomy, 'taxonomy');
-            if(!empty($ancestors)){
-                foreach($ancestors as $ancestor_id){
-                    $ancestor = get_term_by('id', $ancestor_id, $term->taxonomy);
-                    if(!empty($ancestor)){
-                        echo sprintf('<li><a href="%s">%s</a></li> ', get_term_link($ancestor), $ancestor->name);
-                    }
-                }
-            }
+	            $ancestors = get_ancestors($term->term_id, $term->taxonomy, 'taxonomy');
+	            if(!empty($ancestors)){
+	                foreach($ancestors as $ancestor_id){
+	                    $ancestor = get_term_by('id', $ancestor_id, $term->taxonomy);
+	                    if(!empty($ancestor)){
+	                        echo sprintf('<li><a href="%s">%s</a></li> ', get_term_link($ancestor), $ancestor->name);
+	                    }
+	                }
+	            }
 
-            echo sprintf('<li>%s</li>', $term->name);
+	            echo sprintf('<li>%s</li>', $term->name);
+			}
 
         }
 
@@ -62,6 +67,15 @@
 			if($post->post_type == 'post'){
 				$posts_page_id = get_option('page_for_posts');
 				echo sprintf('<li><a href="%s">%s</a></li>', get_permalink($posts_page_id),get_the_title($posts_page_id));
+			}
+
+			if($post->post_type == 'person'){
+				echo sprintf('<li><a href="%s">%s</a></li>', get_permalink(51040),get_the_title(51040)); //who's who page
+			}
+
+
+			if($post->post_type == 'bibliography'){
+				echo '<li><a href="/bibliography">Bibliography</a></li>';
 			}
 
 			echo sprintf('<li>%s</li>', $post->post_title);

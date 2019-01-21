@@ -24,16 +24,9 @@
                             <h2><?php echo $slide['title']; ?></h2>
                             <div class="button-group">
                                 <?php
-                                    $link = '#';
-                                    if($slide['link_type'] == 'internal' && !empty($slide['internal'])){
-                                        $link = get_permalink($slide['internal']->ID);
-                                    }
-                                    elseif(!empty($slide['external'])){
-                                        $link = $slide['external'];
-                                    }
                                     $target = $slide['new_window'] ? ' target="_blank"' : '';
                                 ?>
-                                <a href="<?php echo $link; ?>" class="button" <?php echo $target; ?>><?php echo $slide['link_text']; ?></a>
+                                <a href="<?php echo $slide['link']; ?>" class="button" <?php echo $target; ?>><?php echo $slide['link_text']; ?></a>
 
                             </div>
                         </div>
@@ -65,7 +58,7 @@
                 <h3><?php echo $box_left['heading']; ?></h3>
                 <?php echo $box_left['content']; ?>
                 <div class="button-group">
-                    <a href="<?php echo $box_left['button_url']; ?>" class="button"><?php echo $box_left['button_label']; ?></a>
+                    <a href="<?php echo $box_left['button_link']; ?>" class="button"><?php echo $box_left['button_label']; ?></a>
                 </div>
             </div>
             <?php $box_right = get_field('box_right'); ?>
@@ -73,7 +66,7 @@
                 <h3><?php echo $box_right['heading']; ?></h3>
                 <?php echo $box_right['content']; ?>
                 <div class="button-group">
-                    <a href="<?php echo $box_right['button_url']; ?>" class="button"><?php echo $box_right['button_label']; ?></a>
+                    <a href="<?php echo $box_right['button_link']; ?>" class="button"><?php echo $box_right['button_label']; ?></a>
                 </div>
             </div>
         </div>
