@@ -24,7 +24,7 @@
 
 		<?php knowledgebank_excerpt(); // Build your custom callback length in functions.php ?>
 
-		<?php edit_post_link(); ?>
+		<?php //edit_post_link(); ?>
 
 	</article>
 	<!-- /article -->

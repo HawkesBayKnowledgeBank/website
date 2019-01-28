@@ -139,7 +139,13 @@ jQuery(document).ready(function($) {
     $('.searchbar-toggle').click(function() {
       $('.searchbar-options').slideToggle();
       $(this).toggleClass('active');
+    });
 
+
+
+    $('.searchbar .top i').click(function(){
+        console.log('click')
+        $('#main-search form').submit();
     });
 
 

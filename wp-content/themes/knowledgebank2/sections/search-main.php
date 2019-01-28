@@ -39,7 +39,7 @@
                             </li>
                         </ul>
                         <span class="grow"></span>
-                        <a href="#">Tips</a>
+                        <!-- <a href="#">Tips</a> -->
 
                     </div>
                 </div>

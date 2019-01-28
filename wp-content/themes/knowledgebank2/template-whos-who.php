@@ -60,9 +60,7 @@
 							<?php get_template_part('sections/breadcrumbs'); ?>
 							<h1><?php the_title(); ?></h1>
 							<?php the_field('intro'); ?>
-							<?php if(!empty($display_term[0]->description)): ?>
-								<p><?php echo $display_term[0]->description; ?></p>
-							<?php endif; ?>
+							<p>An index of Hawke's Bay people.</p>							
 						</div><!-- .intro-copy -->
 					</div><!-- .inner -->
 				</section>
@@ -116,7 +114,7 @@
 
 										$birthdate = knowledgebank_get_date('birthdate', $person->ID);
 
-										
+
 
 										$deathdate = get_field('deathdate',$person->ID);
 										if(!empty($deathdate)){

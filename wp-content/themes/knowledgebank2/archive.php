@@ -94,7 +94,12 @@
 
 				  			<div class="col tile shadow <?php echo $type; ?>">
 
-								<?php $src = !empty($image['sizes'][$image_size]) ? $image['sizes'][$image_size] : '/wp-content/themes/knowledgebank2/img/placeholder-400.png';	?>
+								<?php
+									$src = '/wp-content/themes/knowledgebank2/img/placeholder-400.png'; //default
+									if($post->post_type == 'video' && get_field('youtube_id', $post->ID)) $src = sprintf('https://img.youtube.com/vi/%s/0.jpg', get_field('youtube_id', $post->ID));
+									if(!empty($image['sizes'][$image_size])) $src = $image['sizes'][$image_size];
+								?>
+
 								<div class="tile-img lazy" style="background-image:url(/wp-content/themes/knowledgebank2/img/placeholder-400.png)" data-src="<?php echo $src; ?>">
 									<a href="<?php echo $link; ?>"></a>
 								</div>

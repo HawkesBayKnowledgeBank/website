@@ -15,7 +15,7 @@
 					<div class="intro-copy dark inner-700">
 						<?php get_template_part('sections/breadcrumbs'); ?>
 						<h1><?php echo $title; ?></h1>
-		  				<?php if(!empty($term->description)) echo apply_filters('the_content', $term->description); ?>
+		  				<p>An index of Hawke's Bay people.</p>
 					</div><!-- .intro-copy -->
 				</div><!-- .inner -->
 			</section>

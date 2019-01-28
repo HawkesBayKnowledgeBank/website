@@ -51,7 +51,8 @@ function knowledgebank_header_scripts(){
         wp_register_script('modernizr', get_template_directory_uri() . '/js/lib/modernizr-2.7.1.min.js', array(), '2.7.1'); // Modernizr
         wp_enqueue_script('modernizr');
 
-        wp_register_script('knowledgebank-js', get_template_directory_uri() . '/js/script.js', array('jquery'), '1.0.0'); // Custom scripts
+        $js_mtime = filemtime(get_template_directory() . '/js/script.js');
+        wp_register_script('knowledgebank-js', get_template_directory_uri() . '/js/script.js', array('jquery'), $js_mtime); // Custom scripts
         wp_enqueue_script('knowledgebank-js');
 
         wp_register_script('knowledgebank-terms-js', get_template_directory_uri() . '/js/term-filters.js', array('jquery'), '1.0.0'); // Custom scripts
@@ -88,7 +89,8 @@ function knowledgebank_styles(){
     wp_register_style('material-icons', get_template_directory_uri() . '/css/lib/materialdesignicons.min.css', array(), '1.0', 'all');
     wp_enqueue_style('material-icons');
 
-    wp_register_style('knowledgebank', get_template_directory_uri() . '/css/knowledgebank.css', array(), '1.0', 'all');
+    $css_mtime = filemtime(get_template_directory() . '/css/knowledgebank.css');
+    wp_register_style('knowledgebank', get_template_directory_uri() . '/css/knowledgebank.css', array(), $css_mtime, 'all');
     wp_enqueue_style('knowledgebank');
 
     wp_register_style('magnific-css', get_template_directory_uri() . '/css/lib/magnific-popup.css', array(), '1.0', 'all');
@@ -152,6 +154,67 @@ function knowledgebank_excerpt($length_callback = '', $more_callback = ''){
     $output = '<p>' . $output . '</p>';
     echo $output;
 }
+
+
+function knowledgebank_allowedtags() {
+    return '<script>,<style>,<br>,<em>,<i>,<ul>,<ol>,<li>,<a>,<p>,<img>,<video>,<audio>';
+}
+
+if ( ! function_exists( 'knowledgebank_custom_wp_trim_excerpt' ) ) :
+
+    function knowledgebank_custom_wp_trim_excerpt($kb_excerpt) {
+        $raw_excerpt = $kb_excerpt;
+        if ( '' == $kb_excerpt ) {
+
+            $kb_excerpt = get_the_content('');
+            $kb_excerpt = strip_shortcodes( $kb_excerpt );
+            $kb_excerpt = apply_filters('the_content', $kb_excerpt);
+            $kb_excerpt = str_replace(']]>', ']]&gt;', $kb_excerpt);
+            $kb_excerpt = strip_tags($kb_excerpt, knowledgebank_allowedtags()); /*IF you need to allow just certain tags. Delete if all tags are allowed */
+
+            //Set the excerpt word count and only break after sentence is complete.
+                $excerpt_word_count = 75;
+                $excerpt_length = apply_filters('excerpt_length', $excerpt_word_count);
+                $tokens = array();
+                $excerptOutput = '';
+                $count = 0;
+
+                // Divide the string into tokens; HTML tags, or words, followed by any whitespace
+                preg_match_all('/(<[^>]+>|[^<>\s]+)\s*/u', $kb_excerpt, $tokens);
+
+                foreach ($tokens[0] as $token) {
+
+                    if ($count >= $excerpt_length && preg_match('/[\,\;\?\.\!]\s*$/uS', $token)) {
+                    // Limit reached, continue until , ; ? . or ! occur at the end
+                        $excerptOutput .= trim($token);
+                        break;
+                    }
+
+                    // Add words to complete sentence
+                    $count++;
+
+                    // Append what's left of the token
+                    $excerptOutput .= $token;
+                }
+
+                $kb_excerpt = trim(force_balance_tags($excerptOutput));
+
+                //$excerpt_end = ' <a href="'. esc_url( get_permalink() ) . '">' . '&nbsp;&raquo;&nbsp;' . sprintf(__( 'Read more about: %s &nbsp;&raquo;', 'wpse' ), get_the_title()) . '</a>';
+                //$excerpt_more = apply_filters('excerpt_more', ' ' . $excerpt_end);
+
+                //$kb_excerpt .= $excerpt_more; /*Add read more in new paragraph */
+
+            return $kb_excerpt;
+
+        }
+        return apply_filters('knowledgebank_custom_wp_trim_excerpt', $kb_excerpt, $raw_excerpt);
+    }
+
+endif;
+
+remove_filter('get_the_excerpt', 'wp_trim_excerpt');
+add_filter('get_the_excerpt', 'knowledgebank_custom_wp_trim_excerpt');
+
 
 // Custom Gravatar in Settings > Discussion
 function knowledgebankgravatar ($avatar_defaults){
@@ -295,7 +358,7 @@ function knowledgebank_pre_get_posts($query){
             if(is_archive()){
                 $query->set('search', $filters['search']);
                 $query->set('s', $filters['search']);
-            } 
+            }
         }//$filters['search']
 
         //ordering

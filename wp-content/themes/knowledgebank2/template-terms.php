@@ -6,7 +6,43 @@
 ?>
 
 <?php get_header(); ?>
+	<?php
 
+		$mode = get_field('mode');
+		//arguments for get_terms()
+		$args = array(
+			'hide_empty' => 1,
+			'meta_query' => array(),
+		);
+
+		$description = '';
+
+		if($mode == 'Taxonomy'):
+			$taxonomy = get_field('display_taxonomy');
+			$description = $taxonomy[0]->description;
+
+			if($taxonomy[0]->name == 'post_tag'){
+				$description = 'Tags are informal subjects or topics used to group related material.';
+			}
+
+			$args['taxonomy'] = $taxonomy[0]->name;
+			$args['parent'] = 0;
+
+			if($taxonomy[0]->name == 'collections') :
+				$args['meta_query'][] = array(
+					'key' => 'public',
+					'value' => 1,
+				);
+			endif;
+
+		else:
+			$display_term = get_field('display_term');
+			$description = $display_term[0]->description;
+			$args['taxonomy'] = $display_term[0]->taxonomy;
+			$args['child_of'] = $display_term[0]->term_id;
+		endif;
+
+	?>
 	<main role="main">
 
 			<section class="layer intro intro-default">
@@ -14,7 +50,7 @@
 					<div class="intro-copy dark inner-700">
 						<?php get_template_part('sections/breadcrumbs'); ?>
 						<h1><?php the_title(); ?></h1>
-						<?php the_field('intro'); ?>
+						<p><?php echo $description; ?></p>
 					</div><!-- .intro-copy -->
 				</div><!-- .inner -->
 			</section>
@@ -22,34 +58,6 @@
 			<?php include_once(get_template_directory() . '/sections/term-filters.php'); //include rather than get_template_part so we can share $filters ?>
 
 			<?php
-
-				$mode = get_field('mode');
-
-				//arguments for get_terms()
-				$args = array(
-					'hide_empty' => 0,
-					'meta_query' => array(),
-				);
-
-				if($mode == 'Taxonomy'):
-					$taxonomy = get_field('display_taxonomy');
-					$args['taxonomy'] = $taxonomy[0]->name;
-					$args['parent'] = 0;
-
-					if($taxonomy[0]->name == 'collections') :
-						$args['meta_query'][] = array(
-							'key' => 'public',
-							'value' => 1,
-						);
-					endif;
-
-				else:
-					$display_term = get_field('display_term');
-					//print_r($term);
-					$args['taxonomy'] = $display_term[0]->taxonomy;
-					$args['child_of'] = $display_term[0]->term_id;
-				endif;
-
 
 				//search filtering if applicable
 				if(!empty($filters['search'])){
