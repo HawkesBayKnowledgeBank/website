@@ -292,8 +292,10 @@ function knowledgebank_pre_get_posts($query){
         $filters = knowledgebank_get_filters();
         //search filtering if applicable
         if(!empty($filters['search'])){
-            if(is_archive()) $query->set('search', $filters['search']);
-            if(is_archive()) $query->set('s', $filters['search']);
+            if(is_archive()){
+                $query->set('search', $filters['search']);
+                $query->set('s', $filters['search']);
+            } 
         }//$filters['search']
 
         //ordering

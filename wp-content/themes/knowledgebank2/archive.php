@@ -8,7 +8,7 @@
 	$taxonomy = get_taxonomy($term->taxonomy);
 	$taxonomy_name = $term->taxonomy;
 
-	$title = get_the_archive_title();
+	$title = $term->name; //get_the_archive_title();
 	if($term->parent == 967){
 		$title = "Hawke's Bay Photo News - " . $term->name;
 	}

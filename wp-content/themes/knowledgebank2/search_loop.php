@@ -1,5 +1,5 @@
 <?php if (have_posts()): while (have_posts()) : the_post(); ?>
-
+	<?php if($post->ID == 113310) continue; ?>
 	<!-- article -->
 	<article id="post-<?php the_ID(); ?>" <?php post_class('search-results'); ?>>
 
@@ -14,7 +14,7 @@
 		<!-- post title -->
 		<h4>
 			<span class="icon-content-type <?php echo $post->post_type; ?>"></span>
-			<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"><?php the_title(); ?></a>			
+			<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"><?php the_title(); ?></a>
 		</h4>
 		<!-- /post title -->
 		<ul class="breadcrumbs">

@@ -27,7 +27,7 @@
 
 				//arguments for get_terms()
 				$args = array(
-					'hide_empty' => true,
+					'hide_empty' => 0,
 					'meta_query' => array(),
 				);
 
@@ -53,9 +53,9 @@
 
 				//search filtering if applicable
 				if(!empty($filters['search'])){
-					$args['search'] = $filters['search'];
+					$args['name__like'] = $filters['search'];
 				}//$filters['search']
-
+				//print_r($args);
 				$all_terms = get_terms( $args ); //we need to know how many terms there are in total, for pagination. TODO: find a more efficient solution than this
 
 				//Filters
