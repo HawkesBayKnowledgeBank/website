@@ -162,19 +162,7 @@
 
 			<?php get_template_part('sections/sponsors'); ?>
 
-			<section class="layer signup">
-				<div class="inner">
-					<div class="section-header center">
-						<h4>Sign up to our newsletter</h4>
-					</div>
-					<form class="" action="index.html" method="post">
-						<input type="text" name="" value="" placeholder="First name">
-						<input type="text" name="" value="" placeholder="Last name">
-						<input type="email" name="" value="" placeholder="Email address">
-						<button type="submit" name="button">Sign up</button>
-					</form>
-				</div>
-			</section>
+			<?php get_template_part('sections/signup'); ?>
 
 
 		</article>
