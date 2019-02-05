@@ -1,12 +1,13 @@
+<?php $fid = get_option('page_on_front'); ?>
 <section class="layer logos">
     <div class="inner">
         <div class="section-header center">
-            <h4>Sponsors &amp; Supporters</h4>
-            <p>We'd like to thank the following businesses and organisations for their support.</p>
+            <h4><?php the_field('supporters_title', $fid); ?></h4>
+            <?php the_field('supporters_intro', $fid); ?>
         </div>
         <div class="grid">
             <?php
-                $fid = get_option('page_on_front');
+
                 $sponsors = get_field('sponsors', $fid);
             ?>
             <?php if(!empty($sponsors)): ?>

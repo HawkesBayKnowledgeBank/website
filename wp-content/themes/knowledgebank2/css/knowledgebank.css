@@ -352,7 +352,7 @@
   .home-slide .slide-copy p{}
   .home-slide .slide-copy .button-group{}
   .home-slide .slide-copy .button-group a.button{}
-  .home-intro .intro-text{width: 33%;background-color: #34B841;padding: 180px 44px 160px;color: white;flex-shrink: 0;z-index: 1;max-width: 400px;background: #34B841 url(../img/pine.svg) repeat-x bottom right -20px;background-size: 113px;}
+  .home-intro .intro-text{width: 33%;background-color: #24802d;padding: 80px 44px 120px;color: white;flex-shrink: 0;z-index: 1;max-width: 400px;background: #24802d url(../img/pine.svg) repeat-x bottom right -20px;background-size: 113px;}
   .home-intro .intro-text h4{}
   .home-intro .slick-dots{padding: 0;text-align: left;bottom: 70px;}
   .home-intro .slick-dots li button:before{background: white;}

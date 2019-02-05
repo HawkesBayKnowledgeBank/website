@@ -184,37 +184,71 @@ function import_log($message){
 				foreach($d_collections as $t) {
 
 					$tid = $t['tid'];
+					$existing_term = get_terms(array(
+						'taxonomy' => 'collections',
+						'meta_query' => array(
+							'key' => '_drupal_tid',
+							'value' => $tid
+						),
+					));
 
-					if(get_term($tid,'collections')) {
-						import_log('Term ' . $tid . " already exists, moving on\n");
+					// get_term($tid,'collections')
+					if(!empty($existing_term)) {
+						import_log('Term ' . $tid . " already exists\n");
+						$wp_tid = $existing_term[0]->term_id;
 						//continue;
 					}
+					else{
+						//else get on with inserting the term
 
-					//else get on with inserting the term
+						$new_term = wp_insert_term(
+							$t["name"],
+							'collections',
+							array(
+								'description' => $t['description'],
+							)
+						);
 
-					$wpdb->query('INSERT INTO `wp_terms` values ('  . $t["tid"] . ',"' . $t["name"] . '","' . $t["tid"] . '",0) ON DUPLICATE KEY UPDATE term_id = ' . $t["tid"] . ', name = "' . $t['name'] . '", slug = "' . $t['tid'] . '"');
+						if(empty($new_term['term_id'])) {
+							import_log('error creating term ' . $tid);
+							continue;
+						}
+						$wp_tid = $new_term['term_id'];
+
+						//set drupal tid meta
+						update_term_meta($wp_tid, '_drupal_tid', $tid);
+					}
+
 
 					$parent = 0;
 
 					if(isset($t['field_collections']['und'][0]['tid'])){
-						$parent = $t['field_collections']['und'][0]['tid'];
+						//check if we can set a parent tid
+						$parent_tid = $t['field_collections']['und'][0]['tid'];
+						$existing_parent = get_terms(array(
+							'taxonomy' => 'collections',
+							'meta_query' => array(
+								'key' => '_drupal_tid',
+								'value' => $parent_tid
+							),
+						));
+						if(!empty($existing_parent[0]->term_id)){
+							wp_update_term($wp_tid, 'collections', array('parent' => $existing_parent[0]->term_id));
+						}
 					}
-
-					$wpdb->query('INSERT INTO `wp_term_taxonomy` (term_id, taxonomy, parent) VALUES ("' . $t["tid"] . '", "collections", "' . $parent . '") ON DUPLICATE KEY UPDATE term_id = ' . $t['tid'] . ', taxonomy = "collections", parent = ' . $parent);
-
 
 					import_log('Inserted term ' . $t["tid"] . ' (' . $t['name'] . ')' );
 
 					$filefield = 'field_donor_form';
-					if(isset($t[$filefield]['und']['0']['uri']) && !get_field('donor_form','collections_' . $tid)) {
+					if(isset($t[$filefield]['und']['0']['uri']) && !get_field('donor_form','collections_' . $wp_tid)) {
 						$file_path = str_replace('public://','/webs/hbda/sites/default/files/', $t[$filefield]['und']['0']['uri']);
 
-						$fileid = kb_fetch_media($file_path,$tid,'/collections/'.$tid.'/');
+						$fileid = kb_fetch_media($file_path,$wp_tid,'/collections/'.$wp_tid.'/');
 
 						if($fileid) {
 
-							update_field('field_56b452c658411',$fileid,'collections_' . $tid);
-							import_log('File ' . $fileid . ' attached to ' . $tid );
+							update_field('field_56b452c658411',$fileid,'collections_' . $wp_tid);
+							import_log('File ' . $fileid . ' attached to ' . $wp_tid );
 
 						}
 						else{
@@ -226,13 +260,13 @@ function import_log($message){
 
 					foreach($fields as $field) {
 
-						//simple text fields
+						//simple fields
 
 						if(in_array($field['type'], array('text','radio','wysiwyg','true_false','select')) && isset($t['field_' . $field['name']]['und'][0]['value'])) {
 
 							import_log("Doing field " . 'field_' . $field['name'] );
 
-							update_field($field['key'], $t['field_' . $field['name']]['und'][0]['value'], 'collections_' . $tid);
+							update_field($field['key'], $t['field_' . $field['name']]['und'][0]['value'], 'collections_' . $wp_tid);
 							import_log("Added value " .  $t['field_' . $field['name']]['und'][0]['value'] . ' to ' . $field['name'] . ' (' . $field['key'] . ')' );
 							unset($t['field_' . $field['name']]);
 						}
@@ -244,7 +278,7 @@ function import_log($message){
 					}
 
 
-					import_log('Updated term ' . $tid . ' (' . $t['name'] . ')' );
+					import_log('Updated term ' . $wp_tid . ' (' . $t['name'] . ')' );
 
 					import_log('Left in d_term: ' . print_r($t,true) );
 
@@ -264,35 +298,46 @@ function import_log($message){
 				foreach($terms as $t) {
 
 					$tid = $t['tid'];
+					$tax = $mode; //subjects, tags
+					if($tax == 'tags') $tax = 'post_tag';
 
-					if(get_term($tid,$mode)) {
-						//import_log('Term ' . $tid . " already exists, moving on\n");
+
+					$existing_term = get_terms(array(
+						'taxonomy' => $tax,
+						'meta_query' => array(
+							'key' => '_drupal_tid',
+							'value' => $tid
+						),
+					));
+
+					if(!empty($existing_term)) {
+						import_log("Term $tid already exists\n");
+						$wp_tid = $existing_term[0]->term_id;
 						//continue;
 					}
+					else{
+						//else get on with inserting the term
 
-					//else get on with inserting the term
+						$new_term = wp_insert_term(
+							$t["name"],
+							$tax,
+							array(
+								'description' => $t['description'],
+							)
+						);
 
-					$wpdb->query('REPLACE INTO `wp_terms` values ('  . $t["tid"] . ',"' . $t["name"] . '","' . $t["tid"] . '",0)');
+						if(empty($new_term['term_id'])) {
+							import_log('error creating term ' . $tid);
+							continue;
+						}
+						$wp_tid = $new_term['term_id'];
+					}
 
-					//$wpdb->query('REPLACE INTO `wp_terms` values (%d, "%s", "%d",0)',$t["tid"],$t["name"],$t["tid"]);
-
-					$parent = 0;
-
-					if($mode == 'tags') $mode = 'post_tag';
-					if($mode == 'subjects') $mode = 'subject';
-
-					$wpdb->query('REPLACE INTO `wp_term_taxonomy` (term_id, taxonomy, parent) VALUES ("' . $t["tid"] . '", "' . $mode . '", "' . $parent . '")');
-
-					import_log('Inserted term ' . $t["tid"] . ' (' . $t['name'] . ')' );
+					import_log("Inserted term {$t['tid']} ({$t['name']})" );
 
 				}
 
 			break;
-
-
-
-
-
 
 		}//switch
 
