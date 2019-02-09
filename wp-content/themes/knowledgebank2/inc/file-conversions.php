@@ -55,7 +55,7 @@ function knowledgebank_audio_create_web_from_master($post_id) {
 /**
  * Given a file path that we are already happy with (in wp-uploads or wherever already), create a WP attachment for it
  * @param  string $file_path Path to file
- * @param  int $wp_id - Id of audio
+ * @param  int $wp_id - Id of parent post
  * @return int Attachment id
  */
 function knowledgebank_insert_file_into_wp($file_path, $wp_id){
@@ -86,7 +86,8 @@ function knowledgebank_insert_file_into_wp($file_path, $wp_id){
         $attach_data = wp_generate_attachment_metadata( $attach_id, $file_path );
 
         if(is_wp_error($attach_data)) {
-            return false;        }
+            return false;
+        }
         else {
             wp_update_attachment_metadata($attach_id, $attach_data);
         }
@@ -97,4 +98,98 @@ function knowledgebank_insert_file_into_wp($file_path, $wp_id){
     else {
         return false;
     }
-}
+}//knowledgebank_insert_file_into_wp()
+
+
+/**
+ * If a master file is found, no web files found ('images','image','audio','video'), and an 'auto_generate' field is true.. generate the relevant kind of web file (image, audio etc).
+ * @param  integer $post_id WP post ID
+ * @param boolean $force Whether to force the conversion
+ * @return void
+ */
+function knowledgebank_auto_file_conversion($post_id, $force = false){
+
+    switch(get_post_type($post_id)){
+
+        case 'still_image':
+        case 'text':
+            if($force || (get_field('auto_generate',$post_id) && get_field('master',$post_id) && !get_field('images', $post_id))){
+                $master = get_field('master',$post_id);
+
+                //do the conversion
+                if(!empty($master['id'])){
+                    $master_path = get_attached_file($master['id']);
+                    if(empty($master_path) || !file_exists($master_path)) return false;
+
+                    //output path is wp-content/uploads/node/$post_id/images/
+                    $wp_upload_dir = wp_get_upload_dir();
+
+                    //make sure our /$post_id/ and /$post_id/images/ subdirectories exist
+                    $output_dir = $wp_upload_dir['basedir'] . "/node/$post_id";
+                    if(!file_exists($output_dir)) mkdir($output_dir);
+                    $output_dir .= "/images";
+                    if(!file_exists($output_dir)) mkdir($output_dir);
+
+
+                    if(file_exists($output_dir)){ //create our image
+
+                        //first delete existing jpegs in output dir
+                        //try to be a little bit safe in what we expect $output_dir to look like :p
+                        if(preg_match('@^/webs/new/wp-content/uploadsnode/[0-9]+/images@', $output_dir)){
+                            echo "Deleting jpgs";
+                            exec("rm -f  $output_dir/*.jpg");
+                        }
+
+                        $output_filename = !empty($master['name']) ? "{$master['name']}.jpg" : "$post_id.jpg";
+                        $output_path = "$output_dir/$output_filename";
+                        exec("convert -quality 90 -interlace none -density 300 -format jpg -resize 1800x1800 $master_path $output_path");
+                        //echo "convert -quality 90 -interlace none -density 300 -format jpg -resize 1800x1800 $master_path $output_path";
+
+                        //if conversion worked, we should have jpegs in our output dir
+                        $jpgs = glob("$output_dir/*.jpg");
+                        if(!empty($jpgs)){ //insert new jpgs as wordpress attachments and into the images field on the post
+
+                            $images_field = get_field_object('images',$post_id);
+                            $images_key = $images_field['key'];
+                            $image_key = $images_field['sub_fields'][0]['key'];
+
+                            update_field($images_key,array(),$post_id); //clear existing images
+
+                            foreach($jpgs as $jpg){
+                                echo "Adding wp attachment for $jpg \n";
+                                $attachment_id = knowledgebank_insert_file_into_wp($jpg, $post_id);
+                                if(!empty($attachment_id)){
+                                    add_row($images_key, array($image_key => $attachment_id),$post_id);
+                                }
+                                else{
+                                    echo 'failed to get attachment id';
+                                }
+                            }
+                        }
+                        else{
+                            echo "No jpegs";
+                        }
+
+                    }//create image(s)
+
+                }//if master[id]
+
+            }//if auto generate
+        break;
+
+        case 'audio':
+
+        break;
+
+        case 'video':
+
+        break;
+
+    }//switch
+
+}//knowledgebank_auto_file_conversion()
+
+
+/******************************/
+//Actions
+add_action('save_post','knowledgebank_auto_file_conversion');

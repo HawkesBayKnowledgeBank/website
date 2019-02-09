@@ -31,13 +31,14 @@
 			import_log("Doing collections");
 			$cid = $node['field_collections']['und'][0]['tid'];
 
+/*
 			//see if the collection exists already
 			$collection = get_term($cid,'collections');
 
 			if(empty($collection)) {
 				kb_add_term($cid,'collections');
 			}
-
+*/
 
 			wp_set_object_terms( $wp_id, $cid, 'collections' );
 			import_log('Set collection ' . $cid );
@@ -57,7 +58,7 @@
 				kb_add_term($cid,'collections');
 			}
 
-			wp_set_object_terms( $wp_id, $cid, 'collections', true );
+			wp_set_object_terms( $wp_id, $cid, 'collections', true ); //true = append
 			import_log('Set series ' . $cid );
 			unset($node['field_series']);
 		}
@@ -113,7 +114,7 @@
 
 		//master
 		$filefield = 'field_master';
-		if(isset($node[$filefield]['und']['0']['uri'])) {
+		if(isset($node[$filefield]['und']['0']['uri']) && !get_field('master', $wp_id)) {
 			import_log("Doing field_master");
 			$file_path = str_replace('public://','/webs/hbda/sites/default/files/', $node[$filefield]['und']['0']['uri']);
 			import_log('Fetchmedia for master on  ' . $wp_id  . print_r($node[$filefield]['und']['0'],true) );
@@ -131,7 +132,7 @@
 
 		//image
 		$filefield = 'field_image';
-		if(isset($node[$filefield]['und'][0]['uri'])) {
+		if(isset($node[$filefield]['und'][0]['uri']) && !get_field('images', $wp_id)) {
 
 			import_log("Doing field_image");
 
@@ -206,7 +207,7 @@
 				$people = array();
 
 				foreach($node['field_' . $nf]['und'] as $person) {
-					
+
 					$people[] = array(
 						array_pop(acf_key($nf,'first_name')) => $person['given'],
 						array_pop(acf_key($nf,'middle_names')) => $person['middle'],

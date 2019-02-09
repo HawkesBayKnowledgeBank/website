@@ -428,12 +428,12 @@ function knowledgebank_remove_redux_stuff(){
 }
 add_action('wp_dashboard_setup','knowledgebank_remove_redux_stuff',100);
 
-$redux = ReduxFrameworkInstances::get_instance('wpml_settings');
-remove_action('admin_notices', array($redux, '_admin_notices'), 99);
+//$redux = ReduxFrameworkInstances::get_instance('wpml_settings');
+//remove_action('admin_notices', array($redux, '_admin_notices'), 99);
 
 
 /* Fancy search */
-require_once('wp-advanced-search/wpas.php');
+//require_once('wp-advanced-search/wpas.php');
 
 
 function knowledgebank_advanced_search_form() {
@@ -448,4 +448,4 @@ function knowledgebank_advanced_search_form() {
                               'format' => 'select');
     register_wpas_form('knowledgebank_advanced_search', $args);
 }
-add_action('init', 'knowledgebank_advanced_search_form');
+//add_action('init', 'knowledgebank_advanced_search_form');
