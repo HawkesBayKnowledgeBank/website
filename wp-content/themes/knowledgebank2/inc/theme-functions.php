@@ -227,3 +227,41 @@ function update_term_icons($post_id){
     }
 }
 add_action('save_post','update_term_icons');
+
+//Accession numbers on post creation
+function knowledgebank_generate_post_accession_number( $post_id, $post, $update ) {
+
+	if ($update || wp_is_post_revision( $post_id ) || get_field('accession_number', $post_id)) return;
+
+    $accession_number = $post_id; //start with post id
+
+    $collections = get_field('collections',$post_id);
+
+    if(!empty($collections)){
+
+        //sort
+        $collection_hierarchy = array();
+        $parent_id = 0;
+        $child_found = true;
+        while($child_found != false){
+            $child_found = false;
+            foreach($collections as $collection){
+                if($collection->parent == $parent_id){
+                    $parent_id = $collection->term_id;
+                    $collection_hierarchy[] = $parent_id;
+                    $child_found = true;
+                    break;
+                }
+            }
+        }
+
+        if(!empty($collection_hierarchy)){
+            $collection_hierarchy[] = $accession_number;
+            $accession_number = implode('/',$collection_hierarchy);
+        }
+    }
+    //update_post_meta($post_id, 'accession_number', $accession_number);
+    update_field('field_56d3eb00414ad', $accession_number,$post_id);
+
+}
+add_action( 'wp_insert_post', 'knowledgebank_generate_post_accession_number', 10, 3 );

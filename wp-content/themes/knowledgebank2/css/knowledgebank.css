@@ -748,6 +748,8 @@ article.search-results .icon-content-type { float:right;}
   .footer p{color: #979aa5;font-size: 14px;}
   .footer ul li{position: relative;font-size: 14px;margin-bottom: 3px;}
   .footer ul li:before{content:'-';display:block;position: absolute;left: -16px;color: #979aa5;}
+  .footer ul li.mdi-facebook{ padding:10px; }
+  .footer ul li.mdi-facebook:before{font-family:'Material Design Icons'; content:"\F20C";font-size:22px;}
   .footer a{font-weight: 400;color: #ffffff;text-decoration: none;}
   .footer a:hover{text-decoration:underline;}
   .footer p.footer-meta{border-top: 1px solid rgba(255, 255, 255, 0.05);margin-top: 17px;padding-top: 30px;font-size: 12px;}
@@ -991,7 +993,7 @@ article.search-results .icon-content-type { float:right;}
 
 /* Sub-colletion tiles */
 
-.grid.sub-collections .tile.shadow, .grid.sub-collections .tile.shadow .tile-copy { background-color: #34b841; color :#fff;}
+.grid.sub-collections .tile.shadow, .grid.sub-collections .tile.shadow .tile-copy { background-color: #24802d; color :#fff;}
 .grid.sub-collections .tile-copy h4 > a, .grid.sub-collections .tile-copy h4 > a:visited { color : #fff; }
 /* Print Styles
 --------------------------- */

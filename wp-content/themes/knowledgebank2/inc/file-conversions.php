@@ -13,11 +13,13 @@ function knowledgebank_convert_to_mp3($input_path) {
 
         if($mp3_path != '/.mp3'){
             if(file_exists($mp3_path)) return $mp3_path;
-            exec("ffmpeg -i $input_path $mp3_path");
+            echo "ffmpeg -i \"$input_path\" \"$mp3_path\"";
+            exec("ffmpeg -i \"$input_path\" \"$mp3_path\"");
             if(file_exists($mp3_path)) return $mp3_path;
+
         }
     }
-    return false;
+
 }//knowledgebank_ogg_to_mp3()
 
 
@@ -41,6 +43,7 @@ function knowledgebank_audio_create_web_from_master($post_id) {
     if(empty($file_path)) return false;
 
     $mp3 = knowledgebank_convert_to_mp3($file_path);
+
     if(!empty($mp3)){
         //now we need to 'upload' the file to WordPress
         $attachment_id = knowledgebank_insert_file_into_wp($mp3, $post_id);
@@ -114,71 +117,14 @@ function knowledgebank_auto_file_conversion($post_id, $force = false){
         case 'still_image':
         case 'text':
             if($force || (get_field('auto_generate',$post_id) && get_field('master',$post_id) && !get_field('images', $post_id))){
-                $master = get_field('master',$post_id);
-
-                //do the conversion
-                if(!empty($master['id'])){
-                    $master_path = get_attached_file($master['id']);
-                    if(empty($master_path) || !file_exists($master_path)) return false;
-
-                    //output path is wp-content/uploads/node/$post_id/images/
-                    $wp_upload_dir = wp_get_upload_dir();
-
-                    //make sure our /$post_id/ and /$post_id/images/ subdirectories exist
-                    $output_dir = $wp_upload_dir['basedir'] . "/node/$post_id";
-                    if(!file_exists($output_dir)) mkdir($output_dir);
-                    $output_dir .= "/images";
-                    if(!file_exists($output_dir)) mkdir($output_dir);
-
-
-                    if(file_exists($output_dir)){ //create our image
-
-                        //first delete existing jpegs in output dir
-                        //try to be a little bit safe in what we expect $output_dir to look like :p
-                        if(preg_match('@^/webs/new/wp-content/uploadsnode/[0-9]+/images@', $output_dir)){
-                            echo "Deleting jpgs";
-                            exec("rm -f  $output_dir/*.jpg");
-                        }
-
-                        $output_filename = !empty($master['name']) ? "{$master['name']}.jpg" : "$post_id.jpg";
-                        $output_path = "$output_dir/$output_filename";
-                        exec("convert -quality 90 -interlace none -density 300 -format jpg -resize 1800x1800 $master_path $output_path");
-                        //echo "convert -quality 90 -interlace none -density 300 -format jpg -resize 1800x1800 $master_path $output_path";
-
-                        //if conversion worked, we should have jpegs in our output dir
-                        $jpgs = glob("$output_dir/*.jpg");
-                        if(!empty($jpgs)){ //insert new jpgs as wordpress attachments and into the images field on the post
-
-                            $images_field = get_field_object('images',$post_id);
-                            $images_key = $images_field['key'];
-                            $image_key = $images_field['sub_fields'][0]['key'];
-
-                            update_field($images_key,array(),$post_id); //clear existing images
-
-                            foreach($jpgs as $jpg){
-                                echo "Adding wp attachment for $jpg \n";
-                                $attachment_id = knowledgebank_insert_file_into_wp($jpg, $post_id);
-                                if(!empty($attachment_id)){
-                                    add_row($images_key, array($image_key => $attachment_id),$post_id);
-                                }
-                                else{
-                                    echo 'failed to get attachment id';
-                                }
-                            }
-                        }
-                        else{
-                            echo "No jpegs";
-                        }
-
-                    }//create image(s)
-
-                }//if master[id]
-
+                knowledgebank_convert_master_image($post_id);
             }//if auto generate
         break;
 
         case 'audio':
-
+            if(get_field('auto_convert',$post_id) && get_field('master',$post_id) && !get_field('audio',$post_id)){
+                knowledgebank_audio_create_web_from_master($post_id);
+            }
         break;
 
         case 'video':
@@ -189,6 +135,65 @@ function knowledgebank_auto_file_conversion($post_id, $force = false){
 
 }//knowledgebank_auto_file_conversion()
 
+function knowledgebank_convert_master_image($post_id){
+
+    $master = get_field('master',$post_id);
+
+    //do the conversion
+    if(!empty($master['id'])){
+        $master_path = get_attached_file($master['id']);
+        if(empty($master_path) || !file_exists($master_path)) return false;
+
+        //output path is wp-content/uploads/node/$post_id/images/
+        $wp_upload_dir = wp_get_upload_dir();
+
+        //make sure our /$post_id/ and /$post_id/images/ subdirectories exist
+        $output_dir = $wp_upload_dir['basedir'] . "/node/$post_id";
+        if(!file_exists($output_dir)) mkdir($output_dir);
+        $output_dir .= "/images";
+        if(!file_exists($output_dir)) mkdir($output_dir);
+
+
+        if(file_exists($output_dir)){ //create our image
+
+            //first delete existing jpegs in output dir
+            //try to be a little bit safe in what we expect $output_dir to look like :p
+            if(preg_match('@^/webs/new/wp-content/uploadsnode/[0-9]+/images@', $output_dir)){
+                echo "Deleting jpgs";
+                exec("rm -f  $output_dir/*.jpg");
+            }
+
+            $output_filename = !empty($master['name']) ? "{$master['name']}.jpg" : "$post_id.jpg";
+            $output_path = "$output_dir/$output_filename";
+            exec("convert -quality 90 -interlace none -density 300 -format jpg -resize 1800x1800 \"$master_path\" \"$output_path\"");
+            //echo "convert -quality 90 -interlace none -density 300 -format jpg -resize 1800x1800 $master_path $output_path";
+
+            //if conversion worked, we should have jpegs in our output dir
+            $jpgs = glob("$output_dir/*.jpg");
+            if(!empty($jpgs)){ //insert new jpgs as wordpress attachments and into the images field on the post
+
+                $images_field = get_field_object('images',$post_id);
+                $images_key = $images_field['key'];
+                $image_key = $images_field['sub_fields'][0]['key'];
+
+                update_field($images_key,array(),$post_id); //clear existing images
+
+                foreach($jpgs as $jpg){
+                    echo "Adding wp attachment for $jpg \n";
+                    $attachment_id = knowledgebank_insert_file_into_wp($jpg, $post_id);
+                    if(!empty($attachment_id)){
+                        add_row($images_key, array($image_key => $attachment_id),$post_id);
+                    }
+
+                }
+
+            }
+
+        }//create image(s)
+
+    }//if master[id]
+
+}//knowledgebank_convert_master_image
 
 /******************************/
 //Actions

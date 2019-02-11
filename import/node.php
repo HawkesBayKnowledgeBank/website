@@ -41,6 +41,9 @@
 */
 
 			wp_set_object_terms( $wp_id, $cid, 'collections' );
+			$collections = array($cid);
+			update_field(acf_key('collections'), $collections, $wp_id);
+
 			import_log('Set collection ' . $cid );
 
 			unset($node['field_collections']);
@@ -59,6 +62,11 @@
 			}
 
 			wp_set_object_terms( $wp_id, $cid, 'collections', true ); //true = append
+
+			if(empty($collections)) $collections = array();
+			$collections[] = $cid;
+			update_field(acf_key('collections'), $collections, $wp_id);
+
 			import_log('Set series ' . $cid );
 			unset($node['field_series']);
 		}
@@ -83,6 +91,7 @@
 			}
 
 			wp_set_post_terms( $wp_id, $terms, 'subject' );
+			update_field(acf_key('subjects'), $terms, $wp_id);
 			import_log('Set terms ' . print_r($terms,true) . " on subjects");
 			unset($node['field_subjects']);
 		}
@@ -105,6 +114,7 @@
 			}
 
 			wp_set_post_terms( $wp_id, $terms, 'post_tag' );
+			update_field(acf_key('tags'), $terms, $wp_id);
 			import_log('Set terms ' . print_r($terms,true) . " on tags");
 			unset($node['field_tags']);
 		}

@@ -4,6 +4,7 @@
 
         <?php
             $links = array_map(function($related_post){
+                if(get_post_status($related_post->ID) != 'publish') return false;
                 return sprintf('<a href="%s" target="_blank">%s</a>',get_permalink($related_post->ID),$related_post->post_title);
             },$field['value']);
             echo implode(', ', $links);

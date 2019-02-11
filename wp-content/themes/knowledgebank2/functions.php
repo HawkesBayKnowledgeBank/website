@@ -31,7 +31,9 @@ if (function_exists('add_theme_support')){
 
     // Add Thumbnail Theme Support
     add_theme_support('post-thumbnails');
-
+    //set_post_thumbnail_size( 400, 256, array('center','top') );
+    //add_image_size( 'thumbnail', 400, 256, array( 'center', 'top' ) );
+    update_option( 'thumbnail_crop', array( 'center', 'top' ) );
     //add_image_size('custom-size', 700, 200, true); // Custom Thumbnail Size call using the_post_thumbnail('custom-size');
 
 }
