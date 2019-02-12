@@ -9,7 +9,7 @@
 		<!-- article -->
 		<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
-			<section class="layer intro intro-default background-image" style="background-image:url(img/quake.jpg);">
+			<section class="layer intro intro-default background-image" style="">
 				<div class="inner">
 					<div class="intro-copy dark inner-700">
 						<?php get_template_part('sections/breadcrumbs'); ?>

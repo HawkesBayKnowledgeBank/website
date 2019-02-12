@@ -25,7 +25,7 @@
 
 			<?php
 
-				$advanced_search = new WP_Advanced_Search('knowledgebank_advanced_search');
+				//$advanced_search = new WP_Advanced_Search('knowledgebank_advanced_search');
 				//$advanced_search->the_form();
 
 			?>

@@ -36,7 +36,6 @@
 									<tr>
 										<th>Title</th>
 										<th>Author(s)</th>
-										<th>ISBN</th>
 										<th>Publication date</th>
 									</tr>
 								</thead>
@@ -65,14 +64,12 @@
 											$author = implode(", ", $author_strings);
 										}
 
-										$isbn = get_field('isbn', $book->ID);
 										$yearpublished = get_field('yearpublished', $book->ID);
 
 									?>
 									<tr>
 										<td data-title="Title"><a href="<?php echo get_permalink($book->ID); ?>"><?php echo $book->post_title; ?></a></td>
 										<td data-title="Author"><?php echo $author; ?></td>
-										<td data-title="ISBN"><?php echo $isbn; ?></td>
 										<td data-title="Year"><?php echo $yearpublished; ?></td>
 									</tr>
 

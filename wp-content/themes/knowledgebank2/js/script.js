@@ -106,10 +106,30 @@ jQuery(document).ready(function($) {
       asNavFor: '.intro-slider',
     });
 
+    if($('.sub-collections .tile').length > 10){
+
+        $('.sub-collections .tile').wrap('<div class="tileslide"></div>');
+
+        $('.sub-collections').slick({
+          dots: false,
+          mobileFirst:true,
+          slidesToShow: 1,
+          slidesPerRow: 1,
+          rows: 1,
+              responsive: [
+              {
+                breakpoint: 600,
+                settings: {
+                    slidesPerRow: 5,
+                    rows: 2,
+                }
+            }]
+        });
+    }
+
 
 
     $('.media-slider').slick({
-
       dots: true,
       slidesToShow: 1,
       slidesToScroll: 1,

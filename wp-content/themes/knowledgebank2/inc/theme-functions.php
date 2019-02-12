@@ -23,6 +23,9 @@ function knowledgebank_field_template($field, $looping= true){
         'youtube_id',
         'auto_generate_images',
         'collections',
+        'transcript',
+        'source',
+        'holder',
     );
     if($looping && in_array($field['name'], $exclude)) return false;
 

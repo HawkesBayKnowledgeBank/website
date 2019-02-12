@@ -66,10 +66,10 @@ function knowledgebank_header_scripts(){
         wp_register_script('lazy-js', get_template_directory_uri() . '/js/lib/jquery.lazy.min.js', array('jquery'), '1.0.0'); // Custom scripts
         wp_enqueue_script('lazy-js');
 
-        wp_register_script('slick-js', '//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js', array('jquery'), '1.0.0'); // Custom scripts
+        wp_register_script('slick-js', get_template_directory_uri() . '/js/lib/slick/slick.min.js', array('jquery'), '1.0.0'); // Custom scripts
         wp_enqueue_script('slick-js');
 
-        wp_register_script('select2-js', '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js', array('jquery'), '1.0.0'); // Custom scripts
+        wp_register_script('select2-js', get_template_directory_uri() . '/js/lib/select2/select2.min.js', array('jquery'), '1.0.0'); // Custom scripts
         wp_enqueue_script('select2-js');
 
     }
@@ -77,6 +77,8 @@ function knowledgebank_header_scripts(){
 
 function knowledgebank_admin_scripts(){
     wp_enqueue_script( 'acf-date-picker-js', get_stylesheet_directory_uri() . '/js/custom_acf_date_picker.js', array(), '1.0.0', true );
+    wp_enqueue_style('kb-admin-css', get_template_directory_uri() . '/css/knowledgebank-admin.css', array(), '1.0', 'all');
+
 }
 add_action('admin_enqueue_scripts', 'knowledgebank_admin_scripts');
 
@@ -98,7 +100,7 @@ function knowledgebank_styles(){
     wp_register_style('magnific-css', get_template_directory_uri() . '/css/lib/magnific-popup.css', array(), '1.0', 'all');
     wp_enqueue_style('magnific-css');
 
-    wp_register_style('select2-css', '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css', array(), '1.0', 'all');
+    wp_register_style('select2-css', get_template_directory_uri() . '/css/lib/select2.min.css', array(), '1.0', 'all');
     wp_enqueue_style('select2-css');
 
 }

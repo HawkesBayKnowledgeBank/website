@@ -36,6 +36,7 @@
 					$extra_classes[] = 'photo-news';
 				}
 			?>
+			<!-- sub-terms -->
 			<section class="layer results tiles <?php echo implode(' ', $extra_classes); ?>">
 				<div class="inner">
 					<?php
