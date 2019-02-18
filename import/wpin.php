@@ -41,14 +41,14 @@ function import_log($message){
 	//taxonomies first, content second
 
 	$modes = array(
-		//'collections' => 35640,//$mode => $fgid
-		//'tags' => '',
-		//'subjects' => '',
-		//'still_image' => 37072,
-		//'video' => 35615,
-		//'person' => 36254,
+		'collections' => 35640,//$mode => $fgid
+		'tags' => '',
+		'subjects' => '',
+		'still_image' => 37072,
+		'video' => 35615,
+		'person' => 36254,
 		'audio' => 51154,
-		//'text' => 51186,
+		'text' => 51186,
 	);
 
 
@@ -175,7 +175,7 @@ function import_log($message){
 					$tid = $t['tid'];
 
 					if(get_term($tid,'collections')) {
-						import_log('Term ' . $tid . " already exists, moving on\n");
+						import_log('Term ' . $tid . " already exists\n");
 						//continue;
 					}
 

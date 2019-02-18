@@ -6,5 +6,5 @@
         }else{
             echo $field['value'];
         }
-        ?>
+    ?>
 </div>

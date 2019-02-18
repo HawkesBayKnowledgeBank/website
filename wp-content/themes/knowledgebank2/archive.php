@@ -39,42 +39,8 @@
 			<!-- sub-terms -->
 			<section class="layer results tiles <?php echo implode(' ', $extra_classes); ?>">
 				<div class="inner">
-					<?php
-						$child_terms = get_terms(array( 'taxonomy' => $taxonomy_name, 'child_of' => $term_id, 'orderby' => 'name' ));
-					?>
-					<?php if(!empty($child_terms)): ?>
-						<?php /* <h5>Sub-<?php echo strtolower($taxonomy->labels->singular_name); ?>s in <?php echo single_cat_title( '', false ); ?></h5> */ ?>
-					<div class="grid column-5 sub-collections">
-						<?php foreach($child_terms as $child_term): ?>
-							<?php
-								$link = get_term_link($child_term);
-								$image = get_field('image',$child_term);
-							?>
 
-							<div class="col tile shadow">
-								<?php /*if(!empty($image)): ?>
-									<?php
-										$src = !empty($image['sizes']['thumbnail']) ? $image['sizes']['thumbnail'] : '';
-									?>
-									<div class="tile-img lazy" data-src="<?php echo $src; ?>">
-										<a href="<?php echo $link; ?>"></a>
-									</div>
-								<?php endif; */ ?>
-								<div class="tile-copy">
-									<h4><a href="<?php echo $link; ?>"><?php echo $child_term->name; ?></a></h4>
-									<p class="term-item-count"><?php echo $child_term->count; ?> items</p>
-									<?php if(!empty($child_term->description)): ?><p><?php echo $child_term->description; ?></p><?php endif; ?>
-									<?php /*
-									<div class="button-group">
-										<a href="<?php echo $link; ?>" class="button">View</a>
-									</div>
-									*/ ?>
-								</div><!-- .tile-copy -->
-							</div><!-- .col -->
-						<?php endforeach; ?>
-
-					</div><!-- child terms -->
-					<?php endif; ?>
+					<?php include('sections/sub-terms.php'); ?>
 
 					<?php /* <h5>Records in <?php echo single_cat_title( '', false ); ?></h5> */ ?>
 					<div class="grid column-4 ">

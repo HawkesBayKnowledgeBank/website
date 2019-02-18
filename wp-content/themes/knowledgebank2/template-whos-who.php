@@ -60,7 +60,7 @@
 							<?php get_template_part('sections/breadcrumbs'); ?>
 							<h1><?php the_title(); ?></h1>
 							<?php the_field('intro'); ?>
-							<p>An index of Hawke's Bay people.</p>							
+							<p>An index of Hawke's Bay people.</p>
 						</div><!-- .intro-copy -->
 					</div><!-- .inner -->
 				</section>
@@ -112,31 +112,19 @@
 
 										//dates are kind of complex as they have an accuracy which determines how much of the date is valid and should be shown
 
-										$birthdate = knowledgebank_get_date('birthdate', $person->ID);
+										$birthdate = get_field('birthdate', $person->ID, false);
+
+										if(!empty($birthdate)){
+											//birthdates have some odd values brought over from Drupal - might be Y or Y-m or Y-m-d
+											$birthdate_dt = DateTime::createFromFormat('Y-m-d H:i:s', $birthdate);
+											$birthdate = $birthdate_dt->format('Y');
+										}
 
 
-
-										$deathdate = get_field('deathdate',$person->ID);
+										$deathdate = get_field('deathdate',$person->ID, false);
 										if(!empty($deathdate)){
 											$deathdate_dt = DateTime::createFromFormat('Y-m-d H:i:s', $deathdate);
-											if(!empty($deathdate_dt)){
-												$deathdate_accuracy = get_field('birthdate_accuracy', $person->ID);
-												switch($deathdate_accuracy){
-
-													case '365':
-														$deathdate = $deathdate_dt->format('Y');
-													break;
-
-													case '30':
-														$deathdate = $deathdate_dt->format('Y-m');
-													break;
-
-													default:
-														$deathdate = $deathdate_dt->format('Y-m-d');
-													break;
-
-												}
-											}
+											$deathdate = $deathdate_dt->format('Y');
 										}
 
 									?>

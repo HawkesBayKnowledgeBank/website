@@ -108,22 +108,25 @@ jQuery(document).ready(function($) {
 
     if($('.sub-collections .tile').length > 10){
 
-        $('.sub-collections .tile').wrap('<div class="tileslide"></div>');
+        //$('.sub-collections .tile').wrap('<div class="tileslide"></div>');
 
         $('.sub-collections').slick({
           dots: false,
           mobileFirst:true,
           slidesToShow: 1,
-          slidesPerRow: 1,
-          rows: 1,
-              responsive: [
+          slidesToScroll:1,
+          responsive: [
               {
                 breakpoint: 600,
                 settings: {
-                    slidesPerRow: 5,
-                    rows: 2,
+                    slidesToShow: 5,
+                    slidesToScroll:5,
                 }
-            }]
+          }],
+        });
+        $('.sub-collections').on('afterChange', function(slick, currentSlide){
+            console.log(currentSlide);
+            $('.slide-count .current-index').text(Math.ceil(currentSlide.currentSlide / 5) + 1);
         });
     }
 
@@ -138,7 +141,7 @@ jQuery(document).ready(function($) {
 
     //lazy loading - slick's native version doesn't handle adaptiveHeight o.O
     //unlazy the slide after the one we are viewing
-    $('.media-slider').on('afterChange', function(event, slick, currentSlide){
+    $('.media-slider, .book-slider').on('afterChange', function(event, slick, currentSlide){
         var nextSlide = currentSlide + 1;
         var $next_image = $('[data-slick-index="' + nextSlide + '"] img[data-lazy-src]');
         if($next_image.length){
@@ -147,7 +150,7 @@ jQuery(document).ready(function($) {
         }
     });
     //if jumping to a lazy slide, unlazy it
-    $('.media-slider').on('beforeChange', function(event, slick, currentSlide, nextSlide){
+    $('.media-slider, .book-slider').on('beforeChange', function(event, slick, currentSlide, nextSlide){
         var $next_image = $('[data-slick-index="' + nextSlide + '"] img[data-lazy-src]');
         if($next_image.length){
             $next_image.attr('src', $next_image.attr('data-lazy-src') );
@@ -206,7 +209,7 @@ jQuery(document).ready(function($) {
     });
 
     // single image - Magnific (for images)
-    $('.media-slider:not(.video)').each(function() {
+    $('.media-slider:not(.video), .book-slider:not(.video)').each(function() {
         $(this).magnificPopup({
             delegate: 'a.zoom',
             type: 'image',

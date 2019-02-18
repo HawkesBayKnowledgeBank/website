@@ -3,7 +3,7 @@
 					<div class="inner">
 						<div class="grid column-4">
 							<div class="col">
-								<img src="<?php echo get_stylesheet_directory_uri(); ?>/img/knowledgebank_logo_center_reversed.svg" alt="Knowledge Bank">
+								<a href="/"><img src="<?php echo get_stylesheet_directory_uri(); ?>/img/knowledgebank_logo_center_reversed.svg" alt="Knowledge Bank"></a>
 							</div>
 							<div class="col">
 								<h5>Quicklinks</h5>
@@ -61,7 +61,7 @@
 		(f[s].q=f[s].q||[]).push(arguments)},f[s].l=1*new Date();h=i.createElement(r),
 		l=i.getElementsByTagName(r)[0];h.async=1;h.src=e;l.parentNode.insertBefore(h,l)
 		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-		ga('create', 'UA-XXXXXXXX-XX', 'yourdomain.com');
+		ga('create', 'UA-36759475-1', 'knowledgebank.org.nz');
 		ga('send', 'pageview');
 		</script>
 

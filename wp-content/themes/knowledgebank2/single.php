@@ -28,47 +28,7 @@
 
 			<?php if(!empty($images)): ?>
 
-				<?php
-					//maybe output a caption with each image
-					$transcript = get_field('transcript');
-					if(!empty($transcript)){
-						$captions = preg_split('/<hr ?\/?>/', $transcript);//pages are delimited by <hr /> (match variations <hr> and <hr/>)
-					}
-				?>
-
-				<section class="layer media-slider-wrap">
-					<div class="inner">
-						<div class="media-slider">
-
-							<?php foreach($images as $index => $image): $image = $image['image']; //image :) ?>
-
-							<div class="media-slide">
-								<div class="media-slide-inner">
-									<?php
-										if($index > 3){ //lazy load everything after image 3
-											$src = sprintf('src="" data-lazy-src="%s"',$image['sizes']['large']);
-										}
-										else{
-											$src = sprintf('src="%s"',$image['sizes']['large']);
-										}
-									?>
-									<img <?php echo $src; ?> alt="<?php echo $image['alt']; ?>" />
-									<a href="<?php echo $image['url']; ?>" class="zoom">
-										<i class="mdi mdi-magnify"></i>
-									</a>
-								</div>
-								<?php if(!empty($captions[$index])): ?>
-								<div class="caption">
-									<?php echo $captions[$index]; ?>
-								</div>
-							<?php endif; ?>
-							</div><!-- .media-slide -->
-
-							<?php endforeach; ?>
-
-						</div><!-- .media-slider -->
-					</div>
-				</section>
+				<?php include('sections/image-slider.php'); ?>
 
 			<?php endif; //!empty($images) ?>
 
@@ -112,53 +72,7 @@
 				</div>
 			</section>
 
-			<section class="layer commenting-wrap">
-				<div class="inner">
-					<div class="commenting">
-						<h4>Do you know something about this record?</h4>
-						<p>Please note we cannot verify the accuracy of any information posted by the community.</p>
-						<div id="disqus_thread"></div>
-						<script>
-						    /**
-						     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT
-						     *  THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR
-						     *  PLATFORM OR CMS.
-						     *
-						     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT:
-						     *  https://disqus.com/admin/universalcode/#configuration-variables
-						     */
-
-						    var disqus_config = function () {
-						        // Replace PAGE_URL with your page's canonical URL variable
-						        //this.page.url = https://knowledgebank.org.nz/<?php echo get_field('accession_number'); ?>;
-
-						        // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-								<?php
-									$identifier = get_post_meta($post->ID, '_drupal_nid', true);
-									if(empty($identifier)) $identifier = $post->ID;
-								?>
-								this.page.identifier = 'node/<?php echo $identifier; ?>';
-						    };
-
-
-						    (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
-						        var d = document, s = d.createElement('script');
-
-						        s.src = 'https://hawkesbayknowledgebank.disqus.com/embed.js';
-
-						        s.setAttribute('data-timestamp', +new Date());
-						        (d.head || d.body).appendChild(s);
-						    })();
-						</script>
-						<noscript>
-						    Please enable JavaScript to view the
-						    <a href="https://disqus.com/?ref_noscript" rel="nofollow">
-						        comments powered by Disqus.
-						    </a>
-						</noscript>
-					</div><!-- .commenting -->
-				</div>
-			</section>
+			<?php include('sections/disqus.php'); ?>
 
 			<?php get_template_part('sections/sponsors'); ?>
 
