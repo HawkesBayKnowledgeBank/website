@@ -898,6 +898,7 @@ article.search-results .icon-content-type { float:right;}
   .book-slide .caption{width: 50%;-ms-flex-negative: 0;/* flex-shrink: 0; */position: absolute;height: 100%;padding: 30px;overflow: auto;}
   .book-slide .caption-inner{min-height: 100%;left: 0;width: 100%;overflow-y: auto;display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-orient: vertical;-webkit-box-direction: normal;-ms-flex-direction: column;flex-direction: column;-webkit-box-pack: center;-ms-flex-pack: center;justify-content: center;-ms-flex-negative: 0;flex-shrink: 0;}
   .book-slide img{width: 50%;height: auto;margin-left: 50%;}
+  .book-slide.nocaption img { width:100%; margin:0;}
   .book-slide .caption-inner p{margin:0.6em 0;}
   .book-slide a.zoom, a.zoom{position: absolute;bottom: 0;right: 0;color: white;top: 0;right: 0;width: 50%;}
   .media-slider a.zoom{width:100%;}

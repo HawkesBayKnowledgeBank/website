@@ -16,14 +16,14 @@
 
                 <div class="slide-wrap">
 
-                    <div class="book-slide">
+                    <div class="book-slide <?php if(empty($captions[$index])) echo 'nocaption'; ?>">
+                        <?php if(!empty($captions[$index])): ?>
                         <div class="caption">
                             <div class="caption-inner">
-                                <?php if(!empty($captions[$index])): ?>
                                 <?php echo $captions[$index]; ?>
-                                <?php endif; ?>
                             </div><!-- .caption-inner -->
                         </div><!-- .caption -->
+                        <?php endif; ?>
                         <?php
                             if($index > 3){ //lazy load everything after image 3
                                 $src = sprintf('src="" data-lazy-src="%s"',$image['sizes']['large']);
