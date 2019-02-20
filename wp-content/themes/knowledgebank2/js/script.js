@@ -131,9 +131,10 @@ jQuery(document).ready(function($) {
     }
 
 
-
+    var dots = true;
+    if($('.media-slider .media-slide').length == 1) dots = false;
     $('.media-slider').slick({
-      dots: true,
+      dots: dots,
       slidesToShow: 1,
       slidesToScroll: 1,
       adaptiveHeight: true,

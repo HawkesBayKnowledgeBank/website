@@ -1,6 +1,6 @@
 <section class="field-section layer">
     <div class="inner">
-        <div class="col field field-audio" data-field-name="<?php echo $field['name']; ?>">            
+        <div class="col field field-audio" data-field-name="<?php echo $field['name']; ?>">
             <?php
                 //check if we have a master ogg
                 global $post;
@@ -18,3 +18,16 @@
         </div><!--.field -->
     </div><!-- .inner -->
 </section>
+<?php if(get_field('transcript')): ?>
+
+    <section class="layer trascript">
+
+        <div class="inner">
+
+            <?php the_field('transcript'); ?>
+
+        </div>
+
+    </section>
+
+<?php endif; ?>

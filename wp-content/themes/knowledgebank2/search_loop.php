@@ -1,3 +1,4 @@
+<?php //global $wp_query; print_r($wp_query); ?>
 <?php if (have_posts()): while (have_posts()) : the_post(); ?>
 	<?php if($post->ID == 113310) continue; ?>
 	<!-- article -->

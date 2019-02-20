@@ -37,12 +37,16 @@
 						<div class="inner thin content">
 
 							<?php if(!empty($search_query)): ?><h3>Results for <em><?php echo $search_query; ?></em></h3><?php endif; ?>
+							<?php if(get_current_user_id() == 'x5116'): ?>
+								<?php get_template_part('sections/solr-results'); ?>
+							<?php else: ?>
+							<?php get_template_part('search_loop'); ?>
+							<?php endif; ?>
 
-						<?php get_template_part('search_loop'); ?>
-						<ul class="pagination">
-							<?php knowledgebank_numeric_posts_nav(); ?>
-						</ul>
-					</div>
+							<ul class="pagination">
+								<?php knowledgebank_numeric_posts_nav(); ?>
+							</ul>
+						</div>
 					</section>
 					<!-- /section -->
 				</main>

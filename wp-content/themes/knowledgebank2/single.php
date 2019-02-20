@@ -10,6 +10,7 @@
 		<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
 			<section class="layer intro intro-default background-image" style="">
+				<?php if(function_exists('the_favorites_button')) the_favorites_button($post->ID); ?>
 				<div class="inner">
 					<div class="intro-copy dark inner-700">
 						<?php get_template_part('sections/breadcrumbs'); ?>

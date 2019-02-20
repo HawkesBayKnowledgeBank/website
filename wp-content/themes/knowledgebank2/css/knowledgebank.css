@@ -884,6 +884,9 @@ article.search-results .icon-content-type { float:right;}
     .media-slider .slick-prev, .media-slider .slick-next{display: none !important;}
   }
 
+/* favourites */
+
+.single .simplefavorite-button {position:absolute; right:0; top:0; padding:10px;font-size:14px;cursor: pointer;}
 
   /* Book slider
   --------------------------- */

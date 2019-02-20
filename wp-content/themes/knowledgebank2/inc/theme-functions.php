@@ -243,7 +243,7 @@ function knowledgebank_generate_post_accession_number( $post_id, $post, $update 
 
     if(!empty($collections)){
 
-        //sort
+        //we take the first hierarchy we can find in our collections - as soon as we find a parent term, we push it into our hierarchal list and repeat for its children
         $collection_hierarchy = array();
         $parent_id = 0;
         $child_found = true;
@@ -251,9 +251,9 @@ function knowledgebank_generate_post_accession_number( $post_id, $post, $update 
             $child_found = false;
             foreach($collections as $collection){
                 if($collection->parent == $parent_id){
-                    $parent_id = $collection->term_id;
-                    $collection_hierarchy[] = $parent_id;
-                    $child_found = true;
+                    $parent_id = $collection->term_id;//this term is a child of the current parent, it now becomes the parent
+                    $collection_hierarchy[] = $parent_id; //push this term into the hierarchy
+                    $child_found = true; //set flag to true to we recurse down into this term's children
                     break;
                 }
             }

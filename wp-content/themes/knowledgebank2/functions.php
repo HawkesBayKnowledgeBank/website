@@ -76,7 +76,7 @@ function knowledgebank_header_scripts(){
 }
 
 function knowledgebank_admin_scripts(){
-    wp_enqueue_script( 'acf-date-picker-js', get_stylesheet_directory_uri() . '/js/custom_acf_date_picker.js', array(), '1.0.0', true );
+    wp_enqueue_script( 'acf-date-picker-js', get_stylesheet_directory_uri() . '/js/custom_acf_date_picker.js', array('acf'), '1.0.0', true );
     wp_enqueue_style('kb-admin-css', get_template_directory_uri() . '/css/knowledgebank-admin.css', array(), '1.0', 'all');
 
 }
@@ -355,6 +355,7 @@ function knowledgebank_get_filters(){
 
 function knowledgebank_pre_get_posts($query){
     if(empty($query)) return false;
+
     if($query->is_main_query()){
         $filters = knowledgebank_get_filters();
         //search filtering if applicable
@@ -391,7 +392,12 @@ function knowledgebank_pre_get_posts($query){
 }//knowledgebank_pre_get_posts()
 add_filter('pre_get_posts', 'knowledgebank_pre_get_posts');
 
-
+function knowledgebank_posts_request($request, $query){
+    if($query->is_main_query() && $query->is_search()){
+        $query->set('solr_integrate',true);
+    }
+}
+//add_filter('posts_request', 'knowledgebank_posts_request',20,2);
 
 function knowledgebank_get_collections($post_id){
     $terms = wp_get_post_terms($post_id, 'collections');
@@ -438,18 +444,3 @@ add_action('wp_dashboard_setup','knowledgebank_remove_redux_stuff',100);
 
 /* Fancy search */
 //require_once('wp-advanced-search/wpas.php');
-
-
-function knowledgebank_advanced_search_form() {
-    $args = array();
-    $args['wp_query'] = array('post_type' => 'post',
-                              'posts_per_page' => 5);
-    $args['fields'][] = array('type' => 'search',
-                              'title' => 'Search',
-                              'placeholder' => 'Enter search terms...');
-    $args['fields'][] = array('type' => 'taxonomy',
-                              'taxonomy' => 'collections',
-                              'format' => 'select');
-    register_wpas_form('knowledgebank_advanced_search', $args);
-}
-//add_action('init', 'knowledgebank_advanced_search_form');
