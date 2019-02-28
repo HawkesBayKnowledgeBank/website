@@ -269,3 +269,31 @@ function knowledgebank_generate_post_accession_number( $post_id, $post, $update 
 
 }
 add_action( 'wp_insert_post', 'knowledgebank_generate_post_accession_number', 10, 3 );
+
+
+
+add_filter('tiny_mce_before_init','kb_configure_tinymce');
+
+/**
+ * Customize TinyMCE's configuration
+ *
+ * @param   array
+ * @return  array
+ */
+function kb_configure_tinymce($in) {
+  $in['paste_preprocess'] = "function(plugin, args){
+    // Strip all HTML tags except those we have whitelisted
+    var whitelist = 'p,b,strong,i,em,h3,h4,h5,h6,ul,li,ol';
+    var stripped = jQuery('<div>' + args.content + '</div>');
+    var els = stripped.find('*').not(whitelist);
+    for (var i = els.length - 1; i >= 0; i--) {
+      var e = els[i];
+      jQuery(e).replaceWith(e.innerHTML);
+    }
+    // Strip all class and id attributes
+    stripped.find('*').removeAttr('id').removeAttr('class');
+    // Return the clean HTML
+    args.content = stripped.html();
+  }";
+  return $in;
+}

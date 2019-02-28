@@ -21,3 +21,22 @@ acf.add_filter('date_picker_args', function( args, $field ){
 	return args;
 
 });
+
+acf.add_filter('select2_ajax_data', function( data, args, $input, field, instance ){
+
+	if($('.acf-field[data-key="' + data.field_key + '"]').attr('data-name') == 'collections'){
+		var field_selector = '[name="acf[' + data.field_key + '][]"]'; //the select field holding the values chosen
+		if($(field_selector).val()){
+			var collections = $(field_selector).val();
+			parent_id = collections.pop(); //parent of available options will be set to the last term selected
+		}
+		else{
+			parent_id = 0; //nothing chosen yet, offer only top-level terms
+		}
+		data.parent = parent_id;
+	}
+
+    // return
+    return data;
+
+});

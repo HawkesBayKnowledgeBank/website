@@ -76,7 +76,8 @@ function knowledgebank_header_scripts(){
 }
 
 function knowledgebank_admin_scripts(){
-    wp_enqueue_script( 'acf-date-picker-js', get_stylesheet_directory_uri() . '/js/custom_acf_date_picker.js', array('acf'), '1.0.0', true );
+    $js_mtime = filemtime(get_stylesheet_directory() . '/js/knowledgebank_acf.js');
+    wp_enqueue_script( 'knowledgebank-acf-js', get_stylesheet_directory_uri() . '/js/knowledgebank_acf.js', array(), $js_mtime, true );
     wp_enqueue_style('kb-admin-css', get_template_directory_uri() . '/css/knowledgebank-admin.css', array(), '1.0', 'all');
 
 }
