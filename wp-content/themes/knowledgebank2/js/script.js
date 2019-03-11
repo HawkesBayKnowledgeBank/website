@@ -224,6 +224,7 @@ jQuery(document).ready(function($) {
     // Book slider
     $('.book-slider').slick({
       dots: true,
+      
     });
 
     //Lazy images

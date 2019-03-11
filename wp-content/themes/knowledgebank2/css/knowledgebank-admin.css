@@ -1,1 +1,3 @@
 #collectionsdiv.postbox, #tagsdiv-post_tag.postbox { display:none;}
+
+.edit-tags-php.taxonomy-collections .form-wrap  .form-field.term-slug-wrap { display:none; }

@@ -45,7 +45,7 @@
 
 							</div>
 						</div>
-						<p class="footer-meta">© 2018 Hawke's Bay Digital Archives Trust <span class="spacer">|</span>
+						<p class="footer-meta">© 2018 - <?php echo date('Y'); ?> Hawke's Bay Digital Archives Trust <span class="spacer">|</span>
 							<a href="http://mogul.nz/" target="_blank">Website by Mogul</a> <span class="spacer">|</span>
 							<a href="/login">Login</a></p>
 

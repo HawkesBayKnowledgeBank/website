@@ -10,7 +10,7 @@
   audio:not([controls]) { display: none; }
   [hidden] { display: none; }
   html {font-size: 100%;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;-webkit-font-smoothing: antialiased;background: #E7E8EE;}
-  html, button, input, select, textarea {font-family: 'Karla', sans-serif;color: #282a43;}
+  html, button, input, select, textarea {font-family: 'Work Sans', sans-serif;color: #282a43;}
   body {margin: 0;font-size: 1em;line-height: 1.4;overflow-x: hidden;}
   ::-moz-selection { background: #2fbdff; color: #fff; text-shadow: none; }
   ::selection { background: #2fbdff; color: #fff; text-shadow: none; }
@@ -211,14 +211,14 @@
       font-weight: 600;
       font-style: normal;
   }
-  body{font-family: 'Karla', sans-serif;}
+  body{font-family: 'Work Sans', sans-serif;}
   h1{font-family: 'YoungSerif';font-size: 3.3em;letter-spacing: -0.025em;line-height: 1.15em;margin-bottom: 0.4em;margin-top: 0;}
   h2{font-family: 'YoungSerif';font-size: 2.6em;letter-spacing: -0.025em;line-height: 1.15em;margin-bottom: 0.4em;margin-top: 0;}
-  h3{font-family: 'Karla', sans-serif;font-size: 2.2em;letter-spacing: -0.025em;line-height: 1.22em;margin-top: 0;margin-bottom: 0.4em;font-weight: 400;}
+  h3{font-family: 'Work Sans', sans-serif;font-size: 2.2em;letter-spacing: -0.025em;line-height: 1.22em;margin-top: 0;margin-bottom: 0.4em;font-weight: 400;}
   h4{font-size: 24px;margin: 0.8em 0;letter-spacing: -0.025em;line-height: 1.22em;margin-top: 0;margin-bottom: 0.4em;}
   h5{letter-spacing: -0.025em;line-height: 1.22em;font-size: 18px;font-weight: 700;font-family: 'YoungSerif';margin-top: 0;margin-bottom: 0.4em;}
   h6{letter-spacing: 0.04em;line-height: 1.22em;text-transform: uppercase;font-size: 16px;margin-top: 0;margin-bottom: 0.4em;}
-  p, li{font-family: 'Karla', sans-serif;letter-spacing: -0.025em;line-height: 1.6em;}
+  p, li{font-family: 'Work Sans', sans-serif;letter-spacing: -0.025em;line-height: 1.6em;}
   .dark h1,.dark h2,.dark h3,.dark h4,.dark h5,.dark h6,.dark p,.dark li{color:white;}
 
   @media screen and (max-width:680px){
@@ -952,6 +952,21 @@ article.search-results .icon-content-type { float:right;}
     .book-slide .caption-inner{}
     .book-slide img{width: 100%;margin: 0;}
     .book-slide a.zoom,a.zoom{display:none;}
+  }
+
+  .slick-slider {
+    -webkit-user-select: text;
+    -khtml-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+  }
+  .slick-list.draggable {
+      -webkit-user-select: text;
+      -khtml-user-select: text;
+      -moz-user-select: text;
+      -ms-user-select: text;
+      user-select: text;
   }
 
 .sub-collections { margin-bottom: 20px;}

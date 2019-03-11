@@ -296,4 +296,50 @@ function kb_configure_tinymce($in) {
     args.content = stripped.html();
   }";
   return $in;
+}//kb_configure_tinymce()
+
+
+//add_action('create_term', 'knowledgebank_term_slug', 10, 3 );
+function knowledgebank_term_slug($term_id, $tt_id, $taxonomy) {
+
+    if($taxonomy != 'collections') return;
+
+    $term = get_term_by('id', $term_id, $taxonomy, ARRAY_A);
+    $term['slug'] = $term['term_id'];
+    wp_update_term($term_id, $taxonomy, $term);
+
 }
+
+
+function is_chris(){
+    return (get_current_user_id() == 5116);
+}
+
+function knowledgebank_admin_new_post_links() {
+    if(is_user_logged_in() && is_single()){
+        global $post;
+        $collections = wp_get_post_terms($post->ID, 'collections');
+        if(!empty($collections)){
+            $collection_ids = array();
+            foreach($collections as $collection){
+                $collection_ids[] = $collection->term_id;
+            }
+            echo "<script>var knowledgebank_collections = '" . http_build_query(array('collections' => $collection_ids)) . "';</script>";
+        }
+    }
+    elseif(is_user_logged_in() && is_tax('collections')){
+        $collection_id = get_queried_object()->term_id;
+        if(!empty($collection_id)){
+            $collection_ids = array($collection_id);
+            $collection = get_term_by('id',$collection_id,'collections');
+            while(!empty($collection->parent)){//recurse up the term parents getting ids
+                $collection = get_term_by('id',$collection->parent,'collections');
+                if(!empty($collection->term_id)) $collection_ids[] = $collection->term_id;
+            }
+            //finally flip the id array so eldest ancestor is first, which we want for our acf field
+            $collection_ids = array_reverse($collection_ids);
+            echo "<script>var knowledgebank_collections = '" . http_build_query(array('collections' => $collection_ids)) . "';</script>";
+        }
+    }
+}
+add_action( 'wp_footer', 'knowledgebank_admin_new_post_links' );

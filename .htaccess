@@ -2,12 +2,12 @@
 # BEGIN WordPress
 <IfModule mod_rewrite.c>
 RewriteEngine On
+RewriteBase /
 
 # old Drupal redirects
 RewriteRule ^[0-9]+\/[0-9]+\/([0-9]+) https://knowledgebank.org.nz/?p=$1
 RewriteRule ^[0-9]+\/([0-9]+) https://knowledgebank.org.nz/?p=$1
 RewriteRule ^([0-9]+) https://knowledgebank.org.nz/?p=$1
-
 
 RewriteRule ^index\.php$ - [L]
 RewriteCond %{REQUEST_FILENAME} !-f

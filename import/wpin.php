@@ -115,7 +115,19 @@ function import_log($message){
 							$wp_post = get_post($wp_id);
 
 						}
-						else{
+						else{ //update with current details
+
+							$status = ($node['status'] == 1 ? 'publish' : 'draft');
+							
+							$updated_post = array(
+								'ID' => $wp_id,
+							    'post_title' => $node['title'],
+							    'post_modified' => date('Y-m-d H:i:s',$node['changed']),
+							    'post_content' => (isset($node['body']['und'][0]['value']) ? $node['body']['und'][0]['value'] : ''),
+							    'post_status' => $status,
+							);
+							wp_update_post($updated_post);
+
 							$wp_post = get_post($wp_id);
 						}
 
