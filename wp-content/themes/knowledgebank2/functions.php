@@ -450,3 +450,29 @@ add_action('wp_dashboard_setup','knowledgebank_remove_redux_stuff',100);
 
 /* Fancy search */
 //require_once('wp-advanced-search/wpas.php');
+
+
+function knowledgebank_og_tags(){
+
+    if(!is_single()) return;
+
+    //fallbacks
+    $title = get_option('blogname');
+    $description = get_option('blogdescription');
+    $image = get_stylesheet_directory_uri() . '/img/share-lg.png';
+    $url = get_permalink();
+
+    $title = get_the_title();
+    $images = get_field('images');
+    if(!empty($images[0])){
+        $image = $images[0]['image']['sizes']['large'] ?? $images[0]['image']['url'];
+    }
+
+    echo vsprintf('
+        <meta property="og:title" content="%s">
+        <meta property="og:image" content="%s">
+        <meta property="og:url" content="%s">
+    ',array($title, $image, $url));
+
+}
+add_action('wp_head', 'knowledgebank_og_tags');
