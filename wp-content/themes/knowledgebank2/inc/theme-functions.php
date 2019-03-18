@@ -20,6 +20,7 @@ function knowledgebank_field_template($field, $looping= true){
         'audio',
         'birthdate_accuracy',
         'deathdate_accuracy',
+        'marriage_date_accuracy',
         'youtube_id',
         'auto_generate_images',
         'auto_convert',
@@ -155,11 +156,11 @@ function knowledgebank_get_date($field_name, $post_id) {
                 break;
 
                 case '30':
-                    $_date = $_date_dt->format('Y-m');
+                    $_date = $_date_dt->format('m/Y');
                 break;
 
                 default:
-                    $_date = $_date_dt->format('Y-m-d');
+                    $_date = $_date_dt->format('d/m/Y');
                 break;
 
             }

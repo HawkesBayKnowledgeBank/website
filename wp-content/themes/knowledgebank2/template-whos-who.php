@@ -11,27 +11,30 @@
 		'post_type' => 'person',
 		'posts_per_page' => -1,
 		'post_status' => 'publish',
-		'meta_key' => 'name_0_family_name',
+		'meta_query' => 'name_0_family_name',
 		'orderby' => 'meta_value',
 		'order' => 'ASC'
 	);
 
+	global $wpdb;
+	//$all_people = $wpdb->get_results('SELECT ID, pm1.meta_value AS last_name, pm2.meta_value AS first_name FROM wp_posts LEFT JOIN wp_postmeta pm1 ON ID = pm1.post_id LEFT JOIN wp_postmeta pm2 ON ID = pm2.post_id WHERE pm1.meta_key = "name_0_family_name" AND pm2.meta_key = "name_0_first_name" ORDER BY last_name, first_name ASC');
 
 
 	$letter = '';
 	if(!empty($_GET['letter']) && strlen($_GET['letter']) == 1) {
 		$letter = $_GET['letter'];
-		$regex_letter = strtolower($letter) . strtoupper($letter);
-		$args['meta_query'] = array(
-			array(
-				'key' => 'name_0_family_name',
-				'value' => "^[$regex_letter]",
-				'compare' => 'REGEXP'
-			)
-		);
+		$sql = $wpdb->prepare('SELECT ID, pm1.meta_value AS last_name, pm2.meta_value AS first_name FROM wp_posts LEFT JOIN wp_postmeta pm1 ON ID = pm1.post_id LEFT JOIN wp_postmeta pm2 ON ID = pm2.post_id WHERE pm1.meta_key = "name_0_family_name" AND pm2.meta_key = "name_0_first_name" AND pm1.meta_value LIKE "%s" AND wp_posts.post_status = "publish" ORDER BY last_name, first_name ASC',array($letter . '%'));
+		//echo $sql;
+		$all_people = $wpdb->get_results($sql);
+
+	}
+	else{
+		$all_people = $wpdb->get_results('SELECT ID, pm1.meta_value AS last_name, pm2.meta_value AS first_name FROM wp_posts LEFT JOIN wp_postmeta pm1 ON ID = pm1.post_id LEFT JOIN wp_postmeta pm2 ON ID = pm2.post_id WHERE pm1.meta_key = "name_0_family_name" AND pm2.meta_key = "name_0_first_name" AND wp_posts.post_status = "publish" ORDER BY last_name, first_name ASC');
 	}
 	//print_r($args);
-	$all_people = get_posts( $args );
+//	$all_people = get_posts( $args );
+
+	//print_r($all_people);
 
 	//Filters
 	if(!empty($filters['number']) && is_numeric($filters['number'])){
@@ -41,14 +44,15 @@
 		$args['posts_per_page'] = 90;
 	}
 
+	$args['offset'] = 0;
 	if(!empty($_GET['_page']) && is_numeric($_GET['_page'])){
 		$offset = $args['posts_per_page'] * ($_GET['_page'] - 1); //eg on page 2, with 20 posts per page, we skip 20 * (2-1)
 		$args['offset'] = $offset;
 	}
 
+	$people = array_slice($all_people, $args['offset'], $args['posts_per_page']);
 
-
-	$people = get_posts( $args ); //just the terms we want, accounting for pagination
+	//$people = get_posts( $args ); //just the terms we want, accounting for pagination
 
 ?>
 
@@ -104,6 +108,8 @@
 								</thead>
 								<?php foreach($people as $person): ?>
 									<?php
+										$person = get_post($person->ID);
+
 										$name = get_field('name', $person->ID);
 										//print_r($name);
 										$family_name = !empty($name[0]['family_name']) ? $name[0]['family_name'] : '';
@@ -116,15 +122,15 @@
 
 										if(!empty($birthdate)){
 											//birthdates have some odd values brought over from Drupal - might be Y or Y-m or Y-m-d
-											$birthdate_dt = DateTime::createFromFormat('Y-m-d H:i:s', $birthdate);
-											$birthdate = $birthdate_dt->format('Y');
+											$birthdate_dt = DateTime::createFromFormat('Ymd', $birthdate);
+											if(!empty($birthdate_dt)) $birthdate = $birthdate_dt->format('Y');
 										}
 
 
 										$deathdate = get_field('deathdate',$person->ID, false);
 										if(!empty($deathdate)){
-											$deathdate_dt = DateTime::createFromFormat('Y-m-d H:i:s', $deathdate);
-											$deathdate = $deathdate_dt->format('Y');
+											$deathdate_dt = DateTime::createFromFormat('Ymd', $deathdate);
+											if(!empty($deathdate_dt)) $deathdate = $deathdate_dt->format('Y');
 										}
 
 									?>
