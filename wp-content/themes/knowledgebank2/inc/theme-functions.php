@@ -140,6 +140,19 @@ function knowledgebank_register_menus() {
 add_action( 'init', 'knowledgebank_register_menus' );
 
 
+/** Advanced admin listings */
+
+function knowledgebank_manage_content_page(){
+  add_menu_page( 'Find Content', 'Find Content', 'manage_options', 'knowledgebank_content_manager', 'knowledgebank_manage_content_page_html','',0);
+}
+add_action('admin_menu', 'knowledgebank_manage_content_page');
+
+function knowledgebank_manage_content_page_html(){
+        include(get_stylesheet_directory() . '/admin/find-content.php');
+}
+
+
+
 
 //Format a date using an associated 'accuracy' field
 function knowledgebank_get_date($field_name, $post_id) {

@@ -52,8 +52,6 @@
 
 	$people = array_slice($all_people, $args['offset'], $args['posts_per_page']);
 
-	//$people = get_posts( $args ); //just the terms we want, accounting for pagination
-
 ?>
 
 	<main role="main">

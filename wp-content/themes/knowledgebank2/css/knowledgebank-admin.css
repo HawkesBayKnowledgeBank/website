@@ -1,3 +1,12 @@
 #collectionsdiv.postbox, #tagsdiv-post_tag.postbox { display:none;}
 
 .edit-tags-php.taxonomy-collections .form-wrap  .form-field.term-slug-wrap { display:none; }
+
+
+/* Find content */
+#find-content form { max-width:1200px; display:block;}
+#find-content input,
+#find-content select,
+#find-content button,
+#find-content label { display:block; margin:5px; width:300px;}
+#find-content .search-controls { display:flex;}

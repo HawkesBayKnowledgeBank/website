@@ -33,21 +33,12 @@
 
 			<?php endif; //!empty($images) ?>
 
-			<?php if(get_field('audio')): ?>
 
-				<?php
-					$audio = get_field_object('audio');
-					knowledgebank_field_template($audio, false);
-				?>
-
-			<?php endif; //audio ?>
 
 			<?php
-				if($post->post_type == 'video'):
 					$video = get_field_object('master');
 					$video['name'] = 'video';
-					knowledgebank_field_template($video, false);
-				 endif; //videos
+					knowledgebank_field_template($video, false);		
 			?>
 
 			<section class="layer attributes">
