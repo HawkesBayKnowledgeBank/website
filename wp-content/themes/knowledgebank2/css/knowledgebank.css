@@ -465,6 +465,7 @@
   article.search-results .breadcrumbs li, article.search-results .breadcrumbs li a { color:#282a43;}
 
 
+
 /* default intro */
 .intro-default{background: #24802d;background-size: cover;background-position: center right;background-image: url(../img/intro1.png); position:relative; }
 
@@ -738,6 +739,9 @@ article.search-results .icon-content-type { float:right;}
   .news .post-thumbnail { float:none; margin: 0 auto 20px auto; }
   .news .post-thumbnail img {max-width:100%; width:100%; display:block; margin: 0 auto;}
 }
+
+.highlight { background-color: #fff700; }
+
 /* Footer
   --------------------------- */
   .footer{background: #24293e;}
