@@ -60,6 +60,10 @@ function knowledgebank_header_scripts(){
         wp_register_script('knowledgebank-terms-js', get_template_directory_uri() . '/js/term-filters.js', array('jquery'), '1.0.0'); // Custom scripts
         wp_enqueue_script('knowledgebank-terms-js');
 
+        wp_register_script('jquery-highlight', get_template_directory_uri() . '/js/jquery.highlight.js', array('jquery'), '1.0.0'); // Custom scripts
+        wp_enqueue_script('jquery-highlight');
+
+
         wp_register_script('magnific-js', get_template_directory_uri() . '/js/lib/jquery.magnific-popup.js', array('jquery'), '1.0.0'); // Custom scripts
         wp_enqueue_script('magnific-js');
 
