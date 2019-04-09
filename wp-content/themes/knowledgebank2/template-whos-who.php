@@ -31,10 +31,6 @@
 	else{
 		$all_people = $wpdb->get_results('SELECT ID, pm1.meta_value AS last_name, pm2.meta_value AS first_name FROM wp_posts LEFT JOIN wp_postmeta pm1 ON ID = pm1.post_id LEFT JOIN wp_postmeta pm2 ON ID = pm2.post_id WHERE pm1.meta_key = "name_0_family_name" AND pm2.meta_key = "name_0_first_name" AND wp_posts.post_status = "publish" ORDER BY last_name, first_name ASC');
 	}
-	//print_r($args);
-//	$all_people = get_posts( $args );
-
-	//print_r($all_people);
 
 	//Filters
 	if(!empty($filters['number']) && is_numeric($filters['number'])){
@@ -133,7 +129,7 @@
 
 									?>
 									<tr>
-										<td data-title="Last Name:"><a href="<?php echo get_permalink($person->ID); ?>"><?php echo $family_name; ?></a></td>
+										<td data-title="Last Name:"><a href="<?php echo get_permalink($person->ID); ?>"><?php echo strtoupper($family_name); ?></a></td>
 										<td data-title="First Name:"><a href="<?php echo get_permalink($person->ID); ?>"><?php echo $first_names; ?></a></td>
 										<td data-title="DOB:"><?php echo $birthdate; ?></td>
 										<td data-title="DOD:"><?php echo $deathdate; ?></td>

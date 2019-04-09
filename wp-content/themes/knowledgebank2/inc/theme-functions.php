@@ -22,7 +22,7 @@ function knowledgebank_field_template($field, $looping= true){
         'deathdate_accuracy',
         'marriage_date_accuracy',
         'youtube_id',
-        'auto_generate_images',
+        'auto_generate',
         'auto_convert',
         'collections',
         'transcript',
@@ -59,6 +59,11 @@ function knowledgebank_field_template($field, $looping= true){
 function knowledgebank_get_field_objects(){
     $fields = get_field_objects();
 
+    //first sort by back end order
+    uasort($fields, function($a,$b){
+        return strnatcmp($a['menu_order'], $b['menu_order']);
+    });
+
     //Anything we want to go before other fields, in desired order
     $before = array_flip(array('master','licence','name')); //use a nice simple array to declare field names, but flip so these become keys for use
 
@@ -75,7 +80,7 @@ function knowledgebank_get_field_objects(){
     }
 
     //Anything we want specifically moved to the end
-    $after = array_flip(array('biography','accession_number'));
+    $after = array_flip(array( 'biography','accession_number'));
     if(!empty($after) && !empty($fields)){
         foreach($after as $field_name => $_val){
             if(array_key_exists($field_name, $fields)){ //found the field we are looking for, move it into $after
