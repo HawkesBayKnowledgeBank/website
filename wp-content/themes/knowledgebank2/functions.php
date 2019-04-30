@@ -488,3 +488,15 @@ function wpb_image_editor_default_to_gd( $editors ) {
     return $editors;
 }
 add_filter( 'wp_image_editors', 'wpb_image_editor_default_to_gd' );
+
+
+function knowledgebank_dev_site_admin_bar($wp_admin_bar) {
+
+    if(get_option('siteurl') != 'https://test.knowledgebank.org.nz') return;
+
+    $wp_admin_bar->add_menu( array(
+        'id' => 'wpse-form-in-admin-bar',
+        'parent' => 'root-default',
+        'title' => '<span style="background-color: red;width: 100%; display: block;padding: 0 6px;text-align: center;">test site</span>') );
+}
+add_action( 'admin_bar_menu', 'knowledgebank_dev_site_admin_bar', 10 , 1 );

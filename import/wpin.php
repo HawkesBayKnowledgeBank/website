@@ -41,21 +41,21 @@ function import_log($message){
 	//taxonomies first, content second
 
 	$modes = array(
-		'collections' => 35640,//$mode => $fgid
-		'tags' => '',
-		'subjects' => '',
-		'still_image' => 37072,
-		'video' => 35615,
+		// 'collections' => 35640,//$mode => $fgid
+		// 'tags' => '',
+		// 'subjects' => '',
+		// 'still_image' => 37072,
+		// 'video' => 35615,
 		'person' => 36254,
-		'audio' => 51154,
-		'text' => 51186,
+		// 'audio' => 51154,
+		// 'text' => 51186,
 	);
 
 
 	foreach($modes as $mode => $fgid) :
 
 		//Get all the fields on an ACF field group
-		$fields = acf_get_fields_by_id($fgid);
+		$fields = acf_get_fields($fgid);
 
 		switch($mode) {
 
@@ -94,7 +94,7 @@ function import_log($message){
 						}
 
 						if(empty($wp_id)){ //need to create a post
-
+							continue;
 							//Post
 							$status = ($node['status'] == 1 ? 'publish' : 'draft');
 
@@ -117,16 +117,16 @@ function import_log($message){
 						}
 						else{ //update with current details
 
-							$status = ($node['status'] == 1 ? 'publish' : 'draft');
-							
-							$updated_post = array(
-								'ID' => $wp_id,
-							    'post_title' => $node['title'],
-							    'post_modified' => date('Y-m-d H:i:s',$node['changed']),
-							    'post_content' => (isset($node['body']['und'][0]['value']) ? $node['body']['und'][0]['value'] : ''),
-							    'post_status' => $status,
-							);
-							wp_update_post($updated_post);
+							// $status = ($node['status'] == 1 ? 'publish' : 'draft');
+							//
+							// $updated_post = array(
+							// 	'ID' => $wp_id,
+							//     'post_title' => $node['title'],
+							//     'post_modified' => date('Y-m-d H:i:s',$node['changed']),
+							//     'post_content' => (isset($node['body']['und'][0]['value']) ? $node['body']['und'][0]['value'] : ''),
+							//     'post_status' => $status,
+							// );
+							// wp_update_post($updated_post);
 
 							$wp_post = get_post($wp_id);
 						}

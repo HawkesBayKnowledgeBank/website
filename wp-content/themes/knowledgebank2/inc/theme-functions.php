@@ -195,11 +195,11 @@ function knowledgebank_get_date($field_name, $post_id) {
  * @param  [type] $term [description]
  * @return [type]       [description]
  */
-function knowledgebank_term_content_type_icons($term){
+function knowledgebank_term_content_type_icons($term, $force = false){
 
     $types = get_term_meta($term->term_id, 'term_post_types', true);
 
-    if(empty($types)){ //query and determine the content types in the term
+    if(empty($types) || $force){ //query and determine the content types in the term
         $args = array(
             'post_type' => 'any',
             'posts_per_page' => -1,
@@ -236,7 +236,7 @@ function update_term_icons($post_id){
         $terms = wp_get_post_terms($post_id, $tax_name);
         if(!empty($terms)){
             foreach($terms as $term){
-                $term_types = get_term_meta($term->term_id, 'term_content_types', true); //get existing list of types on the term
+                $term_types = get_term_meta($term->term_id, 'term_post_types', true); //get existing list of types on the term
                 if(empty($term_types)){
                     $term_types = array($saved_post_type);
                     update_term_meta($term->term_id, 'term_post_types', $term_types);
