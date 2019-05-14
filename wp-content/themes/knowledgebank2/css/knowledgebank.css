@@ -863,11 +863,12 @@ article.search-results .icon-content-type { float:right;}
   }
 
 
-  /* Media slider
+  /* Media slider (caption below)
   --------------------------- */
   .media-slider-wrap{}
   .media-slider-wrap > .inner{padding-top: 0px;}
   .media-slider{padding-top: 10px;margin: 0 -10px;}
+  .media-slider .slick-slide { height:inherit;}
 
   .media-slide{border-radius: 2px;background-color: rgba(0, 0, 0, 0.1);margin-bottom: 30px;border-radius: 4px;overflow: hidden;box-shadow: 0px 6px 4px -4px rgba(125, 127, 142, 0.26);margin: 10px;outline: none;text-align: center;}
   .media-slide-inner{position:relative; }
@@ -892,13 +893,15 @@ article.search-results .icon-content-type { float:right;}
 
 .single .simplefavorite-button {position:absolute; right:0; top:0; padding:10px;font-size:14px;cursor: pointer;}
 
-  /* Book slider
+  /* Book slider (Caption beside)
   --------------------------- */
   .book-slider-wrap{}
   .book-slider-wrap > .inner{padding-top: 0px;padding-bottom: 1px;}
   .book-slider{padding-top: 10px;margin: 0;}
+  .book-slider .slick-track { display:flex; }
+  .book-slider .slick-slide { height:inherit;}
 
-  .book-slide{border-radius: 2px;background-color: white;margin-bottom: 30px;border-radius: 4px;overflow: hidden;box-shadow: 0px 6px 4px -4px rgba(125, 127, 142, 0.26);margin: 0;outline: none;display: flex;align-items: flex-start;justify-content: stretch;position: relative;width: 100%;}
+  .book-slide{border-radius: 2px;background-color: white;margin-bottom: 30px;border-radius: 4px;overflow: hidden;box-shadow: 0px 6px 4px -4px rgba(125, 127, 142, 0.26);margin: 0;outline: none;display: flex;align-items: flex-start;justify-content: stretch;position: relative;width: 100%;height:100%;}
   .book-slide .caption{width: 50%;-ms-flex-negative: 0;/* flex-shrink: 0; */position: absolute;height: 100%;padding: 30px;overflow: auto;}
   .book-slide .caption-inner{min-height: 100%;left: 0;width: 100%;overflow-y: auto;display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-orient: vertical;-webkit-box-direction: normal;-ms-flex-direction: column;flex-direction: column;-webkit-box-pack: center;-ms-flex-pack: center;justify-content: center;-ms-flex-negative: 0;flex-shrink: 0;}
   .book-slide img{width: 50%;height: auto;margin-left: 50%;}
