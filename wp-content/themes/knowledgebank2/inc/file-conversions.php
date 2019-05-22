@@ -158,7 +158,7 @@ function knowledgebank_convert_master_image($post_id){
 
             //first delete existing jpegs in output dir
             //try to be a little bit safe in what we expect $output_dir to look like :p
-            if(preg_match('@^/webs/new/wp-content/uploadsnode/[0-9]+/images@', $output_dir)){
+            if(preg_match('@^/webs/new/wp-content/uploads/node/[0-9]+/images@', $output_dir)){
                 echo "Deleting jpgs";
                 exec("rm -f  $output_dir/*.jpg");
             }
@@ -170,7 +170,10 @@ function knowledgebank_convert_master_image($post_id){
 
             //if conversion worked, we should have jpegs in our output dir
             $jpgs = glob("$output_dir/*.jpg");
+
             if(!empty($jpgs)){ //insert new jpgs as wordpress attachments and into the images field on the post
+
+                natsort($jpgs);//ensure jpegs are in correct numerical order
 
                 $images_field = get_field_object('images',$post_id);
                 $images_key = $images_field['key'];
