@@ -7,7 +7,15 @@
 		<!-- post thumbnail -->
 		<?php if ( has_post_thumbnail()) : // Check if thumbnail exists ?>
 			<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>" class="post-thumbnail">
-				<?php the_post_thumbnail('thumbnail'); // Declare pixel size you need inside the array ?>
+				<?php
+					$images = get_field('images', $post->ID);
+					if(!empty($images[0]['image']['sizes']['thumbnail'])){
+						echo sprintf('<img src="%s" alt="%s" />', $images[0]['image']['sizes']['thumbnail'], $images[0]['image']['alt']);
+					}
+					else {
+						the_post_thumbnail('thumbnail'); // Declare pixel size you need inside the array
+					}
+				?>
 			</a>
 		<?php endif; ?>
 		<!-- /post thumbnail -->

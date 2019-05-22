@@ -174,11 +174,11 @@ function knowledgebank_get_date($field_name, $post_id) {
                 break;
 
                 case '30':
-                    $_date = $_date_dt->format('m/Y');
+                    $_date = $_date_dt->format('F Y');
                 break;
 
                 default:
-                    $_date = $_date_dt->format('d/m/Y');
+                    $_date = $_date_dt->format('d F Y');
                 break;
 
             }
