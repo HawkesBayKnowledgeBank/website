@@ -73,7 +73,7 @@
 
 								<div class="tile-copy">
 									<h4><a href="<?php echo $link; ?>"><?php echo $post->post_title; ?></a></h4>
-										<?php the_excerpt(); ?>
+										<?php //the_excerpt(); ?>
 										<?php
 											if($type == 'audio') { //see if we have an mp3 and/or ogg
 												$mp3 = get_field('audio', $post->ID);
