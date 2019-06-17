@@ -4,51 +4,52 @@
     <?php foreach($field['value'] as $index => $marriage): ?>
         <div class="row">
 
-            <?php if(!empty($marriage['marriage_date'])): ?>
+            <div class="marriage-date">
+                <?php if(!empty($marriage['marriage_date'])): ?>
 
-                <?php
-                    $_date = $marriage['marriage_date'];
-                    $_date_accuracy = $marriage['marriage_date_accuracy'];
-                    $_date_dt = DateTime::createFromFormat('Ymd', $marriage['marriage_date']);
-                    if(!empty($_date_dt)){
+                    <?php
+                        $_date = $marriage['marriage_date'];
+                        $_date_accuracy = $marriage['marriage_date_accuracy'];
+                        $_date_dt = DateTime::createFromFormat('Ymd', $marriage['marriage_date']);
+                        if(!empty($_date_dt)){
 
-                        switch($_date_accuracy){
+                            switch($_date_accuracy){
 
-                            case '365':
-                                $_date = $_date_dt->format('Y');
-                            break;
+                                case '365':
+                                    $_date = $_date_dt->format('Y');
+                                break;
 
-                            case '30':
-                                $_date = $_date_dt->format('F Y');
-                            break;
+                                case '30':
+                                    $_date = $_date_dt->format('F Y');
+                                break;
 
-                            default:
-                                $_date = $_date_dt->format('d F Y');
-                            break;
+                                default:
+                                    $_date = $_date_dt->format('d F Y');
+                                break;
 
+                            }
                         }
-                    }
 
-                ?>
-                <div class="marriage-date">
+                    ?>
                     <label>Marriage date</label>
                     <?php echo $_date; ?>
-                </div>
-            <?php endif; ?>
+                <?php endif; ?>
+            </div>
 
-            <?php if(!empty($marriage['marriageplace'])): ?>
-                <div class="marriage-place">
+            <div class="marriage-place">
+                <?php if(!empty($marriage['marriageplace'])): ?>
                     <label>Place of Marriage</label>
                     <?php echo $marriage['marriageplace']; ?>
-                </div>
-            <?php endif; ?>
+                <?php endif; ?>
+            </div>
 
-            <?php if(!empty($marriage['spouse'])): ?>
-                <div class="marriage-spouse">
-                    <label>Spouse</label>
-                    <?php echo $marriage['spouse']; ?>
-                </div>
-            <?php endif; ?>
+            <div class="marriage-spouse">
+                <?php if(!empty($marriage['spouse'])): ?>
+                <label>Spouse</label>
+                <?php echo $marriage['spouse']; ?>
+                <?php endif; ?>
+            </div>
+
 
         </div><!-- .row -->
 

@@ -12,7 +12,7 @@
                 $children = $collection->children;
                 do{
                     $child = array_shift($children);
-                    echo sprintf(' > <a href="%s">%s</a>', get_term_link($child->term_id), $child->name);
+                    echo sprintf(' > <a href="%s" target="_blank">%s</a>', get_term_link($child->term_id), $child->name);
                     $children = $child->children;
                 } while (!empty($children));
             }

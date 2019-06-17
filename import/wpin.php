@@ -14,6 +14,7 @@ error_reporting(E_ALL);
 
 function import_log($message){
 	file_put_contents('import.log', date('Y-m-d H:i:s') . " - $message\n", FILE_APPEND);
+	echo date('Y-m-d H:i:s') . " - $message\n";
 }
 
 	//still_image
@@ -46,9 +47,10 @@ function import_log($message){
 		// 'subjects' => '',
 		// 'still_image' => 37072,
 		// 'video' => 35615,
-		'person' => 36254,
+		//'person' => 36254,
 		// 'audio' => 51154,
 		// 'text' => 51186,
+		'book' => 279435,
 	);
 
 
@@ -87,13 +89,14 @@ function import_log($message){
 					foreach($nodes as $node) :
 
 						$wp_id = nid_to_wpid($node['nid']);
-
+						
 						if(!empty($wp_id) && $update_existing == false){
 							import_log("drupal: {$node['nid']} already exists (wp: $wp_id)\n");
 							//continue;
 						}
 
 						if(empty($wp_id)){ //need to create a post
+							echo "Need a new post for " . $node['nid'] . "\n";
 							continue;
 							//Post
 							$status = ($node['status'] == 1 ? 'publish' : 'draft');
@@ -188,7 +191,7 @@ function import_log($message){
 
 					if(get_term($tid,'collections')) {
 						import_log('Term ' . $tid . " already exists\n");
-						//continue;
+						continue;
 					}
 
 					//else get on with inserting the term

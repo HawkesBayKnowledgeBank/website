@@ -12,7 +12,7 @@
                     }
                     $name = implode(' ', $person);
                     if(!empty($record->ID) && get_post_status($record->ID) == 'publish'){
-                        echo sprintf('<a href="%s">%s</a>', get_permalink($record->ID), $name);
+                        echo sprintf('<a href="%s" target="_blank">%s</a>', get_permalink($record->ID), $name);
                     }
                     else{
                         echo $name;

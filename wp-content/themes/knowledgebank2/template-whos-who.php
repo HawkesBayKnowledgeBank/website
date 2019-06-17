@@ -129,7 +129,7 @@
 
 									?>
 									<tr>
-										<td data-title="Last Name:"><a href="<?php echo get_permalink($person->ID); ?>"><?php echo strtoupper($family_name); ?></a></td>
+										<td data-title="Last Name:"><a href="<?php echo get_permalink($person->ID); ?>"><?php echo strtoupper($family_name); ?><?php if(empty($family_name) && empty($first_names)) echo '[unknown]'; ?></a></td>
 										<td data-title="First Name:"><a href="<?php echo get_permalink($person->ID); ?>"><?php echo $first_names; ?></a></td>
 										<td data-title="DOB:"><?php echo $birthdate; ?></td>
 										<td data-title="DOD:"><?php echo $deathdate; ?></td>

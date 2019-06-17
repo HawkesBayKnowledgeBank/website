@@ -3,16 +3,31 @@
 <?php
 	global $wp_query;
 
-	$term = get_queried_object();
-	$term_id = $term->term_id;
-	$taxonomy = get_taxonomy($term->taxonomy);
-	$taxonomy_name = $term->taxonomy;
+	$extra_classes = array();
 
-	$title = $term->name; //get_the_archive_title();
-	if($term->parent == 967){
-		$title = "Hawke's Bay Photo News - " . $term->name;
+	if(is_tax()){
+
+		$term = get_queried_object();
+
+		$term_id = $term->term_id;
+		$taxonomy = get_taxonomy($term->taxonomy);
+		$taxonomy_name = $term->taxonomy;
+
+		$title = $term->name; //get_the_archive_title();
+		if($term->parent == 967){
+			$title = "Hawke's Bay Photo News - " . $term->name;
+		}
+		if(get_field('display_title', $term)) $title = get_field('display_title', $term);
+
+
+		if($term->term_id == 967 || $term->parent == 967){
+			$extra_classes[] = 'photo-news';
+		}
 	}
-	if(get_field('display_title', $term)) $title = get_field('display_title', $term);
+	elseif(is_post_type_archive()){
+		$post_type = get_queried_object();
+		$title = $post_type->label;
+	}
 
 ?>
 
@@ -30,17 +45,11 @@
 
 			<?php include_once(get_template_directory() . '/sections/term-filters.php'); //include rather than get_template_part so we can share $filters ?>
 
-			<?php
-				$extra_classes = array();
-				if($term->term_id == 967 || $term->parent == 967){
-					$extra_classes[] = 'photo-news';
-				}
-			?>
 			<!-- sub-terms -->
 			<section class="layer results tiles <?php echo implode(' ', $extra_classes); ?>">
 				<div class="inner">
 
-					<?php include('sections/sub-terms.php'); ?>
+					<?php if(is_tax()) include('sections/sub-terms.php'); ?>
 
 					<?php /* <h5>Records in <?php echo single_cat_title( '', false ); ?></h5> */ ?>
 					<div class="grid column-4 ">
@@ -56,7 +65,8 @@
 
 
 								$link = get_permalink($post->ID);
-								$image_size = $term->term_id == 967 || $term->parent == 967 ? 'medium' : 'thumbnail';//medium for photo news
+								$image_size = 'thumbnail';
+								if(is_tax() && ($term->term_id == 967 || $term->parent == 967)) $image_size = 'medium';//medium for photo news
 							?>
 
 				  			<div class="col tile shadow <?php echo $type; ?>">

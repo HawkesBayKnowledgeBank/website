@@ -24,7 +24,7 @@
 /***********************/
 
 
-		unset($node['body']); //I will unset things from my temporary $node array as I go, so I can see at the end what's left / not processed
+		//unset($node['body']); //I will unset things from my temporary $node array as I go, so I can see at the end what's left / not processed
 
 // 		//Collections
 // 		if(isset($node['field_collections']['und'][0]['tid'])){
@@ -174,37 +174,77 @@
 // 		//drupal = field_foo
 // 		//wp = foo
 //
-// 		foreach($fields as $field) {
-//
-// 			//simple text fields
-//
-// 			if(in_array($field['type'], array('text','radio','wysiwyg','true_false','select')) && !empty($node['field_' . $field['name']]['und'][0]['value'])) {
-//
-// 				import_log("Doing text field " . 'field_' . $field['name'] );
-//
-// 				update_field($field['key'], $node['field_' . $field['name']]['und'][0]['value'], $wp_id);
-// 				import_log("Added value " .  $node['field_' . $field['name']]['und'][0]['value'] . ' to ' . $field['name'] . ' (' . $field['key'] . ')' );
-// 				unset($node['field_' . $field['name']]);
-// 			}
-//
-//
-// 			//relationship fields
-//
-// 			if(in_array($field['type'], array('relationship')) && isset($node['field_' . $field['name']]['und'][0])) {
-//
-// 				$newvalue = array();
-//
-// 				foreach($node['field_' . $field['name']]['und'] as $dval) {
-// 					$newvalue[] = $dval['target_id'];
-// 				}
-//
-// 				update_field($field['key'], $newvalue, $wp_id);
-// 				import_log("Added value " . print_r($newvalue,true) . ' to ' . $field['name'] . ' (' . $field['key'] . ')' );
-//
-// 				unset($node['field_' . $field['name']]);
-// 			}
-//
-// 		}//foreach field
+		foreach($fields as $field) {
+
+			//simple text fields
+
+			if(in_array($field['type'], array('text','radio','wysiwyg','true_false','select')) && !empty($node['field_' . $field['name']]['und'][0]['value'])) {
+				//do not overwrite
+				if(!empty(get_field($field['name'], $wp_id))) continue;
+				import_log("Doing text field " . 'field_' . $field['name'] );
+
+				update_field($field['key'], $node['field_' . $field['name']]['und'][0]['value'], $wp_id);
+				import_log("Added value " .  $node['field_' . $field['name']]['und'][0]['value'] . ' to ' . $field['name'] . ' (' . $field['key'] . ')' );
+				unset($node['field_' . $field['name']]);
+			}
+
+
+			//relationship fields
+
+			if(in_array($field['type'], array('relationship')) && isset($node['field_' . $field['name']]['und'][0])) {
+				$d_field_name = 'field_' . $field['name'];
+				$newvalue = array();
+
+
+				switch($d_field_name) {
+
+					case 'field_related_records': //nodes
+
+						foreach($node[$d_field_name]['und'] as $dval) {
+							$target_nid = $dval['target_id'];
+							$target_wp_id = nid_to_wpid($target_nid);
+							if(empty($target_wp_id)){
+								import_log("Could not find matching target wpid for drupal nid $target_nid");
+								continue;
+							}
+							$newvalue[] = $target_wp_id;
+						}
+
+					break;
+
+					default: //terms
+
+						foreach($node[$d_field_name]['und'] as $dval) {
+							$target_tid = $dval['target_id'];
+							$newvalue[] = $target_tid;
+						}
+
+					break;
+
+				}
+				if(empty($newvalue)) continue;
+
+				$current_value = get_field($field['key'], $wp_id, false);
+
+				if(json_encode($current_value) != json_encode($newvalue)){
+					//echo $d_field_name . ' on ' . $wp_id . "\n";
+					//echo "current: " . print_r($current_value,true) . "\n";
+					//echo "new: " . print_r($newvalue,true) . "\n";
+					if(!empty($current_value)) {
+						$merge = array_merge($current_value, $newvalue);
+						$merge = array_unique($merge);
+						$newvalue = $merge;
+						//echo "merged: " . print_r($newvalue,true) . "\n";
+					}
+				}
+
+				//update_field($field['key'], $newvalue, $wp_id);
+				import_log("Added value " . print_r($newvalue,true) . ' to ' . $field['name'] . ' (' . $field['key'] . ')' );
+
+				unset($node[$d_field_name]);
+			}
+
+		}//foreach field
 
 		//Name fields
 
@@ -212,7 +252,7 @@
 
 		foreach($namefields as $nf) {
 
-			if(isset($node['field_' . $nf]['und'][0])) {
+			if(isset($node['field_' . $nf]['und'][0]) && empty(get_field(acf_key($nf), $wp_id))) {
 
 				$people = array();
 
@@ -248,8 +288,13 @@
 
 		}
 
+		if($mode == 'bibliography' && !empty($node['body']['und'][0]['value'])){
+			update_field('field_5c3ba56895ab0', $node['body']['und'][0]['value'], $wp_id);
+			echo 'added description to ' . $wp_id . "\n";
+		}
+
 		//see what's left in the node that we didn't get and unset()
-		import_log("Left in node:");
+		//import_log("Left in node:");
 		//print_r($node);
 		import_log("");
 

@@ -11,7 +11,11 @@
 			if(is_post_type_archive('bibliography')){
 				echo '<li>Bibliography</a>';
 			}
-			else{
+			elseif(is_post_type_archive()){
+				$post_type = get_queried_object();
+				echo "<li>{$post_type->label}</li>";
+			}
+			elseif(is_tax()){
 				$term = get_queried_object();
 	            //print_r($term);
 

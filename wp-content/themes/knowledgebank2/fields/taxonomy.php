@@ -3,7 +3,7 @@
     <ul>
         <?php
             foreach($field['value'] as $term){
-                echo sprintf('<li><a href="%s">%s</a></li>', get_term_link($term->term_id), $term->name);
+                echo sprintf('<li><a href="%s" target="_blank">%s</a></li>', get_term_link($term->term_id), $term->name);
             }
         ?>
     </ul>

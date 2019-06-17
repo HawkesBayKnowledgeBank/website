@@ -990,7 +990,7 @@ article.search-results .icon-content-type { float:right;}
 
 /* Repeater rows */
 .field-marriage .rows .row {display:flex;}
-.field-marriage .rows .row div { padding:20px;}
+.field-marriage .rows .row div { padding:20px; width:33%;}
 .field-marriage .rows .row div label{display:block;font-weight:bold;}
 
 

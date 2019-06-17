@@ -289,6 +289,26 @@ function knowledgebank_generate_post_accession_number( $post_id, $post, $update 
 }
 add_action( 'wp_insert_post', 'knowledgebank_generate_post_accession_number', 10, 3 );
 
+function knowledgebank_generate_person_title($post_id, $post, $update) {
+
+    if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE )
+         return $post_id;
+
+    if(empty($post->post_type) || $post->post_type != 'person') return ;
+    $name = get_field('name', $post_id);
+    if(!empty($name[0])) $name = implode(' ',$name[0]);
+    $dates = [];
+    $dates[] = knowledgebank_get_date('birthdate', $post_id);
+    $dates[] = knowledgebank_get_date('deathdate',$post_id);
+    $dates = array_filter($dates);
+    $title = '';
+    if(!empty($name)) $title = $name;
+    if(!empty($dates)) $title .= ' (' . implode(' - ', $dates) . ')';
+    remove_action('save_post_person','knowledgebank_generate_person_title',10,3);
+    wp_update_post(array('ID' => $post_id, 'post_title' => $title));
+    //echo 'saved title ' . $title . ' to ' . $post_id; exit;
+}
+add_action('save_post_person','knowledgebank_generate_person_title',10,3);
 
 
 add_filter('tiny_mce_before_init','kb_configure_tinymce');
