@@ -11,7 +11,11 @@
 ?>
             <div class="col field field-default" data-field-name="<?php echo $field['name']; ?>">
                 <h4><?php echo $field['label'];?></h4>
-                <?php echo implode(', ', $links); ?>
+                <ul>
+                    <li>
+                        <?php echo implode('</li><li>', $links); ?>
+                    </li>
+                </ul>
             </div>
         <?php endif; ?>
 <?php endif; ?>

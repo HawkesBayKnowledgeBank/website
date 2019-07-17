@@ -5,38 +5,40 @@ function extend(destination, source) {
 	return destination;
 }
 
-// Acf hook -> Hooks -> Filters -> date_picker_args
-// see https://www.advancedcustomfields.com/resources/adding-custom-javascript-fields/
-acf.add_filter('date_picker_args', function( args, $field ){
+if(typeof acf != 'undefined'){
+	// Acf hook -> Hooks -> Filters -> date_picker_args
+	// see https://www.advancedcustomfields.com/resources/adding-custom-javascript-fields/
+	acf.add_filter('date_picker_args', function( args, $field ){
 
-	// do something to args
+		// do something to args
 
-	var custom_args = {
-	  yearRange:			"-300:+100", // value to change
-	};
+		var custom_args = {
+		  yearRange:			"-300:+100", // value to change
+		};
 
-	args = extend(args, custom_args)
+		args = extend(args, custom_args)
 
-	// return
-	return args;
+		// return
+		return args;
 
-});
+	});
 
-acf.add_filter('select2_ajax_data', function( data, args, $input, field, instance ){
+	acf.add_filter('select2_ajax_data', function( data, args, $input, field, instance ){
 
-	if($('.acf-field[data-key="' + data.field_key + '"]').attr('data-name') == 'collections'){
-		var field_selector = '[name="acf[' + data.field_key + '][]"]'; //the select field holding the values chosen
-		if($(field_selector).val()){
-			var collections = $(field_selector).val();
-			parent_id = collections.pop(); //parent of available options will be set to the last term selected
+		if($('.acf-field[data-key="' + data.field_key + '"]').attr('data-name') == 'collections'){
+			var field_selector = '[name="acf[' + data.field_key + '][]"]'; //the select field holding the values chosen
+			if($(field_selector).val()){
+				var collections = $(field_selector).val();
+				parent_id = collections.pop(); //parent of available options will be set to the last term selected
+			}
+			else{
+				parent_id = 0; //nothing chosen yet, offer only top-level terms
+			}
+			data.parent = parent_id;
 		}
-		else{
-			parent_id = 0; //nothing chosen yet, offer only top-level terms
-		}
-		data.parent = parent_id;
-	}
 
-    // return
-    return data;
+	    // return
+	    return data;
 
-});
+	});
+}

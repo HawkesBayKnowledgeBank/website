@@ -160,7 +160,7 @@ function knowledgebank_manage_content_page_html(){
 
 
 //Format a date using an associated 'accuracy' field
-function knowledgebank_get_date($field_name, $post_id) {
+function knowledgebank_get_date($field_name, $post_id){
     $field = get_field_object($field_name,$post_id);
     $_date = $field['value'];
     if(!empty($_date)){
@@ -188,6 +188,22 @@ function knowledgebank_get_date($field_name, $post_id) {
     return $_date;
 
 }//knowldgebank_get_date()
+
+/**
+ * Get the year part of a date field, if possible. Intended for person birth and death dates
+ * @param  string $field_name Name of the field
+ * @param  integer $post_id WP post id
+ * @return string|boolean a year or false
+ */
+function knowledgebank_get_year($field_name, $post_id){
+    $field = get_field_object($field_name,$post_id);
+    $_date = $field['value'];
+    if(!empty($_date)){
+        $_date_dt = DateTime::createFromFormat($field['return_format'], $_date);
+        if(!empty($_date_dt)) return $_date_dt->format('Y');
+    }
+    return false;
+}
 
 /**
  * Output a set of icons representing the content types found with a particular term.
@@ -294,19 +310,28 @@ function knowledgebank_generate_person_title($post_id, $post, $update) {
     if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE )
          return $post_id;
 
+    global $wpdb;
+
     if(empty($post->post_type) || $post->post_type != 'person') return ;
     $name = get_field('name', $post_id);
-    if(!empty($name[0])) $name = implode(' ',$name[0]);
+
+    if(!empty($name[0]['family_name'])) $name[0]['family_name'] = strtoupper($name[0]['family_name']);
+
+    if(!empty($name[0])) $name = implode(' ', array_filter($name[0]));
+
     $dates = [];
-    $dates[] = knowledgebank_get_date('birthdate', $post_id);
-    $dates[] = knowledgebank_get_date('deathdate',$post_id);
+    $dates[] = knowledgebank_get_year('birthdate',$post_id);
+    $dates[] = knowledgebank_get_year('deathdate',$post_id);
     $dates = array_filter($dates);
+
     $title = '';
     if(!empty($name)) $title = $name;
     if(!empty($dates)) $title .= ' (' . implode(' - ', $dates) . ')';
     remove_action('save_post_person','knowledgebank_generate_person_title',10,3);
-    wp_update_post(array('ID' => $post_id, 'post_title' => $title));
-    //echo 'saved title ' . $title . ' to ' . $post_id; exit;
+
+    $wpdb->query($wpdb->prepare('UPDATE wp_posts SET post_title = %s WHERE ID = %d',array($title,$post_id)));
+    //wp_update_post(array('ID' => $post_id, 'post_title' => $title));
+    //echo 'saved title ' . $title . ' to ' . $post_id . "\n";
 }
 add_action('save_post_person','knowledgebank_generate_person_title',10,3);
 
@@ -382,3 +407,22 @@ function knowledgebank_admin_new_post_links() {
     }
 }
 add_action( 'wp_footer', 'knowledgebank_admin_new_post_links' );
+
+/* search result scroller */
+function knowledgebank_search_result_scroller(){
+    if(!empty($_GET['searchterm'])){
+        $searchterm = filter_input(INPUT_GET, 'searchterm', FILTER_SANITIZE_SPECIAL_CHARS);
+        echo sprintf('
+            <div id="searchscroller">
+                <span class="term">%s</span>
+                <span class="index"></span>
+                <span class="total"></span>
+                <span class="prev"><img src="/wp-content/themes/knowledgebank2/img/chevron-arrow-up.svg" /></span>
+                <span class="next"><img src="/wp-content/themes/knowledgebank2/img/chevron-arrow-down.svg" /></span>
+                <span class="close"><img src="/wp-content/themes/knowledgebank2/img/close.svg" /></span>
+            </div>
+        ',$searchterm);
+
+    }
+}
+//add_action('wp_footer', 'knowledgebank_search_result_scroller');

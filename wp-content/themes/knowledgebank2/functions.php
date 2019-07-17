@@ -364,7 +364,7 @@ function knowledgebank_get_filters(){
 }//knowledgebank_get_filters
 
 function knowledgebank_pre_get_posts($query){
-    if(empty($query)) return false;
+    if(empty($query) || is_admin()) return false;
 
     if($query->is_main_query()){
         $filters = knowledgebank_get_filters();

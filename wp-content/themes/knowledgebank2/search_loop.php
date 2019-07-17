@@ -1,5 +1,6 @@
 <?php global $wp_query; ?>
-<p>Showing <?php echo $wp_query->found_posts; ?> results</p>
+<?php $search_query = get_search_query(); ?>
+<?php if(!empty($search_query)): ?><p>Showing <?php echo $wp_query->found_posts; ?> results</p><?php endif; ?>
 <?php if (have_posts()): while (have_posts()) : the_post(); ?>
 	<?php if($post->post_status != 'publish' || $post->ID == 113310) continue; ?>
 
