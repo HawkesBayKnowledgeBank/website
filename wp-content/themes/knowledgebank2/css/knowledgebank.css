@@ -1049,6 +1049,14 @@ article.search-results .icon-content-type { float:right;}
     .grid.sub-collections .tile.shadow { padding:0 15px;}
 }
 
+/* search scroller */
+#searchscroller { position:fixed; top:100px; right:0; background-color:yellow; padding:20px;}
+#searchscroller span {display:inline-block;}
+#searchscroller .term {font-weight:bold; margin-right:20px; }
+#searchscroller .index {}
+#searchscroller .total{}
+#searchscroller .prev, #searchscroller .next, #searchscroller .close{cursor:pointer; font-weight:bold; width:20px; height:20px; text-align:center; }
+
 /* Print Styles
 --------------------------- */
 

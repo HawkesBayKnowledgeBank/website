@@ -1,3 +1,5 @@
+<?php
+/*
 <div class="col field field-image field-<?php echo $field['type']; ?>" data-field-name="<?php echo $field['name']; ?>">
     <h4><?php echo $field['label'];?></h4>
     <?php
@@ -8,3 +10,5 @@
     ?>
     <a href="<?php echo $link; ?>"><img src="<?php echo $src; ?>" title="<?php echo $title; ?>" alt="<?php echo $alt; ?>" /></a>
 </div>
+*/
+?>

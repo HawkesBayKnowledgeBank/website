@@ -25,13 +25,6 @@
 				$fields = knowledgebank_get_field_objects(); //we want to move / remove / play around with field orders
 			?>
 
-			<?php $images = get_field('images'); ?>
-
-			<?php if(!empty($images)): ?>
-
-				<?php include('sections/image-slider.php'); ?>
-
-			<?php endif; //!empty($images) ?>
 
 			<?php if(get_field('audio')): ?>
 

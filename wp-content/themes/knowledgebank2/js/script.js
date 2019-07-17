@@ -297,6 +297,11 @@ jQuery(document).ready(function($) {
             $.each(searchwords, function(index, value){
                 $('.layer').highlight(value);
             });
+
+            //show our own little search bar because ctrl+f can't deal with slick slider
+            if($('#searchscroller').length){
+                $('#searchscroller .total').text(  );
+            }
         }
         else{
             $('.layer:not(.intro)').highlight(searchterm);
