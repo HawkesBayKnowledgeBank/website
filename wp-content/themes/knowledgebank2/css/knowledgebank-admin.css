@@ -5,8 +5,14 @@
 
 /* Find content */
 #find-content form { max-width:1200px; display:block;}
-#find-content input,
+#find-content input[type="text"],
+#find-content input[type="email"],
+#find-content input[type="number"],
 #find-content select,
 #find-content button,
 #find-content label { display:block; margin:5px; width:300px;}
 #find-content .search-controls { display:flex;}
+
+
+.toplevel_page_kb-find-content #submitdiv { display:none; }
+.acf-field[data-name="html"] .acf-label { display:none; }

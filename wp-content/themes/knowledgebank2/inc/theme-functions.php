@@ -426,3 +426,5 @@ function knowledgebank_search_result_scroller(){
     }
 }
 //add_action('wp_footer', 'knowledgebank_search_result_scroller');
+//
+//

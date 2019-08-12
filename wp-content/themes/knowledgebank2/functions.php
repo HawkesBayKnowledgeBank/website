@@ -84,10 +84,16 @@ function knowledgebank_header_scripts(){
 }
 
 function knowledgebank_admin_scripts(){
+    do_action('acf/input/admin_enqueue_scripts');
     $js_mtime = filemtime(get_stylesheet_directory() . '/js/knowledgebank_acf.js');
     wp_enqueue_script( 'knowledgebank-acf-js', get_stylesheet_directory_uri() . '/js/knowledgebank_acf.js', array(), $js_mtime, true );
     $css_mtime = filemtime(get_stylesheet_directory() . '/css/knowledgebank-admin.css');
     wp_enqueue_style('kb-admin-css', get_template_directory_uri() . '/css/knowledgebank-admin.css', array(), $css_mtime, 'all');
+
+    if(!empty($_GET['page']) && $_GET['page'] == 'knowledgebank_content_manager'){
+        wp_register_script('select2-js', get_template_directory_uri() . '/js/lib/select2/select2.min.js', array('jquery'), '1.0.0'); // Custom scripts
+        wp_enqueue_script('select2-js');
+    }
 
 }
 add_action('admin_enqueue_scripts', 'knowledgebank_admin_scripts');
