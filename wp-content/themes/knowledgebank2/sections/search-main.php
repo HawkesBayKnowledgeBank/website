@@ -13,6 +13,10 @@
                     <div class="searchbar-options">
                         <?php $post_type = !empty($_GET['post_type']) ? $_GET['post_type'] : array(); ?>
                         <ul>
+                            <li id="search_all_li">
+                                <input type="checkbox" name="" id="search_all" value="all" <?php if(empty($post_type) || count($post_type) == 6) echo 'checked'; ?>>
+                                <label for="search_all">All</label>
+                            </li>
                             <li>
                                 <input type="checkbox" id="check_images" name="post_type[]" value="still_image" <?php if(empty($post_type) || in_array('still_image',$post_type)) echo 'checked'; ?>>
                                 <label for="check_images">Images</label>

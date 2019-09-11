@@ -30,32 +30,6 @@ jQuery(document).ready(function($) {
     });
 
 
-    //Magnific
-    /* $('.popup-video').magnificPopup({
-      disableOn: 700,
-      type: 'iframe',
-      mainClass: 'mfp-fade',
-      removalDelay: 160,
-      preloader: false,
-      fixedContentPos: false,
-      iframe: {
-          patterns: {
-            wistia: {
-              index: 'wistia.com',
-              id: function(url) {
-                  var m = url.split('/');
-                  if (m !== null) {
-                      return m[4];
-                  }
-                  return null;
-              },
-              src: '//fast.wistia.net/embed/iframe/%id%'
-            }
-          }
-        }
-    }); */
-
-
     //Content Tabs
     $('ul.tabs li').click(function(){
       var tab_id = $(this).attr('data-tab');
@@ -171,12 +145,30 @@ jQuery(document).ready(function($) {
     });
 
 
-
     $('.searchbar .top i').click(function(){
         console.log('click')
         $('#main-search form').submit();
     });
 
+
+    //Search all
+    $('#search_all').click(function(e){
+        if($(this).is(':checked')){
+            $('.searchbar input[name="post_type[]"]').not(':checked').click();
+        }
+        else{
+            $('.searchbar input[name="post_type[]"]').prop('checked',false);
+        }
+    });
+    $('.searchbar input[name="post_type[]"]').click(function(){
+        if($('.searchbar input[name="post_type[]"]').not(':checked').length){
+            $('#search_all').prop('checked',false);
+        }
+        else{
+            $('#search_all').prop('checked',true);
+        }
+
+    });
 
     // tiles - slider
     if (window.matchMedia("(max-width: 600px)").matches) {

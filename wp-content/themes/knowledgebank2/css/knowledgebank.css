@@ -403,6 +403,7 @@
   .searchbar-options{display: -webkit-box;display: -ms-flexbox;display: flex;-ms-flex-wrap: nowrap;flex-wrap: nowrap;height: 75px;align-items: center;padding: 0px 30px;}
   .searchbar-options ul{margin: 0;list-style: none;padding: 0;display: -webkit-box;display: -ms-flexbox;display: flex;position: relative;top: -1px;}
   .searchbar-options li{margin-right: 30px;position: relative;padding-left: 17px;}
+
   .searchbar-options li span.checkbox-wrap{}
   .searchbar-options li input[type="checkbox"]{display: none;}
   .searchbar-options li label{user-select: none;padding: 7px 0 7px 11px; }
@@ -414,6 +415,8 @@
   .searchbar-options li input[type=checkbox]:checked + label:after{transform: scale(1);}
   .searchbar-options span.grow{flex-grow: 1;}
   .searchbar-options a{}
+
+  #search_all_li { margin-right:20px; padding-right:20px; border-right:1px solid #e0e0e0;}
 
 @media screen and (min-width:781px){
   .searchbar-options{display: -webkit-box !important;display: -ms-flexbox !important;display: flex !important;}
@@ -910,14 +913,14 @@ article.search-results .icon-content-type { float:right;}
   .book-slide a.zoom, a.zoom{position: absolute;bottom: 0;right: 0;color: white;top: 0;right: 0;width: 50%;}
   .media-slider a.zoom{width:100%;}
   .book-slide a.zoom:hover{}
-  .book-slide a.zoom:before, a.zoom:before{content:' ';display:block;background: linear-gradient(165deg, rgba(0,0,0,0) 70%,rgba(0, 0, 0, 0.3) 100%);width: 100%;height: 100%;bottom: 0;position: absolute;transition: 0.2s all cubic-bezier(0.0, 0.0, 0.2, 1);}
-  .book-slide a.zoom i,a.zoom i{position: absolute;right: 2px;bottom: 0px;font-size: 37px;line-height: 80px;transition: 0.2s all cubic-bezier(0.4, 0.0, 0.6, 1);transform: scale(0.8);transform-origin: bottom right;width: 80px;text-align: center;}
+  /*.book-slide a.zoom:before, a.zoom:before{content:' ';display:block;background: linear-gradient(165deg, rgba(0,0,0,0) 70%,rgba(0, 0, 0, 0.3) 100%);width: 100%;height: 100%;bottom: 0;position: absolute;transition: 0.2s all cubic-bezier(0.0, 0.0, 0.2, 1);}*/
+  .book-slide a.zoom i,a.zoom i{position: absolute;right: 2px;bottom: 0px;font-size: 37px;line-height: 60px;transition: 0.2s all cubic-bezier(0.4, 0.0, 0.6, 1);width: 60px;text-align: center; background-color:rgba(0,0,0,0.2); border-radius:30px}
 
   .book-slider .slick-dots{bottom: 0;text-align: left;display: flex !important;overflow: auto;position: relative;padding: 20px 0px 7px;}
   .book-slider .slick-dots li{margin-right:0px;width: auto;height: auto;display: inline-block;margin: 0;}
   .book-slider .slick-dots button{margin: 0 3px;border: 0;outline: none;background: white;display: block;box-shadow: 0px 6px 4px -4px rgba(125, 127, 142, 0.26);border-radius: 32px;text-decoration: none;padding: 3px 9px;color: #9192a5;font-weight: 400;font-size: 14px;transition: 0.2s cubic-bezier(0.4, 0.0, 0.6, 1) all;transform: scale(1);width: 32px;height: 32px;}
 
-  .book-slider .slick-dots button:hover, .book-slider .slick-dots .slick-active button{transform: scale(1.16);color: #282a43;}
+  .book-slider .slick-dots button:hover, .book-slider .slick-dots .slick-active button{color: #282a43;}
   .book-slider .slick-dots button:before{display: none;}
 
   @media screen and (max-width:1280px){
@@ -1060,13 +1063,13 @@ article.search-results .icon-content-type { float:right;}
 /* Print Styles
 --------------------------- */
 
-  @media print,
-     (-o-min-device-pixel-ratio: 5/4),
-     (-webkit-min-device-pixel-ratio: 1.25),
-     (min-resolution: 120dpi) {
+@media print,
+    (-o-min-device-pixel-ratio: 5/4),
+    (-webkit-min-device-pixel-ratio: 1.25),
+    (min-resolution: 120dpi) {
 
-  }
-  @media print {
+}
+@media print {
     * {background: transparent !important; color: black !important; box-shadow:none !important; text-shadow: none !important; filter:none !important; -ms-filter: none !important; } /* Black prints faster: h5bp.com/s */
     a, a:visited {text-decoration: underline; }
     a[href]:after {content: " (" attr(href) ")"; }
@@ -1079,4 +1082,4 @@ article.search-results .icon-content-type { float:right;}
     @page {margin: 0.5cm;}
     p, h2, h3 {orphans: 3; widows: 3;}
     h2, h3 {page-break-after: avoid;}
-  }
+}

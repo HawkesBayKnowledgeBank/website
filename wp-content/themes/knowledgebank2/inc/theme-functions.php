@@ -80,7 +80,7 @@ function knowledgebank_get_field_objects(){
     }
 
     //Anything we want specifically moved to the end
-    $after = array_flip(array( 'biography','accession_number'));
+    $after = array_flip(array('people','notes', 'biography','accession_number'));
     if(!empty($after) && !empty($fields)){
         foreach($after as $field_name => $_val){
             if(array_key_exists($field_name, $fields)){ //found the field we are looking for, move it into $after
