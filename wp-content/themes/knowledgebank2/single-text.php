@@ -26,6 +26,8 @@
 
 
 				$fields = knowledgebank_get_field_objects(); //we want to move / remove / play around with field orders
+
+				
 			?>
 
 			<?php $images = get_field('images'); ?>

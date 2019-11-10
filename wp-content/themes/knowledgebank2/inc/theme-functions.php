@@ -379,6 +379,11 @@ function is_chris(){
     return (get_current_user_id() == 5116);
 }
 
+
+//get the 'current collection(s)' in JS format.
+//Current collections means the ones from a post you are viewing / editing,
+//or the current collection and its ancestors if you are viewing / editing a collection.
+//This is used to pre-populate the collections on a new post if you click the 'new post' button in the above circumstances.
 function knowledgebank_admin_new_post_links() {
     if(is_user_logged_in() && is_single()){
         global $post;
@@ -408,23 +413,79 @@ function knowledgebank_admin_new_post_links() {
 }
 add_action( 'wp_footer', 'knowledgebank_admin_new_post_links' );
 
-/* search result scroller */
-function knowledgebank_search_result_scroller(){
-    if(!empty($_GET['searchterm'])){
-        $searchterm = filter_input(INPUT_GET, 'searchterm', FILTER_SANITIZE_SPECIAL_CHARS);
-        echo sprintf('
-            <div id="searchscroller">
-                <span class="term">%s</span>
-                <span class="index"></span>
-                <span class="total"></span>
-                <span class="prev"><img src="/wp-content/themes/knowledgebank2/img/chevron-arrow-up.svg" /></span>
-                <span class="next"><img src="/wp-content/themes/knowledgebank2/img/chevron-arrow-down.svg" /></span>
-                <span class="close"><img src="/wp-content/themes/knowledgebank2/img/close.svg" /></span>
-            </div>
-        ',$searchterm);
 
+
+function kb_create_ACF_meta_in_REST() {
+    $postypes_to_exclude = ['acf-field-group','acf-field'];
+    $extra_postypes_to_include = ["video","audio","text","still_image","person"];
+    $post_types = array_diff(get_post_types(["_builtin" => false], 'names'),$postypes_to_exclude);
+
+    array_push($post_types, $extra_postypes_to_include);
+
+    foreach ($post_types as $post_type) {
+        register_rest_field( $post_type, 'meta', [
+            'get_callback'    => 'kb_expose_ACF_fields',
+            'schema'          => null,
+       ]
+     );
     }
+
 }
-//add_action('wp_footer', 'knowledgebank_search_result_scroller');
-//
-//
+
+function kb_expose_ACF_fields( $object ) {
+    $ID = $object['id'];
+    return get_fields($ID);
+}
+
+add_action( 'rest_api_init', 'kb_create_ACF_meta_in_REST' );
+
+add_action( 'rest_api_init', function () {
+  register_rest_route( 'knowledgebank', '/recent(?:/(?P<since>\d+))?', array(
+    'methods' => 'GET',
+    'callback' => 'kb_recently_modified',
+  ) );
+} );
+
+function kb_recently_modified( WP_REST_Request $request ){
+
+    $since_ymd = $request->get_param('since');
+
+    $args = array(
+        'post_type' => array('video','audio','still_image','text','person'),
+        'posts_per_page' => 500,
+        'orderby' => 'modified',
+        'order' => 'DESC',
+    );
+
+    if(!empty($since_ymd)){
+        $since = DateTime::createFromFormat('Ymd', $since_ymd);
+        if(!empty($since)){
+            $args['date_query'] = array(
+                array(
+                    'column' => 'post_modified',
+                    'after' => $since->format('Y-m-d'),
+                )
+            );
+
+            $args['posts_per_page'] = -1;
+        }
+    }
+
+    $records = get_posts($args);
+
+    $display_values = array_map(function($record){
+        return array(
+            'ID' => $record->ID,
+            'title' => $record->post_title,
+            'post_date' => $record->post_date,
+            'post_modified' => $record->post_modified,
+            'post_modified_gmt' => $record->post_modified_gmt,
+            'post_type' => $record->post_type,
+            'link' => get_permalink($record->ID),
+            'json' => get_rest_url(null,"/wp/v2/{$record->post_type}/{$record->ID}"),
+        );
+    },$records);
+
+    return $display_values;
+
+}

@@ -43,6 +43,56 @@ jQuery(function($){
 		    return data;
 
 		});
-	}
+
+		window.first_names = [];
+		window.middle_names = [];
+		window.family_names = [];
+		//Autocomplete for family names on people records
+		acf.add_action('append', function( $el ){
+
+			if($el.find('[data-name="family_name"]').length){
+				autocomplete_first_names();
+			}
+			if($el.find('[data-name="family_name"]').length){
+				autocomplete_middle_names();
+			}
+			if($el.find('[data-name="family_name"]').length){
+				autocomplete_family_names();
+			}
+
+		});
+
+		$(document).ready(function(){
+
+			autocomplete_first_names();
+			autocomplete_middle_names();
+			autocomplete_family_names();
+
+		});
+
+		function autocomplete_first_names(){
+			$('.postbox .acf-field[data-name="first_name"] input').each(function(){
+				var val = $(this).val();
+				if(val != '' && $.inArray(val,window.first_names) == -1){	window.first_names.push(val); }
+				$(this).autocomplete({source: window.first_names, minLength: 0});
+			});
+		}
+		function autocomplete_middle_names(){
+			$('.postbox .acf-field[data-name="middle_names"] input').each(function(){
+				var val = $(this).val();
+				if(val != '' && $.inArray(val,window.middle_names) == -1){	window.middle_names.push(val); }
+				$(this).autocomplete({source: window.middle_names, minLength: 0});
+			});
+		}
+		function autocomplete_family_names(){
+			$('.postbox .acf-field[data-name="family_name"] input').each(function(){
+				var val = $(this).val();
+				if(val != '' && $.inArray(val,window.family_names) == -1){	window.family_names.push(val); }
+				$(this).autocomplete({source: window.family_names, minLength: 0});
+			});
+		}
+
+
+	}//if acf is defined
 
 });
