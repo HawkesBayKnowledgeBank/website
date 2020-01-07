@@ -58,6 +58,7 @@ function knowledgebank_field_template($field, $looping= true){
  */
 function knowledgebank_get_field_objects(){
     $fields = get_field_objects();
+    if(empty($fields)) return false;
 
     //first sort by back end order
     uasort($fields, function($a,$b){

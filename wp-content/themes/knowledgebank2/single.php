@@ -55,10 +55,12 @@
 					<div class="grid column-2">
 
 						<?php
+						if(!empty($fields)):
 							foreach($fields as $field):
 								//look for templates for each field, first by name and then by type
 								knowledgebank_field_template($field); //see inc/theme_functions.php
 							endforeach;
+						endif;
 						?>
 
 					</div>

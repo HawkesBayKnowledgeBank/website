@@ -69,173 +69,121 @@ var json =
 
         require_once('../../wp-load.php');
 
-        //array - keys are person IDs, values are an array of referrers
-        $raw_persons = array();
+        //we require a person id
+        //if(empty($_GET['id'])) die('No id specified');
 
-        //final master array of graph nodes
+        $pid = !empty($_GET['id']) ? $_GET['id'] : 422653;
+        $person = get_post($pid);
+        if(empty($person->post_type) || $person->post_type != 'person') die('invalid id');
+
+
+
         $graph_nodes = array();
-
-
-        $people = get_posts(array(
-            'type' => 'person',
-            'posts_per_page' => -1,
-            'post_status' => 'publish'
-        ));
-
-        if (!empty($people)) {
-
-            $person_ids = array(); //note who we've already added in a flat array for easier checking
-
-            foreach ($people as $index => $person) {
-
-                //creage a graph node from each person
-
-                $graphnode = new StdClass();
-
-                $graphnode->id = $person->ID;
-                $graphnode->name = $person->post_title;
-
-                $graphnode->data = new stdClass();
-                $graphnode->data->{'$color'} = '#557EAA';
-                $graphnode->data->{'$type'} = 'circle';
-                $graphnode->data->{'$dim'} = '10';
-                $graphnode->adjacencies = array();
-
-                $parents = get_field('parents', $person->ID);
-                $partners = get_field('partner', $person->ID); //singular
-                $children = get_field('children', $person->ID);
+        kb_get_relatives($pid); //populate $graph_nodes
+        echo json_encode(array_values($graph_nodes));
 
 
 
-                //parents
-                if(!empty($parents)) {
 
-                    foreach($parents as $parent){
 
-                        if(!is_array($raw_persons[$parent->ID])) { //add the parent node to our $raw_persons
-                            $raw_persons[$parent->ID] = array();
+
+        /**
+         * Get a person's relatives, up to a certain depth
+         * @param  integer $pid  WordPress post ID for a 'person'
+         * @return string JSON array of graph nodes for the plugin
+         */
+        function kb_get_relatives($pid){
+
+            global $graph_nodes;
+
+            if(empty($graph_nodes[$pid])){
+                add_graph_node($pid);
+            }
+
+            $relations = array();
+            $relations['parents'] = get_field('parents', $pid);
+            $relations['partners'] = get_field('partner', $pid);
+            $relations['children'] = get_field('children', $pid);
+            $relations = array_filter($relations); //remove empty relation types
+
+            if(empty($relations)) return false; //found no relations at all
+
+            foreach($relations as $relative_type => $relatives){ //$relatives is an array, hopefully with an element named 'record' containing a WP_Post object
+
+                //1. Extract the post IDs of related person records
+                $relatives = array_map(function($relative){
+                    return !empty($relative['record']->ID) ? $relative['record']->ID : false;
+                },$relatives);
+
+                //2. Filter out any without record ids
+                $relatives = array_filter(array_values($relatives));
+
+                //add relations between $pid and relative id
+                if(!empty($relatives)){
+                    foreach($relatives as $relative_id){
+                        if(empty($graph_nodes[$relative_id])){ //add relative node and relations
+                            kb_get_relatives($relative_id);
                         }
 
-                        $raw_persons[$parent->ID][] = $person->ID;
+                        //add adjacencies
+
+                        //1. add person -> relative adjacency
+                        $adjacency = new stdClass();
+                        $adjacency->nodeTo = $relative_id;
+                        $adjacency->nodeFrom = $pid;
+                        $adjacency->data = new stdClass();
+                        $colours = array('parents' => '#FF0000','children' => '#00FF00', 'partners' => '#00FF00');
+                        $colour = $colours[$relative_type];
+                        $adjacency->data->{'$color'} = $colour;
+
+                        $graph_nodes[$pid]->adjacencies[] = $adjacency;
+
+                        //2. add relative -> person adjacency
+
+                        //flip $relative_type for the related party if parents or children
+                        if($relative_type == 'parents'){
+                            $relative_type = 'children';
+                        }
+                        elseif($relative_type == 'children'){
+                            $relative_type = 'parents';
+                        }
 
                         $adjacency = new stdClass();
-
-                        $adjacency->nodeTo = $parent->ID;
-                        $adjacency->nodeFrom = $person->ID;
-
+                        $adjacency->nodeFrom = $relative_id;
+                        $adjacency->nodeTo = $pid;
                         $adjacency->data = new stdClass();
-                        $adjacency->data->{'$color'} = "#557EAA";
-
-                        $graphnode->adjacencies[] = $adjacency;
+                        $colours = array('parents' => '#FF0000','children' => '#00FF00', 'partners' => '#00FF00');
+                        $colour = $colours[$relative_type];
+                        $adjacency->data->{'$color'} = $colour;
+                        $graph_nodes[$relative_id]->adjacencies[] = $adjacency;
 
                     }
-
-                }//end if parents
-
-
-                //children
-                if($children) {
-
-                    foreach($children as $child){
-
-                        if(!is_array($raw_persons[$child->ID])) { //add this node to our $raw_persons
-                            $raw_persons[$child->ID] = array();
-                        }
-                        $raw_persons[$child->ID][] = $person->ID; //add this person as a referrer
-
-                        $adjacency = new stdClass();
-
-                        $adjacency->nodeTo = $child->ID;
-                        $adjacency->nodeFrom = $person->ID;
-
-                        $adjacency->data = new stdClass();
-                        $adjacency->data->{'$color'} = "#FFFFFF";
-
-                        $graphnode->adjacencies[] = $adjacency;
-
-                    }  //end foreach
-
-                } //end if children
-
-                //children
-                if($partners) {
-
-                    foreach($partners as $partner){
-
-                        if(!is_array($raw_persons[$child->ID])) { //add this node to our $raw_persons
-                            $raw_persons[$child->ID] = array();
-                        }
-                        $raw_persons[$child->ID][] = $person->ID; //add this person as a referrer
-
-                        $adjacency = new stdClass();
-
-                        $adjacency->nodeTo = $child->ID;
-                        $adjacency->nodeFrom = $person->ID;
-
-                        $adjacency->data = new stdClass();
-                        $adjacency->data->{'$color'} = "#FFFFFF";
-
-                        $graphnode->adjacencies[] = $adjacency;
-
-                    }  //end foreach
-
-                } //end if children
-
-                if($parents || $children || $partners){
-                    $graph_nodes[] = $graphnode;
-                    $person_ids[] = $person->ID;
-                }
-
-            } //end foreach nids
-
-
-            //final formatting
-
-            foreach($raw_persons as $pid => $referrers) {
-
-                if(!in_array($pid,$person_ids)) { //we don't already have this node
-
-                    $person = get_post($pid);
-
-                    $graphnode = new StdClass();
-
-                    $graphnode->id = $person->ID;
-                    $graphnode->name = $person->post_title;
-
-                    $graphnode->data = new stdClass();
-                    $graphnode->data->{'$color'} = '#557EAA';
-                    $graphnode->data->{'$type'} = 'circle';
-                    $graphnode->data->{'$dim'} = '10';
-                    $graphnode->adjacencies = array();
-
-                    foreach($referrers as $referrer_id) {
-
-                            $adjacency = new stdClass();
-
-                            $adjacency->nodeTo = $referrer_id;
-                            $adjacency->nodeFrom = $person->ID;
-
-                            $adjacency->data = new stdClass();
-                            $adjacency->data->{'$color'} = "#FFFFFF";
-
-                            $graphnode->adjacencies[] = $adjacency;
-
-                    }
-
-
-                    $graph_nodes[] = $graphnode;
-
-                    $person_ids[] = $person->ID;
                 }
 
             }
 
+        }//kb_get_relatives()
 
-            echo json_encode($graph_nodes);
 
+        function add_graph_node($pid){
+            global $graph_nodes;
+            $graphnode = new StdClass();
+            $person = get_post($pid);
+            if(empty($person)) return false;
 
-        }//end if !empty nodes
+            $graphnode->id = $person->ID;
+            $graphnode->name = $person->post_title;
 
+            $graphnode->data = new stdClass();
+            $graphnode->data->{'$color'} = '#557EAA';
+            $graphnode->data->{'$type'} = 'circle';
+            $graphnode->data->{'$dim'} = empty($graph_nodes) ? '50' : '30';
+            $graphnode->adjacencies = array();            
+            $graph_nodes[$pid] = $graphnode;
+
+        }//add_graph_node()
+
+        //print_r($people); exit;
 
 
     ?>
