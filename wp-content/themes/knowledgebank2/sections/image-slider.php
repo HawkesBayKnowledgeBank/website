@@ -52,7 +52,12 @@
             <div class="inner">
                 <div class="media-slider">
 
-                    <?php foreach($images as $index => $image): $image = $image['image']; //image :) ?>
+                    <?php foreach($images as $index => $image):
+
+                        //single captions from the image, not from transcript
+                        $caption = !empty($image['caption']) && !empty($image['show_caption']) ? $image['caption'] : false;
+
+                        $image = $image['image']; //image :) ?>
 
                     <div class="media-slide">
                         <div class="media-slide-inner">
@@ -69,11 +74,13 @@
                                 <i class="mdi mdi-magnify"></i>
                             </a>
                         </div>
-                        <?php if(!empty($captions[$index])): ?>
+
+                        <?php if(!empty($captions[$index]) || !empty($caption)): ?>
                         <div class="caption">
-                            <?php echo $captions[$index]; ?>
+                            <?php if(!empty($captions[$index])) echo $captions[$index]; ?>
+                            <?php if(!empty($caption)) echo $caption; ?>
                         </div>
-                    <?php endif; ?>
+                        <?php endif; ?>
                     </div><!-- .media-slide -->
 
                     <?php endforeach; ?>

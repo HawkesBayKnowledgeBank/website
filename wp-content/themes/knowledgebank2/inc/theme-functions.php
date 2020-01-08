@@ -490,3 +490,5 @@ function kb_recently_modified( WP_REST_Request $request ){
     return $display_values;
 
 }
+
+add_filter( 'big_image_size_threshold', '__return_false' );
