@@ -165,7 +165,7 @@ function knowledgebank_convert_master_image($post_id){
 
             $output_filename = !empty($master['name']) ? "{$master['name']}.jpg" : "$post_id.jpg";
             $output_path = "$output_dir/$output_filename";
-            exec("convert -colorspace sRGB -quality 90 -interlace none -density 300 -format jpg -resize 1800x1800 \"$master_path\" \"$output_path\"");
+            exec("convert -colorspace sRGB -quality 90 -interlace none -density 300 -format jpg -resize 1800x1800\> \"$master_path\" \"$output_path\"");
             //echo "convert -quality 90 -interlace none -density 300 -format jpg -resize 1800x1800 $master_path $output_path";
 
             //if conversion worked, we should have jpegs in our output dir
