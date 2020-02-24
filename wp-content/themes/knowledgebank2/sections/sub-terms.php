@@ -51,7 +51,7 @@
 
     </div><!-- .sub-collections -->
     <?php if(count($child_terms) > 10): ?>
-        <span class="slide-count"><span class="current-index">1</span> / <?php echo ceil(count($child_terms) / 5); ?>
+        <span class="slide-count"><span class="current-index">1</span> / <?php echo count($child_terms); ?>
     <?php endif; ?>
 </div><!-- .sub-collections-wrap -->
 

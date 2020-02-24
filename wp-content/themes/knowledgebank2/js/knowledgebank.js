@@ -87,6 +87,7 @@ jQuery(document).ready(function($) {
         $('.sub-collections').slick({
           dots: false,
           mobileFirst:true,
+          infinite:false,
           slidesToShow: 1,
           slidesToScroll:1,
           responsive: [
@@ -100,7 +101,7 @@ jQuery(document).ready(function($) {
         });
         $('.sub-collections').on('afterChange', function(slick, currentSlide){
             console.log(currentSlide);
-            $('.slide-count .current-index').text(Math.ceil(currentSlide.currentSlide / 5) + 1);
+            $('.slide-count .current-index').text(Math.ceil(currentSlide.currentSlide) + 1);
         });
     }
 

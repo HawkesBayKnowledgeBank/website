@@ -35,6 +35,8 @@
 					<!-- section -->
 					<section class="layer results tiles search-results">
 						<div class="inner">
+							
+							<?php if(!empty($search_query)): ?><p>Showing <?php echo $wp_query->found_posts; ?> results</p><?php endif; ?>
 
 							<div class="grid column-4 ">
 
