@@ -738,6 +738,8 @@ article.news, article.search-results {background-color: white;margin-bottom: 30p
 article.search-results .icon-content-type { float:right;}
 .post-date { font-weight:bold; padding:20px 0;}
 .news .post-thumbnail { float:right; margin: 0 0 0 20px; max-width:400px;}
+.blog .news img { display:none;}
+.blog .news .post-thumbnail img { display:block;}
 @media screen and (max-width:660px){
   .news .post-thumbnail { float:none; margin: 0 auto 20px auto; }
   .news .post-thumbnail img {max-width:100%; width:100%; display:block; margin: 0 auto;}
@@ -876,7 +878,7 @@ article.search-results .icon-content-type { float:right;}
   .media-slide{border-radius: 2px;background-color: rgba(0, 0, 0, 0.1);margin-bottom: 30px;border-radius: 4px;overflow: hidden;box-shadow: 0px 6px 4px -4px rgba(125, 127, 142, 0.26);margin: 10px;outline: none;text-align: center;}
   .media-slide-inner{position:relative; }
   .media-slide img{max-width: 100%;max-height: 768px;}
-  .media-slide .caption{padding: 4px 5%;text-align: left;background: white;}
+  .media-slide .caption{padding: 4px 5%;text-align: left;background: white;overflow-x:scroll;}
 .media-slider .slick-dots{bottom: -50px; min-height:50px;}
   body .slick-prev, body .slick-next{background: white;display: block;box-shadow: 0px 6px 4px -4px rgba(125, 127, 142, 0.26);border-radius: 32px;text-decoration: none;padding: 3px 9px;min-width: 31px;color: #9192a5;font-weight: 400;transition: 0.2s cubic-bezier(0.4, 0.0, 0.6, 1) all;transform: scale(1);width: 40px;height: 40px;z-index: 1;}
 
