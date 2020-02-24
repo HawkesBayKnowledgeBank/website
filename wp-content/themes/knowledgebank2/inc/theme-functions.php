@@ -66,7 +66,8 @@ function knowledgebank_get_field_objects(){
     });
 
     //Anything we want to go before other fields, in desired order
-    $before = array_flip(array('master','licence','name')); //use a nice simple array to declare field names, but flip so these become keys for use
+    //We use a nice simple array to declare field names, but array_flip() because we really want them as array keys
+    $before = array_flip(array('master','licence','name','notes'));
 
     if(!empty($before) && !empty($fields)){
         foreach($before as $field_name => $_val){
@@ -81,7 +82,7 @@ function knowledgebank_get_field_objects(){
     }
 
     //Anything we want specifically moved to the end
-    $after = array_flip(array('people','notes', 'biography','accession_number'));
+    $after = array_flip(array('people', 'biography','accession_number'));
     if(!empty($after) && !empty($fields)){
         foreach($after as $field_name => $_val){
             if(array_key_exists($field_name, $fields)){ //found the field we are looking for, move it into $after
