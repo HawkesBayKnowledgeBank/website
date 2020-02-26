@@ -782,6 +782,7 @@ article.search-results .icon-content-type { float:right;}
   .controls{}
   .controls > .inner{padding-bottom:0px;}
   .controls-grid{display: -webkit-box;display: -ms-flexbox;display: flex;}
+  .whos-who .controls-grid.search{ margin-bottom:20px;}
   .control-option{margin-right: 10px; width:20%}
   .control-option label{display: block;font-size: 14px;margin-bottom: 6px;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;}
   .control-option span.select2-container{min-width: 115px; width:100%;}
@@ -980,7 +981,6 @@ article.search-results .icon-content-type { float:right;}
       -ms-user-select: text;
       user-select: text;
   }
-
 
   .single-person .book-slider-wrap { max-width:250px; margin:0 auto;}
 

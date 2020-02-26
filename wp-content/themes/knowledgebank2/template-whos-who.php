@@ -21,16 +21,25 @@
 
 
 	$letter = '';
-	if(!empty($_GET['letter']) && strlen($_GET['letter']) == 1) {
-		$letter = $_GET['letter'];
-		$sql = $wpdb->prepare('SELECT ID, pm1.meta_value AS last_name, pm2.meta_value AS first_name FROM wp_posts LEFT JOIN wp_postmeta pm1 ON ID = pm1.post_id LEFT JOIN wp_postmeta pm2 ON ID = pm2.post_id WHERE pm1.meta_key = "name_0_family_name" AND pm2.meta_key = "name_0_first_name" AND pm1.meta_value LIKE "%s" AND wp_posts.post_status = "publish" ORDER BY last_name, first_name ASC',array($letter . '%'));
-		//echo $sql;
-		$all_people = $wpdb->get_results($sql);
 
+	if(!empty($_GET['search'])){
+		$args['s'] = $_GET['search'];
+		$all_people = get_posts($args);
 	}
 	else{
-		$all_people = $wpdb->get_results('SELECT ID, pm1.meta_value AS last_name, pm2.meta_value AS first_name FROM wp_posts LEFT JOIN wp_postmeta pm1 ON ID = pm1.post_id LEFT JOIN wp_postmeta pm2 ON ID = pm2.post_id WHERE pm1.meta_key = "name_0_family_name" AND pm2.meta_key = "name_0_first_name" AND wp_posts.post_status = "publish" ORDER BY last_name, first_name ASC');
+		if(!empty($_GET['letter']) && strlen($_GET['letter']) == 1) {
+			$letter = $_GET['letter'];
+			$sql = $wpdb->prepare('SELECT ID, pm1.meta_value AS last_name, pm2.meta_value AS first_name FROM wp_posts LEFT JOIN wp_postmeta pm1 ON ID = pm1.post_id LEFT JOIN wp_postmeta pm2 ON ID = pm2.post_id WHERE pm1.meta_key = "name_0_family_name" AND pm2.meta_key = "name_0_first_name" AND pm1.meta_value LIKE "%s" AND wp_posts.post_status = "publish" ORDER BY last_name, first_name ASC',array($letter . '%'));
+			//echo $sql;
+			$all_people = $wpdb->get_results($sql);
+
+		}
+		else{
+			$all_people = $wpdb->get_results('SELECT ID, pm1.meta_value AS last_name, pm2.meta_value AS first_name FROM wp_posts LEFT JOIN wp_postmeta pm1 ON ID = pm1.post_id LEFT JOIN wp_postmeta pm2 ON ID = pm2.post_id WHERE pm1.meta_key = "name_0_family_name" AND pm2.meta_key = "name_0_first_name" AND wp_posts.post_status = "publish" ORDER BY last_name, first_name ASC');
+		}
 	}
+
+
 
 	//Filters
 	if(!empty($filters['number']) && is_numeric($filters['number'])){
@@ -64,10 +73,21 @@
 				</section>
 
 
-				<section class="layer controls">
+				<section class="layer controls whos-who">
 					<div class="inner">
 
-						<form class="" action="index.html" method="post">
+						<form class="" action="" method="get">
+
+							<div class="controls-grid search">
+								<div class="control-option searchfilter">
+									<label>Search in <em>Who's Who</em></label>
+									<div class="searchfilter-wrap">
+										<input type="text" name="search" class="searchfilter" value="<?php echo !empty($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
+										<input type="submit" value="Search">
+									</div>
+								</div>
+							</div>
+
 							<div class="controls-grid">
 
 								<div class="control-option alphabet">
