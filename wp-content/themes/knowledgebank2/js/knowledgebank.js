@@ -117,7 +117,9 @@ jQuery(document).ready(function($) {
 
 
     $('.media-slider, .book-slider').on('init', function(event, slick, currentSlide){
-        maybe_advance_slider_to_search_term();
+        setTimeout(function(){
+            maybe_advance_slider_to_search_term();
+        },1500);
     });
 
     //lazy loading - slick's native version doesn't handle adaptiveHeight o.O
@@ -261,7 +263,7 @@ jQuery(document).ready(function($) {
 
 		var searchterm = $('input[name="s"]').val();
 		if(searchterm != ''){
-			$('.search-results h4 a').each(function(){
+			$('.search-results').find('a').not('.breadcrumbs a').each(function(){
 				var href = $(this).attr('href');
 				$(this).attr('href',href + '?searchterm=' + encodeURIComponent(searchterm));
 			});
@@ -290,34 +292,66 @@ jQuery(document).ready(function($) {
             $.each(searchwords, function(index, value){
                 $('.layer').highlight(value);
             });
-
-            //show our own little search bar because ctrl+f can't deal with slick slider
-            if($('#searchscroller').length){
-                $('#searchscroller .total').text(  );
-            }
         }
         else{
             $('.layer:not(.intro)').highlight(searchterm);
         }
+
+        //show our own little search bar because ctrl+f can't deal with slick slider
+        if($('#searchscroller').length){
+            $('#searchscroller .total').text( $('.slide-wrap:not(.slick-cloned)').find('.caption .highlight').length );
+
+            $('#searchscroller a.next').click(function(){
+                var current = parseInt($('#searchscroller').attr('data-result'));
+                var total = $('.slide-wrap:not(.slick-cloned)').find('.caption .highlight').length;
+                var next = current + 1;
+                if(current == total){
+                    next = 1;
+                }
+                $('#searchscroller').attr('data-result', next);
+                $('#searchscroller .index').text(next);
+                maybe_advance_slider_to_search_term(next - 1);
+            });
+
+            $('#searchscroller a.prev').click(function(){
+                var current = parseInt($('#searchscroller').attr('data-result'));
+                var total = $('.slide-wrap:not(.slick-cloned)').find('.caption .highlight').length;
+                var next = current - 1;
+                if(current == 1){
+                    next = total;
+                }
+                $('#searchscroller').attr('data-result', next);
+                $('#searchscroller .index').text(next);
+                maybe_advance_slider_to_search_term(next - 1);
+            });
+
+            $('#searchscroller a.close').click(function(){
+                $('#searchscroller').remove();
+            });
+
+        }
     }
 
     //possibly scroll to a search term when gallery is ready
-    function maybe_advance_slider_to_search_term(){
-
+    function maybe_advance_slider_to_search_term(index){
+        if(!index) index = 0;
         if(getUrlVars()['searchterm']){
             var searchterm = getUrlVars()['searchterm'];
             console.log('searchterm is ' + searchterm)
-            $('.slide-wrap').highlight(searchterm);
-            var $first_result = $('.slide-wrap:not(.slick-cloned)').find('span.highlight').first();
+            //$('.slide-wrap').highlight(searchterm);
+            var $first_result = $('.slide-wrap:not(.slick-cloned)').find('span.highlight').eq(index);
             if($first_result.length){
                 var $result_wrap = $first_result.parents('.slide-wrap').first();
                 if($result_wrap.length){
                     var result_index = $result_wrap.attr('data-slick-index');
-                    console.log('result index is ' + result_index)
+                    console.log('result slide index for ' + index + ' is ' + result_index);
+                    $first_result.css('border','1px solid #F00');
                     $('.slick-dots button').eq(result_index).click();
                     setTimeout(function(){
                         var scrollpos = $first_result.position().top;
-                        $('.caption-inner').animate({scrollTop: $('.caption-inner').scrollTop() + scrollpos + 'px'});
+                        console.log(scrollpos);
+                        var $caption_container = $first_result.parents('.caption').first();
+                        $caption_container.animate({scrollTop: $caption_container.scrollTop() + scrollpos + 'px'});
                     },1000);
 
                 }

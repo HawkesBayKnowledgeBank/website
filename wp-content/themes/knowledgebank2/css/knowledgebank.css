@@ -909,7 +909,7 @@ article.search-results .icon-content-type { float:right;}
 
   .book-slide{border-radius: 2px;background-color: white;margin-bottom: 30px;border-radius: 4px;overflow: hidden;box-shadow: 0px 6px 4px -4px rgba(125, 127, 142, 0.26);margin: 0;outline: none;display: flex;align-items: flex-start;justify-content: stretch;position: relative;width: 100%;height:100%;}
   .book-slide .caption{width: 50%;-ms-flex-negative: 0;/* flex-shrink: 0; */position: absolute;height: 100%;padding: 30px;overflow: auto;}
-  .book-slide .caption-inner{min-height: 100%;left: 0;width: 100%;overflow-y: auto;display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-orient: vertical;-webkit-box-direction: normal;-ms-flex-direction: column;flex-direction: column;-webkit-box-pack: center;-ms-flex-pack: center;justify-content: center;-ms-flex-negative: 0;flex-shrink: 0;}
+  .book-slide .caption-inner{min-height: 100%;height:auto;left: 0;width: 100%;overflow-y: auto;}
   .book-slide img{width: 50%;height: auto;margin-left: 50%; max-height:80vh; width:auto;}
   .book-slide.nocaption img { width:100%; margin:0 auto; max-height:800px; width:auto;}
   .book-slide .caption-inner p{margin:0.6em 0;}
@@ -1055,12 +1055,19 @@ article.search-results .icon-content-type { float:right;}
 }
 
 /* search scroller */
-#searchscroller { position:fixed; top:100px; right:0; background-color:yellow; padding:20px;}
+#searchscroller { position:fixed; top:100px; right:0; background-color:yellow; padding:10px;z-index:9000;}
 #searchscroller span {display:inline-block;}
 #searchscroller .term {font-weight:bold; margin-right:20px; }
 #searchscroller .index {}
 #searchscroller .total{}
-#searchscroller .prev, #searchscroller .next, #searchscroller .close{cursor:pointer; font-weight:bold; width:20px; height:20px; text-align:center; }
+
+#searchscroller .prev:before {
+    content: "\F04D";
+}
+#searchscroller .next:before {
+    content: "\F054";
+}
+#searchscroller .prev, #searchscroller .next{font-family: 'Material Design Icons'; text-decoration:none; cursor:pointer;}
 
 /* Print Styles
 --------------------------- */

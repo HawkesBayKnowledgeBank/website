@@ -16,7 +16,7 @@
     .results { }
     .results .result-row { display:flex; flex-wrap: wrap; padding:10px; }
     .results .result-row:nth-of-type(2n) { background-color:#ddd;}
-    .results .result-row .result-col { width:20%;}
+    .results .result-row .result-col { width:15%;}
 
     .results .result-row .result-col.title { width:30%;}
 
@@ -42,33 +42,33 @@
             <div class="search-control">
 
                 <label>Title</label>
-                <input name="xxx[post_title_like]" value="<?php echo !empty($_GET['xxx']['post_title']) ? htmlentities($_GET['xxx']['post_title']) : ''; ?>" type="text" />
+                <input name="fc[post_title_like]" value="<?php echo !empty($_GET['fc']['post_title']) ? htmlentities($_GET['fc']['post_title']) : ''; ?>" type="text" />
 
                 <label>Type</label>
-                <select multiple=true name="xxx[post_type][]">
+                <select multiple=true name="fc[post_type][]">
                     <?php $allowed = array('audio','still_image','text','video','person'); ?>
                     <?php foreach(get_post_types(['public' => true],'objects') as $content_type): ?>
                         <?php if(!in_array($content_type->name, $allowed)) continue; ?>
-                        <?php $selected = !empty($_GET['xxx']['post_type']) && in_array($content_type->name, $_GET['xxx']['post_type']) ? 'selected' : ''; ?>
+                        <?php $selected = !empty($_GET['fc']['post_type']) && in_array($content_type->name, $_GET['fc']['post_type']) ? 'selected' : ''; ?>
                         <option value="<?php echo $content_type->name; ?>" <?php echo $selected; ?>><?php echo $content_type->labels->name; ?></option>
                     <?php endforeach; ?>
                 </select>
             </div><!-- .search-control -->
             <div class="search-control">
                 <label>Status</label>
-                <select name="xxx[post_status]">
+                <select name="fc[post_status]">
                     <?php foreach(array('any' => 'Any', 'publish' => 'Published', 'draft' => 'Draft', 'pending' => 'Pending') as $status => $label): ?>
-                        <?php $selected = !empty($_GET['xxx']['post_status']) && $_GET['xxx']['post_status'] == $status ? 'selected' : ''; ?>
+                        <?php $selected = !empty($_GET['fc']['post_status']) && $_GET['fc']['post_status'] == $status ? 'selected' : ''; ?>
                         <option value="<?php echo $status; ?>"><?php echo $label; ?></option>
                     <?php endforeach; ?>
                 </select>
             </div><!-- .search-control -->
             <div class="search-control">
                 <label>Author / Editor</label>
-                <select name="xxx[user][]" multiple="true">
+                <select name="fc[user][]" multiple="true">
                     <?php $users = get_users(); ?>
                     <?php foreach($users as $user): ?>
-                        <?php $selected = !empty($_GET['xxx']['user']) && in_array($user->ID, $_GET['xxx']['user']) ? 'selected' : ''; ?>
+                        <?php $selected = !empty($_GET['fc']['user']) && in_array($user->ID, $_GET['fc']['user']) ? 'selected' : ''; ?>
                         <option value="<?php echo $user->ID; ?>" <?php echo $selected; ?>><?php echo $user->display_name; ?></option>
                     <?php endforeach; ?>
                 </select>
@@ -95,7 +95,7 @@
             'tax_query' => array(),
         );
 
-        $kb_args = array_filter($_GET['xxx']);
+        $kb_args = array_filter($_GET['fc']);
 
 
         //transform some of our args for Wordpress
@@ -133,7 +133,6 @@
 
         //...
 
-        //Stop; query time.
         $args = wp_parse_args($kb_args, $default_args);
 
         $results = new WP_Query($args);
@@ -156,10 +155,11 @@
                 'type' => 'Type',
                 'edit' => 'Edit',
                 'title' => 'Title',
-                'created' => 'Created',
                 'author' => 'Author',
+                'status' => 'Status',
+                'created' => 'Created',
                 'modified' => 'Last modified',
-                'modified_by' => 'Modified by',
+                'modified_by' => 'Modified by'
             );
 
         ?>
@@ -168,7 +168,13 @@
 
             <div class="result-row headers">
                 <?php foreach($columns as $name => $label): ?>
-                    <?php echo sprintf('<div class="result-col %s">%s</div>',$name,$label); ?>
+                        <?php
+                            $link_args = $_GET;
+                            $link_args['fc']['orderby'] = $name;
+                            $link_args['fc']['order'] = (!empty($_GET['fc']['order']) && $_GET['fc']['order'] == 'DESC' ? 'ASC' : 'DESC');
+                            $link = '/wp-admin/admin.php?' . http_build_query($link_args);
+                        ?>
+                    <?php echo sprintf('<div class="result-col %s"><a href="%s">%s</a></div>',$name,$link,$label); ?>
                 <?php endforeach; ?>
             </div>
 
@@ -215,6 +221,10 @@
 
                                 case 'edit':
                                     $value = sprintf('<a href="%s">edit</a>', get_edit_post_link());
+                                break;
+
+                                case 'status':
+                                    $value = $post->post_status;
                                 break;
 
                             endswitch;

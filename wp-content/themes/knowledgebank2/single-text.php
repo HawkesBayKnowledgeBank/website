@@ -3,7 +3,14 @@
 	<main role="main">
 	<!-- section -->
 	<section>
+		<?php if(!empty($_GET['searchterm'])): ?>
+			<div id="searchscroller" data-result="1">
+				<span class="index">1</span>/<span class="total"></span>
+				<a class="prev"></a>
+				<a class="next"></a>
 
+			</div>
+		<?php endif; ?>
 	<?php if (have_posts()): while (have_posts()) : the_post(); ?>
 
 		<!-- article -->
@@ -27,7 +34,7 @@
 
 				$fields = knowledgebank_get_field_objects(); //we want to move / remove / play around with field orders
 
-				
+
 			?>
 
 			<?php $images = get_field('images'); ?>
