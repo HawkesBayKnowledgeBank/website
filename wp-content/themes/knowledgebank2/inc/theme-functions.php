@@ -493,3 +493,35 @@ function kb_recently_modified( WP_REST_Request $request ){
 }
 
 add_filter( 'big_image_size_threshold', '__return_false' );
+
+function kb_ucm_get_collections(){
+
+    $parent = 0;
+
+    if(!empty($_GET['parents'])){
+        $parent = array_pop($_GET['parents']);
+    }
+
+    $args = array('taxonomy' => 'collections', 'parent' => $parent, 'hide_empty' => false);
+    if(!empty($_GET['search'])){
+        $args['search'] = $_GET['search'];
+    }
+
+    $collections = get_terms($args);
+
+    //we need to include the parent term in our results too
+    $collections[] = get_term_by('id',$parent, 'collections');
+
+    //simple reformatting for select2
+    $collections_json = array();
+    foreach($collections as $collection){
+        $collections_json[] = array(
+            'id' => $collection->term_id,
+            'text' => $collection->name,
+            'parent' => $collection->parent
+        );
+    }
+    wp_send_json(array('results' => $collections_json));
+
+}
+add_action('wp_ajax_ucm_get_collections', 'kb_ucm_get_collections');

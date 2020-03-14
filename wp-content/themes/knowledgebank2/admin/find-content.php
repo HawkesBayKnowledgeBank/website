@@ -1,4 +1,5 @@
 <?php acf_form_head(); ?>
+
 <?php if(!empty($_GET['kbsearch'])): ?>
 
 
@@ -16,9 +17,9 @@
     .results { }
     .results .result-row { display:flex; flex-wrap: wrap; padding:10px; }
     .results .result-row:nth-of-type(2n) { background-color:#ddd;}
-    .results .result-row .result-col { width:15%;}
+    .results .result-row .result-col { width:10%;}
 
-    .results .result-row .result-col.title { width:30%;}
+    .results .result-row .result-col.title { width:25%;}
 
     .results .result-row .result-col.created,
     .results .result-row .result-col.author,
@@ -29,6 +30,8 @@
     .results .result-row .result-col.edit { width:5%; }
 
     .results .result-row .result-col.checkbox { width: 40px;}
+    #select2-collections-results .select2-results__option[aria-disabled=true] { display:none; }
+    #filters input[type="submit"] { padding:10px; margin:10px 0; }
 
 </style>
 
@@ -64,22 +67,45 @@
                 </select>
             </div><!-- .search-control -->
             <div class="search-control">
-                <label>Author / Editor</label>
-                <select name="fc[user][]" multiple="true">
+                <label>Author</label>
+                <select name="fc[author__in][]" multiple="true">
                     <?php $users = get_users(); ?>
                     <?php foreach($users as $user): ?>
-                        <?php $selected = !empty($_GET['fc']['user']) && in_array($user->ID, $_GET['fc']['user']) ? 'selected' : ''; ?>
+                        <?php $selected = !empty($_GET['fc']['author__in']) && in_array($user->ID, $_GET['fc']['author__in']) ? 'selected' : ''; ?>
+                        <option value="<?php echo $user->ID; ?>" <?php echo $selected; ?>><?php echo $user->display_name; ?></option>
+                    <?php endforeach; ?>
+                </select>
+
+                <label>Edited by</label>
+                <select name="fc[editor][]" multiple="true">
+                    <?php $users = get_users(); ?>
+                    <?php foreach($users as $user): ?>
+                        <?php $selected = !empty($_GET['fc']['editor']) && in_array($user->ID, $_GET['fc']['editor']) ? 'selected' : ''; ?>
                         <option value="<?php echo $user->ID; ?>" <?php echo $selected; ?>><?php echo $user->display_name; ?></option>
                     <?php endforeach; ?>
                 </select>
             </div><!-- .search-control -->
 
+            <div class="search-control">
+                <label>Collection(s)</label>
+                <select name="fc[collection][]" id="collections" multiple="true">
+                    <?php if(!empty($_GET['fc']['collection'])): foreach($_GET['fc']['collection'] as $collection_id): ?>
+                        <?php
+                            $collection = get_term_by('id',$collection_id,'collections');
+                            if(empty($collection)) continue;
+                        ?>
+                        <option value="<?php echo $collection->term_id; ?>" selected><?php echo $collection->name; ?></option>
+                    <?php endforeach; endif; ?>
+                </select>
+            </div><!-- .search-control -->
+
         </div><!-- .search-controls -->
+        <div class="search-control">
+            <input type="submit" value="Search" />
+        </div><!-- .search-control -->
 
         <input type="hidden" name="page" value="knowledgebank_content_manager" /><!-- ensure we reload this same page when submitting the form -->
         <input type="hidden" name="kbsearch" value="1" />
-
-        <input type="submit" value="Submit" />
 
     </form>
 
@@ -112,20 +138,28 @@
             }
         }
 
-        //users - authors or revision authors
-        if(!empty($kb_args['user'])){
 
-            $user_ids = $kb_args['user'];
-            unset($kb_args['user']);
-
-            //author
-            $kb_args['author'] = $user_ids; //include all specified users as possible authors
-
-            //last edited by
+        //editor
+        if(!empty($kb_args['editor'])){
+            $editor_ids = $kb_args['editor'];
+            unset($kb_args['editor']);
             $kb_args['meta_query'][] = array(
                 'key' => '_edit_last',
-                'value' => $user_ids,
+                'value' => $editor_ids,
                 'compare' => 'IN'
+            );
+        }
+
+        if(!empty($kb_args['collection'])){
+
+            $collections = $kb_args['collection'];
+            unset($kb_args['collection']);
+            $kb_args['tax_query'] = array(
+                array(
+                    'taxonomy' => 'collections',
+                    'field' => 'term_id',
+                    'terms' => $collections
+                )
             );
 
         }
@@ -157,6 +191,7 @@
                 'title' => 'Title',
                 'author' => 'Author',
                 'status' => 'Status',
+                'collections' => 'Collections',
                 'created' => 'Created',
                 'modified' => 'Last modified',
                 'modified_by' => 'Modified by'
@@ -227,6 +262,18 @@
                                     $value = $post->post_status;
                                 break;
 
+                                case 'collections':
+                                    $collections = wp_get_post_terms( $post->ID, 'collections');
+                                    $values = [];
+                                    $value = '';
+                                    if(!empty($collections)){
+                                        foreach($collections as $collection){
+                                            $values[] = sprintf('<a href="%s">%s</a>', get_term_link($collection), $collection->name);
+                                        }
+                                        $value = implode(', ', $values);
+                                    }
+                                break;
+
                             endswitch;
 
                         ?>
@@ -249,8 +296,22 @@
 
         $(document).ready(function(){
 
-            $('select').select2();
 
+            $('select:not(#collections)').select2();
+
+            $('#collections').select2({
+                ajax: {
+                    url: '/wp-admin/admin-ajax.php',
+                    data: function (params) {
+                        var query = {
+                            action: 'ucm_get_collections',
+                            search: params.term,
+                            parents: $('#collections').val()
+                        }
+                        return query;
+                    }
+                }
+            });
         });
 
     });
