@@ -265,7 +265,12 @@ jQuery(document).ready(function($) {
 		if(searchterm != ''){
 			$('.search-results').find('a').not('.breadcrumbs a').each(function(){
 				var href = $(this).attr('href');
-				$(this).attr('href',href + '?searchterm=' + encodeURIComponent(searchterm));
+                if(href.indexOf('?') != -1){
+                    $(this).attr('href',href + '&searchterm=' + encodeURIComponent(searchterm));
+                } else {
+                    $(this).attr('href',href + '?searchterm=' + encodeURIComponent(searchterm));
+                }
+
 			});
 		}
 

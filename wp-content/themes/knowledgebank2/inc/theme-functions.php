@@ -525,3 +525,12 @@ function kb_ucm_get_collections(){
 
 }
 add_action('wp_ajax_ucm_get_collections', 'kb_ucm_get_collections');
+
+
+function kb_paypal_button_html(){
+    ob_start();
+    get_template_part('sections/paypal-button');
+    $html = ob_get_clean();
+    return $html;
+}
+add_shortcode('kb_paypal_button', 'kb_paypal_button_html');
