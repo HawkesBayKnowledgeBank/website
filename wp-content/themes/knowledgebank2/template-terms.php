@@ -12,6 +12,8 @@
 		//arguments for get_terms()
 		$args = array(
 			'hide_empty' => 1,
+            'offset' => 0,
+            //'number' => 20,
 			'meta_query' => array(),
 		);
 
@@ -26,13 +28,15 @@
 			}
 
 			$args['taxonomy'] = $taxonomy[0]->name;
-			$args['parent'] = 0;
+            $args['parent'] = 0;  //NB this makes wp_term_query ignore number and offset params, but we will fake them with array_slice on the full result set
 
 			if($taxonomy[0]->name == 'collections') :
+
 				$args['meta_query'][] = array(
 					'key' => 'public',
 					'value' => 1,
 				);
+
 			endif;
 
 		else:
@@ -63,23 +67,8 @@
 				if(!empty($filters['search'])){
 					$args['name__like'] = $filters['search'];
 				}//$filters['search']
-				//print_r($args);
-				$all_terms = get_terms( $args ); //we need to know how many terms there are in total, for pagination. TODO: find a more efficient solution than this
 
-				//Filters
-				if(!empty($filters['number']) && is_numeric($filters['number'])){
-					$args['number'] = $filters['number']; //per page
-				}
-				else{
-					$args['number'] = 20;
-				}
-
-				if(!empty($_GET['term_page']) && is_numeric($_GET['term_page'])){
-					$offset = $args['number'] * ($_GET['term_page'] - 1); //eg on page 2, with 20 posts per page, we skip 20 * (2-1)
-					$args['offset'] = $offset;
-				}
-
-				//ordering
+                //ordering
 				if(!empty($filters['order'])){
 					$args['order'] = $filters['order'];
 				}
@@ -87,7 +76,33 @@
 					$args['orderby'] = $filters['orderby'];
 				}
 
-				$terms = get_terms( $args ); //just the terms we want, accounting for pagination
+
+                //Get terms - note this will likely return all of them
+				$term_query = new WP_Term_Query( $args );
+
+
+                //Pagination - we fake this with array_slice on the whole term result set, because reasons
+    			if(!empty($filters['number']) && is_numeric($filters['number'])){
+    				$args['number'] = $filters['number']; //per page
+    			}
+                else{
+                    $args['number'] = 20;
+                }
+
+
+    			if(!empty($_GET['term_page']) && is_numeric($_GET['term_page'])){
+    				$offset = $args['number'] * ($_GET['term_page'] - 1); //eg on page 2, with 20 posts per page, we skip 20 * (2-1)
+    				$args['offset'] = $offset;
+    			}
+                else{
+                    $args['offset'] = 0;
+                }
+
+                $all_terms = count($term_query->terms);
+
+                $terms = array_slice($term_query->terms,$args['offset'],$args['number']);
+
+
 
 			?>
 			<section class="layer results tiles <?php echo $args['taxonomy']; ?> ">
@@ -136,12 +151,14 @@
 
 					</div><!-- .grid -->
 
+
+
 					<ul class="pagination">
 						<?php
 							//pagination
-							$total_terms = count($all_terms);
+							$total_terms = count($term_query->terms);
 							$max_pages = ceil($total_terms / $args['number']);
-							if($max_pages > 0):
+							if($max_pages > 1):
 								foreach(range(1,$max_pages) as $page_number):
 									if($page_number == 0) continue;
 									$term_page = !empty($_GET['term_page']) ? $_GET['term_page'] : 1;
@@ -154,6 +171,8 @@
 							<?php endforeach; ?>
 						<?php endif; ?>
 					</ul>
+
+
 
 				</div><!-- .inner -->
 			</section>

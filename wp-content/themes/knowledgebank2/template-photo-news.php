@@ -129,17 +129,21 @@
 							$total_terms = count($all_terms);
 							$max_pages = ceil($total_terms / $args['number']);
 
-							foreach(range(1,$max_pages) as $page_number):
+                            if($max_pages > 1):
 
-								$term_page = !empty($_GET['term_page']) ? $_GET['term_page'] : 1;
-								$current_page = $term_page == $page_number ? 'active' : '';
-								$url_params = array('term_page' => $page_number, 'filters' => $filters);
-								$url = get_permalink() . '?' . http_build_query($url_params);
+    							foreach(range(1,$max_pages) as $page_number):
 
-						?>
-							<li class="<?php echo $current_page; ?>"><a href="<?php echo $url; ?>"><?php echo $page_number; ?></a></li>
+    								$term_page = !empty($_GET['term_page']) ? $_GET['term_page'] : 1;
+    								$current_page = $term_page == $page_number ? 'active' : '';
+    								$url_params = array('term_page' => $page_number, 'filters' => $filters);
+    								$url = get_permalink() . '?' . http_build_query($url_params);
 
-						<?php endforeach; ?>
+    						?>
+    							<li class="<?php echo $current_page; ?>"><a href="<?php echo $url; ?>"><?php echo $page_number; ?></a></li>
+
+    						<?php endforeach; ?>
+
+                        <?php endif; ?>
 					</ul>
 
 				</div><!-- .inner -->

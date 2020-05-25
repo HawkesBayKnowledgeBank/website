@@ -5,11 +5,11 @@
  * @param  array  $field  Acf field from get_field_object()
  * @param  boolean $looping If we are looping through all fields on a record, we will automatically exclude certain ones. If not, just output whatever field we are given
  */
-function knowledgebank_field_template($field, $looping= true){
+function knowledgebank_field_template($field, $looping = true){
 
     if(empty($field['value']) || !is_array($field) || empty($field['key'])) return false;
 
-    //skip certain fields
+    //skip the automatic output of certain fields
     $exclude = array(
         'licence',
         'allow_commercial_licence',
@@ -534,3 +534,23 @@ function kb_paypal_button_html(){
     return $html;
 }
 add_shortcode('kb_paypal_button', 'kb_paypal_button_html');
+
+function kb_login_logo() { ?>
+    <style type="text/css">
+        #login h1 a, .login h1 a {
+            background-image: url(/wp-content/themes/knowledgebank2/img/knowledgebank_logo.svg);
+    		height:65px;
+    		width:320px;
+    		background-size: 320px 65px;
+    		background-repeat: no-repeat;
+        	padding-bottom: 30px;
+        }
+        #loginform input.button { background-color:#24802d;border-color:#24802d;}
+    </style>
+<?php }
+add_action( 'login_enqueue_scripts', 'kb_login_logo' );
+
+function kb_login_logo_url() {
+    return home_url();
+}
+add_filter( 'login_headerurl', 'kb_login_logo_url' );

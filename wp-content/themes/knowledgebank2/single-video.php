@@ -38,8 +38,23 @@
 			<?php
 					$video = get_field_object('master');
 					$video['name'] = 'video';
-					knowledgebank_field_template($video, false);		
+					knowledgebank_field_template($video, false);
 			?>
+
+            <?php if(get_field('transcript')): ?>
+
+                <section class="layer trascript">
+
+                    <div class="inner">
+
+                        <?php the_field('transcript'); ?>
+
+                    </div>
+
+                </section>
+
+            <?php endif; ?>
+
 
 			<section class="layer attributes">
 				<div class="inner">

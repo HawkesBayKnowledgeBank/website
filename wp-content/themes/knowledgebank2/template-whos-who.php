@@ -171,22 +171,26 @@
 								//pagination
 								$total_people = count($all_people);
 								$max_pages = ceil($total_people / $args['posts_per_page']);
+                                if($max_pages > 1):
 
-								foreach(range(1,$max_pages) as $page_number):
+                                    foreach(range(1,$max_pages) as $page_number):
 
-									$url_params = array('_page' => $page_number, 'filters' => $filters);
+                                        $url_params = array('_page' => $page_number, 'filters' => $filters);
 
-									if(!empty($letter)) $url_params['letter'] = $letter;
+                                        if(!empty($letter)) $url_params['letter'] = $letter;
 
 
-									$_page = !empty($_GET['_page']) ? $_GET['_page'] : 1;
-									$current_page_class = $_page == $page_number ? 'active' : '';
-									$url = get_permalink() . '?' . http_build_query($url_params);
+                                        $_page = !empty($_GET['_page']) ? $_GET['_page'] : 1;
+                                        $current_page_class = $_page == $page_number ? 'active' : '';
+                                        $url = get_permalink() . '?' . http_build_query($url_params);
 
-							?>
-								<li class="<?php echo $current_page_class; ?>"><a href="<?php echo $url; ?>"><?php echo $page_number; ?></a></li>
+                                    ?>
+                                    <li class="<?php echo $current_page_class; ?>"><a href="<?php echo $url; ?>"><?php echo $page_number; ?></a></li>
 
-							<?php endforeach; ?>
+                                    <?php endforeach; ?>
+
+                            <?php endif; ?>
+
 						</ul>
 
 					</div><!-- .inner -->

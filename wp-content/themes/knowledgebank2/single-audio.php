@@ -35,6 +35,21 @@
 
 			<?php endif; //audio ?>
 
+            <?php if(get_field('transcript')): ?>
+
+                <section class="layer trascript">
+
+                    <div class="inner">
+
+                        <?php the_field('transcript'); ?>
+
+                    </div>
+
+                </section>
+
+            <?php endif; ?>
+
+
 			<section class="layer attributes">
 				<div class="inner">
 					<div class="grid column-2">

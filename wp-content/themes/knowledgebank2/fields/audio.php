@@ -18,16 +18,3 @@
         </div><!--.field -->
     </div><!-- .inner -->
 </section>
-<?php if(get_field('transcript')): ?>
-
-    <section class="layer trascript">
-
-        <div class="inner">
-
-            <?php the_field('transcript'); ?>
-
-        </div>
-
-    </section>
-
-<?php endif; ?>
