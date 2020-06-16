@@ -1,35 +1,4 @@
-<?php get_header(); ?>
-<?php $filters = knowledgebank_get_filters(); ?>
-<?php
-	global $wp_query;
-
-	$extra_classes = array();
-
-	if(is_tax()){
-
-		$term = get_queried_object();
-
-		$term_id = $term->term_id;
-		$taxonomy = get_taxonomy($term->taxonomy);
-		$taxonomy_name = $term->taxonomy;
-
-		$title = $term->name; //get_the_archive_title();
-		if($term->parent == 967){
-			$title = "Hawke's Bay Photo News - " . $term->name;
-		}
-		if(get_field('display_title', $term)) $title = get_field('display_title', $term);
-
-
-		if($term->term_id == 967 || $term->parent == 967){
-			$extra_classes[] = 'photo-news';
-		}
-	}
-	elseif(is_post_type_archive()){
-		$post_type = get_queried_object();
-		$title = $post_type->label;
-	}
-
-?>
+<?php /*Template name: Recent */ get_header(); ?>
 
 	<main role="main">
 
@@ -37,44 +6,61 @@
 				<div class="inner">
 					<div class="intro-copy dark inner-700">
 						<?php get_template_part('sections/breadcrumbs'); ?>
-						<h1><?php echo $title; ?></h1>
+						<h1><?php echo get_the_title(); ?></h1>
 		  				<?php if(!empty($term->description)) echo "<p>{$term->description}</p>"; ?>
 					</div><!-- .intro-copy -->
 				</div><!-- .inner -->
 			</section>
 
-			<?php include_once(get_template_directory() . '/sections/term-filters.php'); //include rather than get_template_part so we can share $filters ?>
+			<?php //include_once(get_template_directory() . '/sections/term-filters.php'); //include rather than get_template_part so we can share $filters ?>
 
-			<!-- sub-terms -->
+
 			<section class="layer results tiles <?php echo implode(' ', $extra_classes); ?>">
 				<div class="inner">
 
-					<?php if(is_tax()) include('sections/sub-terms.php'); ?>
 
-					<?php /* <h5>Records in <?php echo single_cat_title( '', false ); ?></h5> */ ?>
 					<div class="grid column-4 ">
 
                         <?php
 
-                            global $wp_query;
-                            if(!empty($_GET['filters']['search'])){
-                                $args = array(
-                                    'taxonomy' => get_query_var('taxonomy'),
-                                    'term' => get_query_var('term'),
-                                    'order' => get_query_var('order'),
-                                    'orderby' => get_query_var('orderby'),
-                                    'posts_per_page' => get_query_var('posts_per_page'),
-                                    's' => $_GET['filters']['search'],
-                                );
-                                $wp_query = new WP_Query();
-                                $wp_query->parse_query( $args );
-                                relevanssi_do_query( $wp_query );
-                            }
+                            $recent_records = new WP_Query(array(
+                                'post_type' =>  array('still_image','audio','video','person','text'),
+                                'post_status' => 'publish',
+                                'posts_per_page' => 200,
+                                'orderby' => 'date',
+                                'order' => 'desc',
+                            ));
+
+
+                            //we are only going to show at most three posts from each collection, so we don't get whole collections taking over this page
+                             $collection_post_limit = 3;
+                             $person_post_limit = 5;
+                             $found_collections = array();
 
                         ?>
 
-						<?php if(have_posts()): while(have_posts()): the_post(); ?>
+						<?php if($recent_records->have_posts()): while($recent_records->have_posts()): $recent_records->the_post();  ?>
+                            <?php
 
+                                $skip = false; //only skip this post if we have enough from its collection(s) already
+
+                                $post_collections = wp_get_post_terms($post->ID, 'collections');
+
+                                if(!empty($post_collections)){
+                                    foreach($post_collections as $term){
+                                        if(!empty($found_collections[$term->term_id]) && $found_collections[$term->term_id] >= $collection_post_limit) $skip = true;
+                                        $found_collections[$term->term_id] = !empty($found_collections[$term->term_id]) ? $found_collections[$term->term_id] + 1 : 1;
+                                    }
+                                }
+
+                                if($post->post_type == 'person'){//limit how many 'person' posts we show
+                                    if($person_post_limit == 0) continue;
+                                    $person_post_limit -= 1;
+                                }
+
+                                if($skip) continue;
+
+                            ?>
 							<?php
 
 								$type = $post->post_type;
@@ -102,6 +88,7 @@
 
 								<div class="tile-copy">
 									<h4><a href="<?php echo $link; ?>"><?php echo $post->post_title; ?></a></h4>
+                                    <?php get_template_part('sections/post-breadcrumbs'); ?>
 										<?php //the_excerpt(); ?>
 										<?php
 											if($type == 'audio') { //see if we have an mp3 and/or ogg
@@ -127,7 +114,7 @@
 								</div><!-- .tile-copy -->
 							</div><!-- .col -->
 
-							<?php endwhile; ?>
+                        <?php endwhile; ?>
 
 						<?php else: ?>
 

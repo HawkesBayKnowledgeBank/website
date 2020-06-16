@@ -1,4 +1,4 @@
-<ul class="breadcrumbs">
+<ul class="breadcrumbs tile-breadcrumbs">
 <?php
     //get hierarchical collection list
     global $post;

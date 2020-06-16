@@ -465,7 +465,7 @@
   .breadcrumbs li a{color:white;  }
   .breadcrumbs.light li a{color: #EE4136;}
 
-  .layer.search-results .breadcrumbs li, .layer.search-results .breadcrumbs li a { color:#282a43;}
+  .layer.search-results .breadcrumbs li, .layer.search-results .breadcrumbs li a, .tile-breadcrumbs li, .tile-breadcrumbs li a { color:#282a43;}
 
 
 

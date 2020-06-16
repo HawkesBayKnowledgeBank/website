@@ -554,3 +554,13 @@ function kb_login_logo_url() {
     return home_url();
 }
 add_filter( 'login_headerurl', 'kb_login_logo_url' );
+
+
+function filter_solr_index_custom_fields( $solr_fields ) {
+	$custom_fields = array( 'transcript', 'notes', 'description' );
+
+	return array_merge( $solr_fields, $custom_fields );
+}
+
+add_filter( 'solr_index_custom_fields', 'filter_solr_index_custom_fields', 10, 1 );
+add_filter( 'solr_facet_custom_fields', 'filter_solr_index_custom_fields', 10, 1 );

@@ -369,8 +369,11 @@ function knowledgebank_get_filters(){
     return $filters;
 }//knowledgebank_get_filters
 
+
+
+/* Pre get posts - caution, this hook is used all over the place */
 function knowledgebank_pre_get_posts($query){
-    if(empty($query) || is_admin()) return false;
+    if(empty($query) || is_admin()) return $query;
 
     if($query->is_main_query()){
         $filters = knowledgebank_get_filters();
