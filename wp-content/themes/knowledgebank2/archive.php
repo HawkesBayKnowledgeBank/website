@@ -57,10 +57,24 @@
                         <?php
 
                             global $wp_query;
-                            if(!empty($_GET['filters']['search'])){
+                            if(!empty($_GET['filters']['search'])){ //replace main query with a special searchy one
+
+                                //set taxonomy and term for query
+                                $taxonomy = get_query_var('taxonomy'); //passed via $_GET
+                                $term = get_query_var('term');
+
+                                $query_term = get_queried_object(); //or get from the context if we are viewing a term
+                                if(!empty($query_term->taxonomy)) $taxonomy = $query_term->taxonomy;
+                                if(!empty($query_term->slug)) $term = $query_term->slug;
+
                                 $args = array(
-                                    'taxonomy' => get_query_var('taxonomy'),
-                                    'term' => get_query_var('term'),
+                                    'tax_query' => array(
+                                        array(
+                                            'taxonomy' => $taxonomy,
+                                            'field' => 'slug',
+                                            'terms' => $term,
+                                        )
+                                    ),
                                     'order' => get_query_var('order'),
                                     'orderby' => get_query_var('orderby'),
                                     'posts_per_page' => get_query_var('posts_per_page'),
@@ -69,11 +83,12 @@
                                 $wp_query = new WP_Query();
                                 $wp_query->parse_query( $args );
                                 relevanssi_do_query( $wp_query );
+
                             }
 
                         ?>
 
-						<?php if(have_posts()): while(have_posts()): the_post(); ?>
+						<?php if($wp_query->have_posts()): while($wp_query->have_posts()): $wp_query->the_post(); ?>
 
 							<?php
 
