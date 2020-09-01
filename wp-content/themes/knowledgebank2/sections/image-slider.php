@@ -12,17 +12,29 @@
         <div class="inner">
             <div class="book-slider">
 
-                <?php foreach($images as $index => $image): $image = $image['image']; //image :) ?>
+                <?php foreach($images as $index => $image_row):
+                    $image = $image_row['image'];
+                ?>
 
                 <div class="slide-wrap">
-
-                    <div class="book-slide <?php if(empty($captions[$index])) echo 'nocaption'; ?>">
+                    <?php
+                        $caption_class = 'nocaption'; //unless we find otherwise
+                        if(!empty($captions[$index])) $caption_class = '';
+                        if(!empty($image_row['caption']) && !empty($image_row['show_caption'])) $caption_class = '';;
+                    ?>
+                    <div class="book-slide <?php echo $caption_class; ?>">
                         <?php if(!empty($captions[$index])): ?>
                         <div class="caption">
                             <div class="caption-inner">
                                 <?php echo $captions[$index]; ?>
                             </div><!-- .caption-inner -->
                         </div><!-- .caption -->
+                        <?php elseif(!empty($image_row['caption']) && !empty($image_row['show_caption'])): ?>
+                            <div class="caption">
+                                <div class="caption-inner">
+                                    <?php echo $image_row['caption']; ?>
+                                </div><!-- .caption-inner -->
+                            </div><!-- .caption -->
                         <?php endif; ?>
                         <?php
                             if($index > 3){ //lazy load everything after image 3

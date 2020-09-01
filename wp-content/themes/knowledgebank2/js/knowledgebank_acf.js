@@ -39,6 +39,17 @@ jQuery(function($){
 				data.parent = parent_id;
 			}
 
+            if($('.acf-field[data-key="' + data.field_key + '"]').attr('data-name') == 'related_collections'){
+                var field_selector = '[name="acf[' + data.field_key + '][]"]'; //the select field holding the values chosen
+                if($(field_selector).val()){
+                    var parents = $(field_selector).val();
+                }
+                else{
+                    parents = 0; //nothing chosen yet, offer only top-level terms
+                }
+                data.related_collection_parents = parents;
+            }
+
 		    // return
 		    return data;
 

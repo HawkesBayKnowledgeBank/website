@@ -77,7 +77,7 @@
                                     ),
                                     'order' => get_query_var('order'),
                                     'orderby' => get_query_var('orderby'),
-                                    'posts_per_page' => get_query_var('posts_per_page'),
+                                    'posts_per_page' => -1,
                                     's' => $_GET['filters']['search'],
                                 );
                                 $wp_query = new WP_Query();
@@ -151,10 +151,11 @@
 						<?php endif; ?>
 
 					</div><!-- .grid -->
-
+                    <?php if(empty($_GET['filters']['search'])): ?>
 					<ul class="pagination">
 						<?php knowledgebank_numeric_posts_nav(); ?>
 					</ul>
+                    <?php endif; ?>
 
 				</div><!-- .inner -->
 			</section>

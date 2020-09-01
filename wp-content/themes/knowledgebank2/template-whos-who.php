@@ -11,9 +11,20 @@
 		'post_type' => 'person',
 		'posts_per_page' => -1,
 		'post_status' => 'publish',
-		'meta_query' => 'name_0_family_name',
-		'orderby' => 'meta_value',
-		'order' => 'ASC'
+		'meta_query' => array(
+            'lname' => array(
+                'key' => 'name_0_family_name'
+            ),
+            'fname' => array(
+                'key' => 'name_0_first_name'
+            ),
+        ),
+		'orderby' => array(
+            'lname' => 'ASC',
+            'fname' => 'ASC'
+        ),
+		'order' => 'ASC',
+        'fields' => 'ids'
 	);
 
 	global $wpdb;
@@ -23,9 +34,12 @@
 	$letter = '';
 
 	if(!empty($_GET['search'])){
-		$args['s'] = $_GET['search'];
-		$all_people = get_posts($args);
-	}
+		//$args['s'] = $_GET['search'];
+		//$all_people = get_posts($args);
+        $sql = $wpdb->prepare('SELECT ID, pm1.meta_value AS last_name, pm2.meta_value AS first_name FROM wp_posts LEFT JOIN wp_postmeta pm1 ON ID = pm1.post_id LEFT JOIN wp_postmeta pm2 ON ID = pm2.post_id WHERE pm1.meta_key = "name_0_family_name" AND pm2.meta_key = "name_0_first_name" AND pm1.meta_value LIKE "%s" AND wp_posts.post_status = "publish" ORDER BY last_name, first_name ASC',array('%' . $_GET['search'] . '%'));
+        //echo $sql;
+        $all_people = $wpdb->get_results($sql);
+    }
 	else{
 		if(!empty($_GET['letter']) && strlen($_GET['letter']) == 1) {
 			$letter = $_GET['letter'];

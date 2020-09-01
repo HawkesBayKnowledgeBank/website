@@ -26,12 +26,40 @@ function knowledgebank_master_upload_directory( $dir, $post_id){
     return $dir;// . $filename;
 }
 
-
+//if a collection is already chosen, filter the collections select box to children of the chosen collection
 function knowledgebank_collections_hierarchy( $args, $field, $post_id ){
     $args['parent'] = empty($_POST['parent']) ? 0 : $_POST['parent'];
     return $args;
 }
 add_filter('acf/fields/taxonomy/query/name=collections', 'knowledgebank_collections_hierarchy',10,3);
+
+//With related collections we don't want to lock it down to just one chosen parent collection, but we do want to promote the children of chosen collections
+function knowledgebank_related_collections_hierarchy($args, $field, $post_id) {
+
+    if(!empty($_POST['related_collection_parents'])){
+        $term_ids = [];
+        foreach($_POST['related_collection_parents'] as $pid){
+            $term_ids[] = $pid;
+            $term_children = get_term_children($pid, 'collections');
+            if(!empty($term_children) && !is_wp_error($term_children)){                
+                $term_ids = array_unique(array_merge($term_ids, $term_children));
+            }
+        }
+
+        if(!empty($term_ids)){
+            //get top-level collections too
+            $top_collections = get_terms(array('taxonomy'=>'collections','hide_empty' => false,'parent' => 0, 'fields' => 'ids'));
+            $term_ids = array_unique(array_merge($term_ids, $top_collections));
+            $args['include'] = $term_ids;
+            $args['orderby'] = 'include';
+        }
+
+    }
+
+
+    return $args;
+}
+add_filter('acf/fields/taxonomy/query/name=related_collections', 'knowledgebank_related_collections_hierarchy',10,3);
 
 
 function knowledgebank_term_accession_number($field){
