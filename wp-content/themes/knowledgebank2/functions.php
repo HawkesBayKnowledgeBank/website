@@ -375,6 +375,7 @@ function knowledgebank_get_filters(){
 function knowledgebank_pre_get_posts($query){
     if(empty($query) || is_admin()) return $query;
 
+
     if($query->is_main_query()){
         $filters = knowledgebank_get_filters();
         //search filtering if applicable
@@ -382,6 +383,7 @@ function knowledgebank_pre_get_posts($query){
             if(is_archive()){
                 $query->set('search', $filters['search']);
                 $query->set('s', $filters['search']);
+                $query->set('solr_integrate',true);
             }
         }//$filters['search']
 
@@ -406,7 +408,6 @@ function knowledgebank_pre_get_posts($query){
 
         if(is_tag()) $query->set('post_type', array('still_image','audio','video','person','text'));
 
-        //print_r($query);
     }
 }//knowledgebank_pre_get_posts()
 add_filter('pre_get_posts', 'knowledgebank_pre_get_posts');

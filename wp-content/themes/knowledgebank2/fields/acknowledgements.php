@@ -3,22 +3,8 @@
     <div class="col field field-acknowledgements" data-field-name="<?php echo $field['name']; ?>">
             <h4><?php echo $field['label'];?></h4>
             <?php foreach($acknowledgements as $a): ?>
-                <?php switch($a){
 
-                    case 'hbt':
-                    ?>
-                        <p>Published with permission of Hawke's Bay Today</p>
-
-                    <?php
-                    break;
-
-                    default:
-                    ?>
-                        <p><?php echo $a; ?></p>
-                    <?php
-                    break;
-
-                } ?>
+                <p>Published with permission of <em><?php echo $a; ?></em></p>
 
             <?php endforeach; ?>
 

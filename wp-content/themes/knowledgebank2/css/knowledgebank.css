@@ -984,7 +984,7 @@ article.search-results .icon-content-type { float:right;}
 
   .single-person .book-slider-wrap { max-width:250px; margin:0 auto;}
 
-.sub-collections { margin-bottom: 20px;}
+.sub-collections { margin-bottom: 20px; display:flex; flex-wrap:wrap; justify-content:center; }
 
 .sub-collections.slick-slider .slick-slide{}
 .sub-collections .slick-prev, .sub-collections .slick-next{top:26%;}
