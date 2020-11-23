@@ -6,19 +6,20 @@
  */
 
 /*------------------------------------*\
-	External Modules/Files
+    External Modules/Files
 \*------------------------------------*/
 
 // Load any external files you have here
 
 require_once(get_stylesheet_directory() . '/inc/theme-functions.php');
 require_once(get_stylesheet_directory() . '/inc/theme-acf.php');
+require_once(get_stylesheet_directory() . '/inc/theme-elasticsearch.php');
 require_once(get_stylesheet_directory() . '/inc/file-conversions.php');
 require_once(get_stylesheet_directory() . '/inc/pagination.php');
 
 
 /*------------------------------------*\
-	Theme Support
+    Theme Support
 \*------------------------------------*/
 
 if (!isset($content_width)){
@@ -39,7 +40,7 @@ if (function_exists('add_theme_support')){
 }
 
 /*------------------------------------*\
-	Functions
+    Functions
 \*------------------------------------*/
 
 
@@ -47,7 +48,7 @@ if (function_exists('add_theme_support')){
 function knowledgebank_header_scripts(){
     if ($GLOBALS['pagenow'] != 'wp-login.php' && !is_admin()) {
 
-    	wp_register_script('conditionizr', get_template_directory_uri() . '/js/lib/conditionizr-4.3.0.min.js', array(), '4.3.0'); // Conditionizr
+        wp_register_script('conditionizr', get_template_directory_uri() . '/js/lib/conditionizr-4.3.0.min.js', array(), '4.3.0'); // Conditionizr
         wp_enqueue_script('conditionizr');
 
         wp_register_script('modernizr', get_template_directory_uri() . '/js/lib/modernizr-2.7.1.min.js', array(), '2.7.1'); // Modernizr
@@ -245,7 +246,7 @@ function knowledgebankgravatar ($avatar_defaults){
 
 
 /*------------------------------------*\
-	Actions + Filters + ShortCodes
+    Actions + Filters + ShortCodes
 \*------------------------------------*/
 
 // Add Actions
@@ -370,54 +371,6 @@ function knowledgebank_get_filters(){
 }//knowledgebank_get_filters
 
 
-
-/* Pre get posts - caution, this hook is used all over the place */
-function knowledgebank_pre_get_posts($query){
-    if(empty($query) || is_admin()) return $query;
-
-
-    if($query->is_main_query()){
-        $filters = knowledgebank_get_filters();
-        //search filtering if applicable
-        if(!empty($filters['search'])){
-            if(is_archive()){
-                $query->set('search', $filters['search']);
-                $query->set('s', $filters['search']);
-                $query->set('solr_integrate',true);
-            }
-        }//$filters['search']
-
-        //ordering
-        if(!empty($filters['order'])){
-            $query->set('order', $filters['order']);
-        }
-        elseif(is_archive() && $query->queried_object_id != 277873){ //not the news page
-            $query->set('order', 'ASC');
-        }
-        if(!empty($filters['orderby'])){
-            $query->set('orderby', $filters['orderby']);
-        }
-        elseif(is_archive() && $query->queried_object_id != 277873){
-            $query->set('orderby', 'name');
-        }
-
-        if(!empty($filters['number'])){
-            $query->set('posts_per_page', $filters['number']);
-        }
-
-
-        if(is_tag()) $query->set('post_type', array('still_image','audio','video','person','text'));
-
-    }
-}//knowledgebank_pre_get_posts()
-add_filter('pre_get_posts', 'knowledgebank_pre_get_posts');
-
-function knowledgebank_posts_request($request, $query){
-    if($query->is_main_query() && $query->is_search()){
-        $query->set('solr_integrate',true);
-    }
-}
-//add_filter('posts_request', 'knowledgebank_posts_request',20,2);
 
 function knowledgebank_get_collections($post_id){
     $terms = wp_get_post_terms($post_id, 'collections');

@@ -15,8 +15,12 @@
             <div class="controls-grid">
 
                 <div class="control-option searchfilter">
-                    <?php  $term = get_queried_object(); ?>
-                    <label>Search in <em><?php echo !empty($term->name) ? $term->name :  get_the_title(); ?></em></label>
+                    <?php
+                        $term = get_queried_object();
+                        $label = 'Search in <em>' . (!empty($term->name) ? $term->name :  get_the_title()) . '</em>';
+                        if(!empty($mode) && $mode == 'Taxonomy') $label = 'Search <em>' . (!empty($term->name) ? $term->name :  get_the_title()) . '</em> by name';
+                    ?>
+                    <label><?php echo $label; ?></label>
                     <div class="searchfilter-wrap">
                         <input type="text" name="filters[search]" class="searchfilter" value="<?php if(!empty($filters['search'])) echo htmlspecialchars(stripslashes($filters['search'])); ?>" />
                         <input type="submit" value="Search" />

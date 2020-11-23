@@ -322,6 +322,8 @@
     .header nav ul li a{padding: 0 10px;}
   }
 
+  .search-tips { font-size:14px; text-decoration:none;}
+
 /* Layers
  --------------------------- */
  .layer > .inner{max-width: 1280px;margin: auto;padding: 30px 5%;}

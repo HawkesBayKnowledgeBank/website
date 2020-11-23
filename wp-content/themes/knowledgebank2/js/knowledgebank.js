@@ -249,7 +249,7 @@ jQuery(document).ready(function($) {
 		}
 	*/
 
-    //Youtube iframe in content
+    //Responsive wrap for Youtube iframes in content
 	$('iframe[src*="youtube.com"]').each(function() {
 		$(this).wrap('<div class="video-wrapper"/>');
 	});
@@ -259,22 +259,22 @@ jQuery(document).ready(function($) {
     /** SEARCH **/
 
     //search results - append search term to search result URLs
-	if($('body.search-results').length){
-
-		var searchterm = $('input[name="s"]').val();
-		if(searchterm != ''){
-			$('.search-results').find('a').not('.breadcrumbs a').each(function(){
-				var href = $(this).attr('href');
-                if(href.indexOf('?') != -1){
-                    $(this).attr('href',href + '&searchterm=' + encodeURIComponent(searchterm));
-                } else {
-                    $(this).attr('href',href + '?searchterm=' + encodeURIComponent(searchterm));
-                }
-
-			});
-		}
-
-	}
+	// if($('body.search-results').length){
+    //
+	// 	var searchterm = $('input[name="s"]').val();
+	// 	if(searchterm != ''){
+	// 		$('.search-results').find('a').not('.breadcrumbs a').each(function(){
+	// 			var href = $(this).attr('href');
+    //             if(href.indexOf('?') != -1){
+    //                 $(this).attr('href',href + '&searchterm=' + encodeURIComponent(searchterm));
+    //             } else {
+    //                 $(this).attr('href',href + '?searchterm=' + encodeURIComponent(searchterm));
+    //             }
+    //
+	// 		});
+	// 	}
+    //
+	// }
 
     function getUrlVars(){
         var vars = [], hash;

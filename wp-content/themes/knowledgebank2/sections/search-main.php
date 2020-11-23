@@ -43,7 +43,8 @@
                             </li>
                         </ul>
                         <span class="grow"></span>
-                        <!-- <a href="#">Tips</a> -->
+
+                        <a href="<?php echo get_permalink(347205); ?>" class="search-tips"><span class="mdi mdi-help-circle"></span> <?php echo get_the_title('347205'); ?></a>
 
                     </div>
                 </div>
