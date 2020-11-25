@@ -259,22 +259,23 @@ jQuery(document).ready(function($) {
     /** SEARCH **/
 
     //search results - append search term to search result URLs
-	// if($('body.search-results').length){
-    //
-	// 	var searchterm = $('input[name="s"]').val();
-	// 	if(searchterm != ''){
-	// 		$('.search-results').find('a').not('.breadcrumbs a').each(function(){
-	// 			var href = $(this).attr('href');
-    //             if(href.indexOf('?') != -1){
-    //                 $(this).attr('href',href + '&searchterm=' + encodeURIComponent(searchterm));
-    //             } else {
-    //                 $(this).attr('href',href + '?searchterm=' + encodeURIComponent(searchterm));
-    //             }
-    //
-	// 		});
-	// 	}
-    //
-	// }
+	if($('body.search-results').length){
+
+		var searchterm = $('input[name="s"]').val();
+		if(searchterm != ''){
+            searchterm = searchterm.replace(/"/g,'')
+			$('.layer.search-results').find('a').not('.breadcrumbs a').each(function(){
+				var href = $(this).attr('href');
+                if(href.indexOf('?') != -1){
+                    $(this).attr('href',href + '&searchterm=' + encodeURIComponent(searchterm));
+                } else {
+                    $(this).attr('href',href + '?searchterm=' + encodeURIComponent(searchterm));
+                }
+
+			});
+		}
+
+	}
 
     function getUrlVars(){
         var vars = [], hash;
@@ -291,6 +292,7 @@ jQuery(document).ready(function($) {
     //highlight search results
     if(getUrlVars()['searchterm']){
         var searchterm = getUrlVars()['searchterm'];
+        searchterm = searchterm.replace('"','')
         searchterm = decodeURIComponent(searchterm);
         var searchwords = searchterm.split(" ");
         if(searchwords.length > 1){ //we have multiple words to highlight

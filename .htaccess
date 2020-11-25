@@ -4,7 +4,7 @@
 RewriteEngine On
 RewriteBase /
 
-# old Drupal redirects
+# old Drupal redirects - urls matching 123/456/789 or 123/456 or 123
 RewriteRule ^[0-9]+\/[0-9]+\/([0-9]+) https://knowledgebank.org.nz/?p=$1
 RewriteRule ^[0-9]+\/([0-9]+) https://knowledgebank.org.nz/?p=$1
 RewriteRule ^([0-9]+) https://knowledgebank.org.nz/?p=$1
