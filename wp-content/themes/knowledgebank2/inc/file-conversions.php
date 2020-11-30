@@ -159,14 +159,13 @@ function knowledgebank_convert_master_image($post_id){
             //first delete existing jpegs in output dir
             //try to be a little bit safe in what we expect $output_dir to look like :p
             if(preg_match('@^/webs/new/wp-content/uploads/node/[0-9]+/images@', $output_dir)){
-                echo "Deleting jpgs";
-                exec("rm -f  $output_dir/*.jpg");
+                //echo "Deleting jpgs";
+                exec("rm -f $output_dir/*.jpg $output_dir/*.jpeg");                
             }
 
             $output_filename = !empty($master['name']) ? "{$master['name']}.jpg" : "$post_id.jpg";
             $output_path = "$output_dir/$output_filename";
             exec("convert -colorspace sRGB -quality 90 -interlace none -density 300 -alpha flatten -format jpg -resize 1800x1800\> \"$master_path\" \"$output_path\"");
-            //echo "convert -quality 90 -interlace none -density 300 -format jpg -resize 1800x1800 $master_path $output_path";
 
             //if conversion worked, we should have jpegs in our output dir
             $jpgs = glob("$output_dir/*.jpg");

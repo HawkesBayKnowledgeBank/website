@@ -297,7 +297,7 @@ jQuery(document).ready(function($) {
         var searchwords = searchterm.split(" ");
         if(searchwords.length > 1){ //we have multiple words to highlight
             $.each(searchwords, function(index, value){
-                $('.layer').highlight(value);
+                $('.layer:not(.intro)').highlight(value);
             });
         }
         else{

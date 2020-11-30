@@ -54,7 +54,7 @@ function knowledgebank_header_scripts(){
         wp_register_script('modernizr', get_template_directory_uri() . '/js/lib/modernizr-2.7.1.min.js', array(), '2.7.1'); // Modernizr
         wp_enqueue_script('modernizr');
 
-        $js_mtime = filemtime(get_template_directory() . '/js/script.js');
+        $js_mtime = filemtime(get_template_directory() . '/js/knowledgebank.js');
         wp_register_script('knowledgebank-js', get_template_directory_uri() . '/js/knowledgebank.js', array('jquery'), $js_mtime); // Custom scripts
         wp_enqueue_script('knowledgebank-js');
 

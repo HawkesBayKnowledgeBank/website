@@ -22,6 +22,8 @@
                         <div class="slide-copy">
                             <h5>Featured content</h5>
                             <h2><?php echo $slide['title']; ?></h2>
+                            <?php if(!empty($slide['description'])) echo $slide['description']; ?>
+
                             <div class="button-group">
                                 <?php
                                     $target = $slide['new_window'] ? ' target="_blank"' : '';
