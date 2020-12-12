@@ -112,6 +112,7 @@ function knowledgebank_insert_file_into_wp($file_path, $wp_id){
  */
 function knowledgebank_auto_file_conversion($post_id, $force = false){
 
+
     switch(get_post_type($post_id)){
 
         case 'still_image':
@@ -137,6 +138,7 @@ function knowledgebank_auto_file_conversion($post_id, $force = false){
 
 function knowledgebank_convert_master_image($post_id){
 
+
     $master = get_field('master',$post_id);
 
     //do the conversion
@@ -160,12 +162,36 @@ function knowledgebank_convert_master_image($post_id){
             //try to be a little bit safe in what we expect $output_dir to look like :p
             if(preg_match('@^/webs/new/wp-content/uploads/node/[0-9]+/images@', $output_dir)){
                 //echo "Deleting jpgs";
-                exec("rm -f $output_dir/*.jpg $output_dir/*.jpeg");                
+                exec("rm -f $output_dir/*.jpg $output_dir/*.jpeg");
             }
 
             $output_filename = !empty($master['name']) ? "{$master['name']}.jpg" : "$post_id.jpg";
             $output_path = "$output_dir/$output_filename";
-            exec("convert -colorspace sRGB -quality 90 -interlace none -density 300 -alpha flatten -format jpg -resize 1800x1800\> \"$master_path\" \"$output_path\"");
+
+            //for PDFs we run GhostScript (gs) directly, for everything else imagemagick convert (which can also do PDFs but it's slow af)
+            if(!empty($master['subtype']) && $master['subtype'] == 'pdf'){
+                $output_filename = str_replace('.jpg', '-%03d.jpg',$output_filename); //%03d is the page number from gs
+                $output_path = "$output_dir/$output_filename";
+                //gs -o ../images/DentonRA1632_WhereWeCameFrom-2-%03d.jpg -sDEVICE=jpeg -r300 -dDOINTERPOLATE -dJPEGQ=90 -dPDFFitPage DentonRA1632_WhereWeCameFrom-2.pdf
+                $cmd = "gs -o $output_path -sDEVICE=jpeg -r200 -dDOINTERPOLATE -dJPEGQ=90 -dPDFFitPage -dDownScaleFactor=2 $master_path";
+                //echo $cmd;
+                exec($cmd);
+
+                $resize = "mogrify -resize 1400x1400 -quality 90 $output_dir/*.jpg";
+                exec($resize);
+
+            }
+            else{
+                exec("convert -colorspace sRGB -quality 90 -interlace none -density 200 -alpha flatten -format jpg -resize 1400x1400\> \"$master_path\" \"$output_path\"");
+            }
+
+
+
+            //or
+            /*
+            gs -o ./output-%03d.jpg -sDEVICE=jpeg -r300 -dDOINTERPOLATE -dJPEGQ=90 -dPDFFitPage -dDownScaleFactor=2 input.pdf
+            */
+
 
             //if conversion worked, we should have jpegs in our output dir
             $jpgs = glob("$output_dir/*.jpg");
@@ -181,7 +207,7 @@ function knowledgebank_convert_master_image($post_id){
                 update_field($images_key,array(),$post_id); //clear existing images
 
                 foreach($jpgs as $jpg){
-                    echo "Adding wp attachment for $jpg \n";
+                    //echo "Adding wp attachment for $jpg \n";
                     $attachment_id = knowledgebank_insert_file_into_wp($jpg, $post_id);
                     if(!empty($attachment_id)){
                         add_row($images_key, array($image_key => $attachment_id),$post_id);

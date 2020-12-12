@@ -2,11 +2,12 @@
 <?php
 global $search_index_fields;
 $search_index_fields = array(
-    'still_image' => array('people','business','location','format_original','author','notes'),
-    'audio' => array('people','business','transcript','format_original','author','additional'),
-    'video' => array('people','business','format_original','transcript','author','additional'),
-    'person' => array('name','known_as','maiden_name','military_identification','birthplace','parents','partner','children','deathplace','biography'),
-    'text' => array('people','business','location','format_original','author','notes','publisher','transcript')
+    'still_image' => array('people','business','location','format_original','author','notes','accession_number'),
+    'audio' => array('people','business','transcript','format_original','author','additional','accession_number'),
+    'video' => array('people','business','format_original','transcript','author','additional','accession_number'),
+    'person' => array('name','known_as','maiden_name','military_identification','birthplace','parents','partner','children','deathplace','biography','accession_number'),
+    'text' => array('people','business','location','format_original','author','notes','publisher','transcript','accession_number'),
+    'bibliography' => array('author','description','isbn','other_physical_details','publisher','place_of_publication','accession_number'),
 );
 
 /* Pre get posts - caution, this hook is used all over the place */
@@ -67,7 +68,9 @@ add_filter('pre_get_posts', 'knowledgebank_pre_get_posts');
 
 function knowledgebank_add_custom_field_elasticpress_weighting( $fields, $post_type ) {
 
-    if(in_array($post_type,['still_image','audio','video','person','text'])){
+    global $search_index_fields;
+
+    if(in_array($post_type,array_keys($search_index_fields))){
         $fields['meta'] = array(
             'label'    => 'Custom Fields',
             'children' => array(),
