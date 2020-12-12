@@ -100,7 +100,7 @@
 
                                 $link = get_permalink($post->ID);
                                 $image_size = 'thumbnail';
-                                if(is_tax() && ($term->term_id == 967 || $term->parent == 967)) $image_size = 'medium';//medium for photo news
+                                if(is_tax() && !empty($term->term_id) && ($term->term_id == 967 || $term->parent == 967) ) $image_size = 'medium';//medium for photo news
                             ?>
 
                               <div class="col tile shadow <?php echo $type; ?>">
