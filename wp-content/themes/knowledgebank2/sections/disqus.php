@@ -1,3 +1,4 @@
+<?php if($post->post_status == 'publish'): ?>
 <section class="layer commenting-wrap">
     <div class="inner">
         <div class="commenting">
@@ -45,3 +46,4 @@
         </div><!-- .commenting -->
     </div>
 </section>
+<?php endif; ?>
