@@ -55,22 +55,59 @@
 <section class="layer cards">
     <div class="inner">
         <div class="grid column-2 tight">
-            <?php $box_left = get_field('box_left'); ?>
-            <div class="col card">
-                <h3><?php echo $box_left['heading']; ?></h3>
-                <?php echo $box_left['content']; ?>
-                <div class="button-group">
-                    <a href="<?php echo $box_left['button_link']; ?>" class="button"><?php echo $box_left['button_label']; ?></a>
+
+            <?php foreach(['box_left','box_centre','box_right'] as $col): ?>
+
+                <?php $box = get_field($col); ?>
+
+                <div class="col card">
+                    <h3><?php echo $box['heading']; ?></h3>
+                    <?php echo $box['content']; ?>
+                    <div class="button-group">
+                        <a href="<?php echo $box['button_link']; ?>" class="button"><?php echo $box['button_label']; ?></a>
+                    </div>
                 </div>
-            </div>
-            <?php $box_right = get_field('box_right'); ?>
-            <div class="col card">
-                <h3><?php echo $box_right['heading']; ?></h3>
-                <?php echo $box_right['content']; ?>
-                <div class="button-group">
-                    <a href="<?php echo $box_right['button_link']; ?>" class="button"><?php echo $box_right['button_label']; ?></a>
+
+            <?php endforeach; ?>
+            <div class="col card explore-items">
+                <h3>Explore</h3>
+
+                <div class="explore-item">
+                    <h5><a href="/collections/" class="icon-collections">Collections</a></h5>
+                    <p>Collections of material donated by individuals, families and organisations.</p>
                 </div>
+                <div class="explore-item">
+                    <h5><a href="/tags/" class="icon-tags">Tags</a></h5>
+                    <p>Tags are informal subjects or topics used to group related material.</p>
+                </div>
+                <div class="explore-item">
+                    <h5><a href="/photo-news/" class="icon-hb-photo-news">Hawke’s Bay Photo News</a></h5>
+                    <p>Hawke's Bay Photo News, a local magazine published November 1958 - June 1967</p>
+                </div>
+                <div class="explore-item">
+                    <h5><a href="/people/" class="icon-people">Who’s Who</a></h5>
+                    <p>An index of Hawke's Bay people.</p>
+                </div>
+                <div class="explore-item">
+                    <h5><a href="/tag/oral-history/" class="icon-audio">Oral History</a></h5>
+                    <p>Recordings and transcripts of interviews with Hawke's Bay personalities.</p>
+                </div>
+                <div class="explore-item">
+                    <h5><a href="/bibliography" class="icon-book">Bibliography</a></h5>
+                    <p>An index of printed publications relating to Hawke's Bay and its history.</p>
+                </div>
+                <div class="explore-item">
+                    <h5><a href="/video" class="icon-video">Video and Film</a></h5>
+                    <p>Film and video from across our collections.</p>
+                </div>
+                <div class="explore-item">
+                    <h5><a href="/images" class="icon-images">Images</a></h5>
+                    <p>Photographs and other still images from our collections.</p>
+                </div>
+
             </div>
+
+
         </div>
     </div>
 </section>

@@ -1071,6 +1071,14 @@ article.search-results .icon-content-type { float:right;}
 }
 #searchscroller .prev, #searchscroller .next{font-family: 'Material Design Icons'; text-decoration:none; cursor:pointer;}
 
+/* Home page explore items */
+
+.explore-items { display:flex; flex-wrap:wrap;}
+.explore-items h3 { width:100%;}
+.explore-items .explore-item {width:50%;padding: 10px 10px 0 0;/* background-color: #fcfcfc; */}
+.explore-items .explore-item p { margin-top:0;}
+
+
 /* Print Styles
 --------------------------- */
 

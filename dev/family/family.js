@@ -28,6 +28,19 @@ var Log = {
 
 function init(){
 
+    $jit.ForceDirected.Plot.NodeTypes.implement({
+      'mySpecialType': {
+        'render': function(node, canvas) {
+            console.log(node.pos);
+          //print your custom node to canvas
+        },
+        //optional
+        'contains': function(node, pos) {
+          //return true if pos is inside the node or false otherwise
+        }
+      }
+    });
+
   // init ForceDirected
   var fd = new $jit.ForceDirected({
     //id of the visualization container
@@ -47,7 +60,8 @@ function init(){
     // with dollar prefixed data-properties in the
     // JSON structure.
     Node: {
-      overridable: true
+      overridable: true,
+      type: 'mySpecialType'
     },
     Edge: {
       overridable: true,
@@ -86,7 +100,9 @@ function init(){
       //Update node positions when dragged
       onDragMove: function(node, eventInfo, e) {
           var pos = eventInfo.getPos();
-          node.pos.setc(pos.x, pos.y);
+
+          //node.pos.setc(pos.x, pos.y);
+          node.pos.setc(pos.x, node.pos.y); //fixed Y
           fd.plot();
       },
       //Implement the same handler for touchscreens
@@ -132,6 +148,9 @@ function init(){
       style.display = '';
     }
   });
+
+
+
   // load JSON data.
   fd.loadJSON(json);
   // compute positions incrementally and animate.
@@ -150,5 +169,10 @@ function init(){
       });
     }
   });
+
+  $jit.Graph.Util.eachNode( fd, function( node ) {
+   console.log( node.pos );
+  });
+
   // end
 }

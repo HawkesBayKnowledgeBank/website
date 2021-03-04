@@ -25,11 +25,11 @@
 				</a>
 				<span class="grow"></span>
 				<nav>
-					<ul>
+
 
 						<?php wp_nav_menu( array( 'theme_location' => 'main', 'container' => '' ) ); ?>
 
-					</ul>
+
 				</nav>
 				<a href="/search" class="search-icon"><i class="mdi mdi-magnify"></i></a>
 			</div><!-- .inner -->

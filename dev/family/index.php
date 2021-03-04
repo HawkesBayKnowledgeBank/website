@@ -72,14 +72,33 @@ var json =
         //we require a person id
         //if(empty($_GET['id'])) die('No id specified');
 
-        $pid = !empty($_GET['id']) ? $_GET['id'] : 422653;
+        global $graph_nodes;
+        $graph_nodes = array();
+
+
+        $pid = !empty($_GET['id']) ? $_GET['id'] : 37606; //JAMES WOODHOUSE BIBBY https://knowledgebank.org.nz/wp-admin/post.php?post=37606&action=edit
         $person = get_post($pid);
         if(empty($person->post_type) || $person->post_type != 'person') die('invalid id');
+        kb_get_relatives($pid);
 
 
 
-        $graph_nodes = array();
-        kb_get_relatives($pid); //populate $graph_nodes
+        // $people = get_posts([
+        //     'post_type' => 'person',
+        //     'posts_per_page' => 100,
+        //
+        // ]);
+        // foreach($people as $person){
+        //
+        //     kb_get_relatives($person->ID); //populate $graph_nodes
+        //
+        // }
+
+
+
+
+
+
         echo json_encode(array_values($graph_nodes));
 
 
@@ -173,12 +192,12 @@ var json =
 
             $graphnode->id = $person->ID;
             $graphnode->name = $person->post_title;
-
+            
             $graphnode->data = new stdClass();
             $graphnode->data->{'$color'} = '#557EAA';
             $graphnode->data->{'$type'} = 'circle';
-            $graphnode->data->{'$dim'} = empty($graph_nodes) ? '50' : '30';
-            $graphnode->adjacencies = array();            
+            $graphnode->data->{'$dim'} = empty($graph_nodes) ? '3' : '3';
+            $graphnode->adjacencies = array();
             $graph_nodes[$pid] = $graphnode;
 
         }//add_graph_node()

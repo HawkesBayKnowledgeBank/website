@@ -16,3 +16,10 @@ RewriteRule . /index.php [L]
 </IfModule>
 
 # END WordPress
+
+
+# Block WordPress xmlrpc.php requests
+<Files xmlrpc.php>
+order deny,allow
+deny from all
+</Files>

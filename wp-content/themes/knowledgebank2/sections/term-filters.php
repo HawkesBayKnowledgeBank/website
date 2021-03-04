@@ -19,6 +19,8 @@
                         $term = get_queried_object();
                         $label = 'Search in <em>' . (!empty($term->name) ? $term->name :  get_the_title()) . '</em>';
                         if(!empty($mode) && $mode == 'Taxonomy') $label = 'Search <em>' . (!empty($term->name) ? $term->name :  get_the_title()) . '</em> by name';
+                        if(is_post_type_archive()) $label = 'Search in <em>' . (!empty($term->label) ? $term->label :  get_the_title()) . '</em>';
+
                     ?>
                     <label><?php echo $label; ?></label>
                     <div class="searchfilter-wrap">
