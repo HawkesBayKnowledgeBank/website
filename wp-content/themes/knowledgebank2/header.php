@@ -13,6 +13,8 @@
 		<meta name="description" content="<?php bloginfo('description'); ?>">
 
 		<?php wp_head(); ?>
+        <meta property="og:image" content="https://www.knowledgebank.org.nz/wp-content/themes/knowledgebank2/img/share.png" />
+
 
 	</head>
 	<body <?php body_class(); ?>>

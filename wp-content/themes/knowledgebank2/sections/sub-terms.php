@@ -1,5 +1,9 @@
 <?php
-    $child_terms = get_terms(array( 'taxonomy' => $taxonomy_name, 'child_of' => $term_id, 'orderby' => 'name' ));
+    $filters = knowledgebank_get_filters();
+    $term_args = array( 'taxonomy' => $taxonomy_name, 'child_of' => $term_id, 'orderby' => 'name' );
+    if(!empty($filters['search'])) $term_args['name__like'] = $filters['search'];
+    $child_terms = get_terms($term_args);
+
 ?>
 <?php if(!empty($child_terms)): ?>
 <div class="sub-terms-wrap">

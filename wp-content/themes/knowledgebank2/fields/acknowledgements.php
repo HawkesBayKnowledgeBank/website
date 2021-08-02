@@ -1,12 +1,21 @@
-<?php $acknowledgements = $field['value']; ?>
+<?php $acknowledgements = $field['value'];?>
 <?php if(!empty($acknowledgements)): ?>
     <div class="col field field-acknowledgements" data-field-name="<?php echo $field['name']; ?>">
             <h4><?php echo $field['label'];?></h4>
-            <?php foreach($acknowledgements as $a): ?>
 
-                <p>Published with permission of <em><?php echo $a; ?></em></p>
+            <?php
+                //make a comma-separated string of acknowledgements, with the final one 'and' spearated
+                //eg A, B, C and D
 
-            <?php endforeach; ?>
+                if(count($acknowledgements) > 1){
+                    $last = array_pop($acknowledgements);
+                }
+                $acknowledgements_str = '<em>' . implode('</em>, <em>',$acknowledgements) . '</em>';
+                if(!empty($last)) $acknowledgements_str .= ' and <em>' . $last . '</em>';
+
+                echo "<p>Published with permission of $acknowledgements_str</p>";
+            ?>
+
 
     </div>
 <?php endif; ?>

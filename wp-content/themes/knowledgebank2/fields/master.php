@@ -17,9 +17,45 @@
 </div>
 <div class="col">
     <h4>Licence</h4>
-    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/cc.png" style="float: right;" alt="Creative Commons Attribution-NonCommercial 4.0 International License">
-    <p>This work is licensed under a <em><a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Creative Commons Attribution-NonCommercial 4.0 International License.</a></em></p>
-    <div class="button-group">
-        <a href="<?php echo get_permalink(284547); ?>" class="button">Commercial licensing</a><br/>
-    </div>
+    <?php $licence = get_field('licence'); ?>
+    <?php if($licence == 'a-nc'): ?>
+        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/cc.png" style="float: right;" alt="Attribution-NonCommercial 3.0 New Zealand (CC BY-NC 3.0 NZ)"/>
+        <p>This work is licensed under a <em><a href="https://creativecommons.org/licenses/by-nc/3.0/nz/" target="_blank">Attribution-NonCommercial 3.0 New Zealand (CC BY-NC 3.0 NZ).</a></em></p>
+
+    <?php elseif($licence == 'copyright'): //todo - sort this mess out ?>
+
+        <?php $acknowledgements = get_field('acknowledgements'); ?>
+
+        <?php if(is_array($acknowledgements) && in_array("Hawke's Bay Today",$acknowledgements)): ?>
+
+            <p>Copyright on this material is owned by Hawke's Bay Today and is not available for commercial use without their consent.</p>
+
+            <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/cc.png" style="float: right;" alt="Attribution-NonCommercial 3.0 New Zealand (CC BY-NC 3.0 NZ)"/>
+            <p>For non-commercial use, this work is licensed under a <em><a href="https://creativecommons.org/licenses/by-nc/3.0/nz/" target="_blank">Attribution-NonCommercial 3.0 New Zealand (CC BY-NC 3.0 NZ).</a></em></p>
+
+        <?php elseif(is_array($acknowledgements) && in_array("Wairoa Star",$acknowledgements)): ?>
+
+            <p>Copyright on this material is owned by The Wairoa Star and is not available for commercial use without their consent.</p>
+
+            <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/cc.png" style="float: right;" alt="Attribution-NonCommercial 3.0 New Zealand (CC BY-NC 3.0 NZ)"/>
+            <p>For non-commercial use, this work is licensed under a <em><a href="https://creativecommons.org/licenses/by-nc/3.0/nz/" target="_blank">Attribution-NonCommercial 3.0 New Zealand (CC BY-NC 3.0 NZ).</a></em></p>
+
+        <?php else: ?>
+
+            <p>This copyright for this work belongs to a third party, it is published here by permission.</p>
+
+        <?php endif; ?>
+
+    <?php else:?>
+
+        <p>Unspecified</p>
+
+    <?php endif; ?>
+
+    <?php if(get_field('allow_commercial_licence')): ?>
+        <div class="button-group">
+            <a href="<?php echo get_permalink(284547); ?>" class="button">Commercial licensing</a><br/>
+        </div>
+    <?php endif; ?>
+
 </div>

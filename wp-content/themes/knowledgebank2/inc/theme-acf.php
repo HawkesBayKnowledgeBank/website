@@ -11,22 +11,20 @@ add_filter('acf/upload_prefilter/name=master', 'knowledgebank_acf_upload_prefilt
 
 function knowledgebank_master_upload_directory( $dir, $post_id){
 
-    $filename = basename($dir);
-
-    //create /node/ and /node/master/ dirs if needed
+    //create /node/[ID]/ and /node/[ID]/master/ dirs if needed
     $dir = "/node/$post_id";
-    if(!file_exists($param['basedir'] . $dir)){
-        mkdir($param['basedir'] . $dir);
+    if(!file_exists($dir)){
+        mkdir($dir);
     }
     $dir .= "/master";
-    if(!file_exists($param['basedir'] . $dir)){
-        mkdir($param['basedir'] . $dir);
+    if(!file_exists($dir)){
+        mkdir($dir);
     }
 
-    return $dir;// . $filename;
+    return $dir;
 }
 
-//if a collection is already chosen, filter the collections select box to children of the chosen collection
+//if a collection is already chosen, filter the collections select box to children of the chosen collection - this is used with some custom JS
 function knowledgebank_collections_hierarchy( $args, $field, $post_id ){
     $args['parent'] = empty($_POST['parent']) ? 0 : $_POST['parent'];
     return $args;
@@ -41,7 +39,7 @@ function knowledgebank_related_collections_hierarchy($args, $field, $post_id) {
         foreach($_POST['related_collection_parents'] as $pid){
             $term_ids[] = $pid;
             $term_children = get_term_children($pid, 'collections');
-            if(!empty($term_children) && !is_wp_error($term_children)){                
+            if(!empty($term_children) && !is_wp_error($term_children)){
                 $term_ids = array_unique(array_merge($term_ids, $term_children));
             }
         }
@@ -88,7 +86,7 @@ function knowledgebank_term_accession_number($field){
 }
 add_filter('acf/load_field/key=field_5c7cca30a8a4a', 'knowledgebank_term_accession_number');
 
-
+//Allow new posts to be created with collections pre-chosen via the URL
 function knowledgebank_new_post_collections($field){
     global $pagenow;
 
@@ -130,3 +128,19 @@ function knowledgebank_wysiwyg_render_field( $field ) {
 <?php
 }
 add_action( 'acf/render_field/type=wysiwyg', 'knowledgebank_wysiwyg_render_field', 10, 1 );
+
+//create checksums for original digital master field files
+function knowledgebank_master_generate_checksum($value, $post_id, $field, $original){
+
+    if(!empty($value)){
+        $file = get_attached_file($value);
+        $path = dirname($file);
+        $checksum_path = $path . '/master.md5';
+        if(file_exists($path)){
+            exec("md5sum $file > $checksum_path");
+        }
+    }
+
+    return $value;
+}
+add_action('acf/update_value/name=master','knowledgebank_master_generate_checksum',10,4);

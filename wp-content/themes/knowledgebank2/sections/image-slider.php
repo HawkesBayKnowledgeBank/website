@@ -4,9 +4,10 @@
     if(!empty($transcript)){
         $captions = preg_split('/<hr ?\/?>/', $transcript);//pages are delimited by <hr /> (match variations <hr> and <hr/>)
     }
+    global $post;
 ?>
 
-<?php if(count($images) > 1): ?>
+<?php if(count($images) > 1 && $post->post_type != 'still_image'): ?>
 
     <section class="layer book-slider-wrap">
         <div class="inner">

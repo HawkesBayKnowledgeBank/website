@@ -19,7 +19,12 @@
                         $term = get_queried_object();
                         $label = 'Search in <em>' . (!empty($term->name) ? $term->name :  get_the_title()) . '</em>';
                         if(!empty($mode) && $mode == 'Taxonomy') $label = 'Search <em>' . (!empty($term->name) ? $term->name :  get_the_title()) . '</em> by name';
-                        if(is_post_type_archive()) $label = 'Search in <em>' . (!empty($term->label) ? $term->label :  get_the_title()) . '</em>';
+                        if(is_post_type_archive()) {
+                            $label = 'Search in <em>' . (!empty($term->label) ? $term->label :  get_the_title()) . '</em>';
+                            if(empty($filters)) $filters = [];
+                            if(empty($filters['orderby'])) $filters['orderby'] = 'date';
+                            if(empty($filters['order'])) $filters['order'] = 'DESC';
+                        }
 
                     ?>
                     <label><?php echo $label; ?></label>
@@ -33,8 +38,8 @@
                     <label>Sort by</label>
                     <select class="select2-nosearch" name="filters[orderby]">
                         <?php $active_filter = !empty($filters['orderby']) ? $filters['orderby'] : ''; ?>
-                        <option value="name" <?php if($active_filter == 'name') echo 'selected'; ?>>Name</option>
-                        <?php /* <option value="date" <?php if($active_filter == 'date') echo 'selected'; ?>>Date Created</option> */ ?>
+                        <option value="title" <?php if($active_filter == 'title') echo 'selected'; ?>>Name</option>
+                        <option value="date" <?php if($active_filter == 'date') echo 'selected'; ?>>Date Created</option>
                     </select>
                 </div><!-- .control-option -->
 

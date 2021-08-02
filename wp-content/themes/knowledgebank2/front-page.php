@@ -70,46 +70,26 @@
 
             <?php endforeach; ?>
             <div class="col card explore-items">
-                <h3>Explore</h3>
+                <h3><?php the_field('explore_heading'); ?></h3>
 
-                <div class="explore-item">
-                    <h5><a href="/collections/" class="icon-collections">Collections</a></h5>
-                    <p>Collections of material donated by individuals, families and organisations.</p>
-                </div>
-                <div class="explore-item">
-                    <h5><a href="/tags/" class="icon-tags">Tags</a></h5>
-                    <p>Tags are informal subjects or topics used to group related material.</p>
-                </div>
-                <div class="explore-item">
-                    <h5><a href="/photo-news/" class="icon-hb-photo-news">Hawke’s Bay Photo News</a></h5>
-                    <p>Hawke's Bay Photo News, a local magazine published November 1958 - June 1967</p>
-                </div>
-                <div class="explore-item">
-                    <h5><a href="/people/" class="icon-people">Who’s Who</a></h5>
-                    <p>An index of Hawke's Bay people.</p>
-                </div>
-                <div class="explore-item">
-                    <h5><a href="/tag/oral-history/" class="icon-audio">Oral History</a></h5>
-                    <p>Recordings and transcripts of interviews with Hawke's Bay personalities.</p>
-                </div>
-                <div class="explore-item">
-                    <h5><a href="/bibliography" class="icon-book">Bibliography</a></h5>
-                    <p>An index of printed publications relating to Hawke's Bay and its history.</p>
-                </div>
-                <div class="explore-item">
-                    <h5><a href="/video" class="icon-video">Video and Film</a></h5>
-                    <p>Film and video from across our collections.</p>
-                </div>
-                <div class="explore-item">
-                    <h5><a href="/images" class="icon-images">Images</a></h5>
-                    <p>Photographs and other still images from our collections.</p>
-                </div>
+                <?php $items = get_field('explore_items'); ?>
+                <?php if(!empty($items)): ?>
+                    <?php foreach($items as $item): ?>
 
-            </div>
+                        <div class="explore-item">
+                            <?php echo $item['item']; ?>
+                        </div><!-- .explore-item -->
+
+                    <?php endforeach; ?>
+
+                <?php endif; ?>
+
+            </div><!-- .explore-items -->
 
 
-        </div>
-    </div>
+        </div><!-- .grid -->
+
+    </div><!-- .inner -->
 </section>
 
 <?php get_template_part('sections/sponsors'); ?>

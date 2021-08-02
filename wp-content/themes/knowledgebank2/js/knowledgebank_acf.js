@@ -12,8 +12,6 @@ jQuery(function($){
 		// see https://www.advancedcustomfields.com/resources/adding-custom-javascript-fields/
 		acf.add_filter('date_picker_args', function( args, $field ){
 
-			// do something to args
-
 			var custom_args = {
 			  yearRange:			"-300:+100", // value to change
 			};

@@ -2,7 +2,7 @@
 <?php $filters = knowledgebank_get_filters(); ?>
 <?php
     global $wp_query;
-
+    
     $extra_classes = array();
 
     $title = get_the_archive_title();

@@ -26,7 +26,8 @@ function knowledgebank_pre_get_posts($query){
                 $query->set('ep_integrate',true);
                 $query->set('search_fields', array(
                         'post_title',
-                        'meta' => $search_index_fields
+                        'meta' => $search_index_fields,
+                        'taxonomies' => ['collections','tags']
                     )
                 );
             }
@@ -36,7 +37,8 @@ function knowledgebank_pre_get_posts($query){
             $query->set('ep_integrate',true);
             $query->set('search_fields', array(
                     'post_title',
-                    'meta' => $search_index_fields
+                    'meta' => $search_index_fields,
+                    'taxonomies' => ['collections','tags']
                 )
             );
         }
@@ -45,20 +47,25 @@ function knowledgebank_pre_get_posts($query){
         if(!empty($filters['order'])){
             $query->set('order', $filters['order']);
         }
+        elseif(is_post_type_archive()){
+            $query->set('order', 'DESC');
+        }
         elseif(is_archive() && $query->queried_object_id != 277873){ //not the news page
             $query->set('order', 'ASC');
         }
         if(!empty($filters['orderby'])){
             $query->set('orderby', $filters['orderby']);
         }
+        elseif(is_post_type_archive()){
+            $query->set('orderby', 'date');
+        }
         elseif(is_archive() && $query->queried_object_id != 277873){
-            $query->set('orderby', 'name');
+            $query->set('orderby', 'title');
         }
 
         if(!empty($filters['number'])){
             $query->set('posts_per_page', $filters['number']);
         }
-
 
         if(is_tag()) $query->set('post_type', array('still_image','audio','video','person','text'));
 
@@ -121,10 +128,7 @@ function knowledgebank_ep_prepare_meta_data($meta,$post){
         }
     }
 
-    // print_r(array_keys($meta));
-    // global $wpdb;
-    // $wpdb->query('DELETE FROM wp_options WHERE option_name LIKE "%wpcli_sync%"');
-    // exit;
+
 
     return $meta;
 }
@@ -169,6 +173,8 @@ function knowledgebank_ep_formatted_args( $formatted_args, $args ) {
     ) {
         global $search_index_fields;
         $all_fields = kb_get_search_fields();
+        $all_fields[] = 'terms.collections.name';
+        $all_fields[] = 'terms.tags.name';
          $simple_query = array(
              'simple_query_string' => array(
                  'query' => $formatted_args['query']['bool']['should'][0]['multi_match']['query'],
@@ -177,6 +183,7 @@ function knowledgebank_ep_formatted_args( $formatted_args, $args ) {
                  'flags' => 'ALL'
              )
          );
+
 
          $formatted_args['query']['bool']['should'] = array($simple_query);
 
