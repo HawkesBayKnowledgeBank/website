@@ -28,11 +28,13 @@ var Log = {
 
 function init(){
 
+    
+
     $jit.ForceDirected.Plot.NodeTypes.implement({
       'mySpecialType': {
         'render': function(node, canvas) {
-            console.log(node.pos);
-          //print your custom node to canvas
+            
+            
         },
         //optional
         'contains': function(node, pos) {
@@ -100,7 +102,8 @@ function init(){
       //Update node positions when dragged
       onDragMove: function(node, eventInfo, e) {
           var pos = eventInfo.getPos();
-
+          console.log(node.pos.y)
+          console.log(node)
           //node.pos.setc(pos.x, pos.y);
           node.pos.setc(pos.x, node.pos.y); //fixed Y
           fd.plot();
@@ -122,6 +125,9 @@ function init(){
         });
         //append connections information
         $jit.id('inner-details').innerHTML = html + list.join("</li><li>") + "</li></ul>";
+      },
+      onBeforePlotNode : function(node){
+        console.log('step')
       }
     },
     //Number of iterations for the FD algorithm
@@ -146,7 +152,8 @@ function init(){
       style.left = (left - w / 2) + 'px';
       style.top = (top + 10) + 'px';
       style.display = '';
-    }
+    },
+    width:8000
   });
 
 
@@ -154,6 +161,8 @@ function init(){
   // load JSON data.
   fd.loadJSON(json);
   // compute positions incrementally and animate.
+
+
   fd.computeIncremental({
     iter: 40,
     property: 'end',
@@ -162,6 +171,15 @@ function init(){
     },
     onComplete: function(){
       Log.write('done');
+      fd.graph.eachNode(function(node){
+        
+        let pos = node.getPos('end');
+        let height_modifier = 6;
+        pos.y = parseInt(node.data.ypos) * height_modifier;
+        node.setPos(pos, 'end'); 
+        
+        console.log(node)
+      })
       fd.animate({
         modes: ['linear'],
         transition: $jit.Trans.Elastic.easeOut,
@@ -170,9 +188,8 @@ function init(){
     }
   });
 
-  $jit.Graph.Util.eachNode( fd, function( node ) {
-   console.log( node.pos );
-  });
+  
+
 
   // end
 }

@@ -22,22 +22,19 @@ require_once(get_stylesheet_directory() . '/inc/pagination.php');
     Theme Support
 \*------------------------------------*/
 
-if (!isset($content_width)){
+if (!isset($content_width)) {
     $content_width = 900;
 }
 
-if (function_exists('add_theme_support')){
+if (function_exists('add_theme_support')) {
     // Add Menu Support
     add_theme_support('menus');
 
     // Add Thumbnail Theme Support
     add_theme_support('post-thumbnails');
-    //set_post_thumbnail_size( 400, 256, array('center','top') );
-    //add_image_size( 'thumbnail', 400, 256, array( 'center', 'top' ) );
-    update_option( 'thumbnail_crop', array( 'center', 'top' ) );
-    //add_image_size('custom-size', 700, 200, true); // Custom Thumbnail Size call using the_post_thumbnail('custom-size');
-
 }
+
+
 
 /*------------------------------------*\
     Functions
@@ -45,7 +42,7 @@ if (function_exists('add_theme_support')){
 
 
 // Load HTML5 Blank scripts (header.php)
-function knowledgebank_header_scripts(){
+function knowledgebank_header_scripts() {
     if ($GLOBALS['pagenow'] != 'wp-login.php' && !is_admin()) {
 
         wp_register_script('conditionizr', get_template_directory_uri() . '/js/lib/conditionizr-4.3.0.min.js', array(), '4.3.0'); // Conditionizr
@@ -77,30 +74,37 @@ function knowledgebank_header_scripts(){
         wp_register_script('select2-js', get_template_directory_uri() . '/js/lib/select2/select2.min.js', array('jquery'), '1.0.0'); // Custom scripts
         wp_enqueue_script('select2-js');
 
-        if(is_user_logged_in()){
-            wp_enqueue_script('knowledgebank_admin_front',get_stylesheet_directory_uri() . '/js/knowledgebank_admin_front.js', array('jquery'), '1.0.0');
+        if (is_user_logged_in()) {
+            wp_enqueue_script('knowledgebank_admin_front', get_stylesheet_directory_uri() . '/js/knowledgebank_admin_front.js', array('jquery'), '1.0.0');
         }
-
     }
 }
 
-function knowledgebank_admin_scripts(){
+function knowledgebank_admin_scripts() {
     do_action('acf/input/admin_enqueue_scripts');
     $js_mtime = filemtime(get_stylesheet_directory() . '/js/knowledgebank_acf.js');
-    wp_enqueue_script( 'knowledgebank-acf-js', get_stylesheet_directory_uri() . '/js/knowledgebank_acf.js', array(), $js_mtime, true );
+    wp_enqueue_script('knowledgebank-acf-js', get_stylesheet_directory_uri() . '/js/knowledgebank_acf.js', array(), $js_mtime, true);
     $css_mtime = filemtime(get_stylesheet_directory() . '/css/knowledgebank-admin.css');
     wp_enqueue_style('kb-admin-css', get_template_directory_uri() . '/css/knowledgebank-admin.css', array(), $css_mtime, 'all');
 
-    if(!empty($_GET['page']) && $_GET['page'] == 'knowledgebank_content_manager'){
+    if (!empty($_GET['page']) && $_GET['page'] == 'knowledgebank_content_manager') {
         wp_register_script('select2-js', get_template_directory_uri() . '/js/lib/select2/select2.min.js', array('jquery'), '1.0.0'); // Custom scripts
         wp_enqueue_script('select2-js');
     }
 
+
+    global $post;
+    if (isset($post) && $post->ID) {
+
+        wp_localize_script('knowledgebank-acf-js', 'contextData', array(
+            'postId' => $post->ID
+        ));
+    }
 }
 add_action('admin_enqueue_scripts', 'knowledgebank_admin_scripts');
 
 // Load HTML5 Blank styles
-function knowledgebank_styles(){
+function knowledgebank_styles() {
     wp_register_style('normalize', get_template_directory_uri() . '/normalize.css', array(), '1.0', 'all');
     wp_enqueue_style('normalize');
 
@@ -120,16 +124,23 @@ function knowledgebank_styles(){
     wp_register_style('select2-css', get_template_directory_uri() . '/css/lib/select2.min.css', array(), '1.0', 'all');
     wp_enqueue_style('select2-css');
 
+
+    if (is_page_template('template-whos-who2.php')) {
+        wp_enqueue_style('jquery-datatables-css', '//cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css');
+        wp_enqueue_script('jquery-datatables-js', '//cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js', array('jquery'));
+        $mtime = filemtime(get_stylesheet_directory() . '/js/whos-who.js');
+        wp_enqueue_script('knowledgebank-whos-who', get_stylesheet_directory_uri() . '/js/whos-who.js', array('jquery', 'jquery-datatables-js'), $mtime);
+    }
 }
 
 
 // Remove invalid rel attribute values in the categorylist
-function remove_category_rel_from_category_list($thelist){
+function remove_category_rel_from_category_list($thelist) {
     return str_replace('rel="category tag"', 'rel="tag"', $thelist);
 }
 
 // Add page slug to body class, love this - Credit: Starkers Wordpress Theme
-function add_slug_to_body_class($classes){
+function add_slug_to_body_class($classes) {
     global $post;
     if (is_home()) {
         $key = array_search('blog', $classes);
@@ -147,7 +158,7 @@ function add_slug_to_body_class($classes){
 
 
 // Pagination for paged posts, Page 1, Page 2, Page 3, with Next and Previous Links, No plugin
-function knowledgebank_pagination(){
+function knowledgebank_pagination() {
     global $wp_query;
     $big = 999999999;
     echo paginate_links(array(
@@ -161,7 +172,7 @@ function knowledgebank_pagination(){
 
 
 // Create the Custom Excerpts callback
-function knowledgebank_excerpt($length_callback = '', $more_callback = ''){
+function knowledgebank_excerpt($length_callback = '', $more_callback = '') {
     global $post;
     if (function_exists($length_callback)) {
         add_filter('excerpt_length', $length_callback);
@@ -181,52 +192,51 @@ function knowledgebank_allowedtags() {
     return '<script>,<style>,<br>,<em>,<i>,<ul>,<ol>,<li>,<a>,<p>,<img>,<video>,<audio>';
 }
 
-if ( ! function_exists( 'knowledgebank_custom_wp_trim_excerpt' ) ) :
+if (!function_exists('knowledgebank_custom_wp_trim_excerpt')) :
 
     function knowledgebank_custom_wp_trim_excerpt($kb_excerpt) {
         $raw_excerpt = $kb_excerpt;
-        if ( '' == $kb_excerpt ) {
+        if ('' == $kb_excerpt) {
 
             $kb_excerpt = get_the_content('');
-            $kb_excerpt = strip_shortcodes( $kb_excerpt );
+            $kb_excerpt = strip_shortcodes($kb_excerpt);
             $kb_excerpt = apply_filters('the_content', $kb_excerpt);
             $kb_excerpt = str_replace(']]>', ']]&gt;', $kb_excerpt);
             $kb_excerpt = strip_tags($kb_excerpt, knowledgebank_allowedtags()); /*IF you need to allow just certain tags. Delete if all tags are allowed */
 
             //Set the excerpt word count and only break after sentence is complete.
-                $excerpt_word_count = 75;
-                $excerpt_length = apply_filters('excerpt_length', $excerpt_word_count);
-                $tokens = array();
-                $excerptOutput = '';
-                $count = 0;
+            $excerpt_word_count = 75;
+            $excerpt_length = apply_filters('excerpt_length', $excerpt_word_count);
+            $tokens = array();
+            $excerptOutput = '';
+            $count = 0;
 
-                // Divide the string into tokens; HTML tags, or words, followed by any whitespace
-                preg_match_all('/(<[^>]+>|[^<>\s]+)\s*/u', $kb_excerpt, $tokens);
+            // Divide the string into tokens; HTML tags, or words, followed by any whitespace
+            preg_match_all('/(<[^>]+>|[^<>\s]+)\s*/u', $kb_excerpt, $tokens);
 
-                foreach ($tokens[0] as $token) {
+            foreach ($tokens[0] as $token) {
 
-                    if ($count >= $excerpt_length && preg_match('/[\,\;\?\.\!]\s*$/uS', $token)) {
+                if ($count >= $excerpt_length && preg_match('/[\,\;\?\.\!]\s*$/uS', $token)) {
                     // Limit reached, continue until , ; ? . or ! occur at the end
-                        $excerptOutput .= trim($token);
-                        break;
-                    }
-
-                    // Add words to complete sentence
-                    $count++;
-
-                    // Append what's left of the token
-                    $excerptOutput .= $token;
+                    $excerptOutput .= trim($token);
+                    break;
                 }
 
-                $kb_excerpt = trim(force_balance_tags($excerptOutput));
+                // Add words to complete sentence
+                $count++;
 
-                //$excerpt_end = ' <a href="'. esc_url( get_permalink() ) . '">' . '&nbsp;&raquo;&nbsp;' . sprintf(__( 'Read more about: %s &nbsp;&raquo;', 'wpse' ), get_the_title()) . '</a>';
-                //$excerpt_more = apply_filters('excerpt_more', ' ' . $excerpt_end);
+                // Append what's left of the token
+                $excerptOutput .= $token;
+            }
 
-                //$kb_excerpt .= $excerpt_more; /*Add read more in new paragraph */
+            $kb_excerpt = trim(force_balance_tags($excerptOutput));
+
+            //$excerpt_end = ' <a href="'. esc_url( get_permalink() ) . '">' . '&nbsp;&raquo;&nbsp;' . sprintf(__( 'Read more about: %s &nbsp;&raquo;', 'wpse' ), get_the_title()) . '</a>';
+            //$excerpt_more = apply_filters('excerpt_more', ' ' . $excerpt_end);
+
+            //$kb_excerpt .= $excerpt_more; /*Add read more in new paragraph */
 
             return $kb_excerpt;
-
         }
         return apply_filters('knowledgebank_custom_wp_trim_excerpt', $kb_excerpt, $raw_excerpt);
     }
@@ -238,12 +248,25 @@ add_filter('get_the_excerpt', 'knowledgebank_custom_wp_trim_excerpt');
 
 
 // Custom Gravatar in Settings > Discussion
-function knowledgebankgravatar ($avatar_defaults){
+function knowledgebankgravatar($avatar_defaults) {
     $myavatar = get_template_directory_uri() . '/img/gravatar.jpg';
     $avatar_defaults[$myavatar] = "Custom Gravatar";
     return $avatar_defaults;
 }
 
+function knowledgebank_image_sizes() {
+
+    //add_image_size( 'thumbnail', 400, 256, array( 'center', 'top' ) );
+    //update_option( 'thumbnail_crop', array( 'center', 'top' ) );
+    //add_image_size('custom-size', 700, 200, true); // Custom Thumbnail Size call using the_post_thumbnail('custom-size');
+    remove_image_size('1536x1536');             // 2 x Medium Large (1536 x 1536)
+    remove_image_size('2048x2048');             // 2 x Large (2048 x 2048)
+    remove_image_size('medium_large');
+}
+
+add_filter('intermediate_image_sizes', function ($sizes) {
+    return array_diff($sizes, ['medium_large']);
+});
 
 /*------------------------------------*\
     Actions + Filters + ShortCodes
@@ -251,6 +274,7 @@ function knowledgebankgravatar ($avatar_defaults){
 
 // Add Actions
 add_action('init', 'knowledgebank_header_scripts'); // Add Custom Scripts to wp_head
+add_action('init', 'knowledgebank_image_sizes', 99);
 add_action('wp_enqueue_scripts', 'knowledgebank_styles'); // Add Theme Stylesheets
 
 
@@ -287,111 +311,109 @@ function wpb_disable_pdf_previews() {
 add_filter('fallback_intermediate_image_sizes', 'wpb_disable_pdf_previews');
 
 //WP cli hard-codes the mime types it looks for when regenerating (-_-)
-function knowledgebank_regenerate_types( $query ) {
-    if(!empty($query->query['post_mime_type']) && $query->query['post_type'] == 'attachment'){
+function knowledgebank_regenerate_types($query) {
+    if (!empty($query->query['post_mime_type']) && $query->query['post_type'] == 'attachment') {
         $query->set('post_mime_type', array('image'));
     }
 }
-add_action( 'pre_get_posts', 'knowledgebank_regenerate_types', 1 );
+add_action('pre_get_posts', 'knowledgebank_regenerate_types', 1);
 
 function knowledgebank_numeric_posts_nav() {
 
-    if( is_singular() )
+    if (is_singular())
         return;
 
     global $wp_query;
 
     /** Stop execution if there's only 1 page */
-    if( $wp_query->max_num_pages <= 1 )
+    if ($wp_query->max_num_pages <= 1)
         return;
 
-    $paged = get_query_var( 'paged' ) ? absint( get_query_var( 'paged' ) ) : 1;
-    $max   = intval( $wp_query->max_num_pages );
+    $paged = get_query_var('paged') ? absint(get_query_var('paged')) : 1;
+    $max   = intval($wp_query->max_num_pages);
 
     /** Add current page to the array */
-    if ( $paged >= 1 )
+    if ($paged >= 1)
         $links[] = $paged;
 
     /** Add the pages around the current page to the array */
-    if ( $paged >= 3 ) {
+    if ($paged >= 3) {
         $links[] = $paged - 1;
         $links[] = $paged - 2;
     }
 
-    if ( ( $paged + 2 ) <= $max ) {
+    if (($paged + 2) <= $max) {
         $links[] = $paged + 2;
         $links[] = $paged + 1;
     }
 
     /** Previous Post Link */
-    if ( get_previous_posts_link() )
-        printf( '<li>%s</li>' . "\n", get_previous_posts_link() );
+    if (get_previous_posts_link())
+        printf('<li>%s</li>' . "\n", get_previous_posts_link());
 
     /** Link to first page, plus ellipses if necessary */
-    if ( ! in_array( 1, $links ) ) {
+    if (!in_array(1, $links)) {
         $class = 1 == $paged ? ' class="active"' : '';
 
-        printf( '<li%s><a href="%s">%s</a></li>' . "\n", $class, esc_url( get_pagenum_link( 1 ) ), '1' );
+        printf('<li%s><a href="%s">%s</a></li>' . "\n", $class, esc_url(get_pagenum_link(1)), '1');
 
-        if ( ! in_array( 2, $links ) )
+        if (!in_array(2, $links))
             echo '<li>…</li>';
     }
 
     /** Link to current page, plus 2 pages in either direction if necessary */
-    sort( $links );
-    foreach ( (array) $links as $link ) {
+    sort($links);
+    foreach ((array) $links as $link) {
         $class = $paged == $link ? ' class="active"' : '';
-        printf( '<li%s><a href="%s">%s</a></li>' . "\n", $class, esc_url( get_pagenum_link( $link ) ), $link );
+        printf('<li%s><a href="%s">%s</a></li>' . "\n", $class, esc_url(get_pagenum_link($link)), $link);
     }
 
     /** Link to last page, plus ellipses if necessary */
-    if ( ! in_array( $max, $links ) ) {
-        if ( ! in_array( $max - 1, $links ) )
+    if (!in_array($max, $links)) {
+        if (!in_array($max - 1, $links))
             echo '<li>…</li>' . "\n";
 
         $class = $paged == $max ? ' class="active"' : '';
-        printf( '<li%s><a href="%s">%s</a></li>' . "\n", $class, esc_url( get_pagenum_link( $max ) ), $max );
+        printf('<li%s><a href="%s">%s</a></li>' . "\n", $class, esc_url(get_pagenum_link($max)), $max);
     }
 
     /** Next Post Link */
-    if ( get_next_posts_link() )
-        printf( '<li>%s</li>' . "\n", get_next_posts_link() );
-
-}//knowledgebank_numeric_posts_nav
+    if (get_next_posts_link())
+        printf('<li>%s</li>' . "\n", get_next_posts_link());
+} //knowledgebank_numeric_posts_nav
 
 //get certain allowed values from the URL to do filtery things with
-function knowledgebank_get_filters(){
-    $allowed_keys = array('order','orderby','view_mode','tags','number','search');
+function knowledgebank_get_filters() {
+    $allowed_keys = array('order', 'orderby', 'view_mode', 'tags', 'number', 'search', 'subject');
     $filters = array();
-    if(!empty($_GET['filters']) && is_array($_GET['filters'])){
+    if (!empty($_GET['filters']) && is_array($_GET['filters'])) {
         //get any $_GET['filters'] elements with a key in $allowed keys
         $filters = array_intersect_key($_GET['filters'], array_flip($allowed_keys));
     }
     return $filters;
-}//knowledgebank_get_filters
+} //knowledgebank_get_filters
 
 
 
-function knowledgebank_get_collections($post_id){
+function knowledgebank_get_collections($post_id) {
     $terms = wp_get_post_terms($post_id, 'collections');
-    if(empty($terms)) return false;
+    if (empty($terms)) return false;
 
     $collections = array();
-    foreach($terms as $collection){
-        if($collection->parent == 0) {
+    foreach ($terms as $collection) {
+        if ($collection->parent == 0) {
             $collection->children = knowledgebank_find_child_terms($collection, $terms);
             $collections[$collection->term_id] = $collection;
         }
     }
 
     return $collections;
-
 }
 
-function knowledgebank_find_child_terms($parent_collection, $all_post_collections){
+function knowledgebank_find_child_terms($parent_collection, $all_post_collections) {
     $children = array();
-    foreach($all_post_collections as $collection){
-        if($collection->parent == $parent_collection->term_id){
+    foreach ($all_post_collections as $collection) {
+        if ($collection->parent == $parent_collection->term_id) {
             //find this term's children too
             $collection->children = knowledgebank_find_child_terms($collection, $all_post_collections);
             $children[] = $collection;
@@ -401,27 +423,16 @@ function knowledgebank_find_child_terms($parent_collection, $all_post_collection
 }
 
 
-function knowledgebank_remove_redux_stuff(){
-    global $wp_meta_boxes;
 
-    if(!empty($wp_meta_boxes['dashboard']['side']['high']['redux_dashboard_widget'])){
-        unset($wp_meta_boxes['dashboard']['side']['high']['redux_dashboard_widget']);
-    }
-
-}
-add_action('wp_dashboard_setup','knowledgebank_remove_redux_stuff',100);
-
-//$redux = ReduxFrameworkInstances::get_instance('wpml_settings');
-//remove_action('admin_notices', array($redux, '_admin_notices'), 99);
 
 
 /* Fancy search */
 //require_once('wp-advanced-search/wpas.php');
 
 
-function knowledgebank_og_tags(){
+function knowledgebank_og_tags() {
 
-    if(!is_single()) return;
+    if (!is_single()) return;
 
     //fallbacks
     $title = get_option('blogname');
@@ -431,35 +442,56 @@ function knowledgebank_og_tags(){
 
     $title = get_the_title();
     $images = get_field('images');
-    if(!empty($images[0])){
-        $image = $images[0]['image']['sizes']['large'] ?? $images[0]['image']['url'];
+    if (!empty($images[0]['image'])) {
+        $image = $images[0]['image']['sizes']['large'] ? $images[0]['image']['sizes']['large'] : $images[0]['image']['url'];
     }
 
     echo vsprintf('
         <meta property="og:title" content="%s">
         <meta property="og:image" content="%s">
         <meta property="og:url" content="%s">
-    ',array($title, $image, $url));
-
+    ', array($title, $image, $url));
 }
 add_action('wp_head', 'knowledgebank_og_tags');
 
-function wpb_image_editor_default_to_gd( $editors ) {
+function wpb_image_editor_default_to_gd($editors) {
     $gd_editor = 'WP_Image_Editor_GD';
-    $editors = array_diff( $editors, array( $gd_editor ) );
-    array_unshift( $editors, $gd_editor );
+    $editors = array_diff($editors, array($gd_editor));
+    array_unshift($editors, $gd_editor);
     return $editors;
 }
-add_filter( 'wp_image_editors', 'wpb_image_editor_default_to_gd' );
+add_filter('wp_image_editors', 'wpb_image_editor_default_to_gd');
 
 
 function knowledgebank_dev_site_admin_bar($wp_admin_bar) {
 
-    if(get_option('siteurl') != 'https://test.knowledgebank.org.nz') return;
+    if (get_option('siteurl') != 'https://test.knowledgebank.org.nz') return;
 
-    $wp_admin_bar->add_menu( array(
+    $wp_admin_bar->add_menu(array(
         'id' => 'wpse-form-in-admin-bar',
         'parent' => 'root-default',
-        'title' => '<span style="background-color: red;width: 100%; display: block;padding: 0 6px;text-align: center;">test site</span>') );
+        'title' => '<span style="background-color: red;width: 100%; display: block;padding: 0 6px;text-align: center;">test site</span>'
+    ));
 }
-add_action( 'admin_bar_menu', 'knowledgebank_dev_site_admin_bar', 10 , 1 );
+add_action('admin_bar_menu', 'knowledgebank_dev_site_admin_bar', 10, 1);
+
+
+function kb_facebook_embed() {
+    return '
+        <div id="fb-root"></div>
+        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v16.0" nonce="aXLlEKKZ"></script>
+        <div class="fb-page" data-href="https://www.facebook.com/hawkesbayKnowledgeBank/" data-tabs="timeline" data-width="500" data-height="" data-small-header="true" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/hawkesbayKnowledgeBank/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/hawkesbayKnowledgeBank/">Knowledge Bank Hawke&#039;s Bay</a></blockquote></div>
+    ';
+}
+add_shortcode('kb_facebook_embed', 'kb_facebook_embed');
+
+
+function kb_robots_txt($output, $public) {
+
+
+    $output .= "User-agent: facebookexternalhit\n";
+    $output .= "Allow: /";
+
+    return $output;
+}
+add_filter('robots_txt', 'kb_robots_txt', 1, 2);

@@ -2,7 +2,7 @@
 <?php $filters = knowledgebank_get_filters(); ?>
 <?php
     global $wp_query;
-    
+
     $extra_classes = array();
 
     $title = get_the_archive_title();
@@ -20,7 +20,7 @@
         if($term->parent == 967){
             $title = "Hawke's Bay Photo News - " . $term->name;
         }
-        if(get_field('display_title', $term)) $title = get_field('display_title', $term);
+        if(get_field('display_title', $term->taxonomy . '_' . $term->term_id )) $title = get_field('display_title', $term->taxonomy . '_' . $term->term_id);
 
 
         if($term->term_id == 967 || $term->parent == 967){

@@ -34,12 +34,30 @@
                     </div>
                 </div><!-- .control-option -->
 
+                <?php if(is_post_type_archive('video')): ?>
+
+                    <div class="control-option">
+                        <label>Filter by</label>
+
+                        <select class="select2-nosearch" name="filters[subject]">
+                            <option value="">Subject</option>
+                            <?php $active_filter = !empty($filters['subject']) ? $filters['subject'] : ''; ?>
+                            <?php $subjects = get_option('options_video_page_subjects');  ?>
+                            <?php foreach($subjects as $id): $subject = get_term($id, 'subject'); ?>
+                                <option value="<?php echo $subject->term_id; ?>" <?php echo $active_filter == $subject->term_id ? 'selected' : ''; ?>><?php echo $subject->name; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                
+                    </div><!-- .control-option -->
+
+                <?php endif; ?>
+
                 <div class="control-option">
                     <label>Sort by</label>
                     <select class="select2-nosearch" name="filters[orderby]">
                         <?php $active_filter = !empty($filters['orderby']) ? $filters['orderby'] : ''; ?>
                         <option value="title" <?php if($active_filter == 'title') echo 'selected'; ?>>Name</option>
-                        <option value="date" <?php if($active_filter == 'date') echo 'selected'; ?>>Date Created</option>
+                        <?php if(is_tax()): ?><option value="date" <?php if($active_filter == 'date') echo 'selected'; ?>>Date Created</option><?php endif; ?>
                     </select>
                 </div><!-- .control-option -->
 

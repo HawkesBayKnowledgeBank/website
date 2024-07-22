@@ -74,7 +74,7 @@
 			}
 
 			if($post->post_type == 'person'){
-				echo sprintf('<li><a href="%s">%s</a></li>', get_permalink(51040),get_the_title(51040)); //who's who page
+				echo '<li><a href="/people/">Who\'s Who</a></li>';
 			}
 
 

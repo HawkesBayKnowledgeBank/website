@@ -16,3 +16,22 @@
 
 .toplevel_page_kb-find-content #submitdiv { display:none; }
 .acf-field[data-name="html"] .acf-label { display:none; }
+
+.mce-content-body table.mce-item-table { width:100%;}
+
+
+.acf-field[data-name="images"] .acf-label { display:flex; justify-content:flex-end;}
+.acf-field[data-name="images"] .acf-label label { margin-right:auto;}
+.acf-field[data-name="images"] .acf-label button.confirm { border:1px solid red;}
+
+
+.conversion-status-wrap { padding:10px; background:rgb(185,255,185);}
+.conversion-status-wrap .cancel { display:none;}
+.conversion-status-wrap.working .cancel { display:block;}
+
+
+body.post-new-php .acf-field[data-name="images"], body.post-new-php .acf-field[data-name="auto_generate"] { display:none; }
+
+body.post-new-php .acf-field[data-name="master"] .acf-label { display:none; }
+body.post-new-php .acf-field[data-name="master"] .acf-input { display:none;}
+body.post-new-php .acf-field[data-name="master"]:before { content: 'Please save this post as a draft before uploading files.'; display:block; padding:10px; background:rgb(255,255,185); margin:10px 0;}
