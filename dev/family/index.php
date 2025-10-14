@@ -99,11 +99,20 @@ var json =
 
 
 
+
+        $min = 0;
+        $max = 0;
+        foreach($graph_nodes as $node){
+            if($node->data->birthdate > $max) $max = $node->data->birthdate;
+            if($min == 0 || $node->data->birthdate < $min) $min =  $node->data->birthdate;
+        }
+
+        foreach ($graph_nodes as &$node) {
+            $node->data->ypos = ($node->data->birthdate - $min);//calculate a relative value for our oldest (zero) to youngest persons
+        }
+
+
         echo json_encode(array_values($graph_nodes));
-
-
-
-
 
 
         /**
@@ -135,7 +144,18 @@ var json =
                 },$relatives);
 
                 //2. Filter out any without record ids
-                $relatives = array_filter(array_values($relatives));
+                $relatives = array_filter($relatives, function($p){
+                    if(empty($p)) return false;
+                    $_birthdate = get_field('birthdate', $p);
+                    //birthdates have some odd values brought over from Drupal - might be Y or Y-m or Y-m-d
+                    $birthdate_dt = DateTime::createFromFormat('Ymd', (string)$_birthdate);
+                    if (!empty($birthdate_dt)) $birthdate = $birthdate_dt->format('Y');
+                    if ($birthdate) {
+                        return $p;
+                    } else {
+                        return false;
+                    }
+                });
 
                 //add relations between $pid and relative id
                 if(!empty($relatives)){
@@ -151,7 +171,7 @@ var json =
                         $adjacency->nodeTo = $relative_id;
                         $adjacency->nodeFrom = $pid;
                         $adjacency->data = new stdClass();
-                        $colours = array('parents' => '#FF0000','children' => '#00FF00', 'partners' => '#00FF00');
+                        $colours = array('parents' => '#FF0000','children' => '#00FF00', 'partners' => '#0000FF');
                         $colour = $colours[$relative_type];
                         $adjacency->data->{'$color'} = $colour;
 
@@ -192,11 +212,24 @@ var json =
 
             $graphnode->id = $person->ID;
             $graphnode->name = $person->post_title;
-            
+
             $graphnode->data = new stdClass();
             $graphnode->data->{'$color'} = '#557EAA';
             $graphnode->data->{'$type'} = 'circle';
             $graphnode->data->{'$dim'} = empty($graph_nodes) ? '3' : '3';
+
+            $_birthdate = $person->birthdate;
+            //birthdates have some odd values brought over from Drupal - might be Y or Y-m or Y-m-d
+            $birthdate_dt = DateTime::createFromFormat('Ymd', $_birthdate);
+            if (!empty($birthdate_dt)) $birthdate = $birthdate_dt->format('Y');
+            if ($birthdate) {
+                $graphnode->data->birthdate = $birthdate;
+            }
+            else{
+                return false;
+            }
+
+
             $graphnode->adjacencies = array();
             $graph_nodes[$pid] = $graphnode;
 
@@ -207,12 +240,14 @@ var json =
 
     ?>
 ; //end json
-
+/*
+    <?php echo $min . ' / ' . $max; ?>
+*/
 </script>
 
 
 <!-- Example File -->
-<script language="javascript" type="text/javascript" src="family.js"></script>
+<script language="javascript" type="text/javascript" src="family.js?v=<?php echo filemtime('family.js'); ?>"></script>
 </head>
 
 <body onload="init();">

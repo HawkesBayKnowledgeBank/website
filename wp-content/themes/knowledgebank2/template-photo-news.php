@@ -89,7 +89,7 @@
 								<?php
 
 									$link = get_term_link($term);
-									$image = get_field('image',$term);
+									$image = get_field('image',$term->taxonomy . '_' . $term->term_id);
 
 								?>
 

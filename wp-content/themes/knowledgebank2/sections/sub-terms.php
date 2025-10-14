@@ -14,7 +14,7 @@
             <?php foreach($child_terms as $child_term): ?>
                 <?php
                     $link = get_term_link($child_term);
-                    $image = get_field('image',$child_term);
+                    $image = get_field('image',$child_term->taxonomy . '_' . $child_term->term_id);
                 ?>
 
                     <div class="col tile shadow">
@@ -35,7 +35,7 @@
             <?php foreach($child_terms as $child_term): ?>
                 <?php
                     $link = get_term_link($child_term);
-                    $image = get_field('image',$child_term);
+                    $image = get_field('image',$child_term->taxonomy . '_' . $child_term->term_id);
                 ?>
 
                     <div class="col tile shadow">

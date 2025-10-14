@@ -67,7 +67,7 @@ jQuery(document).ready(function($) {
       fade: true,
       cssEase: 'linear',
       autoplay:true,
-      autoplaySpeed: 4000,
+      autoplaySpeed: 8000,
       asNavFor: '.intro-background-slider',
     });
 
@@ -225,7 +225,7 @@ jQuery(document).ready(function($) {
     });
 
     // single image - Magnific (for images)
-    $('.media-slider:not(.video), .book-slider:not(.video)').each(function() {
+    $('.media-slider.singular:not(.video)').each(function() {
         $(this).magnificPopup({
             delegate: 'a.zoom',
             type: 'image',
@@ -239,7 +239,7 @@ jQuery(document).ready(function($) {
     // Book slider
     $('.book-slider').slick({
       dots: true,
-
+      infinite: false,
     });
 
     //Lazy images
@@ -249,7 +249,24 @@ jQuery(document).ready(function($) {
       threshold: 0
     });
 
+    $('.single a.button.download').on('click',function(){
 
+        $.magnificPopup.open({
+            items: [
+                {
+                    src: '#donation-request',
+                    type: 'inline'
+                }
+            ],
+            callbacks: {
+                open: function () {
+                    console.log('here')
+                    $('.mfp-bg').css('background-color','rgba(255,255,255,0.7)');
+                },
+            }
+        });
+
+    })
 
     var googleMaps = 'iframe[src*="google.com"][src*="map"][src*="embed"]';
     $(googleMaps).wrap('<div class="google-map-wrapper disable-pointer-events"></div>').after('<style>.disable-pointer-events iframe{pointer-events:none;}</style>');
@@ -280,7 +297,7 @@ jQuery(document).ready(function($) {
 
 		var searchterm = $('input[name="s"]').val();
 		if(searchterm != ''){
-            searchterm = searchterm.replace(/"/g,'')
+            //searchterm = searchterm.replace(/"/g,'')
 			$('.layer.search-results').find('a').not('.breadcrumbs a').each(function(){
 				var href = $(this).attr('href');
                 if(href.indexOf('?') != -1){
@@ -309,25 +326,40 @@ jQuery(document).ready(function($) {
     //highlight search results
     if(getUrlVars()['searchterm']){
         var searchterm = getUrlVars()['searchterm'];
-        searchterm = searchterm.replace('"','')
         searchterm = decodeURIComponent(searchterm);
-        var searchwords = searchterm.split(" ");
-        if(searchwords.length > 1){ //we have multiple words to highlight
-            $.each(searchwords, function(index, value){
-                $('.layer:not(.intro)').highlight(value);
-            });
-        }
-        else{
+
+        console.log('highlight', searchterm)
+
+        if(searchterm.indexOf('"') > -1){ //if there are double quotes we should search with the whole phrase
+            searchterm = searchterm.replaceAll('"', ''); //don't want the quotes though
+            
+            
             $('.layer:not(.intro)').highlight(searchterm);
         }
+        else{            
+            var searchwords = searchterm.split(" ");
+            if (searchwords.length > 1) { //we have multiple words to highlight
+                $.each(searchwords, function (index, value) {
+                    $('.layer:not(.intro)').highlight(value);
+                });
+            }
+            else {
+                $('.layer:not(.intro)').highlight(searchterm);
+            }
+        }       
+
 
         //show our own little search bar because ctrl+f can't deal with slick slider
         if($('#searchscroller').length){
-            $('#searchscroller .total').text( $('.slide-wrap:not(.slick-cloned)').find('.caption .highlight').length );
+            $('#searchscroller .total').text( $('.slick-slide:not(.slick-cloned)').find('.caption .highlight').length );
 
             $('#searchscroller a.next').click(function(){
                 var current = parseInt($('#searchscroller').attr('data-result'));
-                var total = $('.slide-wrap:not(.slick-cloned)').find('.caption .highlight').length;
+                var total = $('.slick-slide:not(.slick-cloned)').find('.caption .highlight').length;
+                if(total == 0){
+                    console.log('total is zero');
+                    return;
+                }
                 var next = current + 1;
                 if(current == total){
                     next = 1;
@@ -339,7 +371,7 @@ jQuery(document).ready(function($) {
 
             $('#searchscroller a.prev').click(function(){
                 var current = parseInt($('#searchscroller').attr('data-result'));
-                var total = $('.slide-wrap:not(.slick-cloned)').find('.caption .highlight').length;
+                var total = $('.slick-slide:not(.slick-cloned)').find('.caption .highlight').length;
                 var next = current - 1;
                 if(current == 1){
                     next = total;
@@ -359,8 +391,10 @@ jQuery(document).ready(function($) {
     //possibly scroll to a search term when gallery is ready
     function maybe_advance_slider_to_search_term(index){
         if(!index) index = 0;
-        if(getUrlVars()['searchterm']){
+        if (getUrlVars()['searchterm']){
             var searchterm = getUrlVars()['searchterm'];
+            searchterm = decodeURIComponent(searchterm);
+            searchterm = searchterm.replaceAll('"', ''); //don't want the quotes though
             console.log('searchterm is ' + searchterm)
             //$('.slide-wrap').highlight(searchterm);
             var $first_result = $('.slide-wrap:not(.slick-cloned)').find('span.highlight').eq(index);
@@ -386,6 +420,7 @@ jQuery(document).ready(function($) {
             }
             else{
                 console.log('no results')
+                return false;
             }
         }
     }
