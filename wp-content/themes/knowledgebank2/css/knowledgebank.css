@@ -748,7 +748,7 @@ article.search-results .icon-content-type { float:right;}
   .news .post-thumbnail img {max-width:100%; width:100%; display:block; margin: 0 auto;}
 }
 
-.highlight { background-color: #fff700; }
+.highlight, mark { background-color: #fff700; }
 
 /* Footer
   --------------------------- */
@@ -908,7 +908,7 @@ article.search-results .icon-content-type { float:right;}
 
   .media-slide{border-radius: 2px;background-color: rgba(0, 0, 0, 0.1);margin-bottom: 30px;border-radius: 4px;overflow: hidden;box-shadow: 0px 6px 4px -4px rgba(125, 127, 142, 0.26);margin: 10px;outline: none;text-align: center;}
   .media-slide-inner{position:relative; }
-  .media-slide img{max-width: 100%;max-height: 768px;}
+  .media-slide img{ height:auto; max-width:100%; max-height:950px; object-fit:contain;}
   .media-slide .caption{padding: 4px 5%;text-align: left;background: white;overflow-x:scroll;}
   .single-still_image .media-slide .caption { overflow-x:visible;}
 .media-slider .slick-dots{bottom: -50px; min-height:50px;}
@@ -954,7 +954,7 @@ article.search-results .icon-content-type { float:right;}
   .book-slider .slick-dots li{margin-right:0px;width: auto;height: auto;display: inline-block;margin: 0;}
   .book-slider .slick-dots button{margin: 0 3px;border: 0;outline: none;background: white;display: flex;justify-content:center; align-items:center;box-shadow: 0px 6px 4px -4px rgba(125, 127, 142, 0.26);border-radius: 32px;text-decoration: none;color: #9192a5;font-weight: 400;font-size: 14px;transition: 0.2s cubic-bezier(0.4, 0.0, 0.6, 1) all;transform: scale(1);width: 32px;height: 32px;}
 
-  .book-slider .slick-dots button:hover, .book-slider .slick-dots .slick-active button{color: #282a43;}
+  .book-slider .slick-dots button:hover, .book-slider .slick-dots .slick-active button{color: #fff; background: #35c343;}
   .book-slider .slick-dots button:before{display: none;}
 
   @media screen and (max-width:1480px){
@@ -1168,3 +1168,9 @@ article.search-results .icon-content-type { float:right;}
 
 
 table.bidbud td { padding:10px;}
+
+.header-banner-message { background-color:#24802d; display:flex; padding:5px; align-items:center; justify-content:center;}
+.header-banner-message p { margin:0; padding:0;}
+.header-banner-message a { color:#fff; text-decoration:none; font-size:14px; font-weight:500;}
+
+.layer.transcript > .inner { max-width:1100px; }

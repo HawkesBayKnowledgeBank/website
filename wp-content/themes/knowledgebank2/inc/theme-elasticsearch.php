@@ -74,6 +74,10 @@ function knowledgebank_pre_get_posts($query) {
         }
 
         if (is_tag()) $query->set('post_type', array('still_image', 'audio', 'video', 'person', 'text'));
+
+        if (!is_user_logged_in()) {
+            $query->set('post_status', array('publish'));
+        }
     }
 } //knowledgebank_pre_get_posts()
 add_filter('pre_get_posts', 'knowledgebank_pre_get_posts');
@@ -149,7 +153,7 @@ function knowledgebank_ep_prepare_meta_data($meta, $post) {
 
     $date_fields = ['birthdate', 'deathdate', 'yearpublished'];
     foreach ($date_fields as $date_field) {
-        $date = get_field($date_field, $post->ID);
+        $date = (string) get_field($date_field, $post->ID);
 
         if (!empty($date)) {
             $dt = DateTime::createFromFormat('Ymd', $date);
@@ -183,6 +187,7 @@ function kb_get_search_fields($raw = false) {
     foreach ($search_index_fields as $post_type => $fields) {
         foreach ($fields as $field) {
             $key = "meta.$field.value";
+            if ($field == 'post_title')  $key = 'post_title';
             if (!in_array($key, $all_fields)) $all_fields[] = ($raw ? $field : $key);
         }
     }
@@ -210,8 +215,9 @@ add_filter('ep_indexable_post_types', 'knowledgebank_ep_indexable_post_types');
 
 function knowledgebank_ep_formatted_args($formatted_args, $args) {
 
+    $search_query = $args['s'];
 
-    // if(is_chris()){
+    // if (is_chris()) {
     //     echo '<pre style="font-size:11px;">';
     //     print_r($formatted_args);
     //     echo '</pre>';
@@ -226,29 +232,70 @@ function knowledgebank_ep_formatted_args($formatted_args, $args) {
         $all_fields[] = 'terms.collections.name';
         $all_fields[] = 'terms.tags.name';
 
-        foreach ($formatted_args['query']['bool']['should'] as &$q) {
-            if (!empty($q['multi_match']['fields'])) {
-                $q['multi_match']['fields'] = array_merge($q['multi_match']['fields'], $all_fields);
-            }
-        }
 
 
-        $simple_query = array(
-            'simple_query_string' => array(
-                'query' => $formatted_args['query']['bool']['should'][0]['multi_match']['query'],
-                'fields' => $all_fields,
-                'default_operator' => 'AND',
-                'flags' => 'ALL',
+        $formatted_args['query']['bool']['should'] = [];
+
+
+        //boosted exact title
+
+        $boosted_exact_title_query = array(
+            'term' => array(
+                'post_title.exact' => [
+                    'value' => $search_query,
+                    'boost' => 10.0
+                ]
             )
         );
 
+        //$formatted_args['query']['bool']['should'][] = $boosted_exact_title_query;
 
-        //$formatted_args['query']['bool']['should'][] = $simple_query;
-        $formatted_args['query']['bool']['should'] = [$simple_query];
-    }
+        // Filter and prepare exact fields
+        // $exact_fields = array_filter($all_fields, function ($field) {
+        //     return $field != 'post_title';
+        // });
+
+        $exact_fields = array_map(function ($field) {
+            return $field . '.exact';
+        }, $all_fields);
+
+        $boosted_exact_fields_query = [
+            'multi_match' => [
+                'query' => $search_query,
+                'fields' => $exact_fields,
+                'type' => 'phrase',
+                'boost' => 8.0
+            ]
+        ];
+
+        $formatted_args['query']['bool']['should'][] = $boosted_exact_fields_query;
+
+        $title_match_query = [
+            'multi_match' => [
+                'query' => $search_query,
+                'fields' => 'post_title.exact',
+                'type' => 'phrase',
+                'boost' => 10.0
+            ]
+        ];
+
+        $formatted_args['query']['bool']['should'][] = $title_match_query;
+
+        $simple_query = array(
+            'simple_query_string' => array(
+                'query' => $search_query,
+                'fields' => $all_fields,
+                'default_operator' => 'AND',
+                'flags' => 'ALL',
+                'quote_field_suffix' => '.exact'
+            )
+        );
+
+        $formatted_args['query']['bool']['must'] = [$simple_query];
+    } //if
 
 
-    // if(is_chris()){
+    // if (is_chris()) {
     //     echo '<pre style="font-size:11px;">';
     //     print_r($formatted_args);
     //     echo '</pre>'; //85 + 911
@@ -258,24 +305,47 @@ function knowledgebank_ep_formatted_args($formatted_args, $args) {
 }
 add_filter('ep_formatted_args', 'knowledgebank_ep_formatted_args', 10, 2);
 
-
-
-
 function kb_ep_config_mapping($mappings) {
 
+    $mappings['settings']['analysis']['analyzer']['exact_match_analyzer'] = [
+        'type' => 'custom',
+        'tokenizer' => 'standard',
+        'filter' => [
+            'lowercase',
+            'asciifolding'
+        ]
+    ];
 
-    foreach ($mappings['settings']['analysis']['analyzer'] as $key => &$settings) {
-        $settings['filter'] = array_merge(
-            ['asciifolding'],
-            $settings['filter']
-        );
-    }
+    $mappings['mappings']['properties']['post_title']['fields']['exact'] = [
+        'type' => 'text',
+        'analyzer' => 'exact_match_analyzer'
+    ];
+
+    $mappings['mappings']['dynamic_templates'][0]['template_meta']['mapping']['fields']['exact'] = [
+        'type' => 'text',
+        'analyzer' => 'exact_match_analyzer'
+    ];
+
+    $mappings['mappings']['dynamic_templates'][1]['template_meta_types']['mapping']['properties']['value']['fields']['exact'] = [
+        'type' => 'text',
+        'analyzer' => 'exact_match_analyzer'
+    ];
+
+    // if (is_chris()) {
+    // echo '<pre style="font-size:11px;">';
+    // print_r($mappings);
+    // echo '</pre>';
+    // }
 
     return $mappings;
 }
-add_filter('ep_config_mapping', 'kb_ep_config_mapping');
+add_filter('ep_config_mapping', 'kb_ep_config_mapping', 11);
 
 function kb_ep_default_analyzer_filters($filters) {
+
+    // if (in_array('ewp_snowball', $filters)) {
+    //     $filters = array_diff($filters, ['ewp_snowball']);
+    // }
 
     return array_merge(['asciifolding'], $filters);
 }

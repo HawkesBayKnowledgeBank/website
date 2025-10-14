@@ -1,103 +1,106 @@
 <?php get_header(); ?>
 
-	<main role="main">
-	<!-- section -->
-	<section>
+<main role="main">
+    <!-- section -->
+    <section>
 
-	<?php if (have_posts()): while (have_posts()) : the_post(); ?>
+        <?php if (have_posts()): while (have_posts()) : the_post(); ?>
 
-		<!-- article -->
-		<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+                <!-- article -->
+                <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
-			<section class="layer intro intro-default background-image" style="">
-				<?php //if(function_exists('the_favorites_button')) the_favorites_button($post->ID); ?>
-				<div class="inner">
-					<div class="intro-copy dark inner-700">
-						<?php get_template_part('sections/breadcrumbs'); ?>
-						<h1><?php the_title(); ?></h1>
-					</div><!-- .intro-copy -->
-				</div><!-- .inner -->
-			</section>
+                    <section class="layer intro intro-default background-image" style="">
+                        <?php //if(function_exists('the_favorites_button')) the_favorites_button($post->ID); 
+                        ?>
+                        <div class="inner">
+                            <div class="intro-copy dark inner-700">
+                                <?php get_template_part('sections/breadcrumbs'); ?>
+                                <h1><?php the_title(); ?></h1>
+                            </div><!-- .intro-copy -->
+                        </div><!-- .inner -->
+                    </section>
 
-			<?php //get_template_part('sections/search','main'); ?>
+                    <?php //get_template_part('sections/search','main'); 
+                    ?>
 
-			<?php
-				$fields = knowledgebank_get_field_objects(); //we want to move / remove / play around with field orders
-			?>
+                    <?php
+                    $fields = knowledgebank_get_field_objects(); //we want to move / remove / play around with field orders
+                    ?>
 
-			<?php $images = get_field('images'); ?>
+                    <?php $images = get_field('images'); ?>
 
-			<?php if(!empty($images)): ?>
+                    <?php if (!empty($images)): ?>
 
-				<?php include('sections/image-slider.php'); ?>
+                        <?php include('sections/image-slider.php'); ?>
 
-			<?php endif; //!empty($images) ?>
-
-
-
-			<?php
-					$video = get_field_object('master');
-					$video['name'] = 'video';
-					knowledgebank_field_template($video, false);
-			?>
-
-            <?php if(get_field('transcript')): ?>
-
-                <section class="layer trascript">
-
-                    <div class="inner">
-
-                        <?php the_field('transcript'); ?>
-
-                    </div>
-
-                </section>
-
-            <?php endif; ?>
+                    <?php endif; //!empty($images) 
+                    ?>
 
 
-			<section class="layer attributes">
-				<div class="inner">
-					<div class="grid column-2">
 
-						<?php
-							foreach($fields as $field):
-								//look for templates for each field, first by name and then by type
-								knowledgebank_field_template($field); //see inc/theme_functions.php
-							endforeach;
-						?>
+                    <?php
+                    $video = get_field_object('master');
+                    $video['name'] = 'video';
+                    knowledgebank_field_template($video, false);
+                    ?>
 
-					</div>
+                    <?php if (get_field('transcript')): ?>
 
-				</div>
-			</section>
+                        <section class="layer transcript">
 
-			<?php include('sections/disqus.php'); ?>
+                            <div class="inner">
 
-			<?php get_template_part('sections/sponsors'); ?>
+                                <?php the_field('transcript'); ?>
 
-			<?php get_template_part('sections/signup'); ?>
+                            </div>
+
+                        </section>
+
+                    <?php endif; ?>
 
 
-		</article>
-		<!-- /article -->
+                    <section class="layer attributes">
+                        <div class="inner">
+                            <div class="grid column-2">
 
-	<?php endwhile; ?>
+                                <?php
+                                foreach ($fields as $field):
+                                    //look for templates for each field, first by name and then by type
+                                    knowledgebank_field_template($field); //see inc/theme_functions.php
+                                endforeach;
+                                ?>
 
-	<?php else: ?>
+                            </div>
 
-		<!-- article -->
-		<article>
+                        </div>
+                    </section>
 
-			<h1><?php _e( 'Sorry, nothing to display.', 'knowledgebank' ); ?></h1>
+                    <?php include('sections/disqus.php'); ?>
 
-		</article>
-		<!-- /article -->
+                    <?php get_template_part('sections/sponsors'); ?>
 
-	<?php endif; ?>
+                    <?php get_template_part('sections/signup'); ?>
 
-	</section>
-	<!-- /section -->
-	</main>
+
+                </article>
+                <!-- /article -->
+
+            <?php endwhile; ?>
+
+        <?php else: ?>
+
+            <!-- article -->
+            <article>
+
+                <h1><?php _e('Sorry, nothing to display.', 'knowledgebank'); ?></h1>
+
+            </article>
+            <!-- /article -->
+
+        <?php endif; ?>
+
+    </section>
+    <!-- /section -->
+</main>
 
 <?php get_footer(); ?>

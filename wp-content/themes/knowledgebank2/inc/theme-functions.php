@@ -117,16 +117,16 @@ function knowledgebank_admin_bar_render() {
 add_action('wp_before_admin_bar_render', 'knowledgebank_admin_bar_render');
 
 
-if (function_exists('acf_add_options_page')) {
+// if (function_exists('acf_add_options_page')) {
 
-    $option_page = acf_add_options_page(array(
-        'page_title'     => 'Theme General Settings',
-        'menu_title'     => 'Theme Settings',
-        'menu_slug'     => 'theme-general-settings',
-        'capability'     => 'manage_options',
-        'redirect'     => false
-    ));
-}
+//     $option_page = acf_add_options_page(array(
+//         'page_title'     => 'Theme General Settings',
+//         'menu_title'     => 'Theme Settings',
+//         'menu_slug'     => 'theme-general-settings',
+//         'capability'     => 'manage_options',
+//         'redirect'     => false
+//     ));
+// }
 
 
 /**
@@ -556,14 +556,7 @@ function kb_login_logo_url() {
 add_filter('login_headerurl', 'kb_login_logo_url');
 
 
-function filter_solr_index_custom_fields($solr_fields) {
-    $custom_fields = array('transcript', 'notes', 'description');
 
-    return array_merge($solr_fields, $custom_fields);
-}
-
-add_filter('solr_index_custom_fields', 'filter_solr_index_custom_fields', 10, 1);
-add_filter('solr_facet_custom_fields', 'filter_solr_index_custom_fields', 10, 1);
 
 /* Who's who vs */
 add_action('wp_ajax_people_endpoint', 'knowledgebank_people_endpoint'); //logged in
@@ -806,6 +799,9 @@ function kb_trademe_listings() {
     //prefix any hrefs which are pure numbers
     $html = preg_replace('/href="(\d+)"/', 'href="https://www.trademe.co.nz/$1"', $html);
 
+    //and get rid of <base href="https://www.bidbud.co.nz/" target="_blank">
+    $html = preg_replace('/<base href="https:\/\/www.bidbud.co.nz\/" target="_blank">/', '', $html);
+
 
     return $html;
 }
@@ -858,3 +854,6 @@ function add_sortable_columns_for_post_types() {
     }
 }
 add_action('admin_init', 'add_sortable_columns_for_post_types');
+
+/* Custom 'sample' post status for 'sample' records */
+include(get_stylesheet_directory() . '/inc/cps-sample.php');

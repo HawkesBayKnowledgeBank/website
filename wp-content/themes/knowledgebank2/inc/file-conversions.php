@@ -290,10 +290,13 @@ function knowledgebank_convert_master_image($post_id) {
                 $output_filename = str_replace('.jpg', '-%03d.jpg', $output_filename); //%03d will be replaced with the page number by gs
                 $output_path = "$output_dir/$output_filename";
                 //gs -o ../images/DentonRA1632_WhereWeCameFrom-2-%03d.jpg -sDEVICE=jpeg -r300 -dDOINTERPOLATE -dJPEGQ=90 -dPDFFitPage DentonRA1632_WhereWeCameFrom-2.pdf
-                $cmd = "gs -o $output_path -sDEVICE=jpeg -r200 -dDOINTERPOLATE -dJPEGQ=90 -dPDFFitPage -dDownScaleFactor=2 $master_path";
+                $cmd = "gs -o $output_path -sDEVICE=jpeg -r200 -dDOINTERPOLATE -dJPEGQ=90  -dDownScaleFactor=1 $master_path";
 
 
                 exec("pdfinfo $master_path", $pdfinfo);
+
+
+
 
                 // Extract total number of pages
                 $totalPages = 0;
@@ -313,13 +316,13 @@ function knowledgebank_convert_master_image($post_id) {
                 $job['status'] = 'Resizing images from PDF';
                 update_post_meta($post_id, '_master_conversion_status', $job);
 
-                $resize = "mogrify -resize 1100x1100 -quality 90 $output_dir/*.jpg";
+                $resize = "mogrify -resize 1400x1400 -quality 90 $output_dir/*.jpg";
                 error_log('Generating images from PDF: ' . $resize);
                 exec($resize);
             } else {
-                exec("convert -colorspace sRGB -quality 90 -interlace none -density 200 -alpha flatten -format jpg -resize 1100x1100\> \"$master_path\" \"$output_path\"");
+                exec("convert -colorspace sRGB -quality 90 -interlace none -density 200 -alpha flatten -format jpg -resize 1400x1400\> \"$master_path\" \"$output_path\"");
                 error_log('Converting attachment on ' . $post_id);
-                error_log("convert -colorspace sRGB -quality 90 -interlace none -density 200 -alpha flatten -format jpg -resize 1100x1100\> \"$master_path\" \"$output_path\"");
+                error_log("convert -colorspace sRGB -quality 90 -interlace none -density 200 -alpha flatten -format jpg -resize 1400x1400\> \"$master_path\" \"$output_path\"");
             }
 
 

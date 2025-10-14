@@ -267,20 +267,7 @@ add_filter('acf/load_field/name=format_original', 'knowledgebank_format_original
 add_filter('acf/load_field/key=field_56e8fa267d692', 'knowledgebank_format_original_values');
 
 
-function fix_post_id_on_preview($null, $post_id) {
-    if (is_preview() && $post_id !== 'options') {
-        return get_the_ID();
-    } else {
-        $acf_post_id = isset($post_id->ID) ? $post_id->ID : $post_id;
 
-        if (!empty($acf_post_id)) {
-            return $acf_post_id;
-        } else {
-            return $null;
-        }
-    }
-}
-add_filter('acf/pre_load_post_id', 'fix_post_id_on_preview', 10, 2);
 
 
 function knowledgebank_auto_generate_field($field) {
@@ -348,3 +335,61 @@ function knowledgebank_cancel_master_conversion() {
 }
 
 add_action('wp_ajax_cancel_master_conversion', 'knowledgebank_cancel_master_conversion');
+
+function save_custom_post_status($post_id) {
+    // Check if the Quick Edit form is submitted
+    if (isset($_POST['_status']) && $_POST['_status'] === 'sample') {
+        // Update the post status to custom status
+        $post = array(
+            'ID'          => $post_id,
+            'post_status' => 'sample',
+        );
+
+        // Update the post
+        $result = wp_update_post($post);
+
+        // If there's an error, send a JSON error response
+        if (is_wp_error($result)) {
+            wp_send_json_error(array('message' => $result->get_error_message()));
+        } else {
+            // Generate the updated row HTML
+            $updated_post = get_post($post_id);
+            $row_html = generate_post_row_html($updated_post);
+
+            // Send the updated row HTML in the response
+            wp_send_json_success(array('row_html' => $row_html));
+        }
+    }
+}
+add_action('save_post', 'save_custom_post_status');
+
+
+function generate_post_row_html($post) {
+    // Generate the HTML for the post row
+    $post_title = esc_html(get_the_title($post));
+    $post_status = esc_html(get_post_status($post));
+    $post_date = esc_html(get_the_date('', $post));
+    $post_id = esc_attr($post->ID);
+
+    // Create the HTML structure for the row (customize as needed)
+    $row_html = '<tr id="post-' . $post_id . '">
+                    <td class="title column-title" data-colname="Title">' . $post_title . '</td>
+                    <td class="status column-status" data-colname="Status">' . $post_status . '</td>
+                    <td class="date column-date" data-colname="Date">' . $post_date . '</td>
+                </tr>';
+
+    return $row_html;
+}
+
+
+function kb_sample_label($statuses) {
+    global $post; // we need it to check current post status
+    //if (get_query_var('post_status') != 'sample') { // not for pages with all posts of this status
+    if ($post->post_status == 'sample') { // если статус поста - Архив
+        return array('Sample'); // returning our status label
+    }
+    //}
+    return $statuses; // returning the array with default statuses
+}
+
+add_filter('display_post_states', 'kb_sample_label');

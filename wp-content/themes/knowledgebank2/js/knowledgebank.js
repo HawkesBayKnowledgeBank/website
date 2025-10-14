@@ -328,30 +328,69 @@ jQuery(document).ready(function($) {
         var searchterm = getUrlVars()['searchterm'];
         searchterm = decodeURIComponent(searchterm);
 
-        console.log('highlight', searchterm)
+        
+
+        let mark_instance = new Mark(document.querySelector('.layer:not(.intro)'));
+
+        let punctuation = ":;.,-–—‒_(){}[]!’'+=".split("");
+
+        let mark_options = {
+            "element": "span",
+            "className": "highlight",
+            "diacritics": true,
+            "ignorePunctuation": punctuation,
+            "synonyms" : {
+                "'": "’",
+                "‘": "’",
+                "“": "”",
+                "ā" : "a",
+                "ē" : "e",
+                "ī" : "i",
+                "ō" : "o",
+                "ū" : "u",
+            }
+        }
 
         if(searchterm.indexOf('"') > -1){ //if there are double quotes we should search with the whole phrase
             searchterm = searchterm.replaceAll('"', ''); //don't want the quotes though
+            console.log('highlight', searchterm)
+            mark_options['separateWordSearch'] = false;
             
-            
-            $('.layer:not(.intro)').highlight(searchterm);
+            //$('.layer:not(.intro)').highlight(searchterm);
+
+            console.log('Marking exact phrase')
+            mark_instance.mark(searchterm, mark_options);
+
+
         }
-        else{            
+        else{           
+             
             var searchwords = searchterm.split(" ");
             if (searchwords.length > 1) { //we have multiple words to highlight
                 $.each(searchwords, function (index, value) {
-                    $('.layer:not(.intro)').highlight(value);
+                    console.log('highlight', value)
+                   
+                    mark_instance.mark(value,  mark_options);
+
                 });
             }
             else {
-                $('.layer:not(.intro)').highlight(searchterm);
+                
+                mark_instance.mark(searchterm,  mark_options);
+
             }
         }       
 
 
         //show our own little search bar because ctrl+f can't deal with slick slider
         if($('#searchscroller').length){
-            $('#searchscroller .total').text( $('.slick-slide:not(.slick-cloned)').find('.caption .highlight').length );
+            let total = $('.slick-slide:not(.slick-cloned)').find('.caption .highlight').length;
+            if(total == 0){
+                console.log('total is zero');
+                $('#searchscroller').remove();
+                return;
+            }
+            $('#searchscroller .total').text( total );
 
             $('#searchscroller a.next').click(function(){
                 var current = parseInt($('#searchscroller').attr('data-result'));
